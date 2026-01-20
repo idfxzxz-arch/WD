@@ -3,15 +3,16 @@ import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
-  // Scroll effect
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener("scroll", onScroll)
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
+
+  const menu = ["about", "services", "divisions", "vision", "contact"]
 
   return (
     <>
@@ -19,7 +20,7 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -80 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         className={`fixed top-0 left-0 w-full z-50 transition-all
           ${scrolled
             ? "bg-black/70 backdrop-blur-md shadow-lg"
@@ -29,9 +30,9 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between text-white">
           <h1 className="font-bold text-xl tracking-wide">WD Company</h1>
 
-          {/* Desktop Menu */}
+          {/* DESKTOP */}
           <ul className="hidden md:flex gap-8 text-sm font-medium">
-            {["about", "services", "vision", "contact"].map((item) => (
+            {menu.map(item => (
               <li key={item}>
                 <a
                   href={`#${item}`}
@@ -39,18 +40,18 @@ export default function Navbar() {
                   after:absolute after:left-0 after:-bottom-1 after:h-[2px]
                   after:w-0 after:bg-blue-400 hover:after:w-full after:transition-all"
                 >
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                  {item.toUpperCase()}
                 </a>
               </li>
             ))}
           </ul>
 
-          {/* ✅ MOBILE BUTTON */}
+          {/* MOBILE BUTTON */}
           <button
+            className="md:hidden"
             onClick={() => setOpen(true)}
-            className="md:hidden hover:scale-110 transition"
           >
-            <Menu size={26} />
+            <Menu size={28} />
           </button>
         </div>
       </motion.nav>
@@ -59,44 +60,44 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <>
-            {/* Backdrop */}
+            {/* BACKDROP */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black/60 z-40"
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
             />
 
-            {/* Slide Menu */}
-            <motion.div
+            {/* PANEL */}
+            <motion.aside
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="fixed top-0 right-0 w-72 h-full bg-gray-950 z-50 p-6"
             >
-              <div className="flex justify-between mb-10 text-white">
-                <span className="font-bold">WD Company</span>
+              <div className="flex items-center justify-between mb-10 text-white">
+                <span className="font-bold text-lg">WD Company</span>
                 <button onClick={() => setOpen(false)}>
-                  <X />
+                  <X size={26} />
                 </button>
               </div>
 
               <ul className="space-y-6 text-lg text-white">
-                {["about", "services", "vision", "contact"].map((item) => (
+                {menu.map(item => (
                   <li key={item}>
                     <a
                       href={`#${item}`}
                       onClick={() => setOpen(false)}
-                      className="hover:text-blue-400 transition"
+                      className="block hover:text-blue-400 transition"
                     >
                       {item.toUpperCase()}
                     </a>
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </motion.aside>
           </>
         )}
       </AnimatePresence>
