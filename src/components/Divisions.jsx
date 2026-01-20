@@ -13,10 +13,10 @@ import {
   X
 } from "lucide-react"
 
-export default function Services() {
+export default function divisions() {
   const [active, setActive] = useState(null)
 
-  const services = [
+  const divisions = [
     {
       title: "WD Jaya Workshop",
       icon: Wrench,
@@ -66,7 +66,7 @@ export default function Services() {
 
   return (
     <section
-      id="services"
+      id="divisions"
       className="py-24 bg-gray-50 dark:bg-gray-900"
     >
       <div className="max-w-7xl mx-auto px-6">
@@ -76,7 +76,7 @@ export default function Services() {
 
         {/* GRID */}
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {services.map((service, i) => {
+          {divisions.map((service, i) => {
             const Icon = service.icon
             return (
               <motion.div
