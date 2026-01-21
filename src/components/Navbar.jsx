@@ -12,7 +12,13 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  const menu = ["about", "services", "divisions", "vision", "contact"]
+  // MENU FIX (label ≠ id)
+  const menu = [
+    { label: "About", id: "about" },
+    { label: "Divisions", id: "divisions" },
+    { label: "Vision", id: "vision" },
+    { label: "Contact", id: "contact" }
+  ]
 
   return (
     <>
@@ -33,14 +39,14 @@ export default function Navbar() {
           {/* DESKTOP */}
           <ul className="hidden md:flex gap-8 text-sm font-medium">
             {menu.map(item => (
-              <li key={item}>
+              <li key={item.id}>
                 <a
-                  href={`#${item}`}
+                  href={`#${item.id}`}
                   className="hover:text-blue-400 transition relative
                   after:absolute after:left-0 after:-bottom-1 after:h-[2px]
                   after:w-0 after:bg-blue-400 hover:after:w-full after:transition-all"
                 >
-                  {item.toUpperCase()}
+                  {item.label.toUpperCase()}
                 </a>
               </li>
             ))}
@@ -56,7 +62,7 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* MOBILE MENU */}
+      {/* MOBILE MENU – ULTRA PREMIUM */}
       <AnimatePresence>
         {open && (
           <>
@@ -66,37 +72,87 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-black/80 backdrop-blur-md z-40"
             />
 
-            {/* PANEL */}
+            {/* FULLSCREEN PANEL */}
             <motion.aside
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="fixed top-0 right-0 w-72 h-full bg-gray-950 z-50 p-6"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="
+                fixed inset-0 z-50
+                bg-gradient-to-b from-black via-gray-950 to-black
+                flex flex-col
+              "
             >
-              <div className="flex items-center justify-between mb-10 text-white">
-                <span className="font-bold text-lg">WD Company</span>
+              {/* TOP BAR */}
+              <div className="flex items-center justify-between px-6 py-5">
+                <h2 className="text-xl font-bold text-white tracking-wide">
+                  WD Company
+                </h2>
                 <button onClick={() => setOpen(false)}>
-                  <X size={26} />
+                  <X size={28} className="text-white" />
                 </button>
               </div>
 
-              <ul className="space-y-6 text-lg text-white">
-                {menu.map(item => (
-                  <li key={item}>
-                    <a
-                      href={`#${item}`}
-                      onClick={() => setOpen(false)}
-                      className="block hover:text-blue-400 transition"
+              {/* GLOW */}
+              <div className="absolute -top-32 left-1/2 -translate-x-1/2
+                              w-72 h-72 bg-blue-600/20 rounded-full blur-3xl" />
+
+              {/* MENU */}
+              <div className="flex-1 flex flex-col items-center justify-center">
+                <ul className="space-y-8 text-center">
+                  {menu.map((item, i) => (
+                    <motion.li
+                      key={item.id}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.08 }}
                     >
-                      {item.toUpperCase()}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+                      <a
+                        href={`#${item.id}`}
+                        onClick={() => setOpen(false)}
+                        className="
+                          text-2xl font-semibold
+                          tracking-widest
+                          text-white
+                          hover:text-blue-400
+                          transition
+                        "
+                      >
+                        {item.label.toUpperCase()}
+                      </a>
+                    </motion.li>
+                  ))}
+                </ul>
+
+                <p className="mt-16 text-sm text-gray-400 text-center px-10">
+                  Creative • Media • Events • Business Solutions
+                </p>
+              </div>
+
+              {/* CTA */}
+              <div className="px-6 pb-10">
+                <a
+                  href="#contact"
+                  onClick={() => setOpen(false)}
+                  className="
+                    block w-full text-center
+                    bg-blue-600 hover:bg-blue-500
+                    text-white py-4 rounded-2xl
+                    font-semibold tracking-wide
+                    transition
+                  "
+                >
+                  Contact WD Company
+                </a>
+
+                <p className="text-center text-xs text-gray-500 mt-4">
+                  © {new Date().getFullYear()} WD Jaya Group
+                </p>
+              </div>
             </motion.aside>
           </>
         )}
