@@ -2,7 +2,7 @@
 
 Hello my name idf 
 
-📍 Suhat, Malang
+📍 kra, ind
 
 <p align="left">
   <a href="https://github.com/idfxzxz-arch" target="_blank">
