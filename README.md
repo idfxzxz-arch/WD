@@ -1,22 +1,15 @@
 # 👋 Hi, I'm idf
 
-Software Engineer Lead @satutitik.engineer · Ex-MSIB Mandiri · Ex-DBS Foundation · Ex-SIB 7 · Ex-Inbound  
-AI & ML Builder · Automation Engineer (n8n) · Full-Stack & Mobile Engineer  
+Hello my name idf 
 
 📍 Suhat, Malang
 
 <p align="left">
- <a href="https://www.linkedin.com/in/wahyupratamaa" target="_blank">
-  <img src="https://img.shields.io/badge/LinkedIn-wahyupratamaa-0A66C2?logo=linkedin&logoColor=white" />
-</a>
-  <a href="https://github.com/ts-wahyupratamaa" target="_blank">
+  <a href="https://github.com/idfxzxz-arch" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-@whatyuupratama-181717?logo=github&logoColor=white" />
   </a>
-  <a href="https://satutitik.engineer/" target="_blank">
+  <a href="https://github.com/idfxzxz-arch" target="_blank">
     <img src="https://img.shields.io/badge/Website-satutitik.engineer-111111?logo=vercel&logoColor=white" />
-  </a>
-  <a href="https://www.instagram.com/alvprma.2cn" target="_blank">
-    <img src="https://img.shields.io/badge/Instagram-@alvprma.2cn-E4405F?logo=instagram&logoColor=white" />
   </a>
 </p>
 
