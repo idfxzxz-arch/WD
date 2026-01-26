@@ -47,23 +47,22 @@ export default function Navbar() {
   }, [])
 
   /* SMOOTH SCROLL */
- const scrollTo = id => {
-  const el = document.getElementById(id)
-  if (!el) return
+  const scrollTo = id => {
+    const el = document.getElementById(id)
+    if (!el) return
 
-  const y =
-    el.getBoundingClientRect().top +
-    window.pageYOffset -
-    100
+    const y =
+      el.getBoundingClientRect().top +
+      window.pageYOffset -
+      90
 
-  window.scrollTo({
-    top: y,
-    behavior: "smooth"
-  })
+    window.scrollTo({
+      top: y,
+      behavior: "smooth"
+    })
 
-  setOpen(false)
-}
-
+    setOpen(false)
+  }
 
   return (
     <>
@@ -81,7 +80,7 @@ export default function Navbar() {
           <h1 className="font-bold text-xl">WD Company</h1>
 
           {/* DESKTOP */}
-          <ul className="hidden md:flex gap-10 text-sm font-medium relative">
+          <ul className="hidden md:flex gap-10 text-sm font-medium">
 
             {menu.map(item => (
               <li key={item.id} className="relative">
@@ -96,21 +95,19 @@ export default function Navbar() {
                   {item.label.toUpperCase()}
                 </button>
 
-                {/* ACTIVE DOT */}
                 {active === item.id && (
-                  <motion.span
-                    layoutId="dot"
-                    className="absolute -bottom-4 left-1/2 -translate-x-1/2
-                               w-2 h-2 rounded-full bg-blue-400"
-                  />
-                )}
+                  <>
+                    <motion.span
+                      layoutId="dot"
+                      className="absolute -bottom-4 left-1/2 -translate-x-1/2
+                      w-2 h-2 rounded-full bg-blue-400"
+                    />
 
-                {/* ACTIVE LINE */}
-                {active === item.id && (
-                  <motion.span
-                    layoutId="line"
-                    className="absolute -bottom-2 left-0 right-0 h-[2px] bg-blue-400"
-                  />
+                    <motion.span
+                      layoutId="line"
+                      className="absolute -bottom-2 left-0 right-0 h-[2px] bg-blue-400"
+                    />
+                  </>
                 )}
               </li>
             ))}
