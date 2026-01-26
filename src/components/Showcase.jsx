@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Play, X } from "lucide-react"
 
 export default function Showcase() {
+  const [active, setActive] = useState(null)
   const [activeVideo, setActiveVideo] = useState(null)
   const [selectedDivisi, setSelectedDivisi] = useState("All")
   const [showMorePhotos, setShowMorePhotos] = useState(false)
@@ -39,7 +40,7 @@ export default function Showcase() {
 
   return (
     <>
-      <section id="showcase" className="py-24 bg-gray-950 text-white">
+      <section id="showcase" className="py-24 bg-gray-950 text-white scroll-mt-32">
         <div className="max-w-7xl mx-auto px-6">
           {/* HEADER */}
           <motion.div

@@ -2,29 +2,50 @@ import { Mail, Phone, MapPin } from "lucide-react"
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 bg-gradient-to-br from-blue-900 to-blue-700 text-white">
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
+    <section
+      id="contact"
+      className="scroll-mt-32 py-28 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white"
+    >
+      <div className="max-w-7xl mx-auto px-6 grid gap-10 md:grid-cols-3">
 
+        {/* LEFT */}
         <div>
-          <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
-          <p className="opacity-90">
-            Ready to grow your business? Let’s talk.
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Contact Us
+          </h2>
+          <p className="text-blue-100 leading-relaxed">
+            Ready to grow your business? Let’s talk and build something amazing together.
           </p>
         </div>
 
+        {/* EMAIL */}
         <div className="flex items-center gap-4">
-          <Mail />
-          <span>info@wdcompany.com</span>
+          <div className="p-3 rounded-xl bg-white/10">
+            <Mail />
+          </div>
+          <span className="text-sm md:text-base">
+            info@wdcompany.com
+          </span>
         </div>
 
+        {/* PHONE */}
         <div className="flex items-center gap-4">
-          <Phone />
-          <span>+62 812-3456-7890</span>
+          <div className="p-3 rounded-xl bg-white/10">
+            <Phone />
+          </div>
+          <span className="text-sm md:text-base">
+            +62 812-3456-7890
+          </span>
         </div>
 
-        <div className="flex items-center gap-4">
-          <MapPin />
-          <span>Jakarta, Indonesia</span>
+        {/* LOCATION */}
+        <div className="flex items-center gap-4 md:col-span-3">
+          <div className="p-3 rounded-xl bg-white/10">
+            <MapPin />
+          </div>
+          <span className="text-sm md:text-base">
+            Jakarta, Indonesia
+          </span>
         </div>
 
       </div>

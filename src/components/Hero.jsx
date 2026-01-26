@@ -56,7 +56,7 @@ export default function Hero() {
           variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}
           className="text-xl mb-8 max-w-2xl mx-auto text-white/90"
         >
-          Professional and Trusted Business Partner for Your Growth
+          Solusi Terintegrasi: Multimedia, Event, Wedding, Music & F&B – Semua dari Satu Tempat
         </motion.p>
 
         {/* CTA */}

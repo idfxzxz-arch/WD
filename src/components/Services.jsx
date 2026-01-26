@@ -23,7 +23,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="py-24 bg-gray-50 dark:bg-gray-900 transition-colors"
+      className="py-24 bg-gray-50 dark:bg-gray-900 transition-colors scroll-mt-32"
     >
       <div className="max-w-7xl mx-auto px-6">
 
