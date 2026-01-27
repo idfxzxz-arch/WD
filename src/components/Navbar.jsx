@@ -9,8 +9,8 @@ export default function Navbar() {
 
   const menu = [
     { label: "About", id: "about" },
-    { label: "Showcase", id: "showcase" },
     { label: "Divisions", id: "divisions" },
+    { label: "Showcase", id: "showcase" },
     { label: "Vision", id: "vision" },
     { label: "Contact", id: "contact" }
   ]
