@@ -11,20 +11,28 @@ export default function Showcase() {
   // Semua item dengan divisi
   const items = [
     // Foto
-    { type: "image", src: "/resources/photo.webp", title: "Workshop", divisi: "Workshop" },
-    { type: "image", src: "/resources/photo.webp", title: "Music Entertaiment", divisi: "Music Entertaiment" },
-    { type: "image", src: "/resources/photo.webp", title: "Production", divisi: "Production" },
-    { type: "image", src: "/resources/photo.webp", title: "Record", divisi: "Record" },
-    { type: "image", src: "/resources/photo.webp", title: "Event", divisi: "Event Organizer" },
-    { type: "image", src: "/resources/photo1.webp", title: "Wedding Organizer", divisi: "Wedding" },
-    { type: "image", src: "/resources/photo2.webp", title: "Wedding Organizer", divisi: "Wedding" },
-    { type: "image", src: "/resources/photo3.webp", title: "Wedding Organizer", divisi: "Wedding" },
-    { type: "image", src: "/resources/photo.webp", title: "Music Class", divisi: "Music Class" },
+    { type: "image", src: "/resources/wedding/photo1.webp", title: "Wedding Organizer", divisi: "Wedding" },
+    { type: "image", src: "/resources/wedding/photo2.webp", title: "Wedding Organizer", divisi: "Wedding" },
+    { type: "image", src: "/resources/wedding/photo3.webp", title: "Wedding Organizer", divisi: "Wedding" },
+    { type: "image", src: "/resources/workshop/workshop1.webp", title: "Workshop", divisi: "Workshop" },
+    { type: "image", src: "/resources/workshop/workshop2.webp", title: "Workshop", divisi: "Workshop" },
+    { type: "image", src: "/resources/workshop/workshop3.webp", title: "Workshop", divisi: "Workshop" },
+    { type: "image", src: "/resources/production/proc1.webp", title: "Production", divisi: "Production" },
+    { type: "image", src: "/resources/production/proc2.webp", title: "Production", divisi: "Production" },
+    { type: "image", src: "/resources/production/proc3.webp", title: "Production", divisi: "Production" },
+    { type: "image", src: "/resources/event/event1.webp", title: "Event", divisi: "Event Organizer" },
+    { type: "image", src: "/resources/event/event2.webp", title: "Event", divisi: "Event Organizer" },
+    { type: "image", src: "/resources/event/event3.webp", title: "Event", divisi: "Event Organizer" },
+    { type: "image", src: "/resources/music/music1.webp", title: "Music Ent", divisi: "Music Ent" },
+    { type: "image", src: "/resources/music/music2.webp", title: "Music Ent", divisi: "Music Ent" },
+    { type: "image", src: "/resources/music/music3.webp", title: "Music Ent", divisi: "Music Ent" },
     { type: "image", src: "/resources/photo.webp", title: "Music Futsal", divisi: "Futsal" },
     { type: "image", src: "/resources/photo.webp", title: "Food & Beverage", divisi: "F&B" },
 
     // Video
-    { type: "video", src: "/vid/video1.mp4", thumb: "/resources/thumbnail.webp", title: "Wedding Video", divisi: "Wedding" }
+    { type: "video", src: "/vid/video1.mp4", thumb: "/resources/thumbnail.webp", title: "Wedding Video", divisi: "Wedding" },
+    { type: "video", src: "/vid/workshopvid.mp4", thumb: "/resources/thumbnail.webp", title: "Workshop Video", divisi: "Workshop" },
+    { type: "video", src: "/vid/workshopvid.mp4", thumb: "/resources/thumbnail.webp", title: "Workshop Video", divisi: "Workshop" }
   ]
 
   // Daftar divisi unik

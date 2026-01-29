@@ -24,7 +24,7 @@ export default function Contact() {
             <Mail />
           </div>
           <span className="text-sm md:text-base">
-            info@wdcompany.com
+            wdgroupcompany21@gmail.com
           </span>
         </div>
 
@@ -34,7 +34,7 @@ export default function Contact() {
             <Phone />
           </div>
           <span className="text-sm md:text-base">
-            +62 812-3456-7890
+            +62 8817134774
           </span>
         </div>
 
@@ -44,7 +44,7 @@ export default function Contact() {
             <MapPin />
           </div>
           <span className="text-sm md:text-base">
-            Jakarta, Indonesia
+            Perumahan Tamanasri RT 01/RW04 JL Mangga Manalagi Blok E1 No 11
           </span>
         </div>
 
