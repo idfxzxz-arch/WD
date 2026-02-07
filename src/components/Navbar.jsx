@@ -34,15 +34,21 @@ export default function Navbar() {
           />
         )}
 
-        {menus.map(menu => (
-          <button
-            key={menu}
-            onMouseEnter={handleHover}
-            className="relative z-10 capitalize px-4 py-1"
-          >
-            {menu}
-          </button>
-        ))}
+       {menus.map(menu => (
+  <button
+    key={menu}
+    onMouseEnter={handleHover}
+    onClick={() => {
+      document
+        .getElementById(menu.toLowerCase())
+        ?.scrollIntoView({ behavior: "smooth" })
+    }}
+    className="relative z-10 capitalize px-4 py-1"
+  >
+    {menu}
+  </button>
+))}
+
 
       </nav>
     </div>

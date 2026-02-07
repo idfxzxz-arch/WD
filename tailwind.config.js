@@ -2,13 +2,11 @@
 export default {
   darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,jsx}"],
-  theme: {
-    extend: {
-
-      fontFamily: {
-        serif: ["Playfair Display", "serif"],
-        sans: ["Inter", "sans-serif"],
-      },
+ theme: {
+  extend: {
+    fontFamily: {
+      genz: ["Space Grotesk", "sans-serif"],
+    },
 
       letterSpacing: {
         ultra: ".2em",
