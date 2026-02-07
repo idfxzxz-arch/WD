@@ -2,7 +2,7 @@ import { motion } from "framer-motion"
 
 const links = ["Instagram", "Dribbble", "Behance", "Webflow", "Privacy"]
 
-export default function CTA() {
+export default function Cta() {
   return (
     <section className="relative bg-black min-h-screen flex items-center justify-center overflow-hidden">
 
