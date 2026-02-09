@@ -16,8 +16,8 @@ export default function App() {
       <Section />
       <About />
       <Works />
-      <Cta />
       <Scope />
+      <Cta />
       <TeamHero />
       <Footer />
     </>

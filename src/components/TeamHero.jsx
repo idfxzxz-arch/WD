@@ -4,7 +4,7 @@ export default function TeamHero() {
 
       {/* BACKGROUND IMAGE */}
       <img
-        src="/resources/herwo.webp"
+        src="/resources/hero.webp"
         className="absolute inset-0 w-full h-full object-cover grayscale"
       />
 
@@ -25,7 +25,7 @@ export default function TeamHero() {
         backgroundImage: "url('/resources/hero.webp')"
       }}
       >
-        WD 
+        WD Group
       </h1>
 
     </section>

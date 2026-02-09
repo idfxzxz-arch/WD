@@ -5,7 +5,7 @@ export default function Section() {
       <div className="max-w-5xl mx-auto px-6">
 
         <p className="text-sm uppercase tracking-widest mb-8">
-          Design Agency
+          WD Group Company
         </p>
 
         <h2 className="text-4xl md:text-6xl leading-tight font-medium">

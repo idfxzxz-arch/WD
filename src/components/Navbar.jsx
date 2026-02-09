@@ -1,7 +1,7 @@
 import { useState, useRef } from "react"
 
 export default function Navbar() {
-  const menus = ["team", "About", "scope", "contact"]
+  const menus = ["Home", "About", "Scope", "Contact"]
   const [style, setStyle] = useState(null)
   const containerRef = useRef()
 
@@ -15,12 +15,30 @@ export default function Navbar() {
     })
   }
 
+  const handleClick = menu => {
+    document
+      .getElementById(menu.toLowerCase())
+      ?.scrollIntoView({ behavior: "smooth" })
+
+    // mobile active
+    const el = document.querySelector(`[data-menu="${menu}"]`)
+    handleHover({ target: el })
+  }
+
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+    <div className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-full px-4 sm:w-auto">
+
       <nav
         ref={containerRef}
         onMouseLeave={() => setStyle(null)}
-        className="relative backdrop-blur bg-white/80 shadow-xl border border-black/5 rounded-full px-4 py-2 flex gap-6 text-sm font-medium"
+        className="
+        relative backdrop-blur bg-white/80 shadow-xl border border-black/5
+        rounded-full px-3 sm:px-5 py-2
+        flex justify-between sm:justify-center
+        gap-1 sm:gap-6
+        text-xs sm:text-sm font-medium
+        overflow-hidden
+        "
       >
 
         {/* Hover pill */}
@@ -34,21 +52,17 @@ export default function Navbar() {
           />
         )}
 
-       {menus.map(menu => (
-  <button
-    key={menu}
-    onMouseEnter={handleHover}
-    onClick={() => {
-      document
-        .getElementById(menu.toLowerCase())
-        ?.scrollIntoView({ behavior: "smooth" })
-    }}
-    className="relative z-10 capitalize px-4 py-1"
-  >
-    {menu}
-  </button>
-))}
-
+        {menus.map(menu => (
+          <button
+            key={menu}
+            data-menu={menu}
+            onMouseEnter={handleHover}
+            onClick={() => handleClick(menu)}
+            className="relative z-10 capitalize px-3 sm:px-4 py-1 whitespace-nowrap"
+          >
+            {menu}
+          </button>
+        ))}
 
       </nav>
     </div>

@@ -1,70 +1,87 @@
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
+import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 
 export default function Scope() {
 
   const divisions = [
-    "Branding",
-    "Web Dev",
-    "Mobile App",
-    "UI / UX",
-    "Graphic Design",
-    "Digital Marketing",
-    "Photography",
-    "Videography",
-    "IT Support",
+    "/icon/Workshop.webp",
+    "/icon/Prodcution.webp",
+    "/icon/Music_Entertaint.webp",
+    "/icon/Records.webp",
+    "/icon/Event_Organizer.webp",
+    "/icon/Wedding_Organizer.webp",
+    "/icon/Music_Class.webp",
+    "/icon/FUTSAL.webp",
+    "/icon/FNB.webp",
   ]
 
+  const [trail, setTrail] = useState([])
+
+  useEffect(() => {
+    const handleMove = e => {
+      setTrail(prev => {
+        const next = [
+          ...prev,
+          {
+            x: e.clientX,
+            y: e.clientY,
+            logo: divisions[prev.length % divisions.length],
+            id: crypto.randomUUID()
+          }
+        ]
+        return next.slice(-6)
+      })
+    }
+
+    // ✅ TAMBAH EVENT
+    window.addEventListener("pointermove", handleMove)
+
+    // ✅ CLEANUP BENAR
+    return () => window.removeEventListener("pointermove", handleMove)
+  }, [])
+
   return (
-    <section
-      id="scope"
-      className="min-h-screen bg-black flex items-center justify-center font-genz"
-    >
-      <div className="text-center max-w-5xl px-6">
+    <section className="relative h-screen bg-black text-white overflow-hidden flex items-center justify-center">
 
-        {/* Title */}
-        <motion.h2
-          initial={{ opacity: 0, scale: .8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: .6 }}
-          className="text-5xl md:text-7xl font-bold mb-10 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent"
-        >
-          Our Scope ✨
-        </motion.h2>
+      {/* TEXT */}
+      <div className="text-center z-10 pointer-events-none">
+        <h1 className="text-4xl md:text-6xl font-light">
+          Branding, <span className="text-white/40">Animation</span>,
+          <br />
+          Illustration, Research,
+          <br />
+          UI/UX, Web, 3D
+        </h1>
 
-        {/* Divisions */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          variants={{
-            visible: {
-              transition: {
-                staggerChildren: 0.08
-              }
-            }
-          }}
-          className="flex flex-wrap justify-center gap-4 text-xl md:text-2xl"
-        >
-          {divisions.map((item, i) => (
-            <motion.span
-              key={i}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              whileHover={{ scale: 1.15 }}
-              className="px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur cursor-pointer text-gray-300 hover:text-white hover:border-pink-500 transition"
-            >
-              {item}
-            </motion.span>
-          ))}
-        </motion.div>
-
-        {/* Subtitle */}
-        <p className="mt-10 text-gray-500 tracking-wide">
-          and many more creative things 🚀
+        <p className="mt-6 text-xs tracking-[0.3em] text-white/40 uppercase">
+          And More
         </p>
-
       </div>
+
+      {/* LOGO TRAIL */}
+      {createPortal(
+        <AnimatePresence>
+          {trail.map((item, i) => (
+            <motion.img
+              key={item.id}
+              src={item.logo}
+              className="fixed w-16 pointer-events-none z-[9999]"
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                x: item.x - 32,
+                y: item.y - 32
+              }}
+              exit={{ opacity: 0, scale: 0.4 }}
+              transition={{ duration: 0.25 }}
+            />
+          ))}
+        </AnimatePresence>,
+        document.body
+      )}
+
     </section>
   )
 }
