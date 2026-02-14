@@ -1,87 +1,91 @@
-import { motion, AnimatePresence } from "framer-motion"
-import { useEffect, useState } from "react"
-import { createPortal } from "react-dom"
+import { motion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
+
+const services = [
+  "Creative Workshop",
+  "Production",
+  "Music Entertainment",
+  "Records",
+  "Event & Wedding Organizer",
+  "Music Education",
+  "Sports & Lifestyle",
+  "Food & Beverage",
+]
 
 export default function Scope() {
-
-  const divisions = [
-    "/icon/Workshop.webp",
-    "/icon/Prodcution.webp",
-    "/icon/Music_Entertaint.webp",
-    "/icon/Records.webp",
-    "/icon/Event_Organizer.webp",
-    "/icon/Wedding_Organizer.webp",
-    "/icon/Music_Class.webp",
-    "/icon/FUTSAL.webp",
-    "/icon/FNB.webp",
-  ]
-
-  const [trail, setTrail] = useState([])
+  const containerRef = useRef(null)
+  const wordRefs = useRef([])
+  const [cursorX, setCursorX] = useState(null)
 
   useEffect(() => {
     const handleMove = e => {
-      setTrail(prev => {
-        const next = [
-          ...prev,
-          {
-            x: e.clientX,
-            y: e.clientY,
-            logo: divisions[prev.length % divisions.length],
-            id: crypto.randomUUID()
-          }
-        ]
-        return next.slice(-6)
-      })
+      setCursorX(e.clientX)
     }
 
-    // ✅ TAMBAH EVENT
-    window.addEventListener("pointermove", handleMove)
-
-    // ✅ CLEANUP BENAR
-    return () => window.removeEventListener("pointermove", handleMove)
+    window.addEventListener("mousemove", handleMove)
+    return () => window.removeEventListener("mousemove", handleMove)
   }, [])
 
   return (
-    <section className="relative h-screen bg-black text-white overflow-hidden flex items-center justify-center">
+    <section
+      id="scope"
+      ref={containerRef}
+      className="relative h-screen bg-black flex items-center justify-center"
+    >
+      <h1 className="text-4xl md:text-6xl font-light leading-[1.15] text-center max-w-5xl px-6">
+        {services.map((text, i) => (
+          <Word
+            key={i}
+            text={text}
+            cursorX={cursorX}
+            ref={el => (wordRefs.current[i] = el)}
+          />
+        ))}
 
-      {/* TEXT */}
-      <div className="text-center z-10 pointer-events-none">
-        <h1 className="text-4xl md:text-6xl font-light">
-          Branding, <span className="text-white/40">Animation</span>,
-          <br />
-          Illustration, Research,
-          <br />
-          UI/UX, Web, 3D
-        </h1>
-
-        <p className="mt-6 text-xs tracking-[0.3em] text-white/40 uppercase">
-          And More
-        </p>
-      </div>
-
-      {/* LOGO TRAIL */}
-      {createPortal(
-        <AnimatePresence>
-          {trail.map((item, i) => (
-            <motion.img
-              key={item.id}
-              src={item.logo}
-              className="fixed w-16 pointer-events-none z-[9999]"
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                x: item.x - 32,
-                y: item.y - 32
-              }}
-              exit={{ opacity: 0, scale: 0.4 }}
-              transition={{ duration: 0.25 }}
-            />
-          ))}
-        </AnimatePresence>,
-        document.body
-      )}
-
+        <div className="mt-10 text-xs tracking-[0.35em] uppercase text-white/40">
+          Move your cursor
+        </div>
+      </h1>
     </section>
+  )
+}
+
+/* ===================== */
+/* WORD COMPONENT */
+/* ===================== */
+
+const Word = ({ text, cursorX }, ref) => {
+  const localRef = useRef(null)
+
+  const [style, setStyle] = useState({
+    opacity: 0.3,
+    scale: 1,
+  })
+
+  useEffect(() => {
+    if (!cursorX || !localRef.current) return
+
+    const rect = localRef.current.getBoundingClientRect()
+    const wordCenter = rect.left + rect.width / 2
+    const distance = Math.abs(cursorX - wordCenter)
+
+    const influence = 220
+    const strength = Math.max(0, 1 - distance / influence)
+
+    setStyle({
+      opacity: 0.25 + strength * 0.75,
+      scale: 1 + strength * 0.06,
+    })
+  }, [cursorX])
+
+  return (
+    <motion.span
+      ref={localRef}
+      animate={style}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="inline-block mr-3 text-white"
+    >
+      {text},
+    </motion.span>
   )
 }
