@@ -26,26 +26,7 @@ const projects = [
     tags: [],
     image: "/resources/Event_Organizer/Event.webp",
   },
-   {
-    title: "1-888-ECHO – Website",
-    tags: [],
-    image: "/resources/Wedding/wedding.webp",
-  },
-   {
-    title: "1-888-ECHO – Website",
-    tags: [],
-    image: "/resources/wedding/photo1.webp",
-  },
-   {
-    title: "1-888-ECHO – Website",
-    tags: [],
-    image: "/resources/wedding/photo1.webp",
-  },
-   {
-    title: "1-888-ECHO – Website",
-    tags: [],
-    image: "/resources/wedding/photo1.webp",
-  },
+  
 ]
 
 export default function Works() {
