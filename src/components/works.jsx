@@ -28,22 +28,22 @@ const projects = [
   },
    {
     title: "1-888-ECHO – Website",
-    tags: ["Website", "Agency"],
+    tags: [],
+    image: "/resources/Wedding/wedding.webp",
+  },
+   {
+    title: "1-888-ECHO – Website",
+    tags: [],
     image: "/resources/wedding/photo1.webp",
   },
    {
     title: "1-888-ECHO – Website",
-    tags: ["Website", "Agency"],
+    tags: [],
     image: "/resources/wedding/photo1.webp",
   },
    {
     title: "1-888-ECHO – Website",
-    tags: ["Website", "Agency"],
-    image: "/resources/wedding/photo1.webp",
-  },
-   {
-    title: "1-888-ECHO – Website",
-    tags: ["Website", "Agency"],
+    tags: [],
     image: "/resources/wedding/photo1.webp",
   },
 ]
