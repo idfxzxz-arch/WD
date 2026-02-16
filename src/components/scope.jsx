@@ -2,14 +2,14 @@ import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 
 const services = [
-  "Creative Workshop",
+  "Workshop",
   "Production",
   "Music Entertainment",
   "Records",
   "Event & Wedding Organizer",
   "Music Education",
-  "Sports & Lifestyle",
-  "Food & Beverage",
+  "UI/UX",
+  "Store",
 ]
 
 export default function Scope() {
@@ -43,7 +43,7 @@ export default function Scope() {
         ))}
 
         <div className="mt-10 text-xs tracking-[0.35em] uppercase text-white/40">
-          Move your cursor
+          And more
         </div>
       </h1>
     </section>
