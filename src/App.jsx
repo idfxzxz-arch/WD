@@ -5,7 +5,6 @@ import About from "./components/About"
 import Works from "./components/works"
 import Cta from "./components/Cta"
 import TeamHero from "./components/TeamHero"
-import Footer from "./components/Footer"
 import Scope from "./components/scope"
 
 export default function App() {
@@ -19,7 +18,6 @@ export default function App() {
       <Scope />
       <Cta />
       <TeamHero />
-      <Footer />
     </>
   )
 }
