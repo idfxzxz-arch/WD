@@ -11,7 +11,7 @@ const links = [
   },
   {
     label: "Email",
-    href: "wdgroupcompany@gmail.com"
+    href: "mailto:emailkamu@gmail.com"
   }
 ]
 
