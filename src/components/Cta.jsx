@@ -11,7 +11,7 @@ const links = [
   },
   {
     label: "Email",
-    href: "mailto:emailkamu@gmail.com"
+    href: "mailto:emailkamu@gmail.com?subject=Project%20Inquiry&body=Halo,%20saya%20tertarik%20untuk%20bekerja%20sama."
   }
 ]
 
