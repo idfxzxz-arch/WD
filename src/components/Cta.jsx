@@ -1,6 +1,19 @@
 import { motion } from "framer-motion"
 
-const links = ["Instagram", "Dribbble", "Behance", "Webflow", "Privacy"]
+const links = [
+  {
+    label: "Instagram",
+    href: "https://instagram.com/wdgroupcompany"
+  },
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/628817134774"
+  },
+  {
+    label: "Email",
+    href: "wdgroupcompany@gmail.com"
+  }
+]
 
 export default function Cta() {
   return (
@@ -46,23 +59,23 @@ export default function Cta() {
         {/* LINKS */}
         <div className="flex flex-wrap justify-center gap-8 mt-12 text-xs tracking-widest uppercase text-white/50">
 
-          {links.map((item,i)=>(
-            <motion.a
-              key={i}
-              href="#"
-              whileHover={{ y: -3 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="hover:text-white relative group"
-            >
-              {item}
+  {links.map((item,i)=>(
+    <motion.a
+      key={i}
+      href={item.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      whileHover={{ y: -3 }}
+      transition={{ type: "spring", stiffness: 300 }}
+      className="hover:text-white relative group"
+    >
+      {item.label}
 
-              {/* underline */}
-              <span className="absolute left-0 -bottom-1 h-px w-0 bg-white transition-all group-hover:w-full" />
+      <span className="absolute left-0 -bottom-1 h-px w-0 bg-white transition-all group-hover:w-full" />
+    </motion.a>
+  ))}
 
-            </motion.a>
-          ))}
-
-        </div>
+</div>
 
       </motion.div>
 
