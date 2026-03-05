@@ -2,21 +2,21 @@ import React, { useState } from "react";
 
 const portfolioData = [
   { type: "image", src: "/resources/Wedding/wedding.webp" },
+  { type: "image", src: "/resources/Wedding/wedding1.webp" },
+  { type: "image", src: "/resources/Wedding/wedding2.webp" },
   { type: "image", src: "/resources/Workshop/Workshop.webp" },
+  { type: "image", src: "/resources/Workshop/workshop1.webp" },
+  { type: "image", src: "/resources/Workshop/workshop2.webp" },
   { type: "image", src: "/resources/Event_Organizer/Event.webp" },
+  { type: "image", src: "/resources/Event_Organizer/Event1.webp" },
+  { type: "image", src: "/resources/Event_Organizer/Event2.webp" },
   { type: "image", src: "/resources/Music_ENT/Music_ENT.webp" },
-  { type: "image", src: "/resources/Production/roduction.webp" },
-  { type: "image", src: "/resources/Store/Store.webp" },
-  { 
-    type: "video", 
-    src: "/vid/video1.mp4", 
-    thumbnail: "/resources/Wedding/wedding.webp" 
-  },
-  { 
-    type: "video", 
-    src: "/vid/Nadia & Riyan.mp4", 
-    thumbnail: "/resources/Wedding/wedding.webp" 
-  }
+  { type: "image", src: "/resources/Music_ENT/Music_ENT1.webp" },
+  { type: "image", src: "/resources/Music_ENT/Music_ENT2.webp" },
+  { type: "image", src: "/resources/Production/Production.webp" },
+  { type: "image", src: "/resources/Production/Production1.webp" },
+  { type: "image", src: "/resources/Production/Production2.webp" },
+  { type: "image", src: "/resources/Store/Store.webp" }
 ];
 
 export default function Portofolio() {
