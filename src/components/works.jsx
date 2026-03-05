@@ -3,16 +3,9 @@ import { ArrowUpRight } from "lucide-react"
 
 const projects = [
   {
-    title: "Music – Entertainment",
-    tags: ["Event", "Stage", "Audio"],
-    video: "/vid/video1.mp4",
-    image: "/resources/Music_ENT/Music_ENT.webp",
-    link: "#"
-  },
-  {
-    title: "Store – Ananta Bettafish",
+    title: "Wedding Organizer",
     tags: ["E-Commerce", "Brand"],
-    image: "/resources/Store/Store.webp",
+    image: "/resources/Wedding/wedding.webp",
     link: "#"
   },
   {
@@ -20,7 +13,31 @@ const projects = [
     tags: ["Training", "Creative"],
     image: "/resources/Workshop/Workshop.webp",
     link: "#"
-  }
+  },
+    {
+    title: "Event Organizer",
+    tags: ["Training", "Creative"],
+    image: "/resources/Event_Organizer/Event.webp",
+    link: "#"
+  },
+    {
+    title: "Music & Entertainment",
+    tags: ["Training", "Creative"],
+    image: "/resources/Music_ENT/Music_ENT.webp",
+    link: "#"
+  },
+    {
+    title: "Production Organizer",
+    tags: ["Training", "Creative"],
+    image: "/resources/Production/Production.webp",
+    link: "#"
+  },
+    {
+    title: "Store – Ananta Bettafish",
+    tags: ["Training", "Creative"],
+    image: "/resources/Store/Store.webp",
+    link: "#"
+  },
 ]
 
 export default function Works() {
