@@ -76,12 +76,15 @@ export default function Portofolio() {
             </button>
 
             <div className="relative w-full aspect-video bg-black rounded-lg overflow-hidden">
-              <video
-                src={activeVideo}
-                controls
-                autoPlay
-                className="absolute inset-0 w-full h-full"
-              />
+             <video
+  controls
+  autoPlay
+  preload="metadata"
+  className="absolute inset-0 w-full h-full"
+>
+  <source src={activeVideo} type="video/mp4" />
+  Browser tidak mendukung video.
+</video>
             </div>
           </div>
         </div>
