@@ -1,3 +1,4 @@
+"use client"
 import { motion } from "framer-motion"
 
 const links = [
@@ -11,7 +12,7 @@ const links = [
   },
   {
     label: "Email",
-    href: "mailto:emailkamu@gmail.com?subject=Project%20Inquiry&body=Halo,%20saya%20tertarik%20untuk%20bekerja%20sama."
+    href: "mailto:wdgroupcompany@gmail.com"
   }
 ]
 
