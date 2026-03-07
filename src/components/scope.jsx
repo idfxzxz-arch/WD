@@ -2,14 +2,12 @@ import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 
 const services = [
-  "Workshop",
-  "Production",
-  "Music Entertainment",
-  "Records",
+  "Multimedia & Production",
+  "Music Entertainment & Education",
   "Event & Wedding Organizer",
-  "Music Education",
-  "UI/UX",
-  "Store",
+  "UI/UX, Web & Mobile Development",
+  "Branding & Digital Marketing",
+  "Creative Workshop & Training"
 ]
 
 export default function Scope() {
@@ -69,7 +67,7 @@ const Word = ({ text, cursorX }, ref) => {
     const wordCenter = rect.left + rect.width / 2
     const distance = Math.abs(cursorX - wordCenter)
 
-    const influence = 220
+    const influence = 90
     const strength = Math.max(0, 1 - distance / influence)
 
     setStyle({
@@ -83,7 +81,7 @@ const Word = ({ text, cursorX }, ref) => {
       ref={localRef}
       animate={style}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className="inline-block mr-3 text-white"
+      className="inline-block mr-3 text-neutral-500"
     >
       {text},
     </motion.span>

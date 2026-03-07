@@ -14,25 +14,25 @@ const projects = [
     image: "/resources/Workshop/Workshop.webp",
     link: "#"
   },
-    {
+  {
     title: "Event Organizer",
     tags: ["Training", "Creative"],
     image: "/resources/Event_Organizer/Event.webp",
     link: "#"
   },
-    {
+  {
     title: "Music & Entertainment",
     tags: ["Training", "Creative"],
     image: "/resources/Music_ENT/Music_ENT.webp",
     link: "#"
   },
-    {
+  {
     title: "Production Organizer",
     tags: ["Training", "Creative"],
     image: "/resources/Production/Production.webp",
     link: "#"
   },
-    {
+  {
     title: "Store – Ananta Bettafish",
     tags: ["Training", "Creative"],
     image: "/resources/Store/Store.webp",
@@ -62,10 +62,15 @@ export default function Works() {
           Selected Works
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-14">
+        <div className="grid md:grid-cols-2 gap-14 mt-24">
 
           {projects.map((item, i) => (
-            <div key={i} className="group">
+            <div
+              key={i}
+              className={`group transition duration-500 ${
+                i % 2 === 0 ? "md:-translate-y-24" : "md:translate-y-24"
+              }`}
+            >
 
               <div className="relative rounded-3xl overflow-hidden bg-neutral-100">
 
@@ -78,7 +83,7 @@ export default function Works() {
                       muted
                       playsInline
                       preload="metadata"
-                      className="w-full h-full object-cover cursor-pointer transition duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover cursor-pointer transition duration-700 group-hover:scale-110"
                       onClick={() => handleClick(i)}
                     >
                       <source src={item.video} type="video/mp4" />
@@ -87,7 +92,7 @@ export default function Works() {
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                     />
                   )}
 
