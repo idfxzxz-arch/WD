@@ -1,3 +1,5 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+
 import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
 import Section from "./components/Section"
@@ -8,8 +10,9 @@ import Cta from "./components/Cta"
 import TeamHero from "./components/TeamHero"
 import Scope from "./components/scope"
 
+import Wedding from "./pages/Wedding"
 
-export default function App() {
+function Home() {
   return (
     <>
       <Navbar />
@@ -22,5 +25,21 @@ export default function App() {
       <Cta />
       <TeamHero />
     </>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+
+        {/* Landing Page */}
+        <Route path="/" element={<Home />} />
+
+        {/* Halaman Project */}
+        <Route path="/wedding" element={<Wedding />} />
+
+      </Routes>
+    </BrowserRouter>
   )
 }

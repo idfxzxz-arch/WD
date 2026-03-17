@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { useRef } from "react"
 import { ArrowUpRight } from "lucide-react"
 
@@ -6,37 +7,37 @@ const projects = [
     title: "Wedding Organizer",
     tags: ["E-Commerce", "Brand"],
     image: "/resources/Wedding/wedding.webp",
-    link: "#"
+    link: "/wedding"
   },
   {
     title: "Workshop",
     tags: ["Training", "Creative"],
     image: "/resources/Workshop/Workshop.webp",
-    link: "#"
+    link: "/workshop"
   },
   {
     title: "Event Organizer",
     tags: ["Training", "Creative"],
     image: "/resources/Event_Organizer/Event.webp",
-    link: "#"
+    link: "/event"
   },
   {
     title: "Music & Entertainment",
     tags: ["Training", "Creative"],
     image: "/resources/Music_ENT/Music_ENT.webp",
-    link: "#"
+    link: "/music"
   },
   {
     title: "Production Organizer",
     tags: ["Training", "Creative"],
     image: "/resources/Production/Production.webp",
-    link: "#"
+    link: "/production"
   },
   {
     title: "Store – Ananta Bettafish",
     tags: ["Training", "Creative"],
     image: "/resources/Store/Store.webp",
-    link: "#"
+    link: "/store"
   },
 ]
 
@@ -65,7 +66,8 @@ export default function Works() {
         <div className="grid md:grid-cols-2 gap-14 mt-24">
 
           {projects.map((item, i) => (
-            <div
+            <Link
+              to={item.link}
               key={i}
               className={`group transition duration-500 ${
                 i % 2 === 0 ? "md:-translate-y-24" : "md:translate-y-24"
@@ -84,7 +86,10 @@ export default function Works() {
                       playsInline
                       preload="metadata"
                       className="w-full h-full object-cover cursor-pointer transition duration-700 group-hover:scale-110"
-                      onClick={() => handleClick(i)}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        handleClick(i)
+                      }}
                     >
                       <source src={item.video} type="video/mp4" />
                     </video>
@@ -125,7 +130,7 @@ export default function Works() {
 
               </div>
 
-            </div>
+            </Link>
           ))}
 
         </div>
