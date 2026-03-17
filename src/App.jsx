@@ -10,7 +10,7 @@ import Cta from "./components/Cta"
 import TeamHero from "./components/TeamHero"
 import Scope from "./components/scope"
 
-import Wedding from "./pages/Wedding"
+import Wedding from "./pages/wedding"
 
 function Home() {
   return (
