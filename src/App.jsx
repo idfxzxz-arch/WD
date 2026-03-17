@@ -33,10 +33,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* Landing Page */}
         <Route path="/" element={<Home />} />
-
-        {/* Halaman Project */}
         <Route path="/wedding" element={<Wedding />} />
 
       </Routes>
