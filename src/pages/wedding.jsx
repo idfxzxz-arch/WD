@@ -1,103 +1,103 @@
-import { motion } from "framer-motion"
-import { useState } from "react"
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
-const images = [
-  "/resources/Wedding/WO/WO1.webp",
-  "/resources/Wedding/WO/WO2.webp",
-  "/resources/Wedding/WO/WO3.webp",
-  "/resources/Wedding/WO/WO4.webp",
-  "/resources/Wedding/WO/WO5.webp",
-  "/resources/Wedding/WO/WO1.webp",
-  "/resources/Wedding/WO/WO2.webp",
-  "/resources/Wedding/WO/WO3.webp",
-  "/resources/Wedding/WO/WO4.webp",
-  "/resources/Wedding/WO/WO5.webp",
-]
-
-export default function Wedding() {
-  const [selected, setSelected] = useState(null)
+export default function WeddingBrandLayout() {
+  const navigate = useNavigate();
 
   return (
-    <div className="bg-white text-neutral-900">
+    <div className="bg-[#F2F2F2] min-h-screen font-sans text-neutral-900">
 
-      {/* HERO */}
-      <section className="h-screen flex flex-col justify-center items-center text-center px-6">
-        <motion.h1
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-5xl md:text-6xl font-bold"
+      {/* BACK BUTTON */}
+      <div className="fixed top-6 left-6 z-50">
+        <button
+          onClick={() => navigate("/")}
+          className="px-5 py-2 bg-white/80 backdrop-blur-md border border-neutral-200 text-black rounded-full text-sm hover:bg-black hover:text-white transition-all shadow-sm"
         >
-          Wedding Editorial
-        </motion.h1>
+          ← Back
+        </button>
+      </div>
 
-        <p className="mt-4 text-neutral-500">
-          A curated visual story
-        </p>
-      </section>
+      {/* ===== HERO SPLIT ===== */}
+      <section className="grid md:grid-cols-2 h-[600px]">
+        <div className="relative overflow-hidden">
+          <img
+            src="/resources/Wedding/WO/WO1.webp"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/20" />
+        </div>
 
-      {/* MAGAZINE GRID */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
-
-          {images.map((img, i) => (
-            <motion.div
-              key={i}
-              onClick={() => setSelected(img)}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className={`
-                relative cursor-pointer overflow-hidden rounded-3xl group
-                ${i % 3 === 0 ? "md:col-span-2 md:row-span-2" : ""}
-              `}
-            >
-              <img
-                src={img}
-                className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
-              />
-
-              {/* overlay */}
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition" />
-
-              {/* text */}
-              <div className="absolute bottom-5 left-5 text-white opacity-0 group-hover:opacity-100 transition">
-                <p className="text-sm">Editorial Shot</p>
-              </div>
-            </motion.div>
-          ))}
-
+        <div className="relative overflow-hidden">
+          <img
+            src="/resources/Wedding/WO/WO2.webp"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/20" />
         </div>
       </section>
 
-      {/* MODAL */}
-      {selected && (
-        <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
-          onClick={() => setSelected(null)}
-        >
+      {/* ===== TRIPLE IMAGE ===== */}
+      <section className="grid md:grid-cols-3 h-[420px] gap-[2px] bg-neutral-200">
+        <img
+          src="/resources/Wedding/WO/WO3.webp"
+          className="w-full h-full object-cover"
+        />
+        <img
+          src="/resources/Wedding/WO/WO4.webp"
+          className="w-full h-full object-cover"
+        />
+        <img
+          src="/resources/Wedding/WO/WO5.webp"
+          className="w-full h-full object-cover"
+        />
+      </section>
+
+      {/* ===== IMAGE GRID ===== */}
+      <section className="px-6 md:px-16 py-20 grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+
+        <motion.img
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 40 }}
+          src="/resources/Wedding/WO/WO1.webp"
+          className="w-full h-[380px] object-cover rounded-3xl"
+        />
+
+        <motion.img
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 40 }}
+          transition={{ delay: 0.1 }}
+          src="/resources/Wedding/WO/WO2.webp"
+          className="w-full h-[380px] object-cover rounded-3xl"
+        />
+
+        <motion.img
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 40 }}
+          transition={{ delay: 0.2 }}
+          src="/resources/Wedding/WO/WO3.webp"
+          className="w-full h-[420px] object-cover rounded-3xl md:col-span-2"
+        />
+
+      </section>
+
+      {/* ===== BIG IMAGE ===== */}
+      <section className="px-6 md:px-16 pb-24">
+        <div className="max-w-6xl mx-auto">
           <img
-            src={selected}
-            className="max-h-[90%] rounded-xl"
+            src="/resources/Wedding/WO/WO4.webp"
+            className="w-full h-[500px] object-cover rounded-3xl"
           />
         </div>
-      )}
-
-      {/* CTA */}
-      <section className="py-24 text-center px-6 bg-neutral-100">
-        <h2 className="text-4xl font-semibold">
-          Tell Your Story
-        </h2>
-
-        <p className="mt-4 text-neutral-500">
-          Every frame crafted like a magazine cover.
-        </p>
-
-        <button className="mt-8 px-10 py-3 bg-black text-white rounded-full hover:scale-105 transition">
-          Get Started
-        </button>
       </section>
 
+      {/* FOOTER CTA */}
+      <footer className="py-20 text-center bg-white border-t border-neutral-100">
+        <h2 className="text-2xl font-bold">Ready to start?</h2>
+        <button className="mt-6 px-8 py-3 bg-black text-white rounded-full hover:scale-105 transition shadow-lg">
+          Contact Us
+        </button>
+      </footer>
+
     </div>
-  )
+  );
 }
