@@ -1,58 +1,103 @@
 import { motion } from "framer-motion"
+import { useState } from "react"
 
 const images = [
-  "/resources/Wedding/wedding.webp",
-  "/resources/Wedding/wedding1.webp",
-  "/resources/Wedding/wedding2.webp",
-  "/resources/Wedding/wedding.webp",
-  "/resources/Wedding/wedding1.webp",
-  "/resources/Wedding/wedding2.webp",
+  "/resources/Wedding/WO/WO1.webp",
+  "/resources/Wedding/WO/WO2.webp",
+  "/resources/Wedding/WO/WO3.webp",
+  "/resources/Wedding/WO/WO4.webp",
+  "/resources/Wedding/WO/WO5.webp",
+  "/resources/Wedding/WO/WO1.webp",
+  "/resources/Wedding/WO/WO2.webp",
+  "/resources/Wedding/WO/WO3.webp",
+  "/resources/Wedding/WO/WO4.webp",
+  "/resources/Wedding/WO/WO5.webp",
 ]
 
-export default function WeddingGallery() {
+export default function Wedding() {
+  const [selected, setSelected] = useState(null)
+
   return (
-    <section className="bg-gradient-to-b from-neutral-100 to-white py-28 px-6">
+    <div className="bg-white text-neutral-900">
 
-      {/* Title */}
-      <div className="text-center mb-20">
-        <h2 className="text-5xl font-semibold tracking-tight">
-          Wedding Organizer
-        </h2>
-        <p className="text-neutral-500 mt-4 max-w-md mx-auto">
-          Creating unforgettable wedding moments with elegant and modern design.
+      {/* HERO */}
+      <section className="h-screen flex flex-col justify-center items-center text-center px-6">
+        <motion.h1
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-5xl md:text-6xl font-bold"
+        >
+          Wedding Editorial
+        </motion.h1>
+
+        <p className="mt-4 text-neutral-500">
+          A curated visual story
         </p>
-      </div>
+      </section>
 
-      {/* Main Card */}
-      <div className="max-w-5xl mx-auto bg-white/40 backdrop-blur-xl rounded-[40px] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-white/30">
-
-        {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      {/* MAGAZINE GRID */}
+      <section className="py-24 px-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
 
           {images.map((img, i) => (
             <motion.div
               key={i}
-              whileHover={{ scale: 1.04 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className={`relative overflow-hidden rounded-2xl group ${
-                i === 0 ? "col-span-2 row-span-2" : ""
-              }`}
+              onClick={() => setSelected(img)}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className={`
+                relative cursor-pointer overflow-hidden rounded-3xl group
+                ${i % 3 === 0 ? "md:col-span-2 md:row-span-2" : ""}
+              `}
             >
               <img
                 src={img}
                 className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
               />
 
-              {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition" />
+              {/* overlay */}
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition" />
 
+              {/* text */}
+              <div className="absolute bottom-5 left-5 text-white opacity-0 group-hover:opacity-100 transition">
+                <p className="text-sm">Editorial Shot</p>
+              </div>
             </motion.div>
           ))}
 
         </div>
+      </section>
 
-      </div>
+      {/* MODAL */}
+      {selected && (
+        <div
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+          onClick={() => setSelected(null)}
+        >
+          <img
+            src={selected}
+            className="max-h-[90%] rounded-xl"
+          />
+        </div>
+      )}
 
-    </section>
+      {/* CTA */}
+      <section className="py-24 text-center px-6 bg-neutral-100">
+        <h2 className="text-4xl font-semibold">
+          Tell Your Story
+        </h2>
+
+        <p className="mt-4 text-neutral-500">
+          Every frame crafted like a magazine cover.
+        </p>
+
+        <button className="mt-8 px-10 py-3 bg-black text-white rounded-full hover:scale-105 transition">
+          Get Started
+        </button>
+      </section>
+
+    </div>
   )
 }
