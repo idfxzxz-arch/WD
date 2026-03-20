@@ -78,21 +78,21 @@ export default function WeddingBrandLayout() {
         </div>
 
         {/* Sisi Kanan: Typography Showcase */}
-        <div className="bg-[#F8F9FA] flex items-center justify-center p-12">
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white p-12 rounded-xl shadow-sm border border-neutral-100 text-center max-w-sm w-full"
-          >
-            <div className="text-[10px] text-neutral-400 mb-12 flex justify-between border-b pb-2 font-mono uppercase tracking-tighter">
-              <span>Main Type</span>
-              <span>Inter Bold</span>
-            </div>
-              <div className="aspect-[4/4] rounded-2xl overflow-hidden shadow-lg mt-4">
-                <img src={images[4]} className="w-full h-full object-cover" alt="preview2" />
-              </div>
-          </motion.div>
-        </div>
+        <div className="bg-[#F8F9FA] flex items-center justify-center p-8 md:p-12">
+  <motion.div 
+    initial={{ scale: 0.95, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    className="w-full max-w-md"
+  >
+    <div className="w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-xl">
+      <img
+        src={images[4]}
+        className="w-full h-full object-cover"
+        alt="preview"
+      />
+    </div>
+  </motion.div>
+</div>
       </section>
 
       {/* SECTION 2: COLOR PALETTE */}
