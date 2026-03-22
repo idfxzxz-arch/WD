@@ -8,11 +8,7 @@ const images = [
   "/resources/Wedding/WO/WO3.webp",
   "/resources/Wedding/WO/WO4.webp",
   "/resources/Wedding/WO/WO5.webp",
-  "/resources/Wedding/WO/WO1.webp",
-  "/resources/Wedding/WO/WO2.webp",
-  "/resources/Wedding/WO/WO3.webp",
-  "/resources/Wedding/WO/WO4.webp",
-  "/resources/Wedding/WO/WO5.webp",
+  "/resources/Wedding/WO/WO6.webp",
 ];
 
 export default function WeddingBrandLayout() {
@@ -78,15 +74,22 @@ export default function WeddingBrandLayout() {
         </div>
 
         {/* Sisi Kanan: Typography Showcase */}
-        <div className="bg-[#F8F9FA] flex items-center justify-center p-8 md:p-12">
+        <div className="bg-[#F8F9FA] flex items-center justify-center p-12">
   <motion.div 
     initial={{ scale: 0.95, opacity: 0 }}
     animate={{ scale: 1, opacity: 1 }}
-    className="w-full max-w-md"
+    className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-100 w-full max-w-md"
   >
-    <div className="w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-xl">
+    {/* Header */}
+    <div className="text-[10px] text-neutral-400 mb-6 flex justify-between border-b pb-2 font-mono uppercase tracking-tighter">
+      <span>Wedding</span>
+      <span>Organizer</span>
+    </div>
+
+    {/* Foto lebih besar */}
+    <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
       <img
-        src={images[4]}
+        src={images[5]}
         className="w-full h-full object-cover"
         alt="preview"
       />
@@ -94,6 +97,100 @@ export default function WeddingBrandLayout() {
   </motion.div>
 </div>
       </section>
+
+      {/* SECTION 1.5: BRAND INFO (HYRD STYLE) */}
+<section className="grid grid-cols-1 md:grid-cols-2 gap-10 px-6 md:px-20 py-20 bg-white">
+  
+  {/* LEFT: TITLE */}
+  <div className="flex items-start">
+    <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+      HYRD
+    </h1>
+  </div>
+
+  {/* RIGHT: DESCRIPTION */}
+  <div className="space-y-6 max-w-md">
+    <p className="text-sm text-neutral-600 leading-relaxed">
+      Hyrd is an AI-powered talent engagement and relationship management 
+      platform designed to effortlessly build candidate relationships.
+    </p>
+
+    <div className="space-y-3 text-sm">
+      <div>
+        <p className="text-neutral-400">Location</p>
+        <p className="font-medium">Frankfurt, Germany</p>
+      </div>
+
+      <div>
+        <p className="text-neutral-400">Industries</p>
+        <p className="font-medium">Human Resources, Recruiting</p>
+      </div>
+
+      <div>
+        <p className="text-neutral-400">Funding</p>
+        <p className="font-medium">€100,000</p>
+      </div>
+
+      <div>
+        <p className="text-neutral-400">Founders</p>
+        <p className="font-medium">Benjamin Weller, Dennis Pfaff</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+ {/* SECTION: DOUBLE CARD (KIRI + KANAN) */}
+<section className="bg-[#F8F9FA] px-6 md:px-20 py-20">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+
+    {/* CARD KIRI */}
+    <motion.div 
+      initial={{ scale: 0.95, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-100 w-full"
+    >
+      {/* Header */}
+      <div className="text-[10px] text-neutral-400 mb-6 flex justify-between border-b pb-2 font-mono uppercase tracking-tighter">
+        <span>Wedding</span>
+        <span>Organizer</span>
+      </div>
+
+      {/* Foto */}
+      <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+        <img
+          src={images[3]}
+          className="w-full h-full object-cover"
+          alt="left"
+        />
+      </div>
+    </motion.div>
+
+    {/* CARD KANAN */}
+    <motion.div 
+      initial={{ scale: 0.95, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      transition={{ delay: 0.1 }}
+      className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-100 w-full"
+    >
+      {/* Header */}
+      <div className="text-[10px] text-neutral-400 mb-6 flex justify-between border-b pb-2 font-mono uppercase tracking-tighter">
+        <span>Wedding</span>
+        <span>Organizer</span>
+      </div>
+
+      {/* Foto */}
+      <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+        <img
+          src={images[4]}
+          className="w-full h-full object-cover"
+          alt="right"
+        />
+      </div>
+    </motion.div>
+
+  </div>
+</section>
+
 
       {/* SECTION 2: COLOR PALETTE */}
       <section className="flex flex-col">
@@ -117,6 +214,8 @@ export default function WeddingBrandLayout() {
           </div>
         </div>
       </section>
+
+      
 
       {/* SECTION 3: COMPONENTS */}
       <section className="p-12 md:p-24 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
