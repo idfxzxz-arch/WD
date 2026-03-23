@@ -187,95 +187,59 @@ export default function WeddingBrandLayout() {
         />
       </div>
     </motion.div>
-
   </div>
 </section>
 
+ {/* SECTION: DOUBLE CARD (KIRI + KANAN) */}
+<section className="bg-[#F8F9FA] px-6 md:px-20 py-20">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
 
-      {/* SECTION 2: COLOR PALETTE */}
-      <section className="flex flex-col">
-        <div className="bg-[#0071E3] h-64 p-8 flex flex-col justify-end text-white">
-          <p className="text-[10px] font-mono opacity-80 uppercase tracking-widest mb-1">#0071E3</p>
-          <p className="text-[10px] font-mono opacity-80 uppercase">RGBA(0, 113, 227, 1)</p>
-        </div>
+    {/* CARD KIRI */}
+    <motion.div 
+      initial={{ scale: 0.95, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-100 w-full"
+    >
+      {/* Header */}
+      <div className="text-[10px] text-neutral-400 mb-6 flex justify-between border-b pb-2 font-mono uppercase tracking-tighter">
+        <span>Wedding</span>
+        <span>Organizer</span>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 h-64">
-          <div className="bg-[#0050A1] p-8 flex flex-col justify-end text-white">
-            <p className="text-[10px] font-mono opacity-80">#0050A1</p>
-            <p className="text-[10px] font-mono opacity-80 tracking-tighter">RGBA(0, 80, 161, 1)</p>
-          </div>
-          <div className="bg-[#1E1E1E] p-8 flex flex-col justify-end text-white">
-            <p className="text-[10px] font-mono opacity-80">#1E1E1E</p>
-            <p className="text-[10px] font-mono opacity-80 tracking-tighter">RGBA(30, 30, 30, 1)</p>
-          </div>
-          <div className="bg-[#FFFFFF] p-8 flex flex-col justify-end text-black border-t md:border-t-0 border-neutral-100">
-            <p className="text-[10px] font-mono opacity-60">#FFFFFF</p>
-            <p className="text-[10px] font-mono opacity-60 tracking-tighter">RGBA(255, 255, 255, 1)</p>
-          </div>
-        </div>
-      </section>
+      {/* Foto */}
+      <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+        <img
+          src={images[3]}
+          className="w-full h-full object-cover"
+          alt="left"
+        />
+      </div>
+    </motion.div>
 
-      
+    {/* CARD KANAN */}
+    <motion.div 
+      initial={{ scale: 0.95, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      transition={{ delay: 0.1 }}
+      className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-100 w-full"
+    >
+      {/* Header */}
+      <div className="text-[10px] text-neutral-400 mb-6 flex justify-between border-b pb-2 font-mono uppercase tracking-tighter">
+        <span>Wedding</span>
+        <span>Organizer</span>
+      </div>
 
-      {/* SECTION 3: COMPONENTS */}
-      <section className="p-12 md:p-24 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
-        {/* Kartu Lokasi */}
-        <motion.div 
-          whileInView={{ y: 0, opacity: 1 }}
-          initial={{ y: 40, opacity: 0 }}
-          className="bg-white rounded-3xl p-8 shadow-sm border border-neutral-100"
-        >
-          <div className="flex justify-between items-start mb-6">
-            <div>
-              <h3 className="font-bold text-lg">Locations</h3>
-              <p className="text-xs text-blue-600 font-bold">60 Destination</p>
-            </div>
-          </div>
-          <div className="aspect-video bg-neutral-100 rounded-2xl overflow-hidden relative group cursor-pointer" onClick={() => setSelected(images[3])}>
-            <img src={images[3]} className="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="map context" />
-            <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition-all" />
-          </div>
-        </motion.div>
-
-        {/* Kartu Profil */}
-        <motion.div 
-          whileInView={{ y: 0, opacity: 1 }}
-          initial={{ y: 40, opacity: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white rounded-3xl p-8 shadow-sm border border-neutral-100"
-        >
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 rounded-full bg-neutral-200 overflow-hidden border-2 border-white shadow-md">
-              <img src={images[4]} className="w-full h-full object-cover" alt="profile" />
-            </div>
-            <div>
-              <p className="text-[10px] text-blue-600 font-bold uppercase tracking-widest">Wedding Expert</p>
-              <p className="text-sm font-bold">Review Portfolio 2024</p>
-            </div>
-          </div>
-          
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <div className="flex justify-between text-[10px] font-bold">
-                <span>WEDDING PLANNING</span>
-                <span>90%</span>
-              </div>
-              <div className="w-full bg-neutral-100 h-1.5 rounded-full overflow-hidden">
-                <motion.div initial={{ width: 0 }} whileInView={{ width: "90%" }} className="bg-[#0071E3] h-full" />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-[10px] font-bold">
-                <span>GALA DINNER</span>
-                <span>40%</span>
-              </div>
-              <div className="w-full bg-neutral-100 h-1.5 rounded-full overflow-hidden">
-                <motion.div initial={{ width: 0 }} whileInView={{ width: "40%" }} className="bg-blue-300 h-full" />
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
+      {/* Foto */}
+      <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+        <img
+          src={images[4]}
+          className="w-full h-full object-cover"
+          alt="right"
+        />
+      </div>
+    </motion.div>
+  </div>
+</section>
 
       {/* FOOTER CTA */}
       <footer className="text-center py-20 px-6">
