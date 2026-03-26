@@ -104,38 +104,18 @@ export default function WeddingBrandLayout() {
   {/* LEFT: TITLE */}
   <div className="flex items-start">
     <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-      HYRD
+      Wedding Organizer
     </h1>
   </div>
 
   {/* RIGHT: DESCRIPTION */}
   <div className="space-y-6 max-w-md">
     <p className="text-sm text-neutral-600 leading-relaxed">
-      Hyrd is an AI-powered talent engagement and relationship management 
-      platform designed to effortlessly build candidate relationships.
+      WD Jaya Group is a creative wedding organizer committed to turning your dream wedding into reality. 
+      We believe every love story is unique, and we bring that story to life through beautifully curated concepts, 
+      meticulous planning, and heartfelt execution. From intimate ceremonies to grand celebrations, 
+      we handle every detail so you can focus on what truly matters—your special moment.
     </p>
-
-    <div className="space-y-3 text-sm">
-      <div>
-        <p className="text-neutral-400">Location</p>
-        <p className="font-medium">Frankfurt, Germany</p>
-      </div>
-
-      <div>
-        <p className="text-neutral-400">Industries</p>
-        <p className="font-medium">Human Resources, Recruiting</p>
-      </div>
-
-      <div>
-        <p className="text-neutral-400">Funding</p>
-        <p className="font-medium">€100,000</p>
-      </div>
-
-      <div>
-        <p className="text-neutral-400">Founders</p>
-        <p className="font-medium">Benjamin Weller, Dennis Pfaff</p>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -245,7 +225,7 @@ export default function WeddingBrandLayout() {
       <footer className="text-center py-20 px-6">
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-8 text-neutral-800">Tell Your Story.</h2>
         <button className="px-12 py-4 bg-black text-white rounded-full text-sm font-bold hover:scale-105 transition-all shadow-xl active:scale-95">
-          START YOUR PROJECT
+          CONTACT ME
         </button>
       </footer>
 
