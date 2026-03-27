@@ -33,12 +33,6 @@ const projects = [
     image: "/resources/Production/Production.webp",
     link: "/production"
   },
-  {
-    title: "Store – Ananta Bettafish",
-    tags: ["Training", "Creative"],
-    image: "/resources/Store/Store.webp",
-    link: "/store"
-  },
 ]
 
 export default function Works() {
