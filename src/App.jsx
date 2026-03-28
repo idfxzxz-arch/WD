@@ -10,6 +10,11 @@ import TeamHero from "./components/TeamHero"
 import Scope from "./components/scope"
 
 import Wedding from "./pages/wedding"
+import Workshop from "./pages/workshop"
+import Music from "./pages/music"
+import Event from "./pages/event"
+import Production from "./pages/production"
+import {} from "lucide-react"
 
 function Home() {
   return (
@@ -33,6 +38,10 @@ export default function App() {
 
         <Route path="/" element={<Home />} />
         <Route path="/wedding" element={<Wedding />} />
+        <Route path="/workshop" element={<Workshop />} />
+        <Route path="/music" element={<Music />} />
+        <Route path="/event" element={<Event />} />
+        <Route path="/production" element={<Production />} />
 
       </Routes>
     </BrowserRouter>
