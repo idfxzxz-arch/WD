@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { ArrowUpRight } from "lucide-react"
 
 const projects = [
@@ -32,21 +32,35 @@ const projects = [
     tags: ["Training", "Creative"],
     image: "/resources/Production/Production.webp",
     link: "/production"
-  },
+  }
 ]
 
 export default function Works() {
   const videoRefs = useRef([])
 
+  // 🔥 AUTO SCROLL KE HASH
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "")
+
+    if (hash) {
+      const el = document.getElementById(hash)
+
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          })
+        }, 100)
+      }
+    }
+  }, [])
+
   const handleClick = (index) => {
     const video = videoRefs.current[index]
     if (!video) return
 
-    if (video.paused) {
-      video.play()
-    } else {
-      video.pause()
-    }
+    video.paused ? video.play() : video.pause()
   }
 
   return (
@@ -69,7 +83,6 @@ export default function Works() {
             >
 
               <div className="relative rounded-3xl overflow-hidden bg-neutral-100">
-
                 <div className="aspect-[4/5] overflow-hidden">
 
                   {item.video ? (
@@ -78,7 +91,6 @@ export default function Works() {
                       poster={item.image}
                       muted
                       playsInline
-                      preload="metadata"
                       className="w-full h-full object-cover cursor-pointer transition duration-700 group-hover:scale-110"
                       onClick={(e) => {
                         e.preventDefault()
@@ -96,10 +108,13 @@ export default function Works() {
                   )}
 
                 </div>
-
               </div>
 
-              <div className="mt-6 space-y-3">
+              {/* 🔥 INI TARGET SCROLL */}
+              <div
+                id={item.link.replace("/", "")}
+                className="mt-6 space-y-3"
+              >
 
                 <div className="flex flex-wrap gap-2">
                   {item.tags.map((tag, j) => (

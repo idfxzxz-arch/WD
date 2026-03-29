@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { motion, useMotionValue, useMotionValueEvent } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -12,11 +12,13 @@ const services = [
 ]
 
 export default function Scope() {
-  const [cursor, setCursor] = useState({ x: 0, y: 0 })
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
 
   useEffect(() => {
     const handleMove = (e) => {
-      setCursor({ x: e.clientX, y: e.clientY })
+      mouseX.set(e.clientX)
+      mouseY.set(e.clientY)
     }
 
     window.addEventListener("mousemove", handleMove)
@@ -24,16 +26,14 @@ export default function Scope() {
   }, [])
 
   return (
-    <section
-      id="scope"
-      className="relative h-screen bg-black flex items-center justify-center"
-    >
-      <h1 className="text-4xl md:text-6xl font-light leading-[1.2] text-center max-w-5xl px-6">
+    <section className="relative min-h-screen bg-black flex items-center justify-center">
+      <h1 className="flex flex-wrap justify-center items-center text-xl sm:text-2xl md:text-3xl lg:text-5xl font-light leading-snug text-center max-w-4xl mx-auto px-4 gap-x-4 gap-y-3">
+        
         {services.map((item, i) => (
-          <Word key={i} item={item} cursor={cursor} />
+          <Word key={i} item={item} mouseX={mouseX} mouseY={mouseY} />
         ))}
 
-        <div className="mt-10 text-xs tracking-[0.35em] uppercase text-white/40">
+        <div className="w-full text-center mt-6 text-xs tracking-[0.3em] uppercase text-white/40">
           And more
         </div>
       </h1>
@@ -41,11 +41,7 @@ export default function Scope() {
   )
 }
 
-/* ===================== */
-/* WORD COMPONENT */
-/* ===================== */
-
-function Word({ item, cursor }) {
+function Word({ item, mouseX, mouseY }) {
   const ref = useRef(null)
   const navigate = useNavigate()
 
@@ -55,49 +51,45 @@ function Word({ item, cursor }) {
     color: "#737373"
   })
 
-  useEffect(() => {
+  useMotionValueEvent(mouseX, "change", () => {
     if (!ref.current) return
 
     const rect = ref.current.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
 
-    const dx = cursor.x - centerX
-    const dy = cursor.y - centerY
+    const dx = mouseX.get() - centerX
+    const dy = mouseY.get() - centerY
     const distance = Math.sqrt(dx * dx + dy * dy)
 
-    const influence = 120
-    const strength = Math.max(0, 1 - distance / influence)
+    const strength = Math.max(0, 1 - distance / 140)
 
     setStyle({
       opacity: 0.3 + strength * 0.7,
-      scale: 1 + strength * 0.08,
+      scale: 1 + strength * 0.1,
       color: strength > 0.5 ? "#ffffff" : "#737373"
     })
-  }, [cursor])
+  })
 
   const handleClick = () => {
-    if (item.link.startsWith("#")) {
-      // scroll dalam halaman
-      const target = document.querySelector(item.link)
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth" })
-      }
-    } else {
-      // pindah halaman
-      navigate(`/${item.link}`)
-    }
+  if (item.link.startsWith("#")) {
+    const el = document.querySelector(item.link)
+    if (el) el.scrollIntoView({ behavior: "smooth" })
+  } else {
+    // 🔥 PAKSA FULL NAVIGASI + HASH
+    window.location.href = item.link
   }
+}
 
   return (
     <motion.span
       ref={ref}
       onClick={handleClick}
       animate={style}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className="inline-block mr-3 cursor-pointer"
+      transition={{ duration: 0.2 }}
+      className="cursor-pointer whitespace-nowrap px-2 py-1"
     >
-      {item.name},
+      {item.name}
     </motion.span>
   )
 }
