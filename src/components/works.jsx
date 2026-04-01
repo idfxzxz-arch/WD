@@ -4,13 +4,13 @@ import { ArrowUpRight } from "lucide-react"
 
 const projects = [
   {
-    title: "Wedding Organizer",
+    title: "WD SKY Wedding Organizer",
     tags: ["E-Commerce", "Brand"],
     image: "/resources/Wedding/wedding.webp",
     link: "/wedding"
   },
   {
-    title: "Workshop",
+    title: "WD Jaya Workshop",
     tags: ["Training", "Creative"],
     image: "/resources/Workshop/Workshop.webp",
     link: "/workshop"
@@ -22,10 +22,16 @@ const projects = [
     link: "/music"
   },
   {
-    title: "Production Organizer",
+    title: "WD Production",
     tags: ["Training", "Creative"],
     image: "/resources/Production/Production.webp",
     link: "/production"
+  },
+  {
+    title: "WD Store",
+    tags: ["Training", "Creative"],
+    image: "/resources/Production/Production.webp",
+    link: "/store"
   }
 ]
 
