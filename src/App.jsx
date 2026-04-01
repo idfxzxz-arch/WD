@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { LanguageProvider } from "./context/LanguageContext"
 
 import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
@@ -14,7 +15,6 @@ import Workshop from "./pages/workshop"
 import Music from "./pages/music"
 import Event from "./pages/event"
 import Production from "./pages/production"
-import {} from "lucide-react"
 
 function Home() {
   return (
@@ -33,18 +33,20 @@ function Home() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <LanguageProvider> {/* 🔥 INI KUNCI NYA */}
+      <BrowserRouter>
+        <Routes>
 
-        <Route path="/" element={<Home />} />
-        <Route path="/works" element={<Works />} />
-        <Route path="/wedding" element={<Wedding />} />
-        <Route path="/workshop" element={<Workshop />} />
-        <Route path="/music" element={<Music />} />
-        <Route path="/event" element={<Event />} />
-        <Route path="/production" element={<Production />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/works" element={<Works />} />
+          <Route path="/wedding" element={<Wedding />} />
+          <Route path="/workshop" element={<Workshop />} />
+          <Route path="/music" element={<Music />} />
+          <Route path="/event" element={<Event />} />
+          <Route path="/production" element={<Production />} />
 
-      </Routes>
-    </BrowserRouter>
-   )
+        </Routes>
+      </BrowserRouter>
+    </LanguageProvider>
+  )
 }

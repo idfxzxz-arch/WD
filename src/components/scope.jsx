@@ -1,95 +1,113 @@
-import { motion, useMotionValue, useMotionValueEvent } from "framer-motion"
+import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
-import { useNavigate } from "react-router-dom"
 
 const services = [
-  { name: "Multimedia & Production", link: "#multimedia" },
+  { name: "Multimedia", link: "#multimedia" },
   { name: "Music Entertainment & Education", link: "#music" },
-  { name: "Event & Wedding Organizer", link: "/works#wedding" },
-  { name: "UI/UX, Web & Mobile Development", link: "#development" },
-  { name: "Branding & Digital Marketing", link: "#marketing" },
-  { name: "Creative Workshop & Training", link: "/works#workshop" }
+  { name: "Wedding Organizer", link: "/wedding" },
+  { name: "UI/UX Web", link: "#development" },
+  { name: "Branding & Digital Store", link: "#marketing" }
+]
+
+const images = [
+  "/resources/Wedding/WO/WO1.webp",
+  "/resources/Wedding/WO/WO2.webp",
+  "/resources/Wedding/WO/WO3.webp",
+  "/resources/Wedding/WO/WO4.webp",
+  "/resources/Wedding/WO/WO5.webp",
+  "/resources/Wedding/WO/WO6.webp"
 ]
 
 export default function Scope() {
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
+  const sectionRef = useRef(null)
+  const [items, setItems] = useState([])
 
   useEffect(() => {
+    let index = 0
+
     const handleMove = (e) => {
-      mouseX.set(e.clientX)
-      mouseY.set(e.clientY)
+      if (!sectionRef.current) return
+
+      const rect = sectionRef.current.getBoundingClientRect()
+
+      if (
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom
+      ) {
+        const newItem = {
+          id: Date.now(),
+          x: e.clientX,
+          y: e.clientY,
+          img: images[index % images.length],
+          rotate: Math.random() * 20 - 10
+        }
+
+        index++
+        setItems((prev) => [...prev, newItem])
+
+        setTimeout(() => {
+          setItems((prev) => prev.slice(1))
+        }, 800)
+      }
     }
 
     window.addEventListener("mousemove", handleMove)
     return () => window.removeEventListener("mousemove", handleMove)
   }, [])
 
+  const handleClick = (link) => {
+    if (link.startsWith("#")) {
+      const el = document.querySelector(link)
+      if (el) el.scrollIntoView({ behavior: "smooth" })
+    } else {
+      window.location.href = link
+    }
+  }
+
   return (
-    <section className="relative min-h-screen bg-black flex items-center justify-center">
-      <h1 className="flex flex-wrap justify-center items-center text-xl sm:text-2xl md:text-3xl lg:text-5xl font-light leading-snug text-center max-w-4xl mx-auto px-4 gap-x-4 gap-y-3">
-        
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden"
+    >
+      {/* 🔥 FLOATING IMAGES */}
+      <div className="pointer-events-none absolute inset-0 z-10">
+        {items.map((item) => (
+          <motion.img
+            key={item.id}
+            src={item.img}
+            className="absolute w-24 h-24 object-cover rounded-xl opacity-80"
+            style={{
+              top: item.y,
+              left: item.x,
+              transform: `translate(-50%, -50%) rotate(${item.rotate}deg)`
+            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+        ))}
+      </div>
+
+      {/* 🔥 TEXT VERTICAL */}
+      <div className="relative z-20 flex flex-col items-center text-center gap-4 text-white px-4">
+
         {services.map((item, i) => (
-          <Word key={i} item={item} mouseX={mouseX} mouseY={mouseY} />
+          <span
+            key={i}
+            onClick={() => handleClick(item.link)}
+            className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-light cursor-pointer opacity-70 hover:opacity-100 hover:scale-105 transition"
+          >
+            {item.name}
+          </span>
         ))}
 
-        <div className="w-full text-center mt-6 text-xs tracking-[0.3em] uppercase text-white/40">
+        <div className="mt-6 text-xs tracking-[0.3em] uppercase text-white/40">
           And more
         </div>
-      </h1>
+
+      </div>
     </section>
-  )
-}
-
-function Word({ item, mouseX, mouseY }) {
-  const ref = useRef(null)
-  const navigate = useNavigate()
-
-  const [style, setStyle] = useState({
-    opacity: 0.3,
-    scale: 1,
-    color: "#737373"
-  })
-
-  useMotionValueEvent(mouseX, "change", () => {
-    if (!ref.current) return
-
-    const rect = ref.current.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-
-    const dx = mouseX.get() - centerX
-    const dy = mouseY.get() - centerY
-    const distance = Math.sqrt(dx * dx + dy * dy)
-
-    const strength = Math.max(0, 1 - distance / 140)
-
-    setStyle({
-      opacity: 0.3 + strength * 0.7,
-      scale: 1 + strength * 0.1,
-      color: strength > 0.5 ? "#ffffff" : "#737373"
-    })
-  })
-
-  const handleClick = () => {
-  if (item.link.startsWith("#")) {
-    const el = document.querySelector(item.link)
-    if (el) el.scrollIntoView({ behavior: "smooth" })
-  } else {
-    // 🔥 PAKSA FULL NAVIGASI + HASH
-    window.location.href = item.link
-  }
-}
-
-  return (
-    <motion.span
-      ref={ref}
-      onClick={handleClick}
-      animate={style}
-      transition={{ duration: 0.2 }}
-      className="cursor-pointer whitespace-nowrap px-2 py-1"
-    >
-      {item.name}
-    </motion.span>
   )
 }

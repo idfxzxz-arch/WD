@@ -16,12 +16,6 @@ const projects = [
     link: "/workshop"
   },
   {
-    title: "Event Organizer",
-    tags: ["Training", "Creative"],
-    image: "/resources/Event_Organizer/Event.webp",
-    link: "/event"
-  },
-  {
     title: "Music & Entertainment",
     tags: ["Training", "Creative"],
     image: "/resources/Music_ENT/Music_ENT.webp",
@@ -38,7 +32,6 @@ const projects = [
 export default function Works() {
   const videoRefs = useRef([])
 
-  // 🔥 AUTO SCROLL KE HASH
   useEffect(() => {
     const hash = window.location.hash.replace("#", "")
 
@@ -64,24 +57,23 @@ export default function Works() {
   }
 
   return (
-    <section id="works" className="py-32">
+    <section id="works" className="pt-48 pb-32 mt-32">
       <div className="max-w-5xl mx-auto px-6">
 
-        <h2 className="text-4xl text-center mb-20 font-semibold tracking-tight">
+        <h2 className="text-4xl text-center mb-24 font-semibold tracking-tight">
           Selected Works
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-14 mt-24">
+        <div className="grid md:grid-cols-2 gap-16 mt-10">
 
           {projects.map((item, i) => (
             <Link
               to={item.link}
               key={i}
-              className={`group transition duration-500 ${
-                i % 2 === 0 ? "md:-translate-y-24" : "md:translate-y-24"
-              }`}
+              className="group transition duration-500"
             >
 
+              {/* IMAGE */}
               <div className="relative rounded-3xl overflow-hidden bg-neutral-100">
                 <div className="aspect-[4/5] overflow-hidden">
 
@@ -110,7 +102,7 @@ export default function Works() {
                 </div>
               </div>
 
-              {/* 🔥 INI TARGET SCROLL */}
+              {/* TEXT */}
               <div
                 id={item.link.replace("/", "")}
                 className="mt-6 space-y-3"
