@@ -1,61 +1,81 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { LanguageContext } from "../context/LanguageContext"
 
 export default function Home() {
   const [showFloating, setShowFloating] = useState(false)
+  const [openLang, setOpenLang] = useState(false)
   const { lang, changeLang } = useContext(LanguageContext)
+
+  // 🔥 auto close kalau klik luar
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".lang-menu")) {
+        setOpenLang(false)
+      }
+    }
+
+    document.addEventListener("click", handleClickOutside)
+    return () => document.removeEventListener("click", handleClickOutside)
+  }, [])
 
   return (
     <section className="min-h-screen bg-white relative overflow-hidden flex flex-col items-center">
 
-     {/* 🌐 LANGUAGE SLIDER SUPER STABLE */}
-<div className="absolute top-6 right-6">
-  <div className="relative flex items-center bg-black/5 backdrop-blur-md rounded-full p-1 shadow-md">
+      {/* 🌐 LANGUAGE (ELLIPSIS) */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
 
-    {/* ID */}
-    <button
-      onClick={() => changeLang("id")}
-      className="relative z-10 w-12 h-9 flex items-center justify-center text-sm font-medium"
-    >
-      {lang.code === "id" && (
-        <motion.div
-          layoutId="langSlider"
-          className="absolute inset-0 bg-black rounded-full"
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        />
-      )}
-      <span className={lang.code === "id" ? "text-white z-10" : "text-black/50"}>
-        ID
-      </span>
-    </button>
+        <button
+          onClick={() => setOpenLang(!openLang)}
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-black/5 backdrop-blur hover:bg-black/10 transition text-xl"
+        >
+          ⋯
+        </button>
 
-    {/* EN */}
-    <button
-      onClick={() => changeLang("en")}
-      className="relative z-10 w-12 h-9 flex items-center justify-center text-sm font-medium"
-    >
-      {lang.code === "en" && (
-        <motion.div
-          layoutId="langSlider"
-          className="absolute inset-0 bg-black rounded-full"
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        />
-      )}
-      <span className={lang.code === "en" ? "text-white z-10" : "text-black/50"}>
-        EN
-      </span>
-    </button>
+        <AnimatePresence>
+          {openLang && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute right-0 mt-2 w-32 bg-white rounded-xl shadow-lg overflow-hidden"
+            >
+              <button
+                onClick={() => {
+                  changeLang("id")
+                  setOpenLang(false)
+                }}
+                className={`w-full px-4 py-2 text-left text-sm hover:bg-black/5 ${
+                  lang.code === "id" ? "font-semibold" : "text-black/60"
+                }`}
+              >
+                🇮🇩 Indonesia
+              </button>
 
-  </div>
-</div>
+              <button
+                onClick={() => {
+                  changeLang("en")
+                  setOpenLang(false)
+                }}
+                className={`w-full px-4 py-2 text-left text-sm hover:bg-black/5 ${
+                  lang.code === "en" ? "font-semibold" : "text-black/60"
+                }`}
+              >
+                🇬🇧 English
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+      </div>
 
       {/* TOP LOGO */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2
-        flex items-center gap-3
-        backdrop-blur bg-white/70
-        px-4 py-2
-        rounded-full shadow">
+      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20
+  flex items-center gap-3
+  backdrop-blur bg-white/70
+  px-4 py-2
+  rounded-full shadow">
         
         <img src="/logo.webp" className="w-6 h-6" />
         <span className="text-sm font-semibold">
@@ -66,7 +86,6 @@ export default function Home() {
       {/* WRAPPER WD */}
       <div className="relative mt-32 flex justify-center">
 
-        {/* FLOATING */}
         <AnimatePresence>
           {showFloating && (
             <motion.div
@@ -83,7 +102,6 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* WD TEXT */}
         <motion.h1
           onClick={() => setShowFloating(!showFloating)}
           whileTap={{ scale: 0.95 }}
