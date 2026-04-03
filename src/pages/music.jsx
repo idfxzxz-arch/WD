@@ -3,12 +3,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const images = [
-  "/resources/Wedding/WO/WO1.webp",
-  "/resources/Wedding/WO/WO2.webp",
-  "/resources/Wedding/WO/WO3.webp",
-  "/resources/Wedding/WO/WO4.webp",
-  "/resources/Wedding/WO/WO5.webp",
-  "/resources/Wedding/WO/WO6.webp",
+  "/resources/Music_ENT/wm1.webp",
+  "/resources/Music_ENT/wm2.webp",
+  "/resources/Music_ENT/wm3.webp",
+  "/resources/Music_ENT/wm4.webp",
+  "/resources/Music_ENT/wm5.webp",
+  "/resources/Music_ENT/wm6.webp",
+  "/resources/Music_ENT/wm7.webp",
+  "/resources/Music_ENT/wm8.webp",
+  "/resources/Music_ENT/wm9.webp",
+  "/resources/Music_ENT/wm10.webp",
 ];
 
 export default function WeddingBrandLayout() {
@@ -47,7 +51,7 @@ export default function WeddingBrandLayout() {
               <div className="w-12 h-[3px] bg-neutral-700 mx-auto rounded-full mb-10" />
               
               <p className="text-[9px] text-neutral-500 mb-2 uppercase tracking-widest font-medium">About Portfolio</p>
-              <h3 className="text-white text-xl font-bold mb-8 leading-tight">Wedding Organizer</h3>
+              <h3 className="text-white text-xl font-bold mb-8 leading-tight">Music Entertainment</h3>
               
               {/* Foto dalam mockup */}
               <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 shadow-lg">
@@ -55,7 +59,7 @@ export default function WeddingBrandLayout() {
               </div>
 
               <div className="aspect-[4/4] rounded-2xl overflow-hidden shadow-lg mt-4">
-                <img src={images[3]} className="w-full h-full object-cover" alt="preview2" />
+                <img src={images[3]} className="w-full h-full object-cover object-top" alt="preview2" />
               </div>
               
               {/* Spacing push to bottom */}
@@ -65,7 +69,7 @@ export default function WeddingBrandLayout() {
                 <div className="h-[3px] w-2/3 bg-neutral-800/60 rounded-full mb-4" />
                 
                 {/* Button Contact Person */}
-                <button className="h-12 w-full bg-[#0071E3] rounded-2xl flex items-center justify-center text-[11px] text-white font-bold tracking-wider hover:bg-blue-600 transition-colors uppercase">
+                <button href="/contact" className="h-12 w-full bg-[#0071E3] rounded-2xl flex items-center justify-center text-[11px] text-white font-bold tracking-wider hover:bg-blue-600 transition-colors uppercase">
                   Contact Person
                 </button>
               </div>
@@ -82,15 +86,15 @@ export default function WeddingBrandLayout() {
   >
     {/* Header */}
     <div className="text-[10px] text-neutral-400 mb-6 flex justify-between border-b pb-2 font-mono uppercase tracking-tighter">
-      <span>Wedding</span>
-      <span>Organizer</span>
+      <span>Music</span>
+      <span>Entertaiment</span>
     </div>
 
     {/* Foto lebih besar */}
     <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
       <img
         src={images[5]}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover object-top"
         alt="preview"
       />
     </div>
@@ -104,17 +108,17 @@ export default function WeddingBrandLayout() {
   {/* LEFT: TITLE */}
   <div className="flex items-start">
     <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-      Wedding Organizer
+      Music Entertaiment
     </h1>
   </div>
 
   {/* RIGHT: DESCRIPTION */}
   <div className="space-y-6 max-w-md">
     <p className="text-sm text-neutral-600 leading-relaxed">
-      WD Jaya Group is a creative wedding organizer committed to turning your dream wedding into reality. 
-      We believe every love story is unique, and we bring that story to life through beautifully curated concepts, 
-      meticulous planning, and heartfelt execution. From intimate ceremonies to grand celebrations, 
-      we handle every detail so you can focus on what truly matters—your special moment.
+     WD Jaya Group provides professional music entertainment designed to elevate every moment of your event.
+We combine creativity, technical expertise, and a deep understanding of atmosphere to deliver performances that truly connect with your audience.
+
+From elegant live music to high-energy DJ sets, every performance is carefully curated to match your concept and create an unforgettable experience.
     </p>
   </div>
 </section>
@@ -139,7 +143,7 @@ export default function WeddingBrandLayout() {
       <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
         <img
           src={images[3]}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-top"
           alt="left"
         />
       </div>
@@ -154,8 +158,8 @@ export default function WeddingBrandLayout() {
     >
       {/* Header */}
       <div className="text-[10px] text-neutral-400 mb-6 flex justify-between border-b pb-2 font-mono uppercase tracking-tighter">
-        <span>Wedding</span>
-        <span>Organizer</span>
+        <span>Music</span>
+        <span>Entertaiment</span>
       </div>
 
       {/* Foto */}
@@ -189,8 +193,8 @@ export default function WeddingBrandLayout() {
       {/* Foto */}
       <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
         <img
-          src={images[3]}
-          className="w-full h-full object-cover"
+          src={images[5]}
+          className="w-full h-full object-cover object-top"
           alt="left"
         />
       </div>
@@ -212,8 +216,8 @@ export default function WeddingBrandLayout() {
       {/* Foto */}
       <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
         <img
-          src={images[4]}
-          className="w-full h-full object-cover"
+          src={images[6]}
+          className="w-full h-full object-cover object-top"
           alt="right"
         />
       </div>

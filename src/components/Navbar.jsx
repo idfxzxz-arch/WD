@@ -3,40 +3,29 @@ import { motion, AnimatePresence } from "framer-motion"
 
 export default function Navbar() {
   const menus = ["Home", "About", "Scope", "Contact"]
-  const [style, setStyle] = useState(null)
+
   const [visible, setVisible] = useState(true)
-  const containerRef = useRef(null)
+  const [active, setActive] = useState("Home")
+
   const lastScrollY = useRef(0)
 
-  const handleHover = e => {
-    if (!e?.target || !containerRef.current) return
-
-    const rect = e.target.getBoundingClientRect()
-    const parent = containerRef.current.getBoundingClientRect()
-
-    setStyle({
-      width: rect.width,
-      left: rect.left - parent.left,
-    })
-  }
-
   /* ===========================
-     AUTO HIDE ON SCROLL
+     AUTO HIDE
   ============================ */
   useEffect(() => {
     const onScroll = () => {
       const current = window.scrollY
 
       if (current > lastScrollY.current && current > 80) {
-        setVisible(false) // scroll down
+        setVisible(false)
       } else {
-        setVisible(true) // scroll up
+        setVisible(true)
       }
 
       lastScrollY.current = current
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("scroll", onScroll)
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
@@ -54,14 +43,11 @@ export default function Navbar() {
           if (!entry.isIntersecting) return
 
           const id = entry.target.id
-          const btn = document.querySelector(
-            `[data-menu="${id.charAt(0).toUpperCase() + id.slice(1)}"]`
-          )
-
-          if (btn) handleHover({ target: btn })
+          const name = id.charAt(0).toUpperCase() + id.slice(1)
+          setActive(name)
         })
       },
-      { threshold: 0.6 }
+      { threshold: 0.3 }
     )
 
     sections.forEach(sec => sec && observer.observe(sec))
@@ -75,44 +61,53 @@ export default function Navbar() {
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-full px-4 sm:w-auto"
+          transition={{ duration: 0.3 }}
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-full px-4 sm:w-auto"
         >
           <nav
-            ref={containerRef}
             className="
               relative backdrop-blur bg-white/80 shadow-xl border border-black/5
-              rounded-full px-3 sm:px-5 py-2
-              flex justify-between sm:justify-center
-              gap-1 sm:gap-6
-              text-xs sm:text-sm font-medium
-              overflow-hidden
+              rounded-full px-3 sm:px-5 py-2 flex gap-2 sm:gap-6
+              text-sm font-medium
             "
           >
-            {style && (
-              <motion.span
-                layout
-                transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                className="absolute top-1 bottom-1 bg-black/10 rounded-full"
-                style={{
-                  width: style.width,
-                  left: style.left,
-                }}
-              />
-            )}
-
             {menus.map(menu => {
               const id = menu.toLowerCase()
+              const isActive = active === menu
 
               return (
                 <a
                   key={menu}
                   href={`#${id}`}
-                  data-menu={menu}
-                  onMouseEnter={handleHover}
-                  className="relative z-10 capitalize px-3 sm:px-4 py-1 whitespace-nowrap"
+                  onClick={() => setActive(menu)}
+                  className="relative px-4 py-2 rounded-full"
                 >
-                  {menu}
+                  {/* 💧 LIQUID HIGHLIGHT */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="liquid"
+                      className="absolute inset-0 rounded-full bg-black/10"
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 35,
+                      }}
+                      style={{
+                        filter: "blur(6px)",
+                      }}
+                    />
+                  )}
+
+                  {/* isi */}
+                  <span
+                    className={`relative z-10 transition ${
+                      isActive
+                        ? "text-black font-semibold"
+                        : "text-black/60"
+                    }`}
+                  >
+                    {menu}
+                  </span>
                 </a>
               )
             })}

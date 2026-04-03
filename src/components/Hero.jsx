@@ -20,7 +20,7 @@ export default function Home() {
   }, [])
 
   return (
-    <section className="min-h-screen bg-white relative overflow-hidden flex flex-col items-center">
+    <section id="home" className="min-h-screen bg-white relative overflow-hidden flex flex-col items-center">
 
       {/* 🌐 LANGUAGE (ELLIPSIS) */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">

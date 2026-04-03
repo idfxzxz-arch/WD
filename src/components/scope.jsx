@@ -75,7 +75,7 @@ export default function Scope() {
   }
 
   return (
-    <section
+    <section id="scope"
       ref={sectionRef}
       className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden"
     >
