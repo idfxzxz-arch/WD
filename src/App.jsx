@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { LanguageProvider } from "./context/LanguageContext"
 import Cursor from "./components/Cursor"
 import ProtectedRoute from "./components/ProtectedRoute"
@@ -17,7 +17,7 @@ import Event from "./pages/event"
 import Production from "./pages/production"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
-import AdminPanel from "./components/AdminPanel" // ✅ tambah ini
+import AdminPanel from "./components/AdminPanel"
 
 function Home() {
   return (
@@ -61,8 +61,10 @@ export default function App() {
               </ProtectedRoute>
             }
           >
+            {/* /admin → redirect ke /admin/dashboard */}
+            <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<></>} />
-            <Route path="content" element={<AdminPanel />} /> {/* ✅ tambah ini */}
+            <Route path="content" element={<AdminPanel />} />
           </Route>
         </Routes>
       </BrowserRouter>
