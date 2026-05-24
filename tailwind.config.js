@@ -2,11 +2,12 @@
 export default {
   darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,jsx}"],
- theme: {
-  extend: {
-    fontFamily: {
-      genz: ["Space Grotesk", "sans-serif", "Inter"],
-    },
+
+  theme: {
+    extend: {
+      fontFamily: {
+        genz: ["Space Grotesk", "sans-serif", "Inter"],
+      },
 
       letterSpacing: {
         ultra: ".2em",
@@ -22,8 +23,8 @@ export default {
           "50%": { transform: "translateY(-15px)" },
         },
       },
-
     },
   },
+
   plugins: [],
 }
