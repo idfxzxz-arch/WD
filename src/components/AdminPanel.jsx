@@ -40,11 +40,21 @@ export default function AdminPanel() {
   const [works, setWorks] = useState([])           // works rows
   const [saving, setSaving] = useState(false)
   const [toast, setToast] = useState("")
+  const [adminEmail, setAdminEmail] = useState("System")
 
   // ── fetch all content on mount & lang change
   useEffect(() => { fetchContent() }, [lang])
   useEffect(() => { fetchScope() }, [])
   useEffect(() => { fetchWorks() }, [])
+  
+  // Ambil email user yang sedang aktif
+  useEffect(() => {
+    const getAdminProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user?.email) setAdminEmail(user.email)
+    }
+    getAdminProfile()
+  }, [])
 
   const showToast = (msg) => {
     setToast(msg)
@@ -96,7 +106,20 @@ export default function AdminPanel() {
       section, key, value, lang,
       updated_at: new Date().toISOString()
     }))
-    await supabase.from("content").upsert(updates, { onConflict: "section,key,lang" })
+    
+    const { error } = await supabase.from("content").upsert(updates, { onConflict: "section,key,lang" })
+    
+    if (!error) {
+      // LOG TETAP BAHASA INGGRIS
+      await supabase.from("activities").insert([
+        {
+          admin_email: adminEmail,
+          action_name: "Updated Content",
+          target_name: `Section ${section.toUpperCase()} (${lang.toUpperCase()})`
+        }
+      ])
+    }
+
     setSaving(false)
     showToast("✓ Perubahan disimpan!")
   }
@@ -119,20 +142,48 @@ export default function AdminPanel() {
   }
 
   const deleteScope = async (item) => {
-    if (!item._new) await supabase.from("scope_services").delete().eq("id", item.id)
+    if (!item._new) {
+      const { error } = await supabase.from("scope_services").delete().eq("id", item.id)
+      if (!error) {
+        // LOG TETAP BAHASA INGGRIS
+        await supabase.from("activities").insert([
+          {
+            admin_email: adminEmail,
+            action_name: "Deleted Scope Item",
+            target_name: item.name || "Unnamed Scope Item"
+          }
+        ])
+      }
+    }
     setScopeItems(prev => prev.filter(s => s.id !== item.id))
   }
 
   const saveScope = async () => {
     setSaving(true)
+    let hasChanges = false
+
     for (const item of scopeItems) {
       const { id, _new, ...rest } = item
       if (_new) {
         await supabase.from("scope_services").insert(rest)
+        hasChanges = true
       } else {
         await supabase.from("scope_services").update(rest).eq("id", id)
+        hasChanges = true
       }
     }
+
+    if (hasChanges) {
+      // LOG TETAP BAHASA INGGRIS
+      await supabase.from("activities").insert([
+        {
+          admin_email: adminEmail,
+          action_name: "Saved Scope List",
+          target_name: "Scope Services Manager"
+        }
+      ])
+    }
+
     await fetchScope()
     setSaving(false)
     showToast("✓ Scope disimpan!")
@@ -156,21 +207,48 @@ export default function AdminPanel() {
   }
 
   const deleteWork = async (item) => {
-    if (!item._new) await supabase.from("works").delete().eq("id", item.id)
+    if (!item._new) {
+      const { error } = await supabase.from("works").delete().eq("id", item.id)
+      if (!error) {
+        // LOG TETAP BAHASA INGGRIS
+        await supabase.from("activities").insert([
+          {
+            admin_email: adminEmail,
+            action_name: "Deleted Work Item",
+            target_name: item.title || "Unnamed Project"
+          }
+        ])
+      }
+    }
     setWorks(prev => prev.filter(w => w.id !== item.id))
   }
 
   const saveWorks = async () => {
     setSaving(true)
+    let hasChanges = false
+
     for (const item of works) {
       const { id, _new, ...rest } = item
-      // tags: simpan sebagai string comma-separated
       if (_new) {
         await supabase.from("works").insert(rest)
+        hasChanges = true
       } else {
         await supabase.from("works").update(rest).eq("id", id)
+        hasChanges = true
       }
     }
+
+    if (hasChanges) {
+      // LOG TETAP BAHASA INGGRIS
+      await supabase.from("activities").insert([
+        {
+          admin_email: adminEmail,
+          action_name: "Saved Portfolio List",
+          target_name: "Works Showcase Manager"
+        }
+      ])
+    }
+
     await fetchWorks()
     setSaving(false)
     showToast("✓ Works disimpan!")
@@ -180,9 +258,9 @@ export default function AdminPanel() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans">
 
-      {/* Toast */}
+      {/* Toast tetap menggunakan notifikasi lokal yang user-friendly */}
       {toast && (
-        <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-white text-sm px-5 py-3 rounded-2xl shadow-lg animate-fade-in">
+        <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-white text-sm px-5 py-3 rounded-2xl shadow-lg">
           {toast}
         </div>
       )}
@@ -235,7 +313,6 @@ export default function AdminPanel() {
         {/* ── CONTENT SECTIONS (hero/about/services/contact) ── */}
         {CONTENT_SECTIONS[activeTab] && (
           <div>
-            {/* Lang notice untuk section yang tidak support lang */}
             <div className="flex items-center gap-2 text-xs text-zinc-500 mb-6">
               <Globe size={12} />
               Mengedit konten bahasa: <span className="text-white font-medium">{lang === "id" ? "Indonesia" : "English"}</span>
@@ -282,7 +359,7 @@ export default function AdminPanel() {
           <div>
             <p className="text-zinc-500 text-sm mb-6">Edit daftar layanan di section Scope (tidak berpengaruh ke bahasa).</p>
             <div className="flex flex-col gap-4 mb-6">
-              {scopeItems.map((item, i) => (
+              {scopeItems.map((item) => (
                 <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex gap-4 items-start">
                   <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
