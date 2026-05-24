@@ -15,7 +15,7 @@ import Workshop from "./pages/workshop"
 import Music from "./pages/music"
 import Event from "./pages/event"
 import Production from "./pages/production"
-import login from "./pages/login"
+import Login from "./pages/login"
 import Dashboard from "./pages/Dashboard"
 import AdminPanel from "./components/AdminPanel"
 
