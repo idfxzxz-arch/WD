@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { LanguageContext } from "../context/LanguageContext"
+import { supabase } from "../lib/supabase"
 
 const WA_NUMBER = "62XXXXXXXXXX"
 
-// Stiker yang muncul tiap klik
 const stickers = [
   {
     id: 1,
@@ -31,28 +31,51 @@ const stickers = [
     id: 4,
     content: (
       <div className="bg-white border border-black/10 shadow-lg rounded-xl px-4 py-2 text-center">
-        <span className="block text-[10px] font-bold text-red-500 uppercase tracking-widest">Danger!</span>
-        <span className="block text-sm font-bold leading-tight mt-0.5">ONE MORE CLICK<br />TO CONTACT US!</span>
+        <span className="block text-[10px] font-bold text-red-500 uppercase tracking-widest">
+          Danger!
+        </span>
+        <span className="block text-sm font-bold leading-tight mt-0.5">
+          ONE MORE CLICK
+          <br />
+          TO CONTACT US!
+        </span>
       </div>
     ),
     position: "top-[25%] right-[8%]",
   },
 ]
 
-export default function Home() {
+export default function Hero() {
   const [clickCount, setClickCount] = useState(0)
   const [openLang, setOpenLang] = useState(false)
+  const [hero, setHero] = useState({})
+
   const { lang, changeLang } = useContext(LanguageContext)
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (!e.target.closest(".lang-menu")) {
-        setOpenLang(false)
-      }
+      if (!e.target.closest(".lang-menu")) setOpenLang(false)
     }
     document.addEventListener("click", handleClickOutside)
     return () => document.removeEventListener("click", handleClickOutside)
   }, [])
+
+  // ✅ re-fetch kalau bahasa ganti
+  useEffect(() => {
+    fetchHero()
+  }, [lang.code])
+
+  const fetchHero = async () => {
+    const { data, error } = await supabase
+      .from("content")
+      .select("*")
+      .eq("section", "hero")
+      .eq("lang", lang.code) // ✅ filter bahasa
+    if (error) { console.log(error); return }
+    const map = {}
+    data?.forEach(row => { map[row.key] = row.value }) // ✅ ubah array jadi object
+    setHero(map)
+  }
 
   const handleWDClick = () => {
     const next = clickCount + 1
@@ -65,8 +88,10 @@ export default function Home() {
   }
 
   return (
-    <section id="home" className="min-h-screen bg-white relative overflow-hidden flex flex-col items-center">
-
+    <section
+      id="home"
+      className="min-h-screen bg-white relative overflow-hidden flex flex-col items-center"
+    >
       {/* LANGUAGE */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
         <button
@@ -86,13 +111,17 @@ export default function Home() {
             >
               <button
                 onClick={() => { changeLang("id"); setOpenLang(false) }}
-                className={`w-full px-4 py-2 text-left text-sm hover:bg-black/5 ${lang.code === "id" ? "font-semibold" : "text-black/60"}`}
+                className={`w-full px-4 py-2 text-left text-sm hover:bg-black/5 ${
+                  lang.code === "id" ? "font-semibold" : "text-black/60"
+                }`}
               >
                 🇮🇩 Indonesia
               </button>
               <button
                 onClick={() => { changeLang("en"); setOpenLang(false) }}
-                className={`w-full px-4 py-2 text-left text-sm hover:bg-black/5 ${lang.code === "en" ? "font-semibold" : "text-black/60"}`}
+                className={`w-full px-4 py-2 text-left text-sm hover:bg-black/5 ${
+                  lang.code === "en" ? "font-semibold" : "text-black/60"
+                }`}
               >
                 🇬🇧 English
               </button>
@@ -107,7 +136,7 @@ export default function Home() {
         <span className="text-sm font-semibold">{lang.company}</span>
       </div>
 
-      {/* STIKER MUNCUL SAAT KLIK */}
+      {/* STICKERS */}
       <AnimatePresence>
         {stickers.slice(0, clickCount).map((sticker) => (
           <motion.div
@@ -123,7 +152,7 @@ export default function Home() {
         ))}
       </AnimatePresence>
 
-      {/* WRAPPER WD */}
+      {/* WD */}
       <div className="relative mt-32 flex justify-center select-none">
         <motion.h1
           onClick={handleWDClick}
@@ -134,7 +163,7 @@ export default function Home() {
         </motion.h1>
       </div>
 
-      {/* Hint klik */}
+      {/* CLICK HINT */}
       <AnimatePresence>
         {clickCount > 0 && clickCount < 4 && (
           <motion.p
@@ -143,25 +172,26 @@ export default function Home() {
             exit={{ opacity: 0 }}
             className="text-xs text-black/30 mt-2"
           >
-            {4 - clickCount} 
+            {4 - clickCount}
           </motion.p>
         )}
       </AnimatePresence>
 
-     {/* Subtitle */}
-<div className="absolute bottom-24 left-6 sm:left-12 z-10">
-  <h2 className="text-3xl sm:text-4xl font-normal leading-snug">
-    {lang.subtitle1} <br /> {lang.subtitle2}
-  </h2>
-</div>
+      {/* SUBTITLE */}
+      <div className="absolute bottom-24 left-6 sm:left-12 z-10">
+        <h2 className="text-3xl sm:text-4xl font-normal leading-snug">
+          {hero.title || lang.subtitle1}
+          <br />
+          {hero.subtitle || lang.subtitle2}  {/* ✅ ganti description → subtitle */}
+        </h2>
+      </div>
 
-      {/* Scroll */}
+      {/* SCROLL */}
       <div className="absolute bottom-10 right-10">
         <div className="w-16 h-16 border rounded-full flex items-center justify-center text-xl cursor-pointer hover:bg-black hover:text-white transition">
           ↓
         </div>
       </div>
-
     </section>
   )
 }

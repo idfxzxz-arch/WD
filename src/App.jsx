@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { LanguageProvider } from "./context/LanguageContext"
 import Cursor from "./components/Cursor"
+import ProtectedRoute from "./components/ProtectedRoute"
 import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
 import Section from "./components/Section"
@@ -14,6 +15,9 @@ import Workshop from "./pages/workshop"
 import Music from "./pages/music"
 import Event from "./pages/event"
 import Production from "./pages/production"
+import Login from "./pages/Login"
+import Dashboard from "./pages/Dashboard"
+import AdminPanel from "./components/AdminPanel" // ✅ tambah ini
 
 function Home() {
   return (
@@ -36,6 +40,7 @@ export default function App() {
     <LanguageProvider>
       <BrowserRouter>
         <Routes>
+          {/* WEBSITE */}
           <Route path="/" element={<Home />} />
           <Route path="/works" element={<Works />} />
           <Route path="/wedding" element={<Wedding />} />
@@ -43,6 +48,22 @@ export default function App() {
           <Route path="/music" element={<Music />} />
           <Route path="/event" element={<Event />} />
           <Route path="/production" element={<Production />} />
+
+          {/* LOGIN */}
+          <Route path="/admin/login" element={<Login />} />
+
+          {/* ADMIN */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="dashboard" element={<></>} />
+            <Route path="content" element={<AdminPanel />} /> {/* ✅ tambah ini */}
+          </Route>
         </Routes>
       </BrowserRouter>
     </LanguageProvider>

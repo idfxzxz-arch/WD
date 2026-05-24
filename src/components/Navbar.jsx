@@ -1,8 +1,11 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { motion } from "framer-motion"
 import { scrollTo } from "../hook/useScrollTo"
+import { LanguageContext } from "../context/LanguageContext"
 
 export default function Navbar() {
+  const { lang } = useContext(LanguageContext)
+
   const menus = [
     {
       label: (
@@ -19,26 +22,10 @@ export default function Navbar() {
       value: "Home",
       id: "home",
     },
-    {
-      label: "About",
-      value: "About",
-      id: "about",
-    },
-        {
-      label: "Works",
-      value: "Works",
-      id: "works",
-    },
-    {
-      label: "Scope",
-      value: "Scope",
-      id: "scope",
-    },
-    {
-      label: "Contact",
-      value: "Contact",
-      id: "contact",
-    },
+    { label: lang.navAbout || "About", value: "About", id: "about" },
+    { label: lang.navWorks || "Works", value: "Works", id: "works" },
+    { label: lang.navScope || "Scope", value: "Scope", id: "scope" },
+    { label: lang.navContact || "Contact", value: "Contact", id: "contact" },
   ]
 
   const [active, setActive] = useState("Home")
@@ -74,7 +61,6 @@ export default function Navbar() {
       className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 px-2 w-full flex justify-center"
     >
       <nav className="flex items-center gap-0.5 sm:gap-1 bg-white border border-black/8 shadow-lg rounded-full px-1 sm:px-2 py-1.5 sm:py-2 max-w-fit">
-
         {menus.map(({ label, value, id }) => {
           const isActive = active === value
           return (
@@ -107,9 +93,7 @@ export default function Navbar() {
             </button>
           )
         })}
-
         <div className="w-px h-4 bg-black/10 mx-1" />
-
       </nav>
     </motion.div>
   )
