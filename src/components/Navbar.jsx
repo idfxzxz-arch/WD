@@ -1,0 +1,116 @@
+import { useState, useRef, useEffect } from "react"
+import { motion } from "framer-motion"
+import { scrollTo } from "../hook/useScrollTo"
+
+export default function Navbar() {
+  const menus = [
+    {
+      label: (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path
+            d="M8 13V3M8 3L3.5 7.5M8 3L12.5 7.5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      value: "Home",
+      id: "home",
+    },
+    {
+      label: "About",
+      value: "About",
+      id: "about",
+    },
+        {
+      label: "Works",
+      value: "Works",
+      id: "works",
+    },
+    {
+      label: "Scope",
+      value: "Scope",
+      id: "scope",
+    },
+    {
+      label: "Contact",
+      value: "Contact",
+      id: "contact",
+    },
+  ]
+
+  const [active, setActive] = useState("Home")
+
+  useEffect(() => {
+    const sections = ["home", "about", "works", "scope", "contact"].map(id =>
+      document.getElementById(id)
+    )
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return
+          const id = entry.target.id
+          setActive(id.charAt(0).toUpperCase() + id.slice(1))
+        })
+      },
+      { threshold: 0.2 }
+    )
+    sections.forEach(sec => sec && observer.observe(sec))
+    return () => observer.disconnect()
+  }, [])
+
+  const handleClick = (id, value) => {
+    setActive(value)
+    scrollTo(id)
+  }
+
+  return (
+    <motion.div
+      initial={{ y: 80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 px-2 w-full flex justify-center"
+    >
+      <nav className="flex items-center gap-0.5 sm:gap-1 bg-white border border-black/8 shadow-lg rounded-full px-1 sm:px-2 py-1.5 sm:py-2 max-w-fit">
+
+        {menus.map(({ label, value, id }) => {
+          const isActive = active === value
+          return (
+            <button
+              key={value}
+              onClick={() => handleClick(id, value)}
+              className="relative px-2 sm:px-4 py-2 rounded-full text-[11px] sm:text-sm font-medium overflow-hidden"
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="active-pill"
+                  className="absolute inset-0 rounded-full bg-black"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              {typeof label === "string" ? (
+                <motion.span
+                  className={`relative z-10 block ${isActive ? "text-white" : "text-black/40"}`}
+                  whileHover={{ rotateX: 360 }}
+                  transition={{ duration: 0.6 }}
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  {label}
+                </motion.span>
+              ) : (
+                <span className={`relative z-10 flex items-center justify-center ${isActive ? "text-white" : "text-black/40"}`}>
+                  {label}
+                </span>
+              )}
+            </button>
+          )
+        })}
+
+        <div className="w-px h-4 bg-black/10 mx-1" />
+
+      </nav>
+    </motion.div>
+  )
+}
