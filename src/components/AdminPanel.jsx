@@ -448,7 +448,7 @@ export default function AdminPanel() {
 
             {/* Filter Tabs */}
             <div className="flex gap-2 mb-6 flex-wrap">
-              {["all", "wedding", "music", "production", "workshop"].map((cat) => (
+              {["all", "wedding", "music", "production", "workshop","event"].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setFilterCategory(cat)}
