@@ -10,6 +10,16 @@ function ProjectCard({ item, index }) {
   const isEven = index % 2 === 0
   const [rotate, setRotate] = useState({ x: 0, y: 0 })
 
+  // 1. OMTOMATISASI ROUTING BERDASARKAN KATEGORI
+  const validCategories = ["production", "event", "music", "wedding", "workshop"]
+  const itemCategory = item.category?.toLowerCase().trim()
+
+  // Jika kategorinya cocok dengan list di atas, arahkan ke /[nama-kategori]
+  // Jika tidak, pakai item.link dari database atau '#' sebagai fallback
+  const targetLink = validCategories.includes(itemCategory)
+    ? `/${itemCategory}`
+    : (item.link || "#")
+
   // tags bisa berupa string "A, B" atau array
   const tags = Array.isArray(item.tags)
     ? item.tags
@@ -31,7 +41,8 @@ function ProjectCard({ item, index }) {
       }}
       onMouseLeave={() => setRotate({ x: 0, y: 0 })}
     >
-      <Link to={item.link} className="group block">
+      {/* Gunakan targetLink hasil mapping dinamis */}
+      <Link to={targetLink} className="group block">
         {/* IMAGE */}
         <div className="relative rounded-2xl overflow-hidden bg-neutral-100">
           <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500 bg-black/10">
