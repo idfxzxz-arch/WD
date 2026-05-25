@@ -1,169 +1,291 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabase";
 
-const images = [
-  "/resources/Wedding/WO/WO1.webp",
-  "/resources/Wedding/WO/WO2.webp",
-  "/resources/Wedding/WO/WO3.webp",
-  "/resources/Wedding/WO/WO4.webp",
-  "/resources/Wedding/WO/WO5.webp",
-  "/resources/Wedding/WO/WO6.webp",
-];
+const css = `
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap');
 
-export default function WeddingBrandLayout() {
-  const [selected, setSelected] = useState(null);
+  .wo-testi-root { 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    background: #0a0a0c; 
+    color: #ffffff; 
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV BAR */
+  .wo-testi-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: sticky; top: 0; background: rgba(10,10,12,0.8);
+    backdrop-filter: blur(16px); z-index: 50;
+  }
+  .wo-testi-back {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    color: #999; cursor: pointer; padding: 8px 18px;
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; background: none;
+    transition: .2s;
+  }
+  .wo-testi-back:hover { color: #fff; border-color: #FF5A24; background: rgba(255,90,36,0.05); }
+  .wo-testi-nav-logo { font-weight: 800; font-size: 18px; letter-spacing: -0.03em; text-transform: uppercase; }
+  .wo-testi-nav-logo span { color: #FF5A24; }
+
+  /* HERO HEADER AREA */
+  .wo-testi-hero-section {
+    max-w: 1300px; margin: 0 auto; padding: 40px;
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .wo-testi-text-block { max-w: 700px; }
+  .wo-testi-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,90,36,0.1); border: 1px solid rgba(255,90,36,0.2);
+    padding: 6px 14px; color: #FF5A24; font-size: 11px; font-weight: 700; 
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; border-radius: 100px;
+  }
+  .wo-testi-h {
+    font-size: 52px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .wo-testi-h em { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; text-transform: lowercase; color: #ff8156; }
+  .wo-testi-desc { color: #8e8e93; font-size: 15px; line-height: 1.6; font-weight: 300; }
+
+  /* IPAD FRAME LAYOUT */
+  .wo-testi-ipad-frame {
+    width: 100%; max-width: 1100px; height: 680px; background: #000;
+    border-radius: 36px; padding: 18px; border: 4px solid #2d2d30;
+    box-shadow: 0 40px 90px -20px rgba(255,90,36,0.25);
+    margin: 0 auto; position: relative;
+  }
+  .wo-testi-ipad-screen {
+    background: #f8f9fa; width: 100%; height: 100%; border-radius: 22px;
+    color: #1c1c1e; display: grid; grid-template-columns: 80px 1fr;
+    overflow: hidden; position: relative;
+  }
+
+  /* IPAD SIDEBAR */
+  .wo-testi-ipad-sidebar {
+    background: #111115; border-right: 1px solid #e5e5e7;
+    display: flex; flex-direction: column; align-items: center; padding: 24px 0; gap: 28px;
+  }
+  .wo-testi-ipad-side-icon {
+    width: 44px; height: 44px; border-radius: 12px; display: flex;
+    align-items: center; justify-content: center; font-size: 18px; color: #8e8e93; cursor: pointer; transition: 0.2s;
+  }
+  .wo-testi-ipad-side-icon.active { background: #FF5A24; color: #fff; }
+
+  /* MAIN AREA BAR */
+  .wo-testi-ipad-main { padding: 24px; display: flex; flex-direction: column; overflow: hidden; height: 100%; }
+  .wo-testi-ipad-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .wo-testi-ipad-title { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #111; }
+  
+  /* TOP HORIZONTAL TABS */
+  .wo-testi-ipad-tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; scrollbar-width: none; }
+  .wo-testi-ipad-tabs::-webkit-scrollbar { display: none; }
+  .wo-testi-ipad-tab-btn {
+    padding: 8px 18px; font-size: 12px; font-weight: 700; border-radius: 12px;
+    background: #fff; color: #555; border: 1px solid #e5e5e7; cursor: pointer; transition: 0.15s; white-space: nowrap;
+  }
+  .wo-testi-ipad-tab-btn.active { background: #111; color: #fff; border-color: #111; }
+
+  /* 3-COLUMN GRID FOR TESTIMONIAL PHOTOS ONLY */
+  .wo-testi-ipad-grid {
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 12px;
+    overflow-y: auto; 
+    flex: 1; 
+    padding-bottom: 20px; 
+    scrollbar-width: none;
+  }
+  .wo-testi-ipad-grid::-webkit-scrollbar { display: none; }
+
+  .wo-testi-ipad-card {
+    background: #ffffff; 
+    border-radius: 14px; 
+    overflow: hidden;
+    border: 2px solid transparent; 
+    cursor: pointer; 
+    transition: all 0.2s ease-in-out;
+    aspect-ratio: 4/3; 
+    display: flex;
+  }
+  .wo-testi-ipad-card:hover { 
+    transform: scale(0.98); 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+  }
+  
+  .wo-testi-ipad-card-img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    background: #eee; 
+  }
+
+  /* TOAST ALERTS */
+  .wo-testi-toast {
+    position: fixed; top: 32px; right: 32px; background: #FF5A24; color: #fff;
+    padding: 14px 24px; border-radius: 16px; font-size: 14px; font-weight: 600;
+    box-shadow: 0 20px 40px rgba(255,90,36,0.2); z-index: 100;
+  }
+`;
+
+const TESTI_TABS = ["All Reviews", "Akad", "Resepsi", "Outdoor"];
+
+export default function WeddingTestimonialsIpad() {
+  const [works, setWorks] = useState([]);
+  const [activeTab, setActiveTab] = useState("All Reviews");
+  const [shortlist, setShortlist] = useState([]);
+  const [toastMsg, setToastMsg] = useState("");
   const navigate = useNavigate();
 
-  return (
-    <div className="bg-[#F2F2F2] min-h-screen font-sans text-neutral-900 pb-16">
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data: worksData } = await supabase
+        .from("works")
+        .select("*")
+        .eq("category", "wedding")
+        .order("order_index");
       
-      {/* BACK BUTTON */}
-      <div className="fixed top-6 left-6 z-50">
-        <button
-          onClick={() => navigate("/")}
-          className="px-5 py-2 bg-white/90 backdrop-blur-md border border-neutral-200 text-black rounded-full text-sm hover:bg-black hover:text-white transition-all shadow-sm"
-        >
-          ← Back
-        </button>
-      </div>
-
-      {/* HERO */}
-      <section className="grid grid-cols-1 md:grid-cols-2 min-h-[500px]">
+      if (worksData) {
+        setWorks(worksData);
         
-        {/* LEFT */}
-        <div className="bg-black flex items-center justify-center p-8 md:p-12 relative overflow-hidden">
-          <div 
-            className="absolute inset-0 opacity-40 bg-cover bg-center scale-110" 
-            style={{ backgroundImage: `url(${images[0]})` }}
-          />
-          
-          <motion.div 
-            initial={{ y: 80, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="relative z-10 w-full max-w-[260px] aspect-[9/19] bg-[#1a1a1a] rounded-[2.5rem] border-[6px] border-neutral-800 shadow-2xl overflow-hidden flex flex-col"
-          >
-            <div className="p-5 pt-10 flex flex-col h-full">
-              
-              <div className="w-10 h-[3px] bg-neutral-700 mx-auto rounded-full mb-8" />
-              
-              <p className="text-[9px] text-neutral-500 mb-2 uppercase tracking-widest">
-                About Portfolio
-              </p>
+        if (worksData.length > 0) {
+          setShortlist([
+            { id: worksData[0].id, title: worksData[0].title, image: worksData[0].image }
+          ]);
+        }
+      }
+    };
+    fetchData();
+  }, []);
 
-              <h3 className="text-white text-lg font-bold mb-6 leading-tight">
-                Wedding Organizer
-              </h3>
+  const triggerToast = (msg) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg(""), 2500);
+  };
+
+  const filteredTestimonials = works.filter((item) => {
+    if (activeTab === "All Reviews") return true;
+    const sub = item.subcategory?.toLowerCase() || "";
+    return sub === activeTab.toLowerCase();
+  });
+
+  const toggleShortlist = (item) => {
+    const isExist = shortlist.find((s) => s.id === item.id);
+    if (isExist) {
+      setShortlist(shortlist.filter((s) => s.id !== item.id));
+      triggerToast("Removed from Selection");
+    } else {
+      setShortlist([...shortlist, { id: item.id, title: item.title, image: item.image }]);
+      triggerToast("❤️ Image Selected");
+    }
+  };
+
+  return (
+    <>
+      <style>{css}</style>
+
+      <div className="wo-testi-root">
+        {/* TOAST NOTIFICATION */}
+        <AnimatePresence>
+          {toastMsg && (
+            <motion.div 
+              className="wo-testi-toast"
+              initial={{ opacity: 0, y: -20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.9 }}
+            >
+              {toastMsg}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* TOP NAVBAR */}
+        <nav className="wo-testi-nav">
+          <button className="wo-testi-back" onClick={() => navigate("/")}>
+            ← Back to Gallery
+          </button>
+          <div className="wo-testi-nav-logo">WD<span>Group</span>Company</div>
+          <div className="text-xs font-bold uppercase tracking-widest text-[#FF5A24] bg-[#FF5A24]/10 px-4 py-1.5 rounded-full">
+            iPad Showcase Mode
+          </div>
+        </nav>
+
+        {/* HERO HEADER */}
+        <div className="wo-testi-hero-section">
+          <div className="wo-testi-text-block">
+            <div className="wo-testi-tag">Live Database Connection</div>
+            <h1 className="wo-testi-h">
+              Client <em>Happy Stories</em>
+            </h1>
+            <p className="wo-testi-desc">
+              Menampilkan galeri foto ulasan asli dan kebahagiaan dari pasangan pengantin yang diambil langsung dari database core portfolio.
+            </p>
+          </div>
+
+          {/* REALISTIC IPAD FRAME CONTAINER */}
+          <div className="wo-testi-ipad-frame">
+            <div className="wo-testi-ipad-screen">
               
-              <div className="w-full aspect-[4/3] rounded-xl overflow-hidden mb-4">
-                <img src={images[2]} className="w-full h-full object-cover" />
+              {/* PANEL 1: SIDEBAR (KIRI) */}
+              <div className="wo-testi-ipad-sidebar">
+                <div className="wo-testi-ipad-side-icon active">📸</div>
+                <div className="wo-testi-ipad-side-icon" onClick={() => setShortlist([])}>🧹</div>
               </div>
 
-              <div className="aspect-[4/4] rounded-xl overflow-hidden">
-                <img src={images[3]} className="w-full h-full object-cover" />
+              {/* PANEL 2: MAIN GRID (3 KOLOM - FOTO SAJA) */}
+              <div className="wo-testi-ipad-main">
+                <div className="wo-testi-ipad-header">
+                  <h2 className="wo-testi-ipad-title">Testimonial Photos</h2>
+                  <span className="text-xs text-zinc-400 font-semibold">Table: works</span>
+                </div>
+
+                {/* HORIZONTAL TAB BAR */}
+                <div className="wo-testi-ipad-tabs">
+                  {TESTI_TABS.map((tab) => (
+                    <button
+                      key={tab}
+                      className={`wo-testi-tab-btn ${activeTab === tab ? "active" : ""}`}
+                      onClick={() => setActiveTab(tab)}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+
+                {/* 3 COLUMNS PHOTO GRID */}
+                <div className="wo-testi-ipad-grid">
+                  {filteredTestimonials.length > 0 ? (
+                    filteredTestimonials.map((item) => {
+                      const isSaved = shortlist.some((s) => s.id === item.id);
+                      return (
+                        <div 
+                          key={item.id} 
+                          className="wo-testi-ipad-card"
+                          style={{ 
+                            borderColor: isSaved ? '#FF5A24' : 'transparent',
+                            boxShadow: isSaved ? '0 0 0 2px #FF5A24' : ''
+                          }}
+                          onClick={() => toggleShortlist(item)}
+                        >
+                          {/* Hanya Menampilkan Foto Langsung */}
+                          <img src={item.image} className="wo-testi-ipad-card-img" alt="" />
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="col-span-3 text-center py-24 text-xs text-zinc-400 bg-white border border-dashed rounded-2xl">
+                      Tidak ada foto dengan subcategory "{activeTab}" di database.
+                    </div>
+                  )}
+                </div>
               </div>
-              
-              <div className="mt-auto pt-4 flex flex-col gap-2">
-                <div className="h-[3px] w-full bg-neutral-800/60 rounded-full" />
-                <div className="h-[3px] w-2/3 bg-neutral-800/60 rounded-full mb-3" />
-                
-                <button className="h-11 w-full bg-[#0071E3] rounded-xl text-[10px] text-white font-bold uppercase">
-                  Contact Person
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* RIGHT */}
-        <div className="bg-[#F8F9FA] flex items-center justify-center p-10">
-          <motion.div 
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white p-6 rounded-2xl shadow-sm border border-neutral-100 w-full max-w-md"
-          >
-            <div className="text-[10px] text-neutral-400 mb-4 flex justify-between border-b pb-2 uppercase">
-              <span>Wedding</span>
-              <span>Organizer</span>
-            </div>
-
-            <div className="w-full aspect-[4/3] rounded-xl overflow-hidden">
-              <img src={images[5]} className="w-full h-full object-cover" />
-            </div>
-          </motion.div>
-        </div>
-
-      </section>
-
-      {/* BRAND INFO */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-10 px-6 md:px-20 py-14 bg-white">
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-          Wedding Organizer
-        </h1>
-
-        <p className="text-sm text-neutral-600 leading-relaxed max-w-md">
-          WD Jaya Group is a creative wedding organizer committed to turning your dream wedding into reality.
-          We bring every love story to life through curated concepts and detail-focused execution.
-        </p>
-      </section>
-
-      {/* DOUBLE CARD */}
-      <section className="bg-[#F8F9FA] px-6 md:px-20 py-12">
-        <div className="flex flex-col gap-8 max-w-6xl mx-auto">
-
-          {[0,1].map((row) => (
-            <div key={row} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-              {[3,4].map((img, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ scale: 0.95, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="bg-white p-6 rounded-2xl shadow-sm border border-neutral-100"
-                >
-                  <div className="text-[10px] text-neutral-400 mb-4 flex justify-between border-b pb-2 uppercase">
-                    <span>Wedding</span>
-                    <span>Organizer</span>
-                  </div>
-
-                  <div className="aspect-[4/3] rounded-xl overflow-hidden">
-                    <img src={images[img]} className="w-full h-full object-cover" />
-                  </div>
-                </motion.div>
-              ))}
 
             </div>
-          ))}
-
+          </div>
         </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="text-center py-14 px-6">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-neutral-800">
-          Tell Your Story.
-        </h2>
-
-        <button className="px-10 py-3 bg-black text-white rounded-full text-sm font-bold">
-          CONTACT ME
-        </button>
-      </footer>
-
-      {/* MODAL */}
-      {selected && (
-        <div
-          className="fixed inset-0 bg-black/90 flex items-center justify-center z-[100] p-10"
-          onClick={() => setSelected(null)}
-        >
-          <motion.img 
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            src={selected} 
-            className="max-h-full max-w-full rounded-lg"
-          />
-        </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../lib/supabase"
-import { Plus, Trash2, Save, Globe, ChevronDown } from "lucide-react"
+import { Plus, Trash2, Save, Globe, HardDriveUpload, Loader2, ImageIcon } from "lucide-react"
 
 // ─── CONFIG FIELDS PER SECTION ───────────────────────────────────────────────
 const CONTENT_SECTIONS = {
@@ -11,6 +11,18 @@ const CONTENT_SECTIONS = {
   about: [
     { key: "title", label: "Judul About", type: "text" },
     { key: "description", label: "Deskripsi", type: "textarea" },
+  ],
+  // ✦ TAMBAHAN: Section wedding untuk halaman WeddingBrandLayout
+  wedding: [
+    { key: "title", label: "Nama Brand / Judul", type: "text" },
+    { key: "description", label: "Deskripsi (muncul di section About)", type: "textarea" },
+    { key: "hero_label", label: "Label Hero (cth: Est. Jakarta · 2018)", type: "text" },
+    { key: "hero_tagline", label: "Tagline Hero (cth: Your moment, perfectly crafted.)", type: "text" },
+    { key: "hero_sub", label: "Sub-tagline Hero", type: "text" },
+    { key: "stat_weddings", label: "Stat: Jumlah Wedding (cth: 200+)", type: "text" },
+    { key: "stat_years", label: "Stat: Tahun Pengalaman (cth: 7)", type: "text" },
+    { key: "stat_happy", label: "Stat: Happy Couples % (cth: 98%)", type: "text" },
+    { key: "contact_link", label: "Link WhatsApp / Contact Person", type: "text" },
   ],
   services: [
     { key: "title", label: "Judul Section Services", type: "text" },
@@ -29,25 +41,28 @@ const LANGS = [
   { code: "en", label: "🇬🇧 English" },
 ]
 
-const TABS = ["hero", "about", "services", "contact", "scope", "works"]
+const TABS = ["hero", "about", "wedding", "services", "contact", "scope", "works"]
+
+// Subkategori khusus untuk works kategori wedding
+const WEDDING_SUBCATEGORIES = ["wedding", "ceremony", "reception", "decor", "portrait"]
 
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("hero")
   const [lang, setLang] = useState("id")
-  const [content, setContent] = useState({})       // { section: { key: value } }
-  const [scopeItems, setScopeItems] = useState([]) // scope_services rows
-  const [works, setWorks] = useState([])           // works rows
+  const [content, setContent] = useState({})
+  const [scopeItems, setScopeItems] = useState([])
+  const [works, setWorks] = useState([])
+  const [filterCategory, setFilterCategory] = useState("all")
   const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(null)
   const [toast, setToast] = useState("")
   const [adminEmail, setAdminEmail] = useState("System")
 
-  // ── fetch all content on mount & lang change
   useEffect(() => { fetchContent() }, [lang])
   useEffect(() => { fetchScope() }, [])
   useEffect(() => { fetchWorks() }, [])
-  
-  // Ambil email user yang sedang aktif
+
   useEffect(() => {
     const getAdminProfile = async () => {
       const { data: { user } } = await supabase.auth.getUser()
@@ -63,10 +78,7 @@ export default function AdminPanel() {
 
   // ─── FETCH ────────────────────────────────────────────────────────────────
   const fetchContent = async () => {
-    const { data } = await supabase
-      .from("content")
-      .select("*")
-      .eq("lang", lang)
+    const { data } = await supabase.from("content").select("*").eq("lang", lang)
     const map = {}
     data?.forEach(row => {
       if (!map[row.section]) map[row.section] = {}
@@ -76,22 +88,54 @@ export default function AdminPanel() {
   }
 
   const fetchScope = async () => {
-    const { data } = await supabase
-      .from("scope_services")
-      .select("*")
-      .order("order_index")
+    const { data } = await supabase.from("scope_services").select("*").order("order_index")
     setScopeItems(data || [])
   }
 
   const fetchWorks = async () => {
-    const { data } = await supabase
-      .from("works")
-      .select("*")
-      .order("order_index")
+    const { data } = await supabase.from("works").select("*").order("order_index")
     setWorks(data || [])
   }
 
-  // ─── CONTENT (hero/about/services/contact) ───────────────────────────────
+  // ─── FILE UPLOAD ──────────────────────────────────────────────────────────
+  const handleFileUpload = async (event, workId) => {
+    try {
+      const file = event.target.files?.[0]
+      if (!file) return
+      setUploading(workId)
+
+      const fileExt = file.name.split(".").pop()
+      const uniqueFileName = `${Date.now()}-${Math.floor(Math.random() * 1000)}.${fileExt}`
+      const filePath = `works/${uniqueFileName}`
+
+      const { error: uploadError } = await supabase.storage.from("photos").upload(filePath, file)
+      if (uploadError) throw uploadError
+
+      const { data: { publicUrl } } = supabase.storage.from("photos").getPublicUrl(filePath)
+
+      const isNewItem = String(workId).startsWith("new_")
+      if (!isNewItem) {
+        const { error: dbError } = await supabase.from("works").update({ image: publicUrl }).eq("id", workId)
+        if (dbError) throw dbError
+      }
+
+      updateWork(workId, "image", publicUrl)
+
+      await supabase.from("activities").insert([{
+        admin_email: adminEmail,
+        action_name: "Uploaded Media",
+        target_name: `Image for Project (${uniqueFileName})`
+      }])
+
+      showToast("✓ Gambar berhasil diunggah!")
+    } catch (error) {
+      alert("Gagal mengunggah gambar: " + error.message)
+    } finally {
+      setUploading(null)
+    }
+  }
+
+  // ─── CONTENT ──────────────────────────────────────────────────────────────
   const handleChange = (section, key, value) => {
     setContent(prev => ({
       ...prev,
@@ -106,22 +150,20 @@ export default function AdminPanel() {
       section, key, value, lang,
       updated_at: new Date().toISOString()
     }))
-    
-    const { error } = await supabase.from("content").upsert(updates, { onConflict: "section,key,lang" })
-    
-    if (!error) {
-      // LOG TETAP BAHASA INGGRIS
-      await supabase.from("activities").insert([
-        {
-          admin_email: adminEmail,
-          action_name: "Updated Content",
-          target_name: `Section ${section.toUpperCase()} (${lang.toUpperCase()})`
-        }
-      ])
-    }
 
+    const { error } = await supabase.from("content").upsert(updates, { onConflict: "section,key,lang" })
+
+    if (!error) {
+      await supabase.from("activities").insert([{
+        admin_email: adminEmail,
+        action_name: "Updated Content",
+        target_name: `Section ${section.toUpperCase()} (${lang.toUpperCase()})`
+      }])
+      showToast("✓ Perubahan disimpan!")
+    } else {
+      alert("Gagal menyimpan konten: " + error.message)
+    }
     setSaving(false)
-    showToast("✓ Perubahan disimpan!")
   }
 
   const val = (section, key) => content[section]?.[key] ?? ""
@@ -133,11 +175,8 @@ export default function AdminPanel() {
 
   const addScope = () => {
     setScopeItems(prev => [...prev, {
-      id: `new_${Date.now()}`,
-      name: "",
-      link: "#",
-      order_index: prev.length,
-      _new: true
+      id: `new_${Date.now()}`, name: "", link: "#",
+      order_index: prev.length, _new: true
     }])
   }
 
@@ -145,14 +184,11 @@ export default function AdminPanel() {
     if (!item._new) {
       const { error } = await supabase.from("scope_services").delete().eq("id", item.id)
       if (!error) {
-        // LOG TETAP BAHASA INGGRIS
-        await supabase.from("activities").insert([
-          {
-            admin_email: adminEmail,
-            action_name: "Deleted Scope Item",
-            target_name: item.name || "Unnamed Scope Item"
-          }
-        ])
+        await supabase.from("activities").insert([{
+          admin_email: adminEmail,
+          action_name: "Deleted Scope Item",
+          target_name: item.name || "Unnamed Scope Item"
+        }])
       }
     }
     setScopeItems(prev => prev.filter(s => s.id !== item.id))
@@ -160,33 +196,29 @@ export default function AdminPanel() {
 
   const saveScope = async () => {
     setSaving(true)
-    let hasChanges = false
-
-    for (const item of scopeItems) {
-      const { id, _new, ...rest } = item
-      if (_new) {
-        await supabase.from("scope_services").insert(rest)
-        hasChanges = true
-      } else {
-        await supabase.from("scope_services").update(rest).eq("id", id)
-        hasChanges = true
-      }
-    }
-
-    if (hasChanges) {
-      // LOG TETAP BAHASA INGGRIS
-      await supabase.from("activities").insert([
-        {
-          admin_email: adminEmail,
-          action_name: "Saved Scope List",
-          target_name: "Scope Services Manager"
+    try {
+      for (const item of scopeItems) {
+        const { id, _new, ...rest } = item
+        if (_new) {
+          const { error } = await supabase.from("scope_services").insert(rest)
+          if (error) throw error
+        } else {
+          const { error } = await supabase.from("scope_services").update(rest).eq("id", id)
+          if (error) throw error
         }
-      ])
+      }
+      await supabase.from("activities").insert([{
+        admin_email: adminEmail,
+        action_name: "Saved Scope List",
+        target_name: "Scope Services Manager"
+      }])
+      await fetchScope()
+      showToast("✓ Scope disimpan!")
+    } catch (error) {
+      alert("Gagal menyimpan scope: " + error.message)
+    } finally {
+      setSaving(false)
     }
-
-    await fetchScope()
-    setSaving(false)
-    showToast("✓ Scope disimpan!")
   }
 
   // ─── WORKS ────────────────────────────────────────────────────────────────
@@ -197,10 +229,10 @@ export default function AdminPanel() {
   const addWork = () => {
     setWorks(prev => [...prev, {
       id: `new_${Date.now()}`,
-      title: "",
-      tags: "",
-      image: "",
-      link: "/",
+      title: "", tags: "", image: "", link: "/",
+      category: filterCategory !== "all" ? filterCategory : "wedding",
+      subcategory: "wedding",  // ✦ TAMBAHAN
+      meta: "",                // ✦ TAMBAHAN
       order_index: prev.length,
       _new: true
     }])
@@ -210,14 +242,11 @@ export default function AdminPanel() {
     if (!item._new) {
       const { error } = await supabase.from("works").delete().eq("id", item.id)
       if (!error) {
-        // LOG TETAP BAHASA INGGRIS
-        await supabase.from("activities").insert([
-          {
-            admin_email: adminEmail,
-            action_name: "Deleted Work Item",
-            target_name: item.title || "Unnamed Project"
-          }
-        ])
+        await supabase.from("activities").insert([{
+          admin_email: adminEmail,
+          action_name: "Deleted Work Item",
+          target_name: item.title || "Unnamed Project"
+        }])
       }
     }
     setWorks(prev => prev.filter(w => w.id !== item.id))
@@ -225,42 +254,37 @@ export default function AdminPanel() {
 
   const saveWorks = async () => {
     setSaving(true)
-    let hasChanges = false
-
-    for (const item of works) {
-      const { id, _new, ...rest } = item
-      if (_new) {
-        await supabase.from("works").insert(rest)
-        hasChanges = true
-      } else {
-        await supabase.from("works").update(rest).eq("id", id)
-        hasChanges = true
-      }
-    }
-
-    if (hasChanges) {
-      // LOG TETAP BAHASA INGGRIS
-      await supabase.from("activities").insert([
-        {
-          admin_email: adminEmail,
-          action_name: "Saved Portfolio List",
-          target_name: "Works Showcase Manager"
+    try {
+      for (const item of works) {
+        const { id, _new, ...rest } = item
+        if (_new) {
+          const { error } = await supabase.from("works").insert(rest)
+          if (error) throw error
+        } else {
+          const { error } = await supabase.from("works").update(rest).eq("id", id)
+          if (error) throw error
         }
-      ])
+      }
+      await supabase.from("activities").insert([{
+        admin_email: adminEmail,
+        action_name: "Saved Portfolio List",
+        target_name: "Works Showcase Manager"
+      }])
+      await fetchWorks()
+      showToast("✓ Works disimpan!")
+    } catch (error) {
+      alert("Gagal menyimpan portfolio: " + error.message)
+    } finally {
+      setSaving(false)
     }
-
-    await fetchWorks()
-    setSaving(false)
-    showToast("✓ Works disimpan!")
   }
 
   // ─── RENDER ───────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans">
 
-      {/* Toast tetap menggunakan notifikasi lokal yang user-friendly */}
       {toast && (
-        <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-white text-sm px-5 py-3 rounded-2xl shadow-lg">
+        <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-white text-sm px-5 py-3 rounded-2xl shadow-lg animate-in fade-in slide-in-from-top-4 duration-300">
           {toast}
         </div>
       )}
@@ -273,8 +297,6 @@ export default function AdminPanel() {
             <h1 className="text-2xl font-semibold tracking-tight">Admin Panel</h1>
             <p className="text-zinc-500 text-sm mt-1">Edit konten website WD Group</p>
           </div>
-
-          {/* Lang switcher */}
           <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-2xl px-1 py-1">
             <Globe size={14} className="text-zinc-500 ml-2" />
             {LANGS.map(l => (
@@ -282,9 +304,7 @@ export default function AdminPanel() {
                 key={l.code}
                 onClick={() => setLang(l.code)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-medium transition ${
-                  lang === l.code
-                    ? "bg-white text-black"
-                    : "text-zinc-400 hover:text-white"
+                  lang === l.code ? "bg-white text-black" : "text-zinc-400 hover:text-white"
                 }`}
               >
                 {l.label}
@@ -303,20 +323,29 @@ export default function AdminPanel() {
                 activeTab === tab
                   ? "bg-white text-black"
                   : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"
-              }`}
+              } ${tab === "wedding" ? "border border-amber-800/40 text-amber-400" : ""}`}
             >
-              {tab}
+              {tab === "wedding" ? "💍 Wedding" : tab}
             </button>
           ))}
         </div>
 
-        {/* ── CONTENT SECTIONS (hero/about/services/contact) ── */}
+        {/* ── CONTENT SECTIONS (hero / about / wedding / services / contact) ── */}
         {CONTENT_SECTIONS[activeTab] && (
           <div>
-            <div className="flex items-center gap-2 text-xs text-zinc-500 mb-6">
-              <Globe size={12} />
-              Mengedit konten bahasa: <span className="text-white font-medium">{lang === "id" ? "Indonesia" : "English"}</span>
-            </div>
+            {activeTab === "wedding" && (
+              <div className="bg-amber-950/30 border border-amber-800/30 rounded-2xl px-5 py-4 mb-6 text-sm text-amber-300">
+                <p className="font-medium mb-1">💍 Konten Halaman Wedding</p>
+                <p className="text-amber-400/70 text-xs">Perubahan di sini akan langsung tampil di halaman <code className="bg-amber-900/40 px-1 rounded">/wedding</code>. Field Stats & link tidak terpengaruh bahasa.</p>
+              </div>
+            )}
+
+            {activeTab !== "wedding" && (
+              <div className="flex items-center gap-2 text-xs text-zinc-500 mb-6">
+                <Globe size={12} />
+                Mengedit konten bahasa: <span className="text-white font-medium">{lang === "id" ? "Indonesia" : "English"}</span>
+              </div>
+            )}
 
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 mb-6">
               <h2 className="text-lg font-semibold mb-6 capitalize">{activeTab}</h2>
@@ -326,14 +355,14 @@ export default function AdminPanel() {
                     <label className="text-zinc-400 text-sm mb-1.5 block">{f.label}</label>
                     {f.type === "textarea" ? (
                       <textarea
-                        className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm resize-y min-h-[80px] border border-zinc-700 focus:outline-none focus:border-blue-500 transition"
+                        className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm resize-y min-h-[80px] border border-zinc-700 focus:outline-none focus:border-amber-500 transition"
                         value={val(activeTab, f.key)}
                         onChange={e => handleChange(activeTab, f.key, e.target.value)}
                       />
                     ) : (
                       <input
                         type="text"
-                        className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm border border-zinc-700 focus:outline-none focus:border-blue-500 transition"
+                        className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm border border-zinc-700 focus:outline-none focus:border-amber-500 transition"
                         value={val(activeTab, f.key)}
                         onChange={e => handleChange(activeTab, f.key, e.target.value)}
                       />
@@ -366,7 +395,7 @@ export default function AdminPanel() {
                       <label className="text-zinc-500 text-xs mb-1 block">Urutan</label>
                       <input
                         type="number"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 focus:outline-none focus:border-blue-500"
+                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700"
                         value={item.order_index}
                         onChange={e => updateScope(item.id, "order_index", Number(e.target.value))}
                       />
@@ -375,7 +404,7 @@ export default function AdminPanel() {
                       <label className="text-zinc-500 text-xs mb-1 block">Nama Layanan</label>
                       <input
                         type="text"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 focus:outline-none focus:border-blue-500"
+                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700"
                         value={item.name}
                         onChange={e => updateScope(item.id, "name", e.target.value)}
                         placeholder="cth: Wedding Organizer"
@@ -385,10 +414,10 @@ export default function AdminPanel() {
                       <label className="text-zinc-500 text-xs mb-1 block">Link</label>
                       <input
                         type="text"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 focus:outline-none focus:border-blue-500"
+                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700"
                         value={item.link}
                         onChange={e => updateScope(item.id, "link", e.target.value)}
-                        placeholder="cth: /wedding atau #contact"
+                        placeholder="cth: /wedding"
                       />
                     </div>
                   </div>
@@ -402,19 +431,11 @@ export default function AdminPanel() {
               ))}
             </div>
             <div className="flex gap-3">
-              <button
-                onClick={addScope}
-                className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 transition px-5 py-2.5 rounded-xl text-sm border border-zinc-700"
-              >
+              <button onClick={addScope} className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 transition px-5 py-2.5 rounded-xl text-sm border border-zinc-700">
                 <Plus size={14} /> Tambah Layanan
               </button>
-              <button
-                onClick={saveScope}
-                disabled={saving}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 transition px-6 py-2.5 rounded-xl font-semibold text-sm disabled:opacity-50"
-              >
-                <Save size={14} />
-                {saving ? "Menyimpan..." : "Simpan Scope"}
+              <button onClick={saveScope} disabled={saving} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 transition px-6 py-2.5 rounded-xl font-semibold text-sm">
+                <Save size={14} /> {saving ? "Menyimpan..." : "Simpan Scope"}
               </button>
             </div>
           </div>
@@ -423,87 +444,145 @@ export default function AdminPanel() {
         {/* ── WORKS ── */}
         {activeTab === "works" && (
           <div>
-            <p className="text-zinc-500 text-sm mb-6">Edit daftar portfolio/works (tidak berpengaruh ke bahasa). Tags dipisah koma, cth: <span className="text-zinc-300">E-Commerce, Brand</span></p>
-            <div className="flex flex-col gap-4 mb-6">
-              {works.map((item) => (
-                <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-                    <div>
-                      <label className="text-zinc-500 text-xs mb-1 block">Judul</label>
-                      <input
-                        type="text"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 focus:outline-none focus:border-blue-500"
-                        value={item.title}
-                        onChange={e => updateWork(item.id, "title", e.target.value)}
-                        placeholder="cth: WD SKY Wedding Organizer"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-zinc-500 text-xs mb-1 block">Tags (pisah koma)</label>
-                      <input
-                        type="text"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 focus:outline-none focus:border-blue-500"
-                        value={item.tags}
-                        onChange={e => updateWork(item.id, "tags", e.target.value)}
-                        placeholder="cth: E-Commerce, Brand"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-zinc-500 text-xs mb-1 block">URL Gambar</label>
-                      <input
-                        type="text"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 focus:outline-none focus:border-blue-500"
-                        value={item.image}
-                        onChange={e => updateWork(item.id, "image", e.target.value)}
-                        placeholder="cth: /resources/Wedding/wedding.webp"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-zinc-500 text-xs mb-1 block">Link halaman</label>
-                      <input
-                        type="text"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 focus:outline-none focus:border-blue-500"
-                        value={item.link}
-                        onChange={e => updateWork(item.id, "link", e.target.value)}
-                        placeholder="cth: /wedding"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-zinc-500 text-xs mb-1 block">Urutan</label>
-                      <input
-                        type="number"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 focus:outline-none focus:border-blue-500"
-                        value={item.order_index}
-                        onChange={e => updateWork(item.id, "order_index", Number(e.target.value))}
-                      />
-                    </div>
-                  </div>
-                  {item.image && (
-                    <img src={item.image} className="rounded-xl max-h-36 object-cover border border-zinc-700 mb-3" />
-                  )}
-                  <button
-                    onClick={() => deleteWork(item)}
-                    className="flex items-center gap-1.5 text-xs text-zinc-500 hover:text-red-400 transition"
-                  >
-                    <Trash2 size={13} /> Hapus
-                  </button>
-                </div>
+            <p className="text-zinc-500 text-sm mb-5">Edit portfolio/works. Kategori menentukan di halaman mana project muncul.</p>
+
+            {/* Filter Tabs */}
+            <div className="flex gap-2 mb-6 flex-wrap">
+              {["all", "wedding", "music", "production", "workshop"].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setFilterCategory(cat)}
+                  className={`px-4 py-1.5 rounded-lg text-xs capitalize transition ${
+                    filterCategory === cat ? "bg-white text-black" : "bg-zinc-800 text-zinc-400 hover:text-white"
+                  }`}
+                >
+                  {cat}
+                </button>
               ))}
             </div>
-            <div className="flex gap-3">
-              <button
-                onClick={addWork}
-                className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 transition px-5 py-2.5 rounded-xl text-sm border border-zinc-700"
-              >
-                <Plus size={14} /> Tambah Project
+
+            <div className="flex flex-col gap-6 mb-6">
+              {works
+                .filter(item => filterCategory === "all" || item.category === filterCategory)
+                .map((item) => (
+                  <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-3xl p-5 flex flex-col md:flex-row gap-6 relative group">
+
+                    {/* MEDIA UPLOADER */}
+                    <div className="w-full md:w-40 h-40 bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700 shrink-0 relative flex flex-col items-center justify-center">
+                      {item.image ? (
+                        <img src={item.image} className="w-full h-full object-cover" alt="Preview" />
+                      ) : (
+                        <div className="text-zinc-600"><ImageIcon size={32} /></div>
+                      )}
+                      <label className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer">
+                        {uploading === item.id ? <Loader2 className="animate-spin" /> : <HardDriveUpload />}
+                        <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, item.id)} />
+                      </label>
+                    </div>
+
+                    {/* FORM FIELDS */}
+                    <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {/* Judul */}
+                      <div>
+                        <label className="text-zinc-500 text-xs mb-1 block">Judul</label>
+                        <input
+                          className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                          value={item.title || ""}
+                          onChange={e => updateWork(item.id, "title", e.target.value)}
+                          placeholder="cth: The Garden Arch"
+                        />
+                      </div>
+
+                      {/* Kategori */}
+                      <div>
+                        <label className="text-zinc-500 text-xs mb-1 block">Kategori</label>
+                        <select
+                          className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                          value={item.category || "wedding"}
+                          onChange={e => updateWork(item.id, "category", e.target.value)}
+                        >
+                          <option value="wedding">Wedding</option>
+                          <option value="music">Music</option>
+                          <option value="production">Production</option>
+                          <option value="workshop">Workshop</option>
+                        </select>
+                      </div>
+
+                      {/* ✦ TAMBAHAN: Subkategori — hanya tampil jika kategori = wedding */}
+                      {item.category === "wedding" && (
+                        <div>
+                          <label className="text-zinc-500 text-xs mb-1 block">
+                            Subkategori <span className="text-amber-500">(filter di halaman wedding)</span>
+                          </label>
+                          <select
+                            className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700 border-amber-800/40"
+                            value={item.subcategory || "wedding"}
+                            onChange={e => updateWork(item.id, "subcategory", e.target.value)}
+                          >
+                            {WEDDING_SUBCATEGORIES.map(s => (
+                              <option key={s} value={s}>
+                                {s.charAt(0).toUpperCase() + s.slice(1)}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+
+                      {/* ✦ TAMBAHAN: Meta info — hanya tampil jika kategori = wedding */}
+                      {item.category === "wedding" && (
+                        <div>
+                          <label className="text-zinc-500 text-xs mb-1 block">
+                            Info Tambahan <span className="text-amber-500">(cth: March 2024 · 250 pax)</span>
+                          </label>
+                          <input
+                            className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700 border-amber-800/40"
+                            value={item.meta || ""}
+                            onChange={e => updateWork(item.id, "meta", e.target.value)}
+                            placeholder="cth: March 2024 · 250 pax"
+                          />
+                        </div>
+                      )}
+
+                      {/* Tags */}
+                      <div>
+                        <label className="text-zinc-500 text-xs mb-1 block">Tags</label>
+                        <input
+                          className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                          value={item.tags || ""}
+                          onChange={e => updateWork(item.id, "tags", e.target.value)}
+                          placeholder="cth: outdoor, intimate, java"
+                        />
+                      </div>
+
+                      {/* Urutan + Delete */}
+                      <div className="flex gap-2 items-end">
+                        <div className="flex-1">
+                          <label className="text-zinc-500 text-xs mb-1 block">Urutan</label>
+                          <input
+                            type="number"
+                            className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                            value={item.order_index || 0}
+                            onChange={e => updateWork(item.id, "order_index", Number(e.target.value))}
+                          />
+                        </div>
+                        <button
+                          onClick={() => deleteWork(item)}
+                          className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            <div className="flex gap-4 mt-8">
+              <button onClick={addWork} className="flex-1 bg-zinc-800 hover:bg-zinc-700 py-3 rounded-xl text-sm border border-zinc-700">
+                <Plus size={14} className="inline mr-1" /> Tambah Project
               </button>
-              <button
-                onClick={saveWorks}
-                disabled={saving}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 transition px-6 py-2.5 rounded-xl font-semibold text-sm disabled:opacity-50"
-              >
-                <Save size={14} />
-                {saving ? "Menyimpan..." : "Simpan Works"}
+              <button onClick={saveWorks} disabled={saving} className="flex-1 bg-blue-600 hover:bg-blue-500 py-3 rounded-xl text-sm font-bold disabled:opacity-50">
+                {saving ? "Menyimpan..." : "Simpan Semua Works"}
               </button>
             </div>
           </div>
