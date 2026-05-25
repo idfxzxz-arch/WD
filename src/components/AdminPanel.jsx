@@ -505,6 +505,7 @@ export default function AdminPanel() {
                           <option value="music">Music</option>
                           <option value="production">Production</option>
                           <option value="workshop">Workshop</option>
+                          <option value="event">Event</option>
                         </select>
                       </div>
 
