@@ -4,26 +4,42 @@ import { ArrowUpRight } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { supabase } from "../lib/supabase"
 
+const CATEGORY_ROUTES = {
+  wedding:    "/wedding",
+  music:      "/music",
+  production: "/production",
+  workshop:   "/workshop",
+  event:      "/event",
+}
+
+function getLink(item) {
+  const cat = (item.category || "").toLowerCase().trim()
+  
+  // 1. Prioritaskan rute internal aplikasi berdasarkan kategori
+  if (CATEGORY_ROUTES[cat]) {
+    return CATEGORY_ROUTES[cat]
+  }
+
+  // 2. Fallback ke custom link jika kategori tidak terdaftar
+  const itemLink = item.link ? item.link.trim() : ""
+  if (itemLink && itemLink !== "/" && itemLink !== "") {
+    return itemLink
+  }
+  
+  return "/"
+}
+
 function ProjectCard({ item, index }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-80px" })
   const isEven = index % 2 === 0
   const [rotate, setRotate] = useState({ x: 0, y: 0 })
 
-  // 1. OMTOMATISASI ROUTING BERDASARKAN KATEGORI
-  const validCategories = ["production", "event", "music", "wedding", "workshop"]
-  const itemCategory = item.category?.toLowerCase().trim()
-
-  // Jika kategorinya cocok dengan list di atas, arahkan ke /[nama-kategori]
-  // Jika tidak, pakai item.link dari database atau '#' sebagai fallback
-  const targetLink = validCategories.includes(itemCategory)
-    ? `/${itemCategory}`
-    : (item.link || "#")
-
-  // tags bisa berupa string "A, B" atau array
   const tags = Array.isArray(item.tags)
     ? item.tags
     : (item.tags || "").split(",").map(t => t.trim()).filter(Boolean)
+
+  const dest = getLink(item)
 
   return (
     <motion.div
@@ -41,8 +57,7 @@ function ProjectCard({ item, index }) {
       }}
       onMouseLeave={() => setRotate({ x: 0, y: 0 })}
     >
-      {/* Gunakan targetLink hasil mapping dinamis */}
-      <Link to={targetLink} className="group block">
+      <Link to={dest} className="group block no-underline text-inherit z-30 relative">
         {/* IMAGE */}
         <div className="relative rounded-2xl overflow-hidden bg-neutral-100">
           <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500 bg-black/10">
@@ -78,7 +93,7 @@ function ProjectCard({ item, index }) {
               ))}
             </div>
             <motion.h3
-              className="text-base font-medium leading-snug"
+              className="text-base font-medium leading-snug text-neutral-900"
               whileHover={{ x: 6 }}
               transition={{ duration: 0.25 }}
             >
@@ -106,7 +121,25 @@ export default function Works() {
       .from("works")
       .select("*")
       .order("order_index")
-      .then(({ data }) => setProjects(data || []))
+      .then(({ data }) => {
+        if (data) {
+          // KITA KEMBALIKAN LOGIKA FILTER UNIKNYA DI SINI
+          const uniqueDivisions = []
+          const seenCategories = new Set()
+
+          data.forEach((item) => {
+            const category = (item.category || "").toLowerCase().trim()
+            
+            // Jika kategorinya belum ada di dalam Set, masukkan ke array uniqueDivisions
+            if (!seenCategories.has(category)) {
+              seenCategories.add(category)
+              uniqueDivisions.push(item)
+            }
+          })
+
+          setProjects(uniqueDivisions)
+        }
+      })
   }, [])
 
   useEffect(() => {
@@ -128,15 +161,17 @@ export default function Works() {
           className="flex items-end justify-between mb-16"
         >
           <h2 className="text-4xl font-light tracking-tight">Selected Works</h2>
-          <span className="text-sm text-neutral-400 mb-1">{projects.length} projects</span>
+          <span className="text-sm text-neutral-400 mb-1">{projects.length} divisions</span>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-x-10 gap-y-20">
+          {/* Kolom Kiri */}
           <div className="flex flex-col gap-20">
             {projects.filter((_, i) => i % 2 === 0).map((item, i) => (
               <ProjectCard key={item.id} item={item} index={i * 2} />
             ))}
           </div>
+          {/* Kolom Kanan (Masonry Offset Effect) */}
           <div className="flex flex-col gap-20 md:mt-32">
             {projects.filter((_, i) => i % 2 !== 0).map((item, i) => (
               <ProjectCard key={item.id} item={item} index={i * 2 + 1} />

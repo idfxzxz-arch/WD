@@ -12,7 +12,6 @@ const CONTENT_SECTIONS = {
     { key: "title", label: "Judul About", type: "text" },
     { key: "description", label: "Deskripsi", type: "textarea" },
   ],
-  // ✦ TAMBAHAN: Section wedding untuk halaman WeddingBrandLayout
   wedding: [
     { key: "title", label: "Nama Brand / Judul", type: "text" },
     { key: "description", label: "Deskripsi (muncul di section About)", type: "textarea" },
@@ -23,6 +22,29 @@ const CONTENT_SECTIONS = {
     { key: "stat_years", label: "Stat: Tahun Pengalaman (cth: 7)", type: "text" },
     { key: "stat_happy", label: "Stat: Happy Couples % (cth: 98%)", type: "text" },
     { key: "contact_link", label: "Link WhatsApp / Contact Person", type: "text" },
+  ],
+  music: [
+    { key: "title", label: "Nama Brand / Judul (cth: Music Production)", type: "text" },
+    { key: "description", label: "Deskripsi", type: "textarea" },
+    { key: "stat_shows", label: "Stat: Jumlah Shows (cth: 150+)", type: "text" },
+    { key: "stat_artists", label: "Stat: Jumlah Artists (cth: 40+)", type: "text" },
+    { key: "stat_years", label: "Stat: Tahun Pengalaman (cth: 7)", type: "text" },
+    { key: "contact_link", label: "Link WhatsApp / Contact", type: "text" },
+  ],
+  production: [
+    { key: "title", label: "Nama Brand / Judul", type: "text" },
+    { key: "description", label: "Deskripsi", type: "textarea" },
+    { key: "contact_link", label: "Link WhatsApp / Contact", type: "text" },
+  ],
+  workshop: [
+    { key: "title", label: "Nama Brand / Judul", type: "text" },
+    { key: "description", label: "Deskripsi", type: "textarea" },
+    { key: "contact_link", label: "Link WhatsApp / Contact", type: "text" },
+  ],
+  event: [
+    { key: "title", label: "Nama Brand / Judul", type: "text" },
+    { key: "description", label: "Deskripsi", type: "textarea" },
+    { key: "contact_link", label: "Link WhatsApp / Contact", type: "text" },
   ],
   services: [
     { key: "title", label: "Judul Section Services", type: "text" },
@@ -36,15 +58,37 @@ const CONTENT_SECTIONS = {
   ],
 }
 
+const CATEGORY_ROUTES = {
+  wedding: "/wedding",
+  music: "/music",
+  production: "/production",
+  workshop: "/workshop",
+  event: "/event",
+}
+
+const SUBCATEGORIES = {
+  wedding:    ["ceremony", "reception", "decor", "portrait"],
+  music:      ["performance", "recording", "concert", "behind the scene"],
+  production: ["film", "photo", "video", "commercial"],
+  workshop:   ["class", "seminar", "training", "bootcamp"],
+  event:      ["corporate", "concert", "exhibition", "private"],
+}
+
+const SECTION_COLORS = {
+  wedding:    { tab: "border-amber-800/40 text-amber-400",   banner: "bg-amber-950/30 border-amber-800/30 text-amber-300",  icon: "💍" },
+  music:      { tab: "border-violet-800/40 text-violet-400", banner: "bg-violet-950/30 border-violet-800/30 text-violet-300", icon: "🎵" },
+  production: { tab: "border-blue-800/40 text-blue-400",     banner: "bg-blue-950/30 border-blue-800/30 text-blue-300",      icon: "🎬" },
+  workshop:   { tab: "border-green-800/40 text-green-400",   banner: "bg-green-950/30 border-green-800/30 text-green-300",   icon: "🛠️" },
+  event:      { tab: "border-rose-800/40 text-rose-400",     banner: "bg-rose-950/30 border-rose-800/30 text-rose-300",      icon: "🎪" },
+}
+
 const LANGS = [
   { code: "id", label: "🇮🇩 Indonesia" },
   { code: "en", label: "🇬🇧 English" },
 ]
 
-const TABS = ["hero", "about", "wedding", "services", "contact", "scope", "works"]
-
-// Subkategori khusus untuk works kategori wedding
-const WEDDING_SUBCATEGORIES = ["wedding", "ceremony", "reception", "decor", "portrait"]
+const CONTENT_TABS = ["hero", "about", "wedding", "music", "production", "workshop", "event", "services", "contact"]
+const ALL_TABS = [...CONTENT_TABS, "scope", "works"]
 
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function AdminPanel() {
@@ -62,7 +106,6 @@ export default function AdminPanel() {
   useEffect(() => { fetchContent() }, [lang])
   useEffect(() => { fetchScope() }, [])
   useEffect(() => { fetchWorks() }, [])
-
   useEffect(() => {
     const getAdminProfile = async () => {
       const { data: { user } } = await supabase.auth.getUser()
@@ -103,30 +146,23 @@ export default function AdminPanel() {
       const file = event.target.files?.[0]
       if (!file) return
       setUploading(workId)
-
       const fileExt = file.name.split(".").pop()
       const uniqueFileName = `${Date.now()}-${Math.floor(Math.random() * 1000)}.${fileExt}`
       const filePath = `works/${uniqueFileName}`
-
       const { error: uploadError } = await supabase.storage.from("photos").upload(filePath, file)
       if (uploadError) throw uploadError
-
       const { data: { publicUrl } } = supabase.storage.from("photos").getPublicUrl(filePath)
-
       const isNewItem = String(workId).startsWith("new_")
       if (!isNewItem) {
         const { error: dbError } = await supabase.from("works").update({ image: publicUrl }).eq("id", workId)
         if (dbError) throw dbError
       }
-
       updateWork(workId, "image", publicUrl)
-
       await supabase.from("activities").insert([{
         admin_email: adminEmail,
         action_name: "Uploaded Media",
         target_name: `Image for Project (${uniqueFileName})`
       }])
-
       showToast("✓ Gambar berhasil diunggah!")
     } catch (error) {
       alert("Gagal mengunggah gambar: " + error.message)
@@ -137,22 +173,16 @@ export default function AdminPanel() {
 
   // ─── CONTENT ──────────────────────────────────────────────────────────────
   const handleChange = (section, key, value) => {
-    setContent(prev => ({
-      ...prev,
-      [section]: { ...prev[section], [key]: value }
-    }))
+    setContent(prev => ({ ...prev, [section]: { ...prev[section], [key]: value } }))
   }
 
   const saveContent = async (section) => {
     setSaving(true)
     const fields = content[section] || {}
     const updates = Object.entries(fields).map(([key, value]) => ({
-      section, key, value, lang,
-      updated_at: new Date().toISOString()
+      section, key, value, lang, updated_at: new Date().toISOString()
     }))
-
     const { error } = await supabase.from("content").upsert(updates, { onConflict: "section,key,lang" })
-
     if (!error) {
       await supabase.from("activities").insert([{
         admin_email: adminEmail,
@@ -172,50 +202,27 @@ export default function AdminPanel() {
   const updateScope = (id, field, value) => {
     setScopeItems(prev => prev.map(item => item.id === id ? { ...item, [field]: value } : item))
   }
-
   const addScope = () => {
-    setScopeItems(prev => [...prev, {
-      id: `new_${Date.now()}`, name: "", link: "#",
-      order_index: prev.length, _new: true
-    }])
+    setScopeItems(prev => [...prev, { id: `new_${Date.now()}`, name: "", link: "#", order_index: prev.length, _new: true }])
   }
-
   const deleteScope = async (item) => {
     if (!item._new) {
-      const { error } = await supabase.from("scope_services").delete().eq("id", item.id)
-      if (!error) {
-        await supabase.from("activities").insert([{
-          admin_email: adminEmail,
-          action_name: "Deleted Scope Item",
-          target_name: item.name || "Unnamed Scope Item"
-        }])
-      }
+      await supabase.from("scope_services").delete().eq("id", item.id)
     }
     setScopeItems(prev => prev.filter(s => s.id !== item.id))
   }
-
   const saveScope = async () => {
     setSaving(true)
     try {
       for (const item of scopeItems) {
         const { id, _new, ...rest } = item
-        if (_new) {
-          const { error } = await supabase.from("scope_services").insert(rest)
-          if (error) throw error
-        } else {
-          const { error } = await supabase.from("scope_services").update(rest).eq("id", id)
-          if (error) throw error
-        }
+        if (_new) { await supabase.from("scope_services").insert(rest) }
+        else { await supabase.from("scope_services").update(rest).eq("id", id) }
       }
-      await supabase.from("activities").insert([{
-        admin_email: adminEmail,
-        action_name: "Saved Scope List",
-        target_name: "Scope Services Manager"
-      }])
       await fetchScope()
       showToast("✓ Scope disimpan!")
     } catch (error) {
-      alert("Gagal menyimpan scope: " + error.message)
+      alert("Gagal: " + error.message)
     } finally {
       setSaving(false)
     }
@@ -225,45 +232,32 @@ export default function AdminPanel() {
   const updateWork = (id, field, value) => {
     setWorks(prev => prev.map(w => w.id === id ? { ...w, [field]: value } : w))
   }
-
   const addWork = () => {
+    const cat = filterCategory !== "all" ? filterCategory : "wedding"
     setWorks(prev => [...prev, {
       id: `new_${Date.now()}`,
-      title: "", tags: "", image: "", link: "/",
-      category: filterCategory !== "all" ? filterCategory : "wedding",
-      subcategory: "wedding",  // ✦ TAMBAHAN
-      meta: "",                // ✦ TAMBAHAN
+      title: "", tags: "", image: "",
+      link: "",           // ← kosong, biar getLink() di Works.jsx fallback ke category
+      category: cat,
+      subcategory: SUBCATEGORIES[cat]?.[0] || "",
+      meta: "",
       order_index: prev.length,
       _new: true
     }])
   }
-
   const deleteWork = async (item) => {
-    if (!item._new) {
-      const { error } = await supabase.from("works").delete().eq("id", item.id)
-      if (!error) {
-        await supabase.from("activities").insert([{
-          admin_email: adminEmail,
-          action_name: "Deleted Work Item",
-          target_name: item.title || "Unnamed Project"
-        }])
-      }
-    }
+    if (!item._new) await supabase.from("works").delete().eq("id", item.id)
     setWorks(prev => prev.filter(w => w.id !== item.id))
   }
-
   const saveWorks = async () => {
     setSaving(true)
     try {
       for (const item of works) {
         const { id, _new, ...rest } = item
-        if (_new) {
-          const { error } = await supabase.from("works").insert(rest)
-          if (error) throw error
-        } else {
-          const { error } = await supabase.from("works").update(rest).eq("id", id)
-          if (error) throw error
-        }
+        // Pastikan link selalu kosong supaya navigasi otomatis by category
+        rest.link = ""
+        if (_new) { await supabase.from("works").insert(rest) }
+        else { await supabase.from("works").update(rest).eq("id", id) }
       }
       await supabase.from("activities").insert([{
         admin_email: adminEmail,
@@ -273,18 +267,19 @@ export default function AdminPanel() {
       await fetchWorks()
       showToast("✓ Works disimpan!")
     } catch (error) {
-      alert("Gagal menyimpan portfolio: " + error.message)
+      alert("Gagal: " + error.message)
     } finally {
       setSaving(false)
     }
   }
 
   // ─── RENDER ───────────────────────────────────────────────────────────────
+  const divisionTabs = ["wedding", "music", "production", "workshop", "event"]
+
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans">
-
       {toast && (
-        <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-white text-sm px-5 py-3 rounded-2xl shadow-lg animate-in fade-in slide-in-from-top-4 duration-300">
+        <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-white text-sm px-5 py-3 rounded-2xl shadow-lg">
           {toast}
         </div>
       )}
@@ -300,50 +295,65 @@ export default function AdminPanel() {
           <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-2xl px-1 py-1">
             <Globe size={14} className="text-zinc-500 ml-2" />
             {LANGS.map(l => (
-              <button
-                key={l.code}
-                onClick={() => setLang(l.code)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium transition ${
-                  lang === l.code ? "bg-white text-black" : "text-zinc-400 hover:text-white"
-                }`}
-              >
+              <button key={l.code} onClick={() => setLang(l.code)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-medium transition ${lang === l.code ? "bg-white text-black" : "text-zinc-400 hover:text-white"}`}>
                 {l.label}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-1.5 flex-wrap mb-8">
-          {TABS.map(tab => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-xl text-sm capitalize font-medium transition ${
-                activeTab === tab
-                  ? "bg-white text-black"
-                  : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"
-              } ${tab === "wedding" ? "border border-amber-800/40 text-amber-400" : ""}`}
-            >
-              {tab === "wedding" ? "💍 Wedding" : tab}
+        {/* Tabs — grouped */}
+        <div className="flex gap-1.5 flex-wrap mb-2">
+          {["hero", "about", "services", "contact"].map(tab => (
+            <button key={tab} onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 rounded-xl text-sm capitalize font-medium transition ${activeTab === tab ? "bg-white text-black" : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"}`}>
+              {tab}
             </button>
           ))}
         </div>
 
-        {/* ── CONTENT SECTIONS (hero / about / wedding / services / contact) ── */}
+        {/* Division tabs */}
+        <div className="flex gap-1.5 flex-wrap mb-2 mt-1">
+          {divisionTabs.map(tab => {
+            const col = SECTION_COLORS[tab]
+            return (
+              <button key={tab} onClick={() => setActiveTab(tab)}
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition border ${activeTab === tab ? "bg-white text-black border-white" : `bg-zinc-900 border-zinc-800 hover:text-white ${col.tab}`}`}>
+                {col.icon} {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Utility tabs */}
+        <div className="flex gap-1.5 flex-wrap mb-8 mt-1">
+          {["scope", "works"].map(tab => (
+            <button key={tab} onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 rounded-xl text-sm capitalize font-medium transition ${activeTab === tab ? "bg-white text-black" : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"}`}>
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {/* ── CONTENT SECTIONS ── */}
         {CONTENT_SECTIONS[activeTab] && (
           <div>
-            {activeTab === "wedding" && (
-              <div className="bg-amber-950/30 border border-amber-800/30 rounded-2xl px-5 py-4 mb-6 text-sm text-amber-300">
-                <p className="font-medium mb-1">💍 Konten Halaman Wedding</p>
-                <p className="text-amber-400/70 text-xs">Perubahan di sini akan langsung tampil di halaman <code className="bg-amber-900/40 px-1 rounded">/wedding</code>. Field Stats & link tidak terpengaruh bahasa.</p>
+            {/* Division info banner */}
+            {SECTION_COLORS[activeTab] && (
+              <div className={`border rounded-2xl px-5 py-4 mb-6 text-sm ${SECTION_COLORS[activeTab].banner}`}>
+                <p className="font-medium mb-1">{SECTION_COLORS[activeTab].icon} Konten Halaman {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</p>
+                <p className="opacity-70 text-xs">
+                  Tampil di halaman <code className="bg-black/20 px-1 rounded">/{activeTab}</code>.
+                  Foto dikelola di tab <strong>Works</strong> → filter kategori <strong>{activeTab}</strong>.
+                </p>
               </div>
             )}
 
-            {activeTab !== "wedding" && (
+            {!SECTION_COLORS[activeTab] && (
               <div className="flex items-center gap-2 text-xs text-zinc-500 mb-6">
                 <Globe size={12} />
-                Mengedit konten bahasa: <span className="text-white font-medium">{lang === "id" ? "Indonesia" : "English"}</span>
+                Mengedit bahasa: <span className="text-white font-medium">{lang === "id" ? "Indonesia" : "English"}</span>
               </div>
             )}
 
@@ -355,14 +365,13 @@ export default function AdminPanel() {
                     <label className="text-zinc-400 text-sm mb-1.5 block">{f.label}</label>
                     {f.type === "textarea" ? (
                       <textarea
-                        className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm resize-y min-h-[80px] border border-zinc-700 focus:outline-none focus:border-amber-500 transition"
+                        className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm resize-y min-h-[80px] border border-zinc-700 focus:outline-none focus:border-blue-500 transition"
                         value={val(activeTab, f.key)}
                         onChange={e => handleChange(activeTab, f.key, e.target.value)}
                       />
                     ) : (
-                      <input
-                        type="text"
-                        className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm border border-zinc-700 focus:outline-none focus:border-amber-500 transition"
+                      <input type="text"
+                        className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm border border-zinc-700 focus:outline-none focus:border-blue-500 transition"
                         value={val(activeTab, f.key)}
                         onChange={e => handleChange(activeTab, f.key, e.target.value)}
                       />
@@ -371,12 +380,8 @@ export default function AdminPanel() {
                 ))}
               </div>
             </div>
-
-            <button
-              onClick={() => saveContent(activeTab)}
-              disabled={saving}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 transition px-6 py-3 rounded-xl font-semibold text-sm disabled:opacity-50"
-            >
+            <button onClick={() => saveContent(activeTab)} disabled={saving}
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 transition px-6 py-3 rounded-xl font-semibold text-sm disabled:opacity-50">
               <Save size={15} />
               {saving ? "Menyimpan..." : "Simpan perubahan"}
             </button>
@@ -386,45 +391,28 @@ export default function AdminPanel() {
         {/* ── SCOPE ── */}
         {activeTab === "scope" && (
           <div>
-            <p className="text-zinc-500 text-sm mb-6">Edit daftar layanan di section Scope (tidak berpengaruh ke bahasa).</p>
+            <p className="text-zinc-500 text-sm mb-6">Edit daftar layanan di section Scope.</p>
             <div className="flex flex-col gap-4 mb-6">
               {scopeItems.map((item) => (
                 <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex gap-4 items-start">
                   <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
                       <label className="text-zinc-500 text-xs mb-1 block">Urutan</label>
-                      <input
-                        type="number"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700"
-                        value={item.order_index}
-                        onChange={e => updateScope(item.id, "order_index", Number(e.target.value))}
-                      />
+                      <input type="number" className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700"
+                        value={item.order_index} onChange={e => updateScope(item.id, "order_index", Number(e.target.value))} />
                     </div>
                     <div>
                       <label className="text-zinc-500 text-xs mb-1 block">Nama Layanan</label>
-                      <input
-                        type="text"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700"
-                        value={item.name}
-                        onChange={e => updateScope(item.id, "name", e.target.value)}
-                        placeholder="cth: Wedding Organizer"
-                      />
+                      <input type="text" className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700"
+                        value={item.name} onChange={e => updateScope(item.id, "name", e.target.value)} placeholder="cth: Wedding Organizer" />
                     </div>
                     <div>
                       <label className="text-zinc-500 text-xs mb-1 block">Link</label>
-                      <input
-                        type="text"
-                        className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700"
-                        value={item.link}
-                        onChange={e => updateScope(item.id, "link", e.target.value)}
-                        placeholder="cth: /wedding"
-                      />
+                      <input type="text" className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700"
+                        value={item.link} onChange={e => updateScope(item.id, "link", e.target.value)} placeholder="cth: /wedding" />
                     </div>
                   </div>
-                  <button
-                    onClick={() => deleteScope(item)}
-                    className="mt-6 p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-400/10 transition"
-                  >
+                  <button onClick={() => deleteScope(item)} className="mt-6 p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-400/10 transition">
                     <Trash2 size={15} />
                   </button>
                 </div>
@@ -444,19 +432,25 @@ export default function AdminPanel() {
         {/* ── WORKS ── */}
         {activeTab === "works" && (
           <div>
-            <p className="text-zinc-500 text-sm mb-5">Edit portfolio/works. Kategori menentukan di halaman mana project muncul.</p>
+            {/* Info box */}
+            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl px-5 py-4 mb-6 text-xs text-zinc-400">
+              <p className="font-semibold text-white mb-1">📁 Cara kerja Works</p>
+              <p>Setiap foto yang ditambah akan muncul di halaman divisinya masing-masing berdasarkan <strong>Kategori</strong>.</p>
+              <div className="flex flex-wrap gap-2 mt-3">
+                {Object.entries(CATEGORY_ROUTES).map(([cat, route]) => (
+                  <span key={cat} className="bg-zinc-800 px-3 py-1 rounded-lg">
+                    {SECTION_COLORS[cat]?.icon} <strong>{cat}</strong> → <code>{route}</code>
+                  </span>
+                ))}
+              </div>
+            </div>
 
-            {/* Filter Tabs */}
+            {/* Filter */}
             <div className="flex gap-2 mb-6 flex-wrap">
-              {["all", "wedding", "music", "production", "workshop","event"].map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setFilterCategory(cat)}
-                  className={`px-4 py-1.5 rounded-lg text-xs capitalize transition ${
-                    filterCategory === cat ? "bg-white text-black" : "bg-zinc-800 text-zinc-400 hover:text-white"
-                  }`}
-                >
-                  {cat}
+              {["all", "wedding", "music", "production", "workshop", "event"].map((cat) => (
+                <button key={cat} onClick={() => setFilterCategory(cat)}
+                  className={`px-4 py-1.5 rounded-lg text-xs capitalize transition ${filterCategory === cat ? "bg-white text-black" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>
+                  {SECTION_COLORS[cat] ? `${SECTION_COLORS[cat].icon} ` : ""}{cat}
                 </button>
               ))}
             </div>
@@ -467,109 +461,87 @@ export default function AdminPanel() {
                 .map((item) => (
                   <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-3xl p-5 flex flex-col md:flex-row gap-6 relative group">
 
-                    {/* MEDIA UPLOADER */}
-                    <div className="w-full md:w-40 h-40 bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700 shrink-0 relative flex flex-col items-center justify-center">
-                      {item.image ? (
-                        <img src={item.image} className="w-full h-full object-cover" alt="Preview" />
-                      ) : (
-                        <div className="text-zinc-600"><ImageIcon size={32} /></div>
-                      )}
+                    {/* Kategori badge */}
+                    <div className="absolute top-4 right-4">
+                      <span className={`text-xs px-2 py-1 rounded-lg font-medium ${
+                        item.category === "wedding"    ? "bg-amber-900/40 text-amber-400" :
+                        item.category === "music"      ? "bg-violet-900/40 text-violet-400" :
+                        item.category === "production" ? "bg-blue-900/40 text-blue-400" :
+                        item.category === "workshop"   ? "bg-green-900/40 text-green-400" :
+                        item.category === "event"      ? "bg-rose-900/40 text-rose-400" :
+                        "bg-zinc-800 text-zinc-400"
+                      }`}>
+                        {SECTION_COLORS[item.category]?.icon} → {CATEGORY_ROUTES[item.category] || "/"}
+                      </span>
+                    </div>
+
+                    {/* Media uploader */}
+                    <div className="w-full md:w-40 h-40 bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700 shrink-0 relative flex items-center justify-center">
+                      {item.image
+                        ? <img src={item.image} className="w-full h-full object-cover" alt="Preview" />
+                        : <div className="text-zinc-600"><ImageIcon size={32} /></div>
+                      }
                       <label className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer">
                         {uploading === item.id ? <Loader2 className="animate-spin" /> : <HardDriveUpload />}
-                        <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, item.id)} />
+                        <span className="text-xs mt-1 text-white">Upload foto</span>
+                        <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, item.id)} />
                       </label>
                     </div>
 
-                    {/* FORM FIELDS */}
+                    {/* Form fields */}
                     <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* Judul */}
                       <div>
                         <label className="text-zinc-500 text-xs mb-1 block">Judul</label>
-                        <input
-                          className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
-                          value={item.title || ""}
-                          onChange={e => updateWork(item.id, "title", e.target.value)}
-                          placeholder="cth: The Garden Arch"
-                        />
+                        <input className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                          value={item.title || ""} onChange={e => updateWork(item.id, "title", e.target.value)} placeholder="Nama project" />
                       </div>
 
-                      {/* Kategori */}
                       <div>
                         <label className="text-zinc-500 text-xs mb-1 block">Kategori</label>
-                        <select
-                          className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
-                          value={item.category || "wedding"}
-                          onChange={e => updateWork(item.id, "category", e.target.value)}
-                        >
-                          <option value="wedding">Wedding</option>
-                          <option value="music">Music</option>
-                          <option value="production">Production</option>
-                          <option value="workshop">Workshop</option>
-                          <option value="event">Event</option>
+                        <select className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                          value={item.category || "wedding"} onChange={e => updateWork(item.id, "category", e.target.value)}>
+                          <option value="wedding">💍 Wedding</option>
+                          <option value="music">🎵 Music</option>
+                          <option value="production">🎬 Production</option>
+                          <option value="workshop">🛠️ Workshop</option>
+                          <option value="event">🎪 Event</option>
                         </select>
                       </div>
 
-                      {/* ✦ TAMBAHAN: Subkategori — hanya tampil jika kategori = wedding */}
-                      {item.category === "wedding" && (
-                        <div>
-                          <label className="text-zinc-500 text-xs mb-1 block">
-                            Subkategori <span className="text-amber-500">(filter di halaman wedding)</span>
-                          </label>
-                          <select
-                            className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700 border-amber-800/40"
-                            value={item.subcategory || "wedding"}
-                            onChange={e => updateWork(item.id, "subcategory", e.target.value)}
-                          >
-                            {WEDDING_SUBCATEGORIES.map(s => (
-                              <option key={s} value={s}>
-                                {s.charAt(0).toUpperCase() + s.slice(1)}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      )}
-
-                      {/* ✦ TAMBAHAN: Meta info — hanya tampil jika kategori = wedding */}
-                      {item.category === "wedding" && (
-                        <div>
-                          <label className="text-zinc-500 text-xs mb-1 block">
-                            Info Tambahan <span className="text-amber-500">(cth: March 2024 · 250 pax)</span>
-                          </label>
-                          <input
-                            className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700 border-amber-800/40"
-                            value={item.meta || ""}
-                            onChange={e => updateWork(item.id, "meta", e.target.value)}
-                            placeholder="cth: March 2024 · 250 pax"
-                          />
-                        </div>
-                      )}
-
-                      {/* Tags */}
                       <div>
-                        <label className="text-zinc-500 text-xs mb-1 block">Tags</label>
-                        <input
-                          className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
-                          value={item.tags || ""}
-                          onChange={e => updateWork(item.id, "tags", e.target.value)}
-                          placeholder="cth: outdoor, intimate, java"
-                        />
+                        <label className="text-zinc-500 text-xs mb-1 block">
+                          Subkategori
+                          <span className="ml-1 text-zinc-600">(filter di halaman {item.category})</span>
+                        </label>
+                        <select className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                          value={item.subcategory || ""}
+                          onChange={e => updateWork(item.id, "subcategory", e.target.value)}>
+                          <option value="">— Pilih subkategori —</option>
+                          {(SUBCATEGORIES[item.category] || []).map(s => (
+                            <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+                          ))}
+                        </select>
                       </div>
 
-                      {/* Urutan + Delete */}
+                      <div>
+                        <label className="text-zinc-500 text-xs mb-1 block">Info Tambahan <span className="text-zinc-600">(cth: March 2024 · 250 pax)</span></label>
+                        <input className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                          value={item.meta || ""} onChange={e => updateWork(item.id, "meta", e.target.value)} placeholder="cth: 2024 · 300 pax" />
+                      </div>
+
+                      <div>
+                        <label className="text-zinc-500 text-xs mb-1 block">Tags <span className="text-zinc-600">(pisah koma)</span></label>
+                        <input className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                          value={item.tags || ""} onChange={e => updateWork(item.id, "tags", e.target.value)} placeholder="outdoor, intimate" />
+                      </div>
+
                       <div className="flex gap-2 items-end">
                         <div className="flex-1">
                           <label className="text-zinc-500 text-xs mb-1 block">Urutan</label>
-                          <input
-                            type="number"
-                            className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
-                            value={item.order_index || 0}
-                            onChange={e => updateWork(item.id, "order_index", Number(e.target.value))}
-                          />
+                          <input type="number" className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                            value={item.order_index || 0} onChange={e => updateWork(item.id, "order_index", Number(e.target.value))} />
                         </div>
-                        <button
-                          onClick={() => deleteWork(item)}
-                          className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition"
-                        >
+                        <button onClick={() => deleteWork(item)} className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition">
                           <Trash2 size={16} />
                         </button>
                       </div>

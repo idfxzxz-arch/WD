@@ -10,7 +10,11 @@ import Works from "./components/works"
 import Cta from "./components/Cta"
 import TeamHero from "./components/TeamHero"
 import Scope from "./components/scope"
-import Wedding from "./pages/wedding"
+
+// 👇 1. PASTIKAN IMPORT INI MENGARAH KE FILE KODE IPAD SHOWCASE ANDA
+// Jika kode iPad tadi Anda simpan di folder pages dengan nama WeddingTestimonialsIpad.jsx:
+import Wedding from "./pages/wedding" 
+
 import Workshop from "./pages/workshop"
 import Music from "./pages/music"
 import Event from "./pages/event"
@@ -43,7 +47,10 @@ export default function App() {
           {/* WEBSITE */}
           <Route path="/" element={<Home />} />
           <Route path="/works" element={<Works />} />
+          
+          {/* 👇 2. GANTI ELEMENTNYA DENGAN KOMPONEN WEDDING IPAD */}
           <Route path="/wedding" element={<Wedding />} />
+          
           <Route path="/workshop" element={<Workshop />} />
           <Route path="/music" element={<Music />} />
           <Route path="/event" element={<Event />} />
@@ -55,7 +62,7 @@ export default function App() {
           {/* ADMIN */}
           <Route
             path="/admin"
-            element={
+            element = {
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>

@@ -132,7 +132,7 @@ const css = `
 
 const TESTI_TABS = ["All Reviews", "Akad", "Resepsi", "Outdoor"];
 
-export default function WeddingTestimonialsIpad() {
+export default function Wedding() {
   const [works, setWorks] = useState([]);
   const [activeTab, setActiveTab] = useState("All Reviews");
   const [shortlist, setShortlist] = useState([]);
@@ -204,7 +204,7 @@ export default function WeddingTestimonialsIpad() {
         {/* TOP NAVBAR */}
         <nav className="wo-testi-nav">
           <button className="wo-testi-back" onClick={() => navigate("/")}>
-            ← Back to Gallery
+            &larr; Back to Gallery
           </button>
           <div className="wo-testi-nav-logo">WD<span>Group</span>Company</div>
           <div className="text-xs font-bold uppercase tracking-widest text-[#FF5A24] bg-[#FF5A24]/10 px-4 py-1.5 rounded-full">
@@ -246,7 +246,7 @@ export default function WeddingTestimonialsIpad() {
                   {TESTI_TABS.map((tab) => (
                     <button
                       key={tab}
-                      className={`wo-testi-tab-btn ${activeTab === tab ? "active" : ""}`}
+                      className={`wo-testi-ipad-tab-btn ${activeTab === tab ? "active" : ""}`}
                       onClick={() => setActiveTab(tab)}
                     >
                       {tab}
