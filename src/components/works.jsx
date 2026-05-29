@@ -12,6 +12,17 @@ const CATEGORY_ROUTES = {
   event:      "/event",
 }
 
+const FALLBACK_DIVISIONS = [
+  {
+    id: "fallback-wd-it",
+    title: "WD IT",
+    category: "it",
+    image: "/resources/hero.webp",
+    tags: "Website,Digital Solution,IT Support",
+    link: "#contact",
+  },
+]
+
 const DIVISION_NAMES = {
   wedding: "WD Sky Wedding Organizer",
   production: "WD Production",
@@ -146,6 +157,14 @@ export default function Works() {
             const category = (item.category || "").toLowerCase().trim()
             
             // Jika kategorinya belum ada di dalam Set, masukkan ke array uniqueDivisions
+            if (!seenCategories.has(category)) {
+              seenCategories.add(category)
+              uniqueDivisions.push(item)
+            }
+          })
+
+          FALLBACK_DIVISIONS.forEach((item) => {
+            const category = item.category.toLowerCase().trim()
             if (!seenCategories.has(category)) {
               seenCategories.add(category)
               uniqueDivisions.push(item)
