@@ -319,6 +319,25 @@ const css = `
     object-fit: cover;
     background: #eee;
   }
+  .wo-card::after {
+    content: "View";
+    position: absolute;
+    inset: auto 12px 12px auto;
+    z-index: 2;
+    border-radius: 999px;
+    padding: 7px 12px;
+    background: rgba(255,255,255,.88);
+    color: #211916;
+    font-size: 11px;
+    font-weight: 800;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: .2s;
+  }
+  .wo-card:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
   .wo-empty {
     grid-column: 1 / -1;
     text-align: center;
@@ -342,6 +361,121 @@ const css = `
     box-shadow: 0 20px 40px rgba(33,25,22,0.2);
     z-index: 100;
   }
+  .wo-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    background: rgba(20, 14, 12, .78);
+    backdrop-filter: blur(18px);
+  }
+  .wo-lightbox-panel {
+    width: min(1120px, 100%);
+    max-height: min(820px, calc(100vh - 56px));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    overflow: hidden;
+    border-radius: 30px;
+    background: #fffdf9;
+    border: 1px solid rgba(255,255,255,.35);
+    box-shadow: 0 42px 120px rgba(0,0,0,.35);
+  }
+  .wo-lightbox-media {
+    min-height: 620px;
+    background: #17110f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wo-lightbox-media img {
+    width: 100%;
+    height: 100%;
+    max-height: min(820px, calc(100vh - 56px));
+    object-fit: contain;
+    display: block;
+  }
+  .wo-lightbox-info {
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    color: #211916;
+  }
+  .wo-lightbox-kicker {
+    width: fit-content;
+    border-radius: 999px;
+    padding: 7px 12px;
+    background: rgba(200,159,103,.14);
+    color: #8a5e2d;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .wo-lightbox-title {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.08;
+    letter-spacing: -.04em;
+  }
+  .wo-lightbox-meta {
+    color: #8a7366;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .wo-lightbox-actions {
+    display: grid;
+    gap: 10px;
+    margin-top: auto;
+  }
+  .wo-lightbox-btn {
+    border: 1px solid rgba(76,49,37,.12);
+    background: #fff;
+    color: #211916;
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .2s;
+  }
+  .wo-lightbox-btn:hover {
+    border-color: #c89f67;
+    background: #fbf7f1;
+  }
+  .wo-lightbox-close,
+  .wo-lightbox-nav {
+    position: absolute;
+    border: 1px solid rgba(255,255,255,.22);
+    background: rgba(255,255,255,.90);
+    color: #211916;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 14px 34px rgba(0,0,0,.18);
+  }
+  .wo-lightbox-close {
+    top: 22px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    font-size: 20px;
+  }
+  .wo-lightbox-nav {
+    top: 50%;
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    font-size: 24px;
+    transform: translateY(-50%);
+  }
+  .wo-lightbox-nav.prev { left: 22px; }
+  .wo-lightbox-nav.next { right: 22px; }
 
   @media (max-width: 900px) {
     .wo-nav { padding: 16px 18px; gap: 12px; }
@@ -361,6 +495,28 @@ const css = `
       grid-column: auto;
       aspect-ratio: 16/10;
     }
+    .wo-lightbox { padding: 14px; }
+    .wo-lightbox-panel {
+      grid-template-columns: 1fr;
+      max-height: calc(100vh - 28px);
+      border-radius: 22px;
+    }
+    .wo-lightbox-media {
+      min-height: 0;
+      height: 62vh;
+    }
+    .wo-lightbox-media img {
+      max-height: 62vh;
+    }
+    .wo-lightbox-info {
+      padding: 18px;
+    }
+    .wo-lightbox-close {
+      top: 10px;
+      right: 10px;
+    }
+    .wo-lightbox-nav.prev { left: 10px; }
+    .wo-lightbox-nav.next { right: 10px; }
   }
 `;
 
@@ -371,6 +527,7 @@ export default function Wedding() {
   const [activeTab, setActiveTab] = useState("All Moments");
   const [shortlist, setShortlist] = useState([]);
   const [toastMsg, setToastMsg] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -415,6 +572,22 @@ export default function Wedding() {
       setShortlist([...shortlist, { id: item.id, title: item.title, image: item.image }]);
       triggerToast("Moment saved for inspiration");
     }
+  };
+
+  const selectedWork = selectedIndex !== null ? filteredWorks[selectedIndex] : null;
+  const openLightbox = (index) => setSelectedIndex(index);
+  const closeLightbox = () => setSelectedIndex(null);
+  const showPrev = () => {
+    setSelectedIndex((current) => {
+      if (current === null || filteredWorks.length === 0) return null;
+      return (current - 1 + filteredWorks.length) % filteredWorks.length;
+    });
+  };
+  const showNext = () => {
+    setSelectedIndex((current) => {
+      if (current === null || filteredWorks.length === 0) return null;
+      return (current + 1) % filteredWorks.length;
+    });
   };
 
   return (
@@ -520,7 +693,7 @@ export default function Wedding() {
 
                 <div className="wo-grid">
                   {filteredWorks.length > 0 ? (
-                    filteredWorks.map((item) => {
+                    filteredWorks.map((item, index) => {
                       const isSaved = shortlist.some((s) => s.id === item.id);
                       return (
                         <div
@@ -530,7 +703,7 @@ export default function Wedding() {
                             borderColor: isSaved ? "#c89f67" : "transparent",
                             boxShadow: isSaved ? "0 0 0 2px #c89f67" : ""
                           }}
-                          onClick={() => toggleShortlist(item)}
+                          onClick={() => openLightbox(index)}
                         >
                           <img
                             src={item.image}
@@ -550,6 +723,63 @@ export default function Wedding() {
             </div>
           </motion.div>
         </main>
+
+        <AnimatePresence>
+          {selectedWork && (
+            <motion.div
+              className="wo-lightbox"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeLightbox}
+            >
+              <button className="wo-lightbox-close" onClick={closeLightbox} aria-label="Close image">
+                ×
+              </button>
+              {filteredWorks.length > 1 && (
+                <>
+                  <button className="wo-lightbox-nav prev" onClick={(event) => { event.stopPropagation(); showPrev(); }} aria-label="Previous image">
+                    ‹
+                  </button>
+                  <button className="wo-lightbox-nav next" onClick={(event) => { event.stopPropagation(); showNext(); }} aria-label="Next image">
+                    ›
+                  </button>
+                </>
+              )}
+              <motion.div
+                className="wo-lightbox-panel"
+                initial={{ scale: 0.96, y: 18 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.96, y: 18 }}
+                transition={{ duration: 0.22 }}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="wo-lightbox-media">
+                  <img src={selectedWork.image} alt={selectedWork.title || "WD Sky Wedding moment"} />
+                </div>
+                <div className="wo-lightbox-info">
+                  <div className="wo-lightbox-kicker">
+                    {selectedWork.subcategory || "Wedding Moment"}
+                  </div>
+                  <h2 className="wo-lightbox-title">
+                    {selectedWork.title || "WD Sky Wedding Moment"}
+                  </h2>
+                  <p className="wo-lightbox-meta">
+                    {selectedWork.meta || "A curated wedding moment from WD Sky Wedding Organizer portfolio."}
+                  </p>
+                  <div className="wo-lightbox-actions">
+                    <button className="wo-lightbox-btn" onClick={() => toggleShortlist(selectedWork)}>
+                      {shortlist.some((s) => s.id === selectedWork.id) ? "Remove from inspiration" : "Save as inspiration"}
+                    </button>
+                    <button className="wo-lightbox-btn" onClick={closeLightbox}>
+                      Back to gallery
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );
