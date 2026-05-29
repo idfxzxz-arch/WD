@@ -131,12 +131,13 @@ export default function Hero() {
       </div>
 
       {/* TOP LOGO */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 flex items-center backdrop-blur bg-white/85 px-4 py-2 rounded-xl shadow">
+      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 backdrop-blur bg-white/70 px-4 py-2 rounded-full shadow">
         <img
           src="/wd-group-logo.jpeg"
           alt={lang.company}
-          className="h-10 sm:h-12 w-auto"
+          className="w-6 h-6 object-contain"
         />
+        <span className="text-sm font-semibold">{lang.company}</span>
       </div>
 
       {/* STICKERS */}
