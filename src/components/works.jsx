@@ -128,10 +128,10 @@ function ProjectCard({ item, index }) {
       onMouseLeave={() => setRotate({ x: 0, y: 0 })}
     >
       <Link to={dest} className="group block no-underline text-inherit z-30 relative">
-        <div className="relative rounded-[1.75rem] overflow-hidden bg-neutral-100 shadow-[0_24px_70px_-44px_rgba(0,0,0,0.55)] ring-1 ring-black/5 transition duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_34px_90px_-42px_rgba(0,0,0,0.62)]">
-          <div className="absolute left-4 top-4 z-20 flex items-center gap-2">
+        <div className="relative rounded-[1.25rem] sm:rounded-[1.75rem] overflow-hidden bg-neutral-100 shadow-[0_20px_54px_-38px_rgba(0,0,0,0.55)] sm:shadow-[0_24px_70px_-44px_rgba(0,0,0,0.55)] ring-1 ring-black/5 transition duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_34px_90px_-42px_rgba(0,0,0,0.62)]">
+          <div className="absolute left-3 top-3 sm:left-4 sm:top-4 z-20 flex items-center gap-2">
             <span
-              className="rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white shadow-lg"
+              className="rounded-full px-2.5 sm:px-3 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.12em] sm:tracking-[0.14em] text-white shadow-lg"
               style={{ backgroundColor: meta.accent }}
             >
               {meta.label}
@@ -147,14 +147,14 @@ function ProjectCard({ item, index }) {
           </div>
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1/2 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 z-20 p-5 text-white">
-            <p className="mb-2 max-w-[22rem] text-xs leading-relaxed text-white/72">
+            <p className="mb-2 max-w-[22rem] text-[11px] sm:text-xs leading-relaxed text-white/72">
               {meta.desc}
             </p>
-            <h3 className="max-w-[24rem] text-2xl font-semibold leading-tight tracking-[-0.03em]">
+            <h3 className="max-w-[24rem] text-xl sm:text-2xl font-semibold leading-tight tracking-[-0.03em]">
               {title}
             </h3>
           </div>
-          <div className={`overflow-hidden ${isEven ? "aspect-[4/5]" : "aspect-[4/4]"}`}>
+          <div className={`overflow-hidden ${isEven ? "aspect-[4/4.75] sm:aspect-[4/5]" : "aspect-[4/4.2] sm:aspect-[4/4]"}`}>
             <motion.img
               src={item.image}
               alt={title}
@@ -165,24 +165,24 @@ function ProjectCard({ item, index }) {
           </div>
         </div>
 
-        <div className="mt-5 flex items-start justify-between gap-4">
+        <div className="mt-4 sm:mt-5 flex items-start justify-between gap-3 sm:gap-4">
           <div className="space-y-2">
             <div className="flex flex-wrap gap-2">
               {tags.slice(0, 3).map((tag, j) => (
                 <span
                   key={j}
-                  className="text-xs text-neutral-500 border border-neutral-200 bg-white px-3 py-1 rounded-full shadow-sm"
+                  className="text-[11px] sm:text-xs text-neutral-500 border border-neutral-200 bg-white px-2.5 sm:px-3 py-1 rounded-full shadow-sm"
                 >
                   {tag}
                 </span>
               ))}
             </div>
-            <p className="text-sm leading-relaxed text-neutral-500">
+            <p className="text-xs sm:text-sm leading-relaxed text-neutral-500">
               Explore the division portfolio and service direction.
             </p>
           </div>
           <motion.div
-            className="shrink-0 mt-1 w-10 h-10 rounded-full border border-neutral-200 bg-white flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:border-black transition duration-300 shadow-sm"
+            className="shrink-0 mt-1 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-neutral-200 bg-white flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:border-black transition duration-300 shadow-sm"
             whileHover={{ rotate: -45, scale: 1.1 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
@@ -240,28 +240,28 @@ export default function Works() {
   }, [])
 
   return (
-    <section id="works" className="pt-32 pb-32 bg-white">
-      <div className="max-w-5xl mx-auto px-6">
+    <section id="works" className="pt-24 sm:pt-32 pb-24 sm:pb-32 bg-white">
+      <div className="max-w-5xl mx-auto px-5 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex items-end justify-between mb-16"
+          className="flex items-end justify-between gap-4 mb-10 sm:mb-16"
         >
-          <h2 className="text-4xl font-light tracking-tight">Selected Works</h2>
-          <span className="text-sm text-neutral-400 mb-1">{projects.length} divisions</span>
+          <h2 className="text-3xl sm:text-4xl font-light tracking-tight">Selected Works</h2>
+          <span className="shrink-0 text-xs sm:text-sm text-neutral-400 mb-1">{projects.length} divisions</span>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-x-10 gap-y-20">
+        <div className="grid md:grid-cols-2 gap-x-10 gap-y-14 sm:gap-y-20">
           {/* Kolom Kiri */}
-          <div className="flex flex-col gap-20">
+          <div className="flex flex-col gap-14 sm:gap-20">
             {projects.filter((_, i) => i % 2 === 0).map((item, i) => (
               <ProjectCard key={item.id} item={item} index={i * 2} />
             ))}
           </div>
           {/* Kolom Kanan (Masonry Offset Effect) */}
-          <div className="flex flex-col gap-20 md:mt-32">
+          <div className="flex flex-col gap-14 sm:gap-20 md:mt-32">
             {projects.filter((_, i) => i % 2 !== 0).map((item, i) => (
               <ProjectCard key={item.id} item={item} index={i * 2 + 1} />
             ))}
@@ -273,7 +273,7 @@ export default function Works() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mt-24 text-center"
+          className="mt-16 sm:mt-24 text-center"
         >
           <a
             href="#"

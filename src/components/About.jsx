@@ -20,15 +20,15 @@ export default function About() {
   }, [lang.code])
 
   return (
-    <section id="about" className="py-40 bg-white">
-      <div className="max-w-5xl mx-auto px-6">
-        <p className="uppercase tracking-widest text-sm mb-10">
+    <section id="about" className="py-24 sm:py-40 bg-white">
+      <div className="max-w-5xl mx-auto px-5 sm:px-6">
+        <p className="uppercase tracking-[0.22em] sm:tracking-widest text-xs sm:text-sm mb-6 sm:mb-10">
           {lang.aboutLabel}
         </p>
-        <h2 className="text-[5vw] leading-[1.1] font-medium mb-10">
+        <h2 className="text-[2.35rem] min-[390px]:text-5xl sm:text-[5vw] leading-[1.05] sm:leading-[1.1] font-medium tracking-[-0.04em] sm:tracking-normal mb-6 sm:mb-10">
           {about.title || lang.aboutTitle}
         </h2>
-        <p className="text-xl text-gray-600 max-w-3xl">
+        <p className="text-base sm:text-xl leading-relaxed text-gray-600 max-w-3xl">
           {about.description || lang.aboutDesc}
         </p>
       </div>

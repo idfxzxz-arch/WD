@@ -153,21 +153,21 @@ export default function Scope() {
     <section
       id="scope"
       ref={sectionRef}
-      className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden"
+      className="relative min-h-[88svh] sm:min-h-screen bg-black flex items-center justify-center overflow-hidden py-24 sm:py-32"
     >
       <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-10" />
-      <div className="relative z-20 flex flex-col items-center text-center gap-5 text-white px-4">
+      <div className="relative z-20 flex w-full max-w-5xl flex-col items-center text-center gap-3 sm:gap-5 text-white px-5">
         {services.map((item, i) => (
           <motion.span
             key={item.id}
             onClick={() => handleClick(item.link)}
             whileHover={{ scale: 1.05, opacity: 1 }}
-            className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-light cursor-pointer opacity-40 hover:opacity-100 transition-all duration-300"
+            className="max-w-full text-[1.45rem] min-[390px]:text-3xl sm:text-2xl md:text-3xl lg:text-5xl leading-tight font-light cursor-pointer opacity-55 sm:opacity-40 hover:opacity-100 transition-all duration-300"
           >
             {getServiceName(item)}
           </motion.span>
         ))}
-        <div className="mt-6 text-xs tracking-[0.3em] uppercase text-white/30">
+        <div className="mt-5 sm:mt-6 text-[10px] sm:text-xs tracking-[0.28em] sm:tracking-[0.3em] uppercase text-white/30">
           And more
         </div>
       </div>

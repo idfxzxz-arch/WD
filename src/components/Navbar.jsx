@@ -58,16 +58,16 @@ export default function Navbar() {
       initial={{ y: 80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 px-2 w-full flex justify-center"
+      className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-full px-3 flex justify-center"
     >
-      <nav className="flex items-center gap-0.5 sm:gap-1 bg-white border border-black/8 shadow-lg rounded-full px-1 sm:px-2 py-1.5 sm:py-2 max-w-fit">
+      <nav className="flex w-full max-w-[23rem] sm:w-auto sm:max-w-fit items-center justify-between sm:justify-center gap-0.5 sm:gap-1 bg-white/95 backdrop-blur border border-black/8 shadow-lg rounded-full px-1.5 sm:px-2 py-1.5 sm:py-2">
         {menus.map(({ label, value, id }) => {
           const isActive = active === value
           return (
             <button
               key={value}
               onClick={() => handleClick(id, value)}
-              className="relative px-2 sm:px-4 py-2 rounded-full text-[11px] sm:text-sm font-medium overflow-hidden"
+              className="relative min-w-0 flex-1 sm:flex-none px-2 sm:px-4 py-2 rounded-full text-[10px] min-[390px]:text-[11px] sm:text-sm font-medium overflow-hidden"
             >
               {isActive && (
                 <motion.span
@@ -78,7 +78,7 @@ export default function Navbar() {
               )}
               {typeof label === "string" ? (
                 <motion.span
-                  className={`relative z-10 block ${isActive ? "text-white" : "text-black/40"}`}
+                  className={`relative z-10 block truncate ${isActive ? "text-white" : "text-black/40"}`}
                   whileHover={{ rotateX: 360 }}
                   transition={{ duration: 0.6 }}
                   style={{ transformStyle: "preserve-3d" }}
@@ -93,7 +93,6 @@ export default function Navbar() {
             </button>
           )
         })}
-        <div className="w-px h-4 bg-black/10 mx-1" />
       </nav>
     </motion.div>
   )

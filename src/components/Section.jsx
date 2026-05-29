@@ -20,12 +20,12 @@ export default function Section() {
   }, [lang.code])
 
   return (
-    <section className="min-h-[80vh] flex items-center bg-white">
-      <div className="max-w-5xl mx-auto px-6">
-        <p className="text-sm uppercase tracking-widest mb-8">
+    <section className="min-h-[68vh] sm:min-h-[80vh] flex items-center bg-white py-24 sm:py-32">
+      <div className="max-w-5xl mx-auto px-5 sm:px-6">
+        <p className="text-xs sm:text-sm uppercase tracking-[0.22em] sm:tracking-widest mb-6 sm:mb-8">
           {lang.sectionLabel}
         </p>
-        <h2 className="text-4xl md:text-6xl leading-tight font-medium">
+        <h2 className="text-[2.35rem] min-[390px]:text-5xl md:text-6xl leading-[1.05] sm:leading-tight font-medium tracking-[-0.04em] sm:tracking-normal">
           {services.title || lang.sectionTitle}
         </h2>
       </div>

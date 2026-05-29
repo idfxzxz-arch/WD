@@ -90,13 +90,13 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-[100svh] sm:min-h-screen bg-white relative overflow-hidden flex flex-col items-center"
+      className="min-h-[100svh] bg-white relative overflow-hidden flex flex-col items-center"
     >
       {/* LANGUAGE */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
         <button
           onClick={() => setOpenLang(!openLang)}
-          className="w-10 h-10 flex items-center justify-center rounded-full bg-black/5 backdrop-blur hover:bg-black/10 transition text-xl"
+          className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-black/5 backdrop-blur hover:bg-black/10 transition text-xl"
         >
           ⋯
         </button>
@@ -107,7 +107,7 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute right-0 mt-2 w-32 bg-white rounded-xl shadow-lg overflow-hidden"
+              className="absolute right-0 mt-2 w-36 bg-white rounded-xl shadow-lg overflow-hidden"
             >
               <button
                 onClick={() => { changeLang("id"); setOpenLang(false) }}
@@ -131,7 +131,7 @@ export default function Hero() {
       </div>
 
       {/* TOP LOGO */}
-      <div className="absolute top-4 sm:top-6 left-1/2 -translate-x-1/2 z-20 flex max-w-[calc(100vw-5.5rem)] items-center gap-2 sm:gap-3 backdrop-blur bg-white/70 px-3 sm:px-4 py-2 rounded-full shadow">
+      <div className="absolute top-4 sm:top-6 left-4 sm:left-1/2 sm:-translate-x-1/2 z-20 flex max-w-[calc(100vw-5rem)] items-center gap-2 sm:gap-3 backdrop-blur bg-white/80 px-3 sm:px-4 py-2 rounded-full shadow">
         <img
           src="/wd-group-logo.jpeg"
           alt={lang.company}
@@ -157,11 +157,11 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* WD */}
-      <div className="relative mt-24 sm:mt-32 flex justify-center select-none">
+      <div className="relative mt-28 sm:mt-32 flex justify-center select-none">
         <motion.h1
           onClick={handleWDClick}
           whileTap={{ scale: 0.95 }}
-          className="text-[24vw] sm:text-[18vw] font-serif leading-none cursor-pointer"
+          className="text-[31vw] sm:text-[18vw] font-serif leading-none cursor-pointer tracking-[-0.08em] sm:tracking-normal"
         >
           WD
         </motion.h1>
@@ -182,8 +182,8 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* SUBTITLE */}
-      <div className="relative z-10 mt-12 w-full px-6 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0">
-        <h2 className="text-2xl sm:text-4xl font-normal leading-snug">
+      <div className="relative z-10 mt-10 w-full px-5 pb-32 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0 sm:pb-0">
+        <h2 className="max-w-[22rem] text-[1.7rem] min-[390px]:text-3xl sm:max-w-none sm:text-4xl font-normal leading-[1.12] sm:leading-snug">
           {hero.title || lang.subtitle1}
           <br />
           {hero.subtitle || lang.subtitle2}  {/* ✅ ganti description → subtitle */}
@@ -191,8 +191,8 @@ export default function Hero() {
       </div>
 
       {/* SCROLL */}
-      <div className="absolute bottom-24 right-6 sm:bottom-10 sm:right-10">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 border rounded-full flex items-center justify-center text-lg sm:text-xl cursor-pointer hover:bg-black hover:text-white transition">
+      <div className="absolute bottom-24 right-5 sm:bottom-10 sm:right-10">
+        <div className="w-11 h-11 sm:w-16 sm:h-16 border rounded-full flex items-center justify-center text-lg sm:text-xl cursor-pointer hover:bg-black hover:text-white transition">
           ↓
         </div>
       </div>
