@@ -6,135 +6,360 @@ import { supabase } from "../lib/supabase";
 const css = `
   @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap');
 
-  .wo-testi-root { 
-    font-family: 'Plus Jakarta Sans', sans-serif; 
-    background: #0a0a0c; 
-    color: #ffffff; 
+  .wo-root {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #fbf7f1;
+    color: #211916;
     min-height: 100vh;
     overflow-x: hidden;
+    position: relative;
   }
-
-  /* NAV BAR */
-  .wo-testi-nav {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.05);
-    position: sticky; top: 0; background: rgba(10,10,12,0.8);
-    backdrop-filter: blur(16px); z-index: 50;
+  .wo-root::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(204, 160, 106, 0.20), transparent 34%),
+      radial-gradient(circle at 90% 18%, rgba(246, 220, 208, 0.55), transparent 32%),
+      linear-gradient(180deg, rgba(255,255,255,0.64), rgba(251,247,241,0));
   }
-  .wo-testi-back {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
-    color: #999; cursor: pointer; padding: 8px 18px;
-    border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; background: none;
+  .wo-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px 40px;
+    border-bottom: 1px solid rgba(76,49,37,0.08);
+    position: sticky;
+    top: 0;
+    background: rgba(251,247,241,0.84);
+    backdrop-filter: blur(16px);
+    z-index: 50;
+  }
+  .wo-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: #8a7366;
+    cursor: pointer;
+    padding: 8px 18px;
+    border: 1px solid rgba(76,49,37,0.12);
+    border-radius: 100px;
+    background: rgba(255,255,255,0.56);
     transition: .2s;
   }
-  .wo-testi-back:hover { color: #fff; border-color: #FF5A24; background: rgba(255,90,36,0.05); }
-  .wo-testi-nav-logo { font-weight: 800; font-size: 18px; letter-spacing: -0.03em; text-transform: uppercase; }
-  .wo-testi-nav-logo span { color: #FF5A24; }
-
-  /* HERO HEADER AREA */
-  .wo-testi-hero-section {
-    max-w: 1300px; margin: 0 auto; padding: 40px;
-    display: flex; flex-direction: column; gap: 32px;
+  .wo-back:hover {
+    color: #211916;
+    border-color: #c89f67;
+    background: #fff;
   }
-  .wo-testi-text-block { max-w: 700px; }
-  .wo-testi-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(255,90,36,0.1); border: 1px solid rgba(255,90,36,0.2);
-    padding: 6px 14px; color: #FF5A24; font-size: 11px; font-weight: 700; 
-    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; border-radius: 100px;
+  .wo-nav-logo {
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
-  .wo-testi-h {
-    font-size: 52px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; text-transform: uppercase; margin-bottom: 16px;
+  .wo-nav-logo span { color: #b88446; }
+  .wo-nav-badge {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #8a5e2d;
+    background: rgba(200,159,103,0.14);
+    border: 1px solid rgba(200,159,103,0.22);
+    padding: 8px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
   }
-  .wo-testi-h em { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; text-transform: lowercase; color: #ff8156; }
-  .wo-testi-desc { color: #8e8e93; font-size: 15px; line-height: 1.6; font-weight: 300; }
-
-  /* IPAD FRAME LAYOUT */
-  .wo-testi-ipad-frame {
-    width: 100%; max-width: 1100px; height: 680px; background: #000;
-    border-radius: 36px; padding: 18px; border: 4px solid #2d2d30;
-    box-shadow: 0 40px 90px -20px rgba(255,90,36,0.25);
-    margin: 0 auto; position: relative;
+  .wo-hero {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 56px 40px 72px;
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(520px, 1.1fr);
+    gap: 42px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
   }
-  .wo-testi-ipad-screen {
-    background: #f8f9fa; width: 100%; height: 100%; border-radius: 22px;
-    color: #1c1c1e; display: grid; grid-template-columns: 80px 1fr;
-    overflow: hidden; position: relative;
+  .wo-copy { max-width: 640px; }
+  .wo-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.68);
+    border: 1px solid rgba(200,159,103,0.26);
+    padding: 7px 14px;
+    color: #9f6b31;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    border-radius: 100px;
   }
-
-  /* IPAD SIDEBAR */
-  .wo-testi-ipad-sidebar {
-    background: #111115; border-right: 1px solid #e5e5e7;
-    display: flex; flex-direction: column; align-items: center; padding: 24px 0; gap: 28px;
+  .wo-title {
+    font-size: clamp(46px, 6vw, 82px);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.98;
+    margin: 0 0 22px;
   }
-  .wo-testi-ipad-side-icon {
-    width: 44px; height: 44px; border-radius: 12px; display: flex;
-    align-items: center; justify-content: center; font-size: 18px; color: #8e8e93; cursor: pointer; transition: 0.2s;
+  .wo-title em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: #b88446;
   }
-  .wo-testi-ipad-side-icon.active { background: #FF5A24; color: #fff; }
-
-  /* MAIN AREA BAR */
-  .wo-testi-ipad-main { padding: 24px; display: flex; flex-direction: column; overflow: hidden; height: 100%; }
-  .wo-testi-ipad-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-  .wo-testi-ipad-title { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #111; }
-  
-  /* TOP HORIZONTAL TABS */
-  .wo-testi-ipad-tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; scrollbar-width: none; }
-  .wo-testi-ipad-tabs::-webkit-scrollbar { display: none; }
-  .wo-testi-ipad-tab-btn {
-    padding: 8px 18px; font-size: 12px; font-weight: 700; border-radius: 12px;
-    background: #fff; color: #555; border: 1px solid #e5e5e7; cursor: pointer; transition: 0.15s; white-space: nowrap;
+  .wo-desc {
+    color: #67564d;
+    font-size: 16px;
+    line-height: 1.75;
+    font-weight: 400;
+    max-width: 560px;
   }
-  .wo-testi-ipad-tab-btn.active { background: #111; color: #fff; border-color: #111; }
-
-  /* 3-COLUMN GRID FOR TESTIMONIAL PHOTOS ONLY */
-  .wo-testi-ipad-grid {
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
+  .wo-actions {
+    display: flex;
+    flex-wrap: wrap;
     gap: 12px;
-    overflow-y: auto; 
-    flex: 1; 
-    padding-bottom: 20px; 
+    margin-top: 28px;
+  }
+  .wo-primary,
+  .wo-secondary {
+    border-radius: 999px;
+    padding: 13px 20px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .02em;
+    cursor: pointer;
+    transition: .2s;
+    border: 1px solid transparent;
+  }
+  .wo-primary {
+    background: #211916;
+    color: #fff;
+    box-shadow: 0 18px 38px rgba(33,25,22,.18);
+  }
+  .wo-primary:hover {
+    transform: translateY(-2px);
+    background: #3a2b25;
+  }
+  .wo-secondary {
+    background: rgba(255,255,255,.6);
+    color: #211916;
+    border-color: rgba(76,49,37,.14);
+  }
+  .wo-secondary:hover {
+    background: #fff;
+    border-color: #c89f67;
+  }
+  .wo-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 12px;
+    margin-top: 34px;
+    max-width: 560px;
+  }
+  .wo-stat {
+    background: rgba(255,255,255,.62);
+    border: 1px solid rgba(76,49,37,.09);
+    border-radius: 18px;
+    padding: 16px;
+  }
+  .wo-stat strong {
+    display: block;
+    font-size: 22px;
+    letter-spacing: -.03em;
+    color: #211916;
+  }
+  .wo-stat span {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    color: #8a7366;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .wo-gallery-frame {
+    width: 100%;
+    height: 680px;
+    background: linear-gradient(135deg, #fff, #efe4d6);
+    border-radius: 36px;
+    padding: 14px;
+    border: 1px solid rgba(76,49,37,0.12);
+    box-shadow: 0 40px 90px -30px rgba(89,62,45,0.35);
+  }
+  .wo-gallery-screen {
+    background: #fffdf9;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    color: #1c1c1e;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    overflow: hidden;
+    position: relative;
+  }
+  .wo-sidebar {
+    background: #2a201c;
+    border-right: 1px solid rgba(76,49,37,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 0;
+    gap: 28px;
+  }
+  .wo-side-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    color: rgba(255,255,255,.58);
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .wo-side-icon.active {
+    background: #c89f67;
+    color: #211916;
+  }
+  .wo-main {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+  }
+  .wo-main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+  .wo-main-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #211916;
+  }
+  .wo-main-meta {
+    font-size: 12px;
+    color: #9b897f;
+    font-weight: 700;
+    text-align: right;
+  }
+  .wo-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
     scrollbar-width: none;
   }
-  .wo-testi-ipad-grid::-webkit-scrollbar { display: none; }
-
-  .wo-testi-ipad-card {
-    background: #ffffff; 
-    border-radius: 14px; 
+  .wo-tabs::-webkit-scrollbar { display: none; }
+  .wo-tab {
+    padding: 8px 18px;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 12px;
+    background: #fff;
+    color: #7a665b;
+    border: 1px solid #efe4d6;
+    cursor: pointer;
+    transition: 0.15s;
+    white-space: nowrap;
+  }
+  .wo-tab.active {
+    background: #211916;
+    color: #fff;
+    border-color: #211916;
+  }
+  .wo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    overflow-y: auto;
+    flex: 1;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+  }
+  .wo-grid::-webkit-scrollbar { display: none; }
+  .wo-card {
+    background: #ffffff;
+    border-radius: 14px;
     overflow: hidden;
-    border: 2px solid transparent; 
-    cursor: pointer; 
+    border: 2px solid transparent;
+    cursor: pointer;
     transition: all 0.2s ease-in-out;
-    aspect-ratio: 4/3; 
+    aspect-ratio: 4/3;
     display: flex;
   }
-  .wo-testi-ipad-card:hover { 
-    transform: scale(0.98); 
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+  .wo-card:hover {
+    transform: scale(0.98);
+    box-shadow: 0 8px 20px rgba(89,62,45,0.12);
   }
-  
-  .wo-testi-ipad-card-img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    background: #eee; 
+  .wo-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #eee;
+  }
+  .wo-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 96px 24px;
+    color: #9b897f;
+    background: #fff;
+    border: 1px dashed #e4d6c8;
+    border-radius: 18px;
+    font-size: 13px;
+  }
+  .wo-toast {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    background: #211916;
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 20px 40px rgba(33,25,22,0.2);
+    z-index: 100;
   }
 
-  /* TOAST ALERTS */
-  .wo-testi-toast {
-    position: fixed; top: 32px; right: 32px; background: #FF5A24; color: #fff;
-    padding: 14px 24px; border-radius: 16px; font-size: 14px; font-weight: 600;
-    box-shadow: 0 20px 40px rgba(255,90,36,0.2); z-index: 100;
+  @media (max-width: 900px) {
+    .wo-nav { padding: 16px 18px; gap: 12px; }
+    .wo-nav-logo { font-size: 14px; }
+    .wo-nav-badge { display: none; }
+    .wo-hero { grid-template-columns: 1fr; padding: 36px 18px 42px; gap: 28px; }
+    .wo-title { font-size: 44px; }
+    .wo-stats { grid-template-columns: 1fr; }
+    .wo-gallery-frame { height: 560px; border-radius: 26px; padding: 8px; }
+    .wo-gallery-screen { grid-template-columns: 1fr; border-radius: 20px; }
+    .wo-sidebar { display: none; }
+    .wo-main { padding: 16px; }
+    .wo-main-header { align-items: flex-start; }
+    .wo-grid { grid-template-columns: repeat(2, 1fr); }
   }
 `;
 
-const TESTI_TABS = ["All Reviews", "Akad", "Resepsi", "Outdoor"];
+const MOMENT_TABS = ["All Moments", "Akad", "Resepsi", "Outdoor"];
 
 export default function Wedding() {
   const [works, setWorks] = useState([]);
-  const [activeTab, setActiveTab] = useState("All Reviews");
+  const [activeTab, setActiveTab] = useState("All Moments");
   const [shortlist, setShortlist] = useState([]);
   const [toastMsg, setToastMsg] = useState("");
   const navigate = useNavigate();
@@ -146,10 +371,10 @@ export default function Wedding() {
         .select("*")
         .eq("category", "wedding")
         .order("order_index");
-      
+
       if (worksData) {
         setWorks(worksData);
-        
+
         if (worksData.length > 0) {
           setShortlist([
             { id: worksData[0].id, title: worksData[0].title, image: worksData[0].image }
@@ -157,6 +382,7 @@ export default function Wedding() {
         }
       }
     };
+
     fetchData();
   }, []);
 
@@ -165,8 +391,8 @@ export default function Wedding() {
     setTimeout(() => setToastMsg(""), 2500);
   };
 
-  const filteredTestimonials = works.filter((item) => {
-    if (activeTab === "All Reviews") return true;
+  const filteredWorks = works.filter((item) => {
+    if (activeTab === "All Moments") return true;
     const sub = item.subcategory?.toLowerCase() || "";
     return sub === activeTab.toLowerCase();
   });
@@ -175,10 +401,10 @@ export default function Wedding() {
     const isExist = shortlist.find((s) => s.id === item.id);
     if (isExist) {
       setShortlist(shortlist.filter((s) => s.id !== item.id));
-      triggerToast("Removed from Selection");
+      triggerToast("Moment removed from selection");
     } else {
       setShortlist([...shortlist, { id: item.id, title: item.title, image: item.image }]);
-      triggerToast("❤️ Image Selected");
+      triggerToast("Moment saved for inspiration");
     }
   };
 
@@ -186,12 +412,11 @@ export default function Wedding() {
     <>
       <style>{css}</style>
 
-      <div className="wo-testi-root">
-        {/* TOAST NOTIFICATION */}
+      <div className="wo-root">
         <AnimatePresence>
           {toastMsg && (
-            <motion.div 
-              className="wo-testi-toast"
+            <motion.div
+              className="wo-toast"
               initial={{ opacity: 0, y: -20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.9 }}
@@ -201,52 +426,82 @@ export default function Wedding() {
           )}
         </AnimatePresence>
 
-        {/* TOP NAVBAR */}
-        <nav className="wo-testi-nav">
-          <button className="wo-testi-back" onClick={() => navigate("/")}>
-            &larr; Back to Gallery
+        <nav className="wo-nav">
+          <button className="wo-back" onClick={() => navigate("/")}>
+            &larr; Back to Home
           </button>
-          <div className="wo-testi-nav-logo">WD<span>Group</span>Company</div>
-          <div className="text-xs font-bold uppercase tracking-widest text-[#FF5A24] bg-[#FF5A24]/10 px-4 py-1.5 rounded-full">
-            iPad Showcase Mode
-          </div>
+          <div className="wo-nav-logo">WD <span>Sky</span> Wedding</div>
+          <div className="wo-nav-badge">Wedding Organizer</div>
         </nav>
 
-        {/* HERO HEADER */}
-        <div className="wo-testi-hero-section">
-          <div className="wo-testi-text-block">
-            <div className="wo-testi-tag">Live Database Connection</div>
-            <h1 className="wo-testi-h">
-              Client <em>Happy Stories</em>
+        <main className="wo-hero">
+          <motion.div
+            className="wo-copy"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="wo-tag">WD Sky Wedding Organizer</div>
+            <h1 className="wo-title">
+              Elegant wedding, <em>beautifully directed.</em>
             </h1>
-            <p className="wo-testi-desc">
-              Menampilkan galeri foto ulasan asli dan kebahagiaan dari pasangan pengantin yang diambil langsung dari database core portfolio.
+            <p className="wo-desc">
+              Kami membantu pasangan merancang hari pernikahan yang tenang, rapi,
+              dan berkesan. Dari alur acara, koordinasi vendor, hingga detail
+              visual, WD Sky Wedding Organizer memastikan setiap momen berjalan
+              terarah tanpa menghilangkan rasa personal dari cerita cinta Anda.
             </p>
-          </div>
 
-          {/* REALISTIC IPAD FRAME CONTAINER */}
-          <div className="wo-testi-ipad-frame">
-            <div className="wo-testi-ipad-screen">
-              
-              {/* PANEL 1: SIDEBAR (KIRI) */}
-              <div className="wo-testi-ipad-sidebar">
-                <div className="wo-testi-ipad-side-icon active">📸</div>
-                <div className="wo-testi-ipad-side-icon" onClick={() => setShortlist([])}>🧹</div>
+            <div className="wo-actions">
+              <button className="wo-primary" onClick={() => triggerToast("Consultation request noted")}>
+                Plan Your Wedding
+              </button>
+              <button className="wo-secondary" onClick={() => document.querySelector(".wo-gallery-frame")?.scrollIntoView({ behavior: "smooth" })}>
+                View Moments
+              </button>
+            </div>
+
+            <div className="wo-stats">
+              <div className="wo-stat">
+                <strong>End-to-end</strong>
+                <span>Planning</span>
+              </div>
+              <div className="wo-stat">
+                <strong>Vendor</strong>
+                <span>Coordination</span>
+              </div>
+              <div className="wo-stat">
+                <strong>Detail</strong>
+                <span>Execution</span>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="wo-gallery-frame"
+            initial={{ opacity: 0, y: 28, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="wo-gallery-screen">
+              <div className="wo-sidebar">
+                <div className="wo-side-icon active">SKY</div>
+                <div className="wo-side-icon" onClick={() => setShortlist([])}>CLR</div>
               </div>
 
-              {/* PANEL 2: MAIN GRID (3 KOLOM - FOTO SAJA) */}
-              <div className="wo-testi-ipad-main">
-                <div className="wo-testi-ipad-header">
-                  <h2 className="wo-testi-ipad-title">Testimonial Photos</h2>
-                  <span className="text-xs text-zinc-400 font-semibold">Table: works</span>
+              <div className="wo-main">
+                <div className="wo-main-header">
+                  <h2 className="wo-main-title">Wedding Moments</h2>
+                  <span className="wo-main-meta">
+                    {filteredWorks.length} curated photos
+                  </span>
                 </div>
 
-                {/* HORIZONTAL TAB BAR */}
-                <div className="wo-testi-ipad-tabs">
-                  {TESTI_TABS.map((tab) => (
+                <div className="wo-tabs">
+                  {MOMENT_TABS.map((tab) => (
                     <button
                       key={tab}
-                      className={`wo-testi-ipad-tab-btn ${activeTab === tab ? "active" : ""}`}
+                      className={`wo-tab ${activeTab === tab ? "active" : ""}`}
                       onClick={() => setActiveTab(tab)}
                     >
                       {tab}
@@ -254,37 +509,38 @@ export default function Wedding() {
                   ))}
                 </div>
 
-                {/* 3 COLUMNS PHOTO GRID */}
-                <div className="wo-testi-ipad-grid">
-                  {filteredTestimonials.length > 0 ? (
-                    filteredTestimonials.map((item) => {
+                <div className="wo-grid">
+                  {filteredWorks.length > 0 ? (
+                    filteredWorks.map((item) => {
                       const isSaved = shortlist.some((s) => s.id === item.id);
                       return (
-                        <div 
-                          key={item.id} 
-                          className="wo-testi-ipad-card"
-                          style={{ 
-                            borderColor: isSaved ? '#FF5A24' : 'transparent',
-                            boxShadow: isSaved ? '0 0 0 2px #FF5A24' : ''
+                        <div
+                          key={item.id}
+                          className="wo-card"
+                          style={{
+                            borderColor: isSaved ? "#c89f67" : "transparent",
+                            boxShadow: isSaved ? "0 0 0 2px #c89f67" : ""
                           }}
                           onClick={() => toggleShortlist(item)}
                         >
-                          {/* Hanya Menampilkan Foto Langsung */}
-                          <img src={item.image} className="wo-testi-ipad-card-img" alt="" />
+                          <img
+                            src={item.image}
+                            className="wo-card-img"
+                            alt={item.title || "WD Sky Wedding moment"}
+                          />
                         </div>
                       );
                     })
                   ) : (
-                    <div className="col-span-3 text-center py-24 text-xs text-zinc-400 bg-white border border-dashed rounded-2xl">
-                      Tidak ada foto dengan subcategory "{activeTab}" di database.
+                    <div className="wo-empty">
+                      Belum ada foto untuk kategori "{activeTab}".
                     </div>
                   )}
                 </div>
               </div>
-
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </main>
       </div>
     </>
   );
