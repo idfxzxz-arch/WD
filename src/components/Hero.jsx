@@ -90,7 +90,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen bg-white relative overflow-hidden flex flex-col items-center"
+      className="min-h-[100svh] sm:min-h-screen bg-white relative overflow-hidden flex flex-col items-center"
     >
       {/* LANGUAGE */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
@@ -131,13 +131,13 @@ export default function Hero() {
       </div>
 
       {/* TOP LOGO */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 backdrop-blur bg-white/70 px-4 py-2 rounded-full shadow">
+      <div className="absolute top-4 sm:top-6 left-1/2 -translate-x-1/2 z-20 flex max-w-[calc(100vw-5.5rem)] items-center gap-2 sm:gap-3 backdrop-blur bg-white/70 px-3 sm:px-4 py-2 rounded-full shadow">
         <img
           src="/wd-group-logo.jpeg"
           alt={lang.company}
           className="w-6 h-6 object-contain"
         />
-        <span className="text-sm font-semibold">{lang.company}</span>
+        <span className="truncate text-xs sm:text-sm font-semibold">{lang.company}</span>
       </div>
 
       {/* STICKERS */}
@@ -157,11 +157,11 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* WD */}
-      <div className="relative mt-32 flex justify-center select-none">
+      <div className="relative mt-24 sm:mt-32 flex justify-center select-none">
         <motion.h1
           onClick={handleWDClick}
           whileTap={{ scale: 0.95 }}
-          className="text-[18vw] font-serif leading-none cursor-pointer"
+          className="text-[24vw] sm:text-[18vw] font-serif leading-none cursor-pointer"
         >
           WD
         </motion.h1>
@@ -182,8 +182,8 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* SUBTITLE */}
-      <div className="absolute bottom-24 left-6 sm:left-12 z-10">
-        <h2 className="text-3xl sm:text-4xl font-normal leading-snug">
+      <div className="relative z-10 mt-12 w-full px-6 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0">
+        <h2 className="text-2xl sm:text-4xl font-normal leading-snug">
           {hero.title || lang.subtitle1}
           <br />
           {hero.subtitle || lang.subtitle2}  {/* ✅ ganti description → subtitle */}
@@ -191,8 +191,8 @@ export default function Hero() {
       </div>
 
       {/* SCROLL */}
-      <div className="absolute bottom-10 right-10">
-        <div className="w-16 h-16 border rounded-full flex items-center justify-center text-xl cursor-pointer hover:bg-black hover:text-white transition">
+      <div className="absolute bottom-24 right-6 sm:bottom-10 sm:right-10">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 border rounded-full flex items-center justify-center text-lg sm:text-xl cursor-pointer hover:bg-black hover:text-white transition">
           ↓
         </div>
       </div>
