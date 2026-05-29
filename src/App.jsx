@@ -19,6 +19,7 @@ import Workshop from "./pages/workshop"
 import Music from "./pages/music"
 import Event from "./pages/event"
 import Production from "./pages/production"
+import ITPage from "./pages/it"
 import Login from "./pages/login"
 import Dashboard from "./pages/Dashboard"
 import MediaLibrary from "./pages/MediaLibrary"
@@ -56,6 +57,7 @@ export default function App() {
           <Route path="/music" element={<Music />} />
           <Route path="/event" element={<Event />} />
           <Route path="/production" element={<Production />} />
+          <Route path="/it" element={<ITPage />} />
 
           {/* LOGIN */}
           <Route path="/admin/login" element={<Login />} />

@@ -64,7 +64,7 @@ const CATEGORY_ROUTES = {
   production: "/production",
   workshop: "/workshop",
   event: "/event",
-  it: "#contact",
+  it: "/it",
 }
 
 const SUBCATEGORIES = {
