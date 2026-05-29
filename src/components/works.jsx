@@ -10,6 +10,7 @@ const CATEGORY_ROUTES = {
   production: "/production",
   workshop:   "/workshop",
   event:      "/event",
+  it:          "#contact",
 }
 
 const FALLBACK_DIVISIONS = [
@@ -17,7 +18,7 @@ const FALLBACK_DIVISIONS = [
     id: "fallback-wd-it",
     title: "WD IT",
     category: "it",
-    image: "/resources/hero.webp",
+    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 1400'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23020b1a'/%3E%3Cstop offset='52%25' stop-color='%230f2a44'/%3E%3Cstop offset='100%25' stop-color='%230ea5e9'/%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='12' result='blur'/%3E%3CfeMerge%3E%3CfeMergeNode in='blur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Crect width='1200' height='1400' fill='url(%23bg)'/%3E%3Cg opacity='.24' stroke='%23fff' stroke-width='2'%3E%3Cpath d='M120 260h960M120 420h960M120 580h960M120 740h960M120 900h960M120 1060h960M240 140v1120M420 140v1120M600 140v1120M780 140v1120M960 140v1120'/%3E%3C/g%3E%3Cg filter='url(%23glow)'%3E%3Crect x='250' y='390' width='700' height='420' rx='44' fill='%2307131f' stroke='%2367e8f9' stroke-width='6'/%3E%3Crect x='306' y='448' width='588' height='284' rx='22' fill='%230b1f33'/%3E%3Cpath d='M382 560l92-76M382 560l92 76M818 560l-92-76M818 560l-92 76' fill='none' stroke='%2367e8f9' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M558 660l84-210' fill='none' stroke='%2314b8a6' stroke-width='24' stroke-linecap='round'/%3E%3Ccircle cx='330' cy='950' r='18' fill='%2367e8f9'/%3E%3Ccircle cx='600' cy='950' r='18' fill='%2367e8f9'/%3E%3Ccircle cx='870' cy='950' r='18' fill='%2367e8f9'/%3E%3Cpath d='M330 950h540M600 810v140' fill='none' stroke='%2367e8f9' stroke-width='8' stroke-linecap='round'/%3E%3C/g%3E%3Ctext x='600' y='1110' text-anchor='middle' font-family='Arial, sans-serif' font-size='88' font-weight='800' fill='white' letter-spacing='6'%3EWD IT%3C/text%3E%3Ctext x='600' y='1188' text-anchor='middle' font-family='Arial, sans-serif' font-size='34' font-weight='700' fill='%23bae6fd' letter-spacing='10'%3EDIGITAL SOLUTION%3C/text%3E%3C/svg%3E",
     tags: "Website,Digital Solution,IT Support",
     link: "#contact",
   },

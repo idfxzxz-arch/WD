@@ -64,6 +64,7 @@ const CATEGORY_ROUTES = {
   production: "/production",
   workshop: "/workshop",
   event: "/event",
+  it: "#contact",
 }
 
 const SUBCATEGORIES = {
@@ -72,6 +73,7 @@ const SUBCATEGORIES = {
   production: ["film", "photo", "video", "commercial"],
   workshop:   ["class", "seminar", "training", "bootcamp"],
   event:      ["corporate", "concert", "exhibition", "private"],
+  it:         ["website", "app", "system", "support"],
 }
 
 const SECTION_COLORS = {
@@ -80,6 +82,7 @@ const SECTION_COLORS = {
   production: { tab: "border-blue-800/40 text-blue-400",     banner: "bg-blue-950/30 border-blue-800/30 text-blue-300",      icon: "🎬" },
   workshop:   { tab: "border-green-800/40 text-green-400",   banner: "bg-green-950/30 border-green-800/30 text-green-300",   icon: "🛠️" },
   event:      { tab: "border-rose-800/40 text-rose-400",     banner: "bg-rose-950/30 border-rose-800/30 text-rose-300",      icon: "🎪" },
+  it:         { tab: "border-sky-800/40 text-sky-400",       banner: "bg-sky-950/30 border-sky-800/30 text-sky-300",          icon: "💻" },
 }
 
 const LANGS = [
@@ -447,7 +450,7 @@ export default function AdminPanel() {
 
             {/* Filter */}
             <div className="flex gap-2 mb-6 flex-wrap">
-              {["all", "wedding", "music", "production", "workshop", "event"].map((cat) => (
+              {["all", "wedding", "music", "production", "workshop", "event", "it"].map((cat) => (
                 <button key={cat} onClick={() => setFilterCategory(cat)}
                   className={`px-4 py-1.5 rounded-lg text-xs capitalize transition ${filterCategory === cat ? "bg-white text-black" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>
                   {SECTION_COLORS[cat] ? `${SECTION_COLORS[cat].icon} ` : ""}{cat}
@@ -469,6 +472,7 @@ export default function AdminPanel() {
                         item.category === "production" ? "bg-blue-900/40 text-blue-400" :
                         item.category === "workshop"   ? "bg-green-900/40 text-green-400" :
                         item.category === "event"      ? "bg-rose-900/40 text-rose-400" :
+                        item.category === "it"         ? "bg-sky-900/40 text-sky-400" :
                         "bg-zinc-800 text-zinc-400"
                       }`}>
                         {SECTION_COLORS[item.category]?.icon} → {CATEGORY_ROUTES[item.category] || "/"}
@@ -505,6 +509,7 @@ export default function AdminPanel() {
                           <option value="production">🎬 Production</option>
                           <option value="workshop">🛠️ Workshop</option>
                           <option value="event">🎪 Event</option>
+                          <option value="it">💻 WD IT</option>
                         </select>
                       </div>
 
