@@ -296,6 +296,7 @@ const css = `
   }
   .wo-grid::-webkit-scrollbar { display: none; }
   .wo-card {
+    position: relative;
     background: #ffffff;
     border-radius: 14px;
     overflow: hidden;
@@ -478,22 +479,102 @@ const css = `
   .wo-lightbox-nav.next { right: 22px; }
 
   @media (max-width: 900px) {
-    .wo-nav { padding: 16px 18px; gap: 12px; }
+    .wo-nav {
+      padding: 14px 16px;
+      gap: 12px;
+    }
+    .wo-back {
+      padding: 8px 13px;
+      font-size: 10px;
+    }
     .wo-nav-logo { font-size: 14px; }
     .wo-nav-badge { display: none; }
-    .wo-hero { grid-template-columns: 1fr; padding: 36px 18px 42px; gap: 28px; }
-    .wo-title { font-size: 44px; }
-    .wo-stats { grid-template-columns: 1fr; }
-    .wo-gallery-frame { height: 560px; border-radius: 26px; padding: 8px; }
+    .wo-hero {
+      grid-template-columns: 1fr;
+      padding: 30px 16px 38px;
+      gap: 22px;
+    }
+    .wo-tag {
+      margin-bottom: 14px;
+      font-size: 10px;
+    }
+    .wo-title {
+      font-size: clamp(40px, 13vw, 54px);
+      line-height: .96;
+      margin-bottom: 16px;
+    }
+    .wo-desc {
+      font-size: 14px;
+      line-height: 1.68;
+    }
+    .wo-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .wo-primary,
+    .wo-secondary {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 12px;
+    }
+    .wo-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 22px;
+    }
+    .wo-stat {
+      border-radius: 14px;
+      padding: 12px 10px;
+    }
+    .wo-stat strong {
+      font-size: 15px;
+      line-height: 1.12;
+    }
+    .wo-stat span {
+      font-size: 9px;
+    }
+    .wo-gallery-frame {
+      height: auto;
+      min-height: 560px;
+      border-radius: 24px;
+      padding: 7px;
+      box-shadow: 0 28px 70px -34px rgba(89,62,45,0.45);
+    }
     .wo-gallery-screen { grid-template-columns: 1fr; border-radius: 20px; }
     .wo-sidebar { display: none; }
-    .wo-main { padding: 16px; }
-    .wo-main-header { align-items: flex-start; }
-    .wo-grid { grid-template-columns: 1fr; gap: 14px; }
+    .wo-main {
+      min-height: 546px;
+      padding: 15px;
+    }
+    .wo-main-header {
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+    .wo-main-title {
+      font-size: 20px;
+    }
+    .wo-main-meta {
+      font-size: 11px;
+    }
+    .wo-tabs {
+      margin-bottom: 14px;
+      padding-bottom: 2px;
+    }
+    .wo-tab {
+      padding: 8px 14px;
+      font-size: 11px;
+    }
+    .wo-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding-bottom: 6px;
+    }
     .wo-card,
     .wo-card:first-child {
       grid-column: auto;
-      aspect-ratio: 16/10;
+      aspect-ratio: 16/11;
     }
     .wo-lightbox { padding: 14px; }
     .wo-lightbox-panel {
@@ -503,13 +584,20 @@ const css = `
     }
     .wo-lightbox-media {
       min-height: 0;
-      height: 62vh;
+      height: min(58vh, 470px);
     }
     .wo-lightbox-media img {
-      max-height: 62vh;
+      max-height: min(58vh, 470px);
     }
     .wo-lightbox-info {
       padding: 18px;
+      gap: 12px;
+    }
+    .wo-lightbox-title {
+      font-size: 22px;
+    }
+    .wo-lightbox-actions {
+      grid-template-columns: 1fr 1fr;
     }
     .wo-lightbox-close {
       top: 10px;
@@ -517,6 +605,65 @@ const css = `
     }
     .wo-lightbox-nav.prev { left: 10px; }
     .wo-lightbox-nav.next { right: 10px; }
+  }
+
+  @media (max-width: 520px) {
+    .wo-nav {
+      align-items: center;
+    }
+    .wo-back {
+      max-width: 112px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .wo-nav-logo {
+      font-size: 13px;
+      text-align: right;
+    }
+    .wo-hero {
+      padding: 24px 14px 32px;
+    }
+    .wo-actions {
+      grid-template-columns: 1fr;
+    }
+    .wo-stats {
+      grid-template-columns: 1fr;
+    }
+    .wo-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .wo-gallery-frame {
+      min-height: 520px;
+    }
+    .wo-main {
+      min-height: 506px;
+      padding: 13px;
+    }
+    .wo-main-header {
+      display: grid;
+      gap: 4px;
+    }
+    .wo-main-meta {
+      text-align: left;
+    }
+    .wo-lightbox {
+      padding: 10px;
+    }
+    .wo-lightbox-panel {
+      border-radius: 18px;
+    }
+    .wo-lightbox-media {
+      height: 52vh;
+    }
+    .wo-lightbox-media img {
+      max-height: 52vh;
+    }
+    .wo-lightbox-actions {
+      grid-template-columns: 1fr;
+    }
   }
 `;
 
@@ -734,15 +881,15 @@ export default function Wedding() {
               onClick={closeLightbox}
             >
               <button className="wo-lightbox-close" onClick={closeLightbox} aria-label="Close image">
-                ×
+                &times;
               </button>
               {filteredWorks.length > 1 && (
                 <>
                   <button className="wo-lightbox-nav prev" onClick={(event) => { event.stopPropagation(); showPrev(); }} aria-label="Previous image">
-                    ‹
+                    &lsaquo;
                   </button>
                   <button className="wo-lightbox-nav next" onClick={(event) => { event.stopPropagation(); showNext(); }} aria-label="Next image">
-                    ›
+                    &rsaquo;
                   </button>
                 </>
               )}

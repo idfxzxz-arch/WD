@@ -468,18 +468,102 @@ const css = `
   .dp-lightbox-nav.next { right: 22px; }
 
   @media (max-width: 900px) {
-    .dp-nav { padding: 16px 18px; }
+    .dp-nav {
+      padding: 14px 16px;
+      gap: 12px;
+    }
+    .dp-back {
+      padding: 8px 13px;
+      font-size: 10px;
+    }
     .dp-logo { font-size: 14px; }
     .dp-badge { display: none; }
-    .dp-hero { grid-template-columns: 1fr; padding: 36px 18px 44px; gap: 28px; }
-    .dp-title { font-size: 44px; }
-    .dp-stats { grid-template-columns: 1fr; }
-    .dp-showcase { height: 560px; border-radius: 26px; padding: 8px; }
+    .dp-hero {
+      grid-template-columns: 1fr;
+      padding: 30px 16px 38px;
+      gap: 22px;
+    }
+    .dp-kicker {
+      margin-bottom: 14px;
+      font-size: 10px;
+    }
+    .dp-title {
+      font-size: clamp(40px, 13vw, 54px);
+      line-height: .96;
+      margin-bottom: 16px;
+    }
+    .dp-desc {
+      font-size: 14px;
+      line-height: 1.68;
+    }
+    .dp-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .dp-primary,
+    .dp-secondary {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 12px;
+    }
+    .dp-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 22px;
+    }
+    .dp-stat {
+      border-radius: 14px;
+      padding: 12px 10px;
+    }
+    .dp-stat strong {
+      font-size: 15px;
+      line-height: 1.12;
+    }
+    .dp-stat span {
+      font-size: 9px;
+    }
+    .dp-showcase {
+      height: auto;
+      min-height: 560px;
+      border-radius: 24px;
+      padding: 7px;
+      box-shadow: 0 28px 70px -34px rgba(0,0,0,.72);
+    }
     .dp-screen { grid-template-columns: 1fr; border-radius: 20px; }
     .dp-side { display: none; }
-    .dp-main { padding: 16px; }
-    .dp-main-top { align-items: flex-start; }
-    .dp-grid { grid-template-columns: repeat(2, 1fr); }
+    .dp-main {
+      min-height: 546px;
+      padding: 15px;
+    }
+    .dp-main-top {
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+    .dp-main-title {
+      font-size: 20px;
+    }
+    .dp-main-meta {
+      font-size: 11px;
+    }
+    .dp-tabs {
+      margin-bottom: 14px;
+      padding-bottom: 2px;
+    }
+    .dp-tab {
+      padding: 8px 14px;
+      font-size: 11px;
+    }
+    .dp-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding-bottom: 6px;
+    }
+    .dp-card {
+      aspect-ratio: 4/3.35;
+      border-radius: 13px;
+    }
     .dp-lightbox { padding: 14px; }
     .dp-lightbox-panel {
       grid-template-columns: 1fr;
@@ -488,13 +572,20 @@ const css = `
     }
     .dp-lightbox-media {
       min-height: 0;
-      height: 62vh;
+      height: min(58vh, 470px);
     }
     .dp-lightbox-media img {
-      max-height: 62vh;
+      max-height: min(58vh, 470px);
     }
     .dp-lightbox-info {
       padding: 18px;
+      gap: 12px;
+    }
+    .dp-lightbox-title {
+      font-size: 22px;
+    }
+    .dp-lightbox-actions {
+      grid-template-columns: 1fr 1fr;
     }
     .dp-lightbox-close {
       top: 10px;
@@ -502,6 +593,69 @@ const css = `
     }
     .dp-lightbox-nav.prev { left: 10px; }
     .dp-lightbox-nav.next { right: 10px; }
+  }
+
+  @media (max-width: 520px) {
+    .dp-back {
+      max-width: 98px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .dp-logo {
+      font-size: 13px;
+      text-align: right;
+    }
+    .dp-hero {
+      padding: 24px 14px 32px;
+    }
+    .dp-actions {
+      grid-template-columns: 1fr;
+    }
+    .dp-stats {
+      grid-template-columns: 1fr;
+    }
+    .dp-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .dp-showcase {
+      min-height: 520px;
+    }
+    .dp-main {
+      min-height: 506px;
+      padding: 13px;
+    }
+    .dp-main-top {
+      display: grid;
+      gap: 4px;
+    }
+    .dp-main-meta {
+      text-align: left;
+    }
+    .dp-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .dp-card {
+      aspect-ratio: 16/11;
+    }
+    .dp-lightbox {
+      padding: 10px;
+    }
+    .dp-lightbox-panel {
+      border-radius: 18px;
+    }
+    .dp-lightbox-media {
+      height: 52vh;
+    }
+    .dp-lightbox-media img {
+      max-height: 52vh;
+    }
+    .dp-lightbox-actions {
+      grid-template-columns: 1fr;
+    }
   }
 `;
 
@@ -711,15 +865,15 @@ export default function DivisionPage({ config }) {
               onClick={closeLightbox}
             >
               <button className="dp-lightbox-close" onClick={closeLightbox} aria-label="Close image">
-                ×
+                &times;
               </button>
               {filtered.length > 1 && (
                 <>
                   <button className="dp-lightbox-nav prev" onClick={(event) => { event.stopPropagation(); showPrev(); }} aria-label="Previous image">
-                    ‹
+                    &lsaquo;
                   </button>
                   <button className="dp-lightbox-nav next" onClick={(event) => { event.stopPropagation(); showNext(); }} aria-label="Next image">
-                    ›
+                    &rsaquo;
                   </button>
                 </>
               )}
