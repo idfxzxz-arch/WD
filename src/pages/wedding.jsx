@@ -665,6 +665,88 @@ const css = `
       grid-template-columns: 1fr;
     }
   }
+
+  @media (max-width: 900px) {
+    .wo-gallery-frame {
+      height: auto;
+      min-height: 0;
+      padding: 0;
+      border-radius: 26px;
+      background: rgba(255,255,255,.66);
+      box-shadow: 0 28px 80px -42px rgba(89,62,45,.45);
+    }
+    .wo-gallery-screen {
+      display: block;
+      overflow: visible;
+      border-radius: 26px;
+      background: #fffdf9;
+    }
+    .wo-main {
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+      padding: 18px;
+    }
+    .wo-main-header {
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .wo-tabs {
+      margin-bottom: 16px;
+    }
+    .wo-grid {
+      flex: initial;
+      overflow: visible;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding-bottom: 0;
+    }
+    .wo-card:first-child {
+      grid-column: 1 / -1;
+      aspect-ratio: 16/10;
+    }
+    .wo-card {
+      aspect-ratio: 4/3.2;
+      border-radius: 16px;
+      box-shadow: 0 14px 34px rgba(89,62,45,.12);
+    }
+    .wo-card::after {
+      content: "Open";
+      opacity: 1;
+      transform: none;
+      right: 9px;
+      bottom: 9px;
+      padding: 6px 10px;
+      font-size: 10px;
+    }
+    .wo-empty {
+      padding: 56px 18px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .wo-gallery-frame {
+      border-radius: 22px;
+    }
+    .wo-gallery-screen {
+      border-radius: 22px;
+    }
+    .wo-main {
+      padding: 14px;
+    }
+    .wo-main-header {
+      display: grid;
+      gap: 4px;
+    }
+    .wo-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .wo-card:first-child,
+    .wo-card {
+      aspect-ratio: 16/10.5;
+    }
+  }
 `;
 
 const MOMENT_TABS = ["All Moments", "Akad", "Resepsi", "Outdoor"];

@@ -657,6 +657,88 @@ const css = `
       grid-template-columns: 1fr;
     }
   }
+
+  @media (max-width: 900px) {
+    .dp-showcase {
+      height: auto;
+      min-height: 0;
+      padding: 0;
+      border-radius: 26px;
+      background: rgba(255,255,255,.10);
+      box-shadow: 0 28px 80px -40px rgba(0,0,0,.75);
+    }
+    .dp-screen {
+      display: block;
+      overflow: visible;
+      border-radius: 26px;
+      background: #f7f7f8;
+    }
+    .dp-main {
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+      padding: 18px;
+    }
+    .dp-main-top {
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .dp-tabs {
+      margin-bottom: 16px;
+    }
+    .dp-grid {
+      flex: initial;
+      overflow: visible;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding-bottom: 0;
+    }
+    .dp-grid .dp-card:first-child {
+      grid-column: 1 / -1;
+      aspect-ratio: 16/10;
+    }
+    .dp-card {
+      aspect-ratio: 4/3.2;
+      border-radius: 16px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.10);
+    }
+    .dp-card::after {
+      content: "Open";
+      opacity: 1;
+      transform: none;
+      right: 9px;
+      bottom: 9px;
+      padding: 6px 10px;
+      font-size: 10px;
+    }
+    .dp-empty {
+      padding: 56px 18px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .dp-showcase {
+      border-radius: 22px;
+    }
+    .dp-screen {
+      border-radius: 22px;
+    }
+    .dp-main {
+      padding: 14px;
+    }
+    .dp-main-top {
+      display: grid;
+      gap: 4px;
+    }
+    .dp-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .dp-grid .dp-card:first-child,
+    .dp-card {
+      aspect-ratio: 16/10.5;
+    }
+  }
 `;
 
 export default function DivisionPage({ config }) {
