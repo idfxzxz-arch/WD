@@ -32,9 +32,51 @@ const DIVISION_NAMES = {
   it: "WD IT",
 }
 
+const DIVISION_META = {
+  wedding: {
+    label: "Wedding",
+    accent: "#b88446",
+    desc: "Elegant planning and detail-focused celebration direction.",
+  },
+  production: {
+    label: "Production",
+    accent: "#f59e0b",
+    desc: "Visual production, documentation, and creative execution.",
+  },
+  event: {
+    label: "Event",
+    accent: "#6366f1",
+    desc: "Structured event planning with calm field coordination.",
+  },
+  workshop: {
+    label: "Workshop",
+    accent: "#22c55e",
+    desc: "Practical learning programs built for real outcomes.",
+  },
+  music: {
+    label: "Music",
+    accent: "#a855f7",
+    desc: "Entertainment, music class, and stage-ready talent support.",
+  },
+  it: {
+    label: "IT",
+    accent: "#0ea5e9",
+    desc: "Website, digital solution, and IT support for business needs.",
+  },
+}
+
 function getDivisionName(item) {
   const cat = (item.category || "").toLowerCase().trim()
   return DIVISION_NAMES[cat] || item.title
+}
+
+function getDivisionMeta(item) {
+  const cat = (item.category || "").toLowerCase().trim()
+  return DIVISION_META[cat] || {
+    label: cat || "Work",
+    accent: "#111111",
+    desc: item.meta || "Selected work from WD Group Company.",
+  }
 }
 
 function getLink(item) {
@@ -66,6 +108,7 @@ function ProjectCard({ item, index }) {
 
   const dest = getLink(item)
   const title = getDivisionName(item)
+  const meta = getDivisionMeta(item)
 
   return (
     <motion.div
@@ -84,15 +127,31 @@ function ProjectCard({ item, index }) {
       onMouseLeave={() => setRotate({ x: 0, y: 0 })}
     >
       <Link to={dest} className="group block no-underline text-inherit z-30 relative">
-        {/* IMAGE */}
-        <div className="relative rounded-2xl overflow-hidden bg-neutral-100">
+        <div className="relative rounded-[1.75rem] overflow-hidden bg-neutral-100 shadow-[0_24px_70px_-44px_rgba(0,0,0,0.55)] ring-1 ring-black/5 transition duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_34px_90px_-42px_rgba(0,0,0,0.62)]">
+          <div className="absolute left-4 top-4 z-20 flex items-center gap-2">
+            <span
+              className="rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white shadow-lg"
+              style={{ backgroundColor: meta.accent }}
+            >
+              {meta.label}
+            </span>
+          </div>
           <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500 bg-black/10">
             <motion.div
-              className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg"
+              className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-xl"
               whileHover={{ scale: 1.1 }}
             >
               <ArrowUpRight size={20} />
             </motion.div>
+          </div>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1/2 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 z-20 p-5 text-white">
+            <p className="mb-2 max-w-[22rem] text-xs leading-relaxed text-white/72">
+              {meta.desc}
+            </p>
+            <h3 className="max-w-[24rem] text-2xl font-semibold leading-tight tracking-[-0.03em]">
+              {title}
+            </h3>
           </div>
           <div className={`overflow-hidden ${isEven ? "aspect-[4/5]" : "aspect-[4/4]"}`}>
             <motion.img
@@ -105,29 +164,24 @@ function ProjectCard({ item, index }) {
           </div>
         </div>
 
-        {/* TEXT */}
         <div className="mt-5 flex items-start justify-between gap-4">
           <div className="space-y-2">
             <div className="flex flex-wrap gap-2">
-              {tags.map((tag, j) => (
+              {tags.slice(0, 3).map((tag, j) => (
                 <span
                   key={j}
-                  className="text-xs text-neutral-500 border border-neutral-200 px-3 py-1 rounded-full"
+                  className="text-xs text-neutral-500 border border-neutral-200 bg-white px-3 py-1 rounded-full shadow-sm"
                 >
                   {tag}
                 </span>
               ))}
             </div>
-            <motion.h3
-              className="text-base font-medium leading-snug text-neutral-900"
-              whileHover={{ x: 6 }}
-              transition={{ duration: 0.25 }}
-            >
-              {title}
-            </motion.h3>
+            <p className="text-sm leading-relaxed text-neutral-500">
+              Explore the division portfolio and service direction.
+            </p>
           </div>
           <motion.div
-            className="shrink-0 mt-1 w-9 h-9 rounded-full border border-neutral-200 flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:border-black transition duration-300"
+            className="shrink-0 mt-1 w-10 h-10 rounded-full border border-neutral-200 bg-white flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:border-black transition duration-300 shadow-sm"
             whileHover={{ rotate: -45, scale: 1.1 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
