@@ -306,8 +306,9 @@ const css = `
   .dp-card img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
+    background: #f8f8fa;
   }
   .dp-card::after {
     content: "View";
@@ -386,6 +387,7 @@ const css = `
     max-height: min(820px, calc(100vh - 56px));
     object-fit: contain;
     display: block;
+    background: #07080c;
   }
   .dp-lightbox-info {
     padding: 26px;
