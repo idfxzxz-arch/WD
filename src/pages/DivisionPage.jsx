@@ -286,6 +286,7 @@ const css = `
   }
   .dp-grid::-webkit-scrollbar { display: none; }
   .dp-card {
+    position: relative;
     aspect-ratio: 4/3;
     border-radius: 15px;
     overflow: hidden;
@@ -307,6 +308,25 @@ const css = `
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+  .dp-card::after {
+    content: "View";
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 999px;
+    padding: 6px 11px;
+    background: rgba(255,255,255,.9);
+    color: #111216;
+    font-size: 11px;
+    font-weight: 900;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: .2s;
+  }
+  .dp-card:hover::after {
+    opacity: 1;
+    transform: translateY(0);
   }
   .dp-empty {
     grid-column: 1 / -1;
@@ -331,6 +351,121 @@ const css = `
     font-size: 13px;
     font-weight: 800;
   }
+  .dp-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    background: rgba(3,4,7,.78);
+    backdrop-filter: blur(18px);
+  }
+  .dp-lightbox-panel {
+    width: min(1120px, 100%);
+    max-height: min(820px, calc(100vh - 56px));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    overflow: hidden;
+    border-radius: 28px;
+    background: #f7f7f8;
+    border: 1px solid rgba(255,255,255,.18);
+    box-shadow: 0 42px 120px rgba(0,0,0,.5);
+  }
+  .dp-lightbox-media {
+    min-height: 620px;
+    background: #07080c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dp-lightbox-media img {
+    width: 100%;
+    height: 100%;
+    max-height: min(820px, calc(100vh - 56px));
+    object-fit: contain;
+    display: block;
+  }
+  .dp-lightbox-info {
+    padding: 26px;
+    color: #111216;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .dp-lightbox-kicker {
+    width: fit-content;
+    border-radius: 999px;
+    padding: 7px 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .dp-lightbox-title {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.08;
+    letter-spacing: -.04em;
+  }
+  .dp-lightbox-meta {
+    color: #696970;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .dp-lightbox-actions {
+    display: grid;
+    gap: 10px;
+    margin-top: auto;
+  }
+  .dp-lightbox-btn {
+    border: 1px solid #dedee4;
+    background: #fff;
+    color: #111216;
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .2s;
+  }
+  .dp-lightbox-btn:hover {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, #fff);
+  }
+  .dp-lightbox-close,
+  .dp-lightbox-nav {
+    position: absolute;
+    border: 1px solid rgba(255,255,255,.22);
+    background: rgba(255,255,255,.92);
+    color: #111216;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 14px 34px rgba(0,0,0,.20);
+  }
+  .dp-lightbox-close {
+    top: 22px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    font-size: 20px;
+  }
+  .dp-lightbox-nav {
+    top: 50%;
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    font-size: 24px;
+    transform: translateY(-50%);
+  }
+  .dp-lightbox-nav.prev { left: 22px; }
+  .dp-lightbox-nav.next { right: 22px; }
 
   @media (max-width: 900px) {
     .dp-nav { padding: 16px 18px; }
@@ -345,6 +480,28 @@ const css = `
     .dp-main { padding: 16px; }
     .dp-main-top { align-items: flex-start; }
     .dp-grid { grid-template-columns: repeat(2, 1fr); }
+    .dp-lightbox { padding: 14px; }
+    .dp-lightbox-panel {
+      grid-template-columns: 1fr;
+      max-height: calc(100vh - 28px);
+      border-radius: 22px;
+    }
+    .dp-lightbox-media {
+      min-height: 0;
+      height: 62vh;
+    }
+    .dp-lightbox-media img {
+      max-height: 62vh;
+    }
+    .dp-lightbox-info {
+      padding: 18px;
+    }
+    .dp-lightbox-close {
+      top: 10px;
+      right: 10px;
+    }
+    .dp-lightbox-nav.prev { left: 10px; }
+    .dp-lightbox-nav.next { right: 10px; }
   }
 `;
 
@@ -353,6 +510,7 @@ export default function DivisionPage({ config }) {
   const [activeTab, setActiveTab] = useState(config.tabs[0]);
   const [saved, setSaved] = useState([]);
   const [toast, setToast] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -399,6 +557,22 @@ export default function DivisionPage({ config }) {
       setSaved([...saved, { id: item.id }]);
       showToast(config.savedMessage);
     }
+  };
+
+  const selectedWork = selectedIndex !== null ? filtered[selectedIndex] : null;
+  const openLightbox = (index) => setSelectedIndex(index);
+  const closeLightbox = () => setSelectedIndex(null);
+  const showPrev = () => {
+    setSelectedIndex((current) => {
+      if (current === null || filtered.length === 0) return null;
+      return (current - 1 + filtered.length) % filtered.length;
+    });
+  };
+  const showNext = () => {
+    setSelectedIndex((current) => {
+      if (current === null || filtered.length === 0) return null;
+      return (current + 1) % filtered.length;
+    });
   };
 
   return (
@@ -503,14 +677,14 @@ export default function DivisionPage({ config }) {
 
                 <div className="dp-grid">
                   {filtered.length > 0 ? (
-                    filtered.map((item) => {
+                    filtered.map((item, index) => {
                       const isSaved = saved.some((savedItem) => savedItem.id === item.id);
                       return (
                         <button
                           type="button"
                           key={item.id}
                           className={`dp-card ${isSaved ? "saved" : ""}`}
-                          onClick={() => toggleSaved(item)}
+                          onClick={() => openLightbox(index)}
                         >
                           <img src={item.image} alt={item.title || `${config.brand} portfolio`} loading="lazy" />
                         </button>
@@ -526,6 +700,63 @@ export default function DivisionPage({ config }) {
             </div>
           </motion.div>
         </main>
+
+        <AnimatePresence>
+          {selectedWork && (
+            <motion.div
+              className="dp-lightbox"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeLightbox}
+            >
+              <button className="dp-lightbox-close" onClick={closeLightbox} aria-label="Close image">
+                ×
+              </button>
+              {filtered.length > 1 && (
+                <>
+                  <button className="dp-lightbox-nav prev" onClick={(event) => { event.stopPropagation(); showPrev(); }} aria-label="Previous image">
+                    ‹
+                  </button>
+                  <button className="dp-lightbox-nav next" onClick={(event) => { event.stopPropagation(); showNext(); }} aria-label="Next image">
+                    ›
+                  </button>
+                </>
+              )}
+              <motion.div
+                className="dp-lightbox-panel"
+                initial={{ scale: 0.96, y: 18 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.96, y: 18 }}
+                transition={{ duration: 0.22 }}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="dp-lightbox-media">
+                  <img src={selectedWork.image} alt={selectedWork.title || `${config.brand} portfolio`} />
+                </div>
+                <div className="dp-lightbox-info">
+                  <div className="dp-lightbox-kicker">
+                    {selectedWork.subcategory || config.badge}
+                  </div>
+                  <h2 className="dp-lightbox-title">
+                    {selectedWork.title || `${config.brand} Portfolio`}
+                  </h2>
+                  <p className="dp-lightbox-meta">
+                    {selectedWork.meta || `A curated portfolio item from ${config.brand}.`}
+                  </p>
+                  <div className="dp-lightbox-actions">
+                    <button className="dp-lightbox-btn" onClick={() => toggleSaved(selectedWork)}>
+                      {saved.some((item) => item.id === selectedWork.id) ? "Remove from selection" : "Save to selection"}
+                    </button>
+                    <button className="dp-lightbox-btn" onClick={closeLightbox}>
+                      Back to gallery
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );
