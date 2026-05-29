@@ -12,6 +12,20 @@ const CATEGORY_ROUTES = {
   event:      "/event",
 }
 
+const DIVISION_NAMES = {
+  wedding: "WD Sky Wedding Organizer",
+  production: "WD Production",
+  event: "WD Event Organizer",
+  workshop: "WD Jaya Workshop",
+  music: "WD Music Entertaiment and Music Class",
+  it: "WD IT",
+}
+
+function getDivisionName(item) {
+  const cat = (item.category || "").toLowerCase().trim()
+  return DIVISION_NAMES[cat] || item.title
+}
+
 function getLink(item) {
   const cat = (item.category || "").toLowerCase().trim()
   
@@ -40,6 +54,7 @@ function ProjectCard({ item, index }) {
     : (item.tags || "").split(",").map(t => t.trim()).filter(Boolean)
 
   const dest = getLink(item)
+  const title = getDivisionName(item)
 
   return (
     <motion.div
@@ -71,7 +86,7 @@ function ProjectCard({ item, index }) {
           <div className={`overflow-hidden ${isEven ? "aspect-[4/5]" : "aspect-[4/4]"}`}>
             <motion.img
               src={item.image}
-              alt={item.title}
+              alt={title}
               className="w-full h-full object-cover"
               whileHover={{ scale: 1.08 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -97,7 +112,7 @@ function ProjectCard({ item, index }) {
               whileHover={{ x: 6 }}
               transition={{ duration: 0.25 }}
             >
-              {item.title}
+              {title}
             </motion.h3>
           </div>
           <motion.div

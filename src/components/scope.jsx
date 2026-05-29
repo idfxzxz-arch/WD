@@ -11,6 +11,30 @@ const DEFAULT_IMAGES = [
   "/resources/Wedding/WO/WO6.webp"
 ]
 
+const SERVICE_NAMES = {
+  wedding: "WD Sky Wedding Organizer",
+  production: "WD Production",
+  event: "WD Event Organizer",
+  workshop: "WD Jaya Workshop",
+  music: "WD Music Entertaiment and Music Class",
+  it: "WD IT",
+}
+
+function getServiceName(item) {
+  const source = `${item.name || ""} ${item.link || ""}`.toLowerCase()
+
+  if (source.includes("wedding")) return SERVICE_NAMES.wedding
+  if (source.includes("production")) return SERVICE_NAMES.production
+  if (source.includes("event")) return SERVICE_NAMES.event
+  if (source.includes("workshop")) return SERVICE_NAMES.workshop
+  if (source.includes("music")) return SERVICE_NAMES.music
+  if (source.includes("it") || source.includes("digital") || source.includes("website")) {
+    return SERVICE_NAMES.it
+  }
+
+  return item.name
+}
+
 export default function Scope() {
   const [services, setServices] = useState([])
 
@@ -140,7 +164,7 @@ export default function Scope() {
             whileHover={{ scale: 1.05, opacity: 1 }}
             className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-light cursor-pointer opacity-40 hover:opacity-100 transition-all duration-300"
           >
-            {item.name}
+            {getServiceName(item)}
           </motion.span>
         ))}
         <div className="mt-6 text-xs tracking-[0.3em] uppercase text-white/30">
