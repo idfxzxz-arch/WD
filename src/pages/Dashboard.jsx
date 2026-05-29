@@ -249,9 +249,9 @@ export default function Dashboard() {
               <FileText className="w-4 h-4" /> Content
             </Link>
 
-            <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:bg-white/5 hover:text-zinc-200 text-sm font-medium">
+            <Link to="/admin/media" className={navItemClass("/admin/media")}>
               <ImageIcon className="w-4 h-4" /> Media Library
-            </button>
+            </Link>
           </nav>
 
           <p className="px-3 text-xs font-semibold text-zinc-500 mb-2 uppercase tracking-wider">

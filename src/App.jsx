@@ -21,6 +21,7 @@ import Event from "./pages/event"
 import Production from "./pages/production"
 import Login from "./pages/login"
 import Dashboard from "./pages/Dashboard"
+import MediaLibrary from "./pages/MediaLibrary"
 import AdminPanel from "./components/AdminPanel"
 
 function Home() {
@@ -72,6 +73,7 @@ export default function App() {
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<></>} />
             <Route path="content" element={<AdminPanel />} />
+            <Route path="media" element={<MediaLibrary />} />
           </Route>
         </Routes>
       </BrowserRouter>
