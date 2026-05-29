@@ -287,8 +287,8 @@ const css = `
   }
   .wo-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
     overflow-y: auto;
     flex: 1;
     padding-bottom: 20px;
@@ -302,8 +302,12 @@ const css = `
     border: 2px solid transparent;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    aspect-ratio: 4/3;
+    aspect-ratio: 16/10;
     display: flex;
+  }
+  .wo-card:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16/7;
   }
   .wo-card:hover {
     transform: scale(0.98);
@@ -351,7 +355,12 @@ const css = `
     .wo-sidebar { display: none; }
     .wo-main { padding: 16px; }
     .wo-main-header { align-items: flex-start; }
-    .wo-grid { grid-template-columns: repeat(2, 1fr); }
+    .wo-grid { grid-template-columns: 1fr; gap: 14px; }
+    .wo-card,
+    .wo-card:first-child {
+      grid-column: auto;
+      aspect-ratio: 16/10;
+    }
   }
 `;
 
