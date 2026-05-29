@@ -810,10 +810,6 @@ const css = `
       border-color: var(--accent);
       box-shadow: 0 0 0 2px var(--accent), 0 16px 36px rgba(12,13,18,.10);
     }
-    .dp-card img {
-      object-fit: contain;
-      padding: 5px;
-    }
   }
 
   @media (max-width: 520px) {
