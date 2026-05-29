@@ -739,6 +739,133 @@ const css = `
       aspect-ratio: 16/10.5;
     }
   }
+
+  @media (max-width: 900px) {
+    .dp-root {
+      background:
+        radial-gradient(circle at 18% 0%, var(--accent-soft), transparent 34%),
+        linear-gradient(180deg, color-mix(in srgb, var(--bg) 92%, #ffffff 8%) 0%, var(--bg) 58%, #050609 100%);
+    }
+    .dp-nav {
+      background: color-mix(in srgb, var(--bg) 78%, transparent);
+    }
+    .dp-hero {
+      padding-top: 26px;
+    }
+    .dp-copy {
+      max-width: none;
+    }
+    .dp-kicker {
+      box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 12%, transparent);
+    }
+    .dp-title {
+      max-width: 11ch;
+      text-wrap: balance;
+    }
+    .dp-desc {
+      max-width: 100%;
+      color: color-mix(in srgb, var(--muted) 88%, #ffffff 12%);
+    }
+    .dp-stats {
+      max-width: 100%;
+    }
+    .dp-stat {
+      background: rgba(255,255,255,.075);
+      border-color: rgba(255,255,255,.11);
+    }
+    .dp-showcase {
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+    }
+    .dp-screen {
+      background:
+        linear-gradient(180deg, #ffffff 0%, #f4f5f7 100%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.72);
+    }
+    .dp-main {
+      padding: 16px;
+    }
+    .dp-main-top {
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e7e8ec;
+    }
+    .dp-main-title {
+      color: #101115;
+    }
+    .dp-tabs {
+      margin-top: 14px;
+    }
+    .dp-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--button-ink, #08090d);
+    }
+    .dp-card {
+      border: 1px solid #e7e8ec;
+      background:
+        radial-gradient(circle at 50% 35%, #ffffff, #eef0f3);
+      box-shadow: 0 16px 36px rgba(12,13,18,.10);
+    }
+    .dp-card.saved {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent), 0 16px 36px rgba(12,13,18,.10);
+    }
+    .dp-card img {
+      object-fit: contain;
+      padding: 5px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .dp-hero {
+      padding-top: 22px;
+      gap: 20px;
+    }
+    .dp-title {
+      max-width: 10ch;
+      font-size: clamp(38px, 12.2vw, 48px);
+    }
+    .dp-actions {
+      gap: 9px;
+    }
+    .dp-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .dp-stat {
+      display: block;
+      min-height: 76px;
+      padding: 11px 8px;
+      text-align: left;
+    }
+    .dp-stat strong {
+      font-size: 13px;
+      word-break: break-word;
+    }
+    .dp-stat span {
+      margin-top: 6px;
+      font-size: 8px;
+    }
+    .dp-main {
+      padding: 12px;
+    }
+    .dp-main-top {
+      padding-bottom: 10px;
+    }
+    .dp-main-title {
+      font-size: 18px;
+    }
+    .dp-tab {
+      border-radius: 999px;
+    }
+    .dp-grid {
+      gap: 10px;
+    }
+    .dp-grid .dp-card:first-child,
+    .dp-card {
+      aspect-ratio: 16/10;
+      border-radius: 15px;
+    }
+  }
 `;
 
 export default function DivisionPage({ config }) {
