@@ -905,7 +905,7 @@ const css = `
   }
 `;
 
-export default function DivisionPage({ config }) {
+export default function DivisionLayout({ config }) {
   const [works, setWorks] = useState([]);
   const [activeTab, setActiveTab] = useState(config.tabs[0]);
   const [saved, setSaved] = useState([]);

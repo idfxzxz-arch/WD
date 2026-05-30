@@ -1,4 +1,4 @@
-import DivisionPage from "./DivisionPage";
+import DivisionLayout from "../components/DivisionLayout";
 
 const itConfig = {
   category: "it",
@@ -29,5 +29,5 @@ const itConfig = {
 };
 
 export default function ITPage() {
-  return <DivisionPage config={itConfig} />;
+  return <DivisionLayout config={itConfig} />;
 }

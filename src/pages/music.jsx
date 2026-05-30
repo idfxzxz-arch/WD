@@ -1,4 +1,4 @@
-import DivisionPage from "./DivisionPage";
+import DivisionLayout from "../components/DivisionLayout";
 
 const musicConfig = {
   category: "music",
@@ -29,5 +29,5 @@ const musicConfig = {
 };
 
 export default function MusicLayout() {
-  return <DivisionPage config={musicConfig} />;
+  return <DivisionLayout config={musicConfig} />;
 }

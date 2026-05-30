@@ -1,4 +1,4 @@
-import DivisionPage from "./DivisionPage";
+import DivisionLayout from "../components/DivisionLayout";
 
 const eventConfig = {
   category: "event",
@@ -29,5 +29,5 @@ const eventConfig = {
 };
 
 export default function EventOrganizer() {
-  return <DivisionPage config={eventConfig} />;
+  return <DivisionLayout config={eventConfig} />;
 }

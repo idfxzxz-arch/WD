@@ -1,4 +1,4 @@
-import DivisionPage from "./DivisionPage";
+import DivisionLayout from "../components/DivisionLayout";
 
 const workshopConfig = {
   category: "workshop",
@@ -29,5 +29,5 @@ const workshopConfig = {
 };
 
 export default function WorkshopLayout() {
-  return <DivisionPage config={workshopConfig} />;
+  return <DivisionLayout config={workshopConfig} />;
 }

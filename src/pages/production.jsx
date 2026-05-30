@@ -1,4 +1,4 @@
-import DivisionPage from "./DivisionPage";
+import DivisionLayout from "../components/DivisionLayout";
 
 const productionConfig = {
   category: "production",
@@ -29,5 +29,5 @@ const productionConfig = {
 };
 
 export default function ProductionOrganizer() {
-  return <DivisionPage config={productionConfig} />;
+  return <DivisionLayout config={productionConfig} />;
 }
