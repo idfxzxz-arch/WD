@@ -280,26 +280,26 @@ export default function AdminPanel() {
   const divisionTabs = ["wedding", "music", "production", "workshop", "event"]
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white font-sans">
+    <div className="min-h-screen overflow-x-hidden bg-zinc-950 text-white font-sans">
       {toast && (
-        <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-white text-sm px-5 py-3 rounded-2xl shadow-lg">
+        <div className="fixed left-4 right-4 top-4 z-50 bg-emerald-500 text-white text-sm px-4 py-3 rounded-2xl shadow-lg sm:left-auto sm:right-6 sm:top-6 sm:px-5">
           {toast}
         </div>
       )}
 
-      <div className="max-w-4xl mx-auto px-6 py-10">
+      <div className="w-full max-w-4xl mx-auto px-4 py-6 sm:px-6 sm:py-10">
 
         {/* Header */}
-        <div className="flex items-center justify-between mb-10">
-          <div>
+        <div className="flex flex-col gap-4 mb-7 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
             <h1 className="text-2xl font-semibold tracking-tight">Admin Panel</h1>
             <p className="text-zinc-500 text-sm mt-1">Edit konten website WD Group</p>
           </div>
-          <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-2xl px-1 py-1">
-            <Globe size={14} className="text-zinc-500 ml-2" />
+          <div className="flex w-full items-center gap-2 overflow-x-auto bg-zinc-900 border border-zinc-800 rounded-2xl px-1 py-1 sm:w-auto">
+            <Globe size={14} className="shrink-0 text-zinc-500 ml-2" />
             {LANGS.map(l => (
               <button key={l.code} onClick={() => setLang(l.code)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium transition ${lang === l.code ? "bg-white text-black" : "text-zinc-400 hover:text-white"}`}>
+                className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-medium transition ${lang === l.code ? "bg-white text-black" : "text-zinc-400 hover:text-white"}`}>
                 {l.label}
               </button>
             ))}
@@ -307,22 +307,22 @@ export default function AdminPanel() {
         </div>
 
         {/* Tabs — grouped */}
-        <div className="flex gap-1.5 flex-wrap mb-2">
+        <div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-2 mb-1 sm:mx-0 sm:flex-wrap sm:px-0">
           {["hero", "about", "services", "contact"].map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-xl text-sm capitalize font-medium transition ${activeTab === tab ? "bg-white text-black" : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"}`}>
+              className={`shrink-0 px-4 py-2 rounded-xl text-sm capitalize font-medium transition ${activeTab === tab ? "bg-white text-black" : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"}`}>
               {tab}
             </button>
           ))}
         </div>
 
         {/* Division tabs */}
-        <div className="flex gap-1.5 flex-wrap mb-2 mt-1">
+        <div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-2 mb-1 mt-1 sm:mx-0 sm:flex-wrap sm:px-0">
           {divisionTabs.map(tab => {
             const col = SECTION_COLORS[tab]
             return (
               <button key={tab} onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition border ${activeTab === tab ? "bg-white text-black border-white" : `bg-zinc-900 border-zinc-800 hover:text-white ${col.tab}`}`}>
+                className={`shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition border ${activeTab === tab ? "bg-white text-black border-white" : `bg-zinc-900 border-zinc-800 hover:text-white ${col.tab}`}`}>
                 {col.icon} {tab.charAt(0).toUpperCase() + tab.slice(1)}
               </button>
             )
@@ -330,10 +330,10 @@ export default function AdminPanel() {
         </div>
 
         {/* Utility tabs */}
-        <div className="flex gap-1.5 flex-wrap mb-8 mt-1">
+        <div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-2 mb-6 mt-1 sm:mx-0 sm:flex-wrap sm:px-0 sm:mb-8">
           {["scope", "works"].map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-xl text-sm capitalize font-medium transition ${activeTab === tab ? "bg-white text-black" : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"}`}>
+              className={`shrink-0 px-4 py-2 rounded-xl text-sm capitalize font-medium transition ${activeTab === tab ? "bg-white text-black" : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"}`}>
               {tab}
             </button>
           ))}
@@ -344,7 +344,7 @@ export default function AdminPanel() {
           <div>
             {/* Division info banner */}
             {SECTION_COLORS[activeTab] && (
-              <div className={`border rounded-2xl px-5 py-4 mb-6 text-sm ${SECTION_COLORS[activeTab].banner}`}>
+              <div className={`border rounded-2xl px-4 py-4 mb-5 text-sm sm:px-5 sm:mb-6 ${SECTION_COLORS[activeTab].banner}`}>
                 <p className="font-medium mb-1">{SECTION_COLORS[activeTab].icon} Konten Halaman {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</p>
                 <p className="opacity-70 text-xs">
                   Tampil di halaman <code className="bg-black/20 px-1 rounded">/{activeTab}</code>.
@@ -360,7 +360,7 @@ export default function AdminPanel() {
               </div>
             )}
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 mb-6">
+            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 mb-5 sm:rounded-3xl sm:p-6 sm:mb-6">
               <h2 className="text-lg font-semibold mb-6 capitalize">{activeTab}</h2>
               <div className="flex flex-col gap-5">
                 {CONTENT_SECTIONS[activeTab].map(f => (
@@ -384,7 +384,7 @@ export default function AdminPanel() {
               </div>
             </div>
             <button onClick={() => saveContent(activeTab)} disabled={saving}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 transition px-6 py-3 rounded-xl font-semibold text-sm disabled:opacity-50">
+              className="flex w-full items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 transition px-6 py-3 rounded-xl font-semibold text-sm disabled:opacity-50 sm:w-auto">
               <Save size={15} />
               {saving ? "Menyimpan..." : "Simpan perubahan"}
             </button>
@@ -397,8 +397,8 @@ export default function AdminPanel() {
             <p className="text-zinc-500 text-sm mb-6">Edit daftar layanan di section Scope.</p>
             <div className="flex flex-col gap-4 mb-6">
               {scopeItems.map((item) => (
-                <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex gap-4 items-start">
-                  <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col gap-4 sm:flex-row sm:items-start">
+                  <div className="w-full min-w-0 flex-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
                       <label className="text-zinc-500 text-xs mb-1 block">Urutan</label>
                       <input type="number" className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700"
@@ -415,17 +415,17 @@ export default function AdminPanel() {
                         value={item.link} onChange={e => updateScope(item.id, "link", e.target.value)} placeholder="cth: /wedding" />
                     </div>
                   </div>
-                  <button onClick={() => deleteScope(item)} className="mt-6 p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-400/10 transition">
+                  <button onClick={() => deleteScope(item)} className="self-end p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-400/10 transition sm:mt-6">
                     <Trash2 size={15} />
                   </button>
                 </div>
               ))}
             </div>
-            <div className="flex gap-3">
-              <button onClick={addScope} className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 transition px-5 py-2.5 rounded-xl text-sm border border-zinc-700">
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <button onClick={addScope} className="flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 transition px-5 py-2.5 rounded-xl text-sm border border-zinc-700">
                 <Plus size={14} /> Tambah Layanan
               </button>
-              <button onClick={saveScope} disabled={saving} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 transition px-6 py-2.5 rounded-xl font-semibold text-sm">
+              <button onClick={saveScope} disabled={saving} className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 transition px-6 py-2.5 rounded-xl font-semibold text-sm">
                 <Save size={14} /> {saving ? "Menyimpan..." : "Simpan Scope"}
               </button>
             </div>
@@ -436,12 +436,12 @@ export default function AdminPanel() {
         {activeTab === "works" && (
           <div>
             {/* Info box */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl px-5 py-4 mb-6 text-xs text-zinc-400">
+            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-4 mb-5 text-xs text-zinc-400 sm:px-5 sm:mb-6">
               <p className="font-semibold text-white mb-1">📁 Cara kerja Works</p>
               <p>Setiap foto yang ditambah akan muncul di halaman divisinya masing-masing berdasarkan <strong>Kategori</strong>.</p>
               <div className="flex flex-wrap gap-2 mt-3">
                 {Object.entries(CATEGORY_ROUTES).map(([cat, route]) => (
-                  <span key={cat} className="bg-zinc-800 px-3 py-1 rounded-lg">
+                  <span key={cat} className="bg-zinc-800 px-3 py-1 rounded-lg break-words">
                     {SECTION_COLORS[cat]?.icon} <strong>{cat}</strong> → <code>{route}</code>
                   </span>
                 ))}
@@ -449,10 +449,10 @@ export default function AdminPanel() {
             </div>
 
             {/* Filter */}
-            <div className="flex gap-2 mb-6 flex-wrap">
+            <div className="-mx-4 flex gap-2 mb-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:px-0 sm:mb-6">
               {["all", "wedding", "music", "production", "workshop", "event", "it"].map((cat) => (
                 <button key={cat} onClick={() => setFilterCategory(cat)}
-                  className={`px-4 py-1.5 rounded-lg text-xs capitalize transition ${filterCategory === cat ? "bg-white text-black" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>
+                  className={`shrink-0 px-4 py-1.5 rounded-lg text-xs capitalize transition ${filterCategory === cat ? "bg-white text-black" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>
                   {SECTION_COLORS[cat] ? `${SECTION_COLORS[cat].icon} ` : ""}{cat}
                 </button>
               ))}
@@ -462,10 +462,10 @@ export default function AdminPanel() {
               {works
                 .filter(item => filterCategory === "all" || item.category === filterCategory)
                 .map((item) => (
-                  <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-3xl p-5 flex flex-col md:flex-row gap-6 relative group">
+                  <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col gap-4 relative group sm:rounded-3xl sm:p-5 md:flex-row md:gap-6">
 
                     {/* Kategori badge */}
-                    <div className="absolute top-4 right-4">
+                    <div className="self-start sm:absolute sm:top-4 sm:right-4">
                       <span className={`text-xs px-2 py-1 rounded-lg font-medium ${
                         item.category === "wedding"    ? "bg-amber-900/40 text-amber-400" :
                         item.category === "music"      ? "bg-violet-900/40 text-violet-400" :
@@ -480,12 +480,12 @@ export default function AdminPanel() {
                     </div>
 
                     {/* Media uploader */}
-                    <div className="w-full md:w-40 h-40 bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700 shrink-0 relative flex items-center justify-center">
+                    <div className="w-full h-48 bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700 shrink-0 relative flex items-center justify-center sm:h-40 md:w-40">
                       {item.image
                         ? <img src={item.image} className="w-full h-full object-cover" alt="Preview" />
                         : <div className="text-zinc-600"><ImageIcon size={32} /></div>
                       }
-                      <label className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer">
+                      <label className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center opacity-100 transition cursor-pointer sm:opacity-0 sm:group-hover:opacity-100">
                         {uploading === item.id ? <Loader2 className="animate-spin" /> : <HardDriveUpload />}
                         <span className="text-xs mt-1 text-white">Upload foto</span>
                         <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, item.id)} />
@@ -493,7 +493,7 @@ export default function AdminPanel() {
                     </div>
 
                     {/* Form fields */}
-                    <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="min-w-0 flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-zinc-500 text-xs mb-1 block">Judul</label>
                         <input className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
@@ -541,7 +541,7 @@ export default function AdminPanel() {
                       </div>
 
                       <div className="flex gap-2 items-end">
-                        <div className="flex-1">
+                        <div className="min-w-0 flex-1">
                           <label className="text-zinc-500 text-xs mb-1 block">Urutan</label>
                           <input type="number" className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
                             value={item.order_index || 0} onChange={e => updateWork(item.id, "order_index", Number(e.target.value))} />
@@ -555,7 +555,7 @@ export default function AdminPanel() {
                 ))}
             </div>
 
-            <div className="flex gap-4 mt-8">
+            <div className="flex flex-col gap-3 mt-8 sm:flex-row sm:gap-4">
               <button onClick={addWork} className="flex-1 bg-zinc-800 hover:bg-zinc-700 py-3 rounded-xl text-sm border border-zinc-700">
                 <Plus size={14} className="inline mr-1" /> Tambah Project
               </button>
