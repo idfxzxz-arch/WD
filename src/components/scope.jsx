@@ -28,11 +28,22 @@ function getServiceName(item) {
   if (source.includes("event")) return SERVICE_NAMES.event
   if (source.includes("workshop")) return SERVICE_NAMES.workshop
   if (source.includes("music")) return SERVICE_NAMES.music
-  if (source.includes("it") || source.includes("digital") || source.includes("website")) {
+  if (
+    source.includes("it") ||
+    source.includes("digital") ||
+    source.includes("website") ||
+    source.includes("store")
+  ) {
     return SERVICE_NAMES.it
   }
 
   return item.name
+}
+
+function getServiceLink(item) {
+  const source = `${item.name || ""} ${item.link || ""}`.toLowerCase()
+  if (source.includes("store")) return "/it"
+  return item.link
 }
 
 export default function Scope() {
@@ -160,7 +171,7 @@ export default function Scope() {
         {services.map((item, i) => (
           <motion.span
             key={item.id}
-            onClick={() => handleClick(item.link)}
+            onClick={() => handleClick(getServiceLink(item))}
             whileHover={{ scale: 1.05, opacity: 1 }}
             className="max-w-full text-[1.45rem] min-[390px]:text-3xl sm:text-2xl md:text-3xl lg:text-5xl leading-tight font-light cursor-pointer opacity-55 sm:opacity-40 hover:opacity-100 transition-all duration-300"
           >
