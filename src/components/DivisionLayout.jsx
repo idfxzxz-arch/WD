@@ -903,6 +903,161 @@ const css = `
       font-size: 10px;
     }
   }
+
+  @media (max-width: 640px) {
+    .dp-root {
+      width: 100%;
+      max-width: 100vw;
+    }
+    .dp-nav {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 14px;
+      gap: 10px;
+    }
+    .dp-back {
+      flex: 0 0 auto;
+      max-width: 86px;
+      padding: 8px 11px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .dp-logo {
+      min-width: 0;
+      overflow: hidden;
+      text-align: right;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .dp-hero {
+      width: 100%;
+      max-width: 100%;
+      padding: 22px 14px 32px;
+      gap: 18px;
+    }
+    .dp-copy,
+    .dp-desc,
+    .dp-showcase,
+    .dp-screen,
+    .dp-main {
+      min-width: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+    .dp-kicker {
+      max-width: 100%;
+      white-space: normal;
+      line-height: 1.25;
+    }
+    .dp-title {
+      max-width: 100%;
+      font-size: clamp(32px, 9.8vw, 42px);
+      line-height: 1.02;
+      overflow-wrap: anywhere;
+      text-wrap: balance;
+    }
+    .dp-title em {
+      display: inline;
+    }
+    .dp-desc {
+      font-size: 13.5px;
+      line-height: 1.62;
+      overflow-wrap: anywhere;
+    }
+    .dp-actions,
+    .dp-stats {
+      display: grid;
+      grid-template-columns: 1fr;
+      width: 100%;
+      max-width: 100%;
+    }
+    .dp-primary,
+    .dp-secondary {
+      width: 100%;
+      min-width: 0;
+    }
+    .dp-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 0;
+      padding: 13px 12px;
+    }
+    .dp-stat strong {
+      font-size: 15px;
+      line-height: 1.15;
+    }
+    .dp-stat span {
+      flex: 0 0 auto;
+      margin-top: 0;
+      font-size: 8px;
+    }
+    .dp-showcase {
+      margin-top: 0;
+      border-radius: 22px;
+      overflow: hidden;
+    }
+    .dp-screen {
+      border-radius: 22px;
+      overflow: hidden;
+    }
+    .dp-main {
+      padding: 12px;
+    }
+    .dp-main-top {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3px;
+      align-items: start;
+    }
+    .dp-main-title,
+    .dp-main-meta {
+      min-width: 0;
+      text-align: left;
+    }
+    .dp-main-title {
+      font-size: 17px;
+      overflow-wrap: anywhere;
+    }
+    .dp-tabs {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+    }
+    .dp-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      width: 100%;
+      max-width: 100%;
+    }
+    .dp-grid .dp-card:first-child,
+    .dp-card {
+      width: 100%;
+      max-width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 15px;
+    }
+    .dp-empty {
+      padding: 42px 14px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .dp-title {
+      font-size: clamp(29px, 9.2vw, 36px);
+    }
+    .dp-nav {
+      padding-inline: 10px;
+    }
+    .dp-hero {
+      padding-inline: 10px;
+    }
+    .dp-main {
+      padding: 10px;
+    }
+  }
 `;
 
 export default function DivisionLayout({ config }) {
