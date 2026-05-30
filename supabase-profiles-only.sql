@@ -23,6 +23,33 @@ as $$
   );
 $$;
 
+create or replace function public.handle_new_auth_user()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  insert into public.profiles (id, email, role)
+  values (
+    new.id,
+    coalesce(new.email, ''),
+    coalesce(new.raw_user_meta_data->>'role', 'admin')
+  )
+  on conflict (id) do update
+  set
+    email = excluded.email,
+    role = coalesce(public.profiles.role, excluded.role);
+
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+after insert on auth.users
+for each row execute function public.handle_new_auth_user();
+
 drop policy if exists "profiles_select_authenticated" on public.profiles;
 create policy "profiles_select_authenticated"
 on public.profiles
@@ -96,6 +123,16 @@ on conflict (id) do update
 set
   email = excluded.email,
   role = 'superadmin';
+
+-- Isi profile untuk user Auth lama yang belum punya row profiles.
+insert into public.profiles (id, email, role)
+select
+  id,
+  email,
+  coalesce(raw_user_meta_data->>'role', 'admin')
+from auth.users
+where email is not null
+on conflict (id) do nothing;
 
 -- Opsional, kalau tabel lama sudah tidak dipakai.
 -- drop table if exists public.admin_profiles;

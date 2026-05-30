@@ -26,6 +26,8 @@ const withTimeout = (promise, message = "Request terlalu lama. Coba refresh lalu
   return Promise.race([promise, timeout]).finally(() => clearTimeout(timeoutId))
 }
 
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export default function TeamMembers() {
   const [members, setMembers] = useState([])
   const [currentRole, setCurrentRole] = useState("admin")
@@ -147,6 +149,10 @@ export default function TeamMembers() {
 
       if (error) throw error
 
+      if (data.user?.identities && data.user.identities.length === 0) {
+        throw new Error("Email ini sudah terdaftar di Supabase Auth.")
+      }
+
       if (adminSession?.access_token && adminSession?.refresh_token) {
         await withTimeout(
           supabase.auth.setSession({
@@ -175,7 +181,22 @@ export default function TeamMembers() {
         "User Auth berhasil dibuat, tetapi profile role terlalu lama disimpan. Cek policy profiles di Supabase."
       )
 
-      if (profileError) throw profileError
+      if (profileError) {
+        await wait(1200)
+
+        const { data: existingProfile, error: checkError } = await withTimeout(
+          supabase
+            .from("profiles")
+            .select("id")
+            .eq("id", newUserId)
+            .maybeSingle(),
+          "User Auth berhasil dibuat, tetapi profile belum terbaca. Jalankan ulang SQL trigger profiles di Supabase."
+        )
+
+        if (checkError || !existingProfile) {
+          throw profileError
+        }
+      }
 
       await withTimeout(
         supabase.from("activities").insert([
