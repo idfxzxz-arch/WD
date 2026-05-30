@@ -23,6 +23,8 @@ import ITPage from "./pages/it"
 import Login from "./pages/login"
 import Dashboard from "./pages/Dashboard"
 import MediaLibrary from "./pages/MediaLibrary"
+import TeamMembers from "./pages/TeamMembers"
+import AdminSettings from "./pages/AdminSettings"
 import AdminPanel from "./components/AdminPanel"
 
 function Home() {
@@ -76,6 +78,8 @@ export default function App() {
             <Route path="dashboard" element={<></>} />
             <Route path="content" element={<AdminPanel />} />
             <Route path="media" element={<MediaLibrary />} />
+            <Route path="team" element={<TeamMembers />} />
+            <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -259,13 +259,13 @@ export default function Dashboard() {
           </p>
 
           <nav className="space-y-1">
-            <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:bg-white/5 hover:text-zinc-200 text-sm font-medium">
+            <Link to="/admin/team" className={navItemClass("/admin/team")}>
               <Users className="w-4 h-4" /> Team Members
-            </button>
+            </Link>
 
-            <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:bg-white/5 hover:text-zinc-200 text-sm font-medium">
+            <Link to="/admin/settings" className={navItemClass("/admin/settings")}>
               <Settings className="w-4 h-4" /> Settings
-            </button>
+            </Link>
           </nav>
         </div>
 
