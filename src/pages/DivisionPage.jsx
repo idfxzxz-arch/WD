@@ -23,6 +23,11 @@ const css = `
     color: var(--ink);
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
+  .dp-root *,
+  .dp-root *::before,
+  .dp-root *::after {
+    box-sizing: border-box;
+  }
   .dp-nav {
     position: sticky;
     top: 0;
@@ -759,7 +764,7 @@ const css = `
       box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 12%, transparent);
     }
     .dp-title {
-      max-width: 11ch;
+      max-width: 12.5ch;
       text-wrap: balance;
     }
     .dp-desc {
@@ -818,8 +823,9 @@ const css = `
       gap: 20px;
     }
     .dp-title {
-      max-width: 10ch;
-      font-size: clamp(38px, 12.2vw, 48px);
+      max-width: 100%;
+      font-size: clamp(36px, 11.4vw, 48px);
+      line-height: 1;
     }
     .dp-actions {
       gap: 9px;
@@ -860,6 +866,41 @@ const css = `
     .dp-card {
       aspect-ratio: 16/10;
       border-radius: 15px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .dp-workshop .dp-title {
+      max-width: 100%;
+      font-size: clamp(31px, 9.8vw, 40px);
+      letter-spacing: -0.052em;
+    }
+    .dp-workshop .dp-desc {
+      font-size: 13.5px;
+      line-height: 1.62;
+    }
+    .dp-workshop .dp-actions {
+      grid-template-columns: 1fr;
+    }
+    .dp-workshop .dp-stats {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .dp-workshop .dp-stat {
+      min-height: 0;
+      padding: 13px 12px;
+    }
+    .dp-workshop .dp-stat strong {
+      font-size: 15px;
+    }
+    .dp-workshop .dp-showcase {
+      margin-top: 2px;
+    }
+    .dp-workshop .dp-main-title {
+      font-size: 17px;
+    }
+    .dp-workshop .dp-main-meta {
+      font-size: 10px;
     }
   }
 `;
@@ -938,7 +979,7 @@ export default function DivisionPage({ config }) {
     <>
       <style>{css}</style>
       <div
-        className="dp-root"
+        className={`dp-root dp-${config.category}`}
         style={{
           "--accent": config.accent,
           "--accent-soft": config.accentSoft,
