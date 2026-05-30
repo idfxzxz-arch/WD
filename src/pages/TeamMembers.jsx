@@ -16,6 +16,16 @@ const initialForm = {
   role: "admin",
 }
 
+const withTimeout = (promise, message = "Request terlalu lama. Coba refresh lalu ulangi.") => {
+  let timeoutId
+
+  const timeout = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error(message)), 15000)
+  })
+
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timeoutId))
+}
+
 export default function TeamMembers() {
   const [members, setMembers] = useState([])
   const [currentRole, setCurrentRole] = useState("admin")
@@ -36,24 +46,34 @@ export default function TeamMembers() {
   const fetchMembers = async () => {
     setLoading(true)
 
-    const { data: { user } } = await supabase.auth.getUser()
-    if (user?.email) setCurrentEmail(user.email)
+    try {
+      const { data: { user } } = await withTimeout(supabase.auth.getUser())
+      if (user?.email) setCurrentEmail(user.email)
 
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("id,email,role")
-      .eq("id", user?.id)
-      .maybeSingle()
+      const { data: profile } = await withTimeout(
+        supabase
+          .from("profiles")
+          .select("id,email,role")
+          .eq("id", user?.id)
+          .maybeSingle()
+      )
 
-    setCurrentRole(profile?.role || "admin")
+      setCurrentRole(profile?.role || "admin")
 
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("id,email,role,created_at")
-      .order("created_at", { ascending: false })
+      const { data, error } = await withTimeout(
+        supabase
+          .from("profiles")
+          .select("id,email,role,created_at")
+          .order("created_at", { ascending: false })
+      )
 
-    if (!error) setMembers(data || [])
-    setLoading(false)
+      if (error) throw error
+      setMembers(data || [])
+    } catch (error) {
+      alert("Gagal memuat team members: " + error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -114,21 +134,26 @@ export default function TeamMembers() {
     } = await supabase.auth.getSession()
 
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: { role: form.role },
-        },
-      })
+      const { data, error } = await withTimeout(
+        supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { role: form.role },
+          },
+        }),
+        "Signup terlalu lama. Pastikan Email signups aktif di Supabase, lalu coba lagi."
+      )
 
       if (error) throw error
 
       if (adminSession?.access_token && adminSession?.refresh_token) {
-        await supabase.auth.setSession({
-          access_token: adminSession.access_token,
-          refresh_token: adminSession.refresh_token,
-        })
+        await withTimeout(
+          supabase.auth.setSession({
+            access_token: adminSession.access_token,
+            refresh_token: adminSession.refresh_token,
+          })
+        )
       }
 
       const newUserId = data.user?.id
@@ -136,26 +161,31 @@ export default function TeamMembers() {
         throw new Error("User berhasil diminta dibuat, tetapi ID user tidak tersedia.")
       }
 
-      const { error: profileError } = await supabase
-        .from("profiles")
-        .upsert(
-          {
-            id: newUserId,
-            email,
-            role: form.role,
-          },
-          { onConflict: "id" }
-        )
+      const { error: profileError } = await withTimeout(
+        supabase
+          .from("profiles")
+          .upsert(
+            {
+              id: newUserId,
+              email,
+              role: form.role,
+            },
+            { onConflict: "id" }
+          ),
+        "User Auth berhasil dibuat, tetapi profile role terlalu lama disimpan. Cek policy profiles di Supabase."
+      )
 
       if (profileError) throw profileError
 
-      await supabase.from("activities").insert([
-        {
-          admin_email: currentEmail || "System",
-          action_name: "Added Team Member",
-          target_name: `${email} sebagai ${form.role}`,
-        },
-      ])
+      await withTimeout(
+        supabase.from("activities").insert([
+          {
+            admin_email: currentEmail || "System",
+            action_name: "Added Team Member",
+            target_name: `${email} sebagai ${form.role}`,
+          },
+        ])
+      )
 
       setForm(initialForm)
       await fetchMembers()
@@ -163,6 +193,12 @@ export default function TeamMembers() {
     } catch (error) {
       alert("Gagal menambah user: " + error.message)
     } finally {
+      if (adminSession?.access_token && adminSession?.refresh_token) {
+        await supabase.auth.setSession({
+          access_token: adminSession.access_token,
+          refresh_token: adminSession.refresh_token,
+        })
+      }
       setCreating(false)
     }
   }
