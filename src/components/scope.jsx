@@ -178,9 +178,6 @@ export default function Scope() {
             {getServiceName(item)}
           </motion.span>
         ))}
-        <div className="mt-5 sm:mt-6 text-[10px] sm:text-xs tracking-[0.28em] sm:tracking-[0.3em] uppercase text-white/30">
-          And more
-        </div>
       </div>
     </section>
   )
