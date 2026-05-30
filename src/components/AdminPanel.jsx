@@ -278,6 +278,7 @@ export default function AdminPanel() {
 
   // ─── RENDER ───────────────────────────────────────────────────────────────
   const divisionTabs = ["wedding", "music", "production", "workshop", "event"]
+  const tabLabel = (tab) => tab === "it" ? "WD IT" : tab.charAt(0).toUpperCase() + tab.slice(1)
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-zinc-950 text-white font-sans">
@@ -287,27 +288,41 @@ export default function AdminPanel() {
         </div>
       )}
 
-      <div className="w-full max-w-4xl mx-auto px-4 py-6 sm:px-6 sm:py-10">
+      <div className="w-full max-w-4xl mx-auto px-4 py-5 sm:px-6 sm:py-10">
 
         {/* Header */}
-        <div className="flex flex-col gap-4 mb-7 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 mb-4 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
-            <h1 className="text-2xl font-semibold tracking-tight">Admin Panel</h1>
-            <p className="text-zinc-500 text-sm mt-1">Edit konten website WD Group</p>
+            <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">Admin Panel</h1>
+            <p className="text-zinc-500 text-xs mt-1 sm:text-sm">Edit konten website WD Group</p>
           </div>
-          <div className="flex w-full items-center gap-2 overflow-x-auto bg-zinc-900 border border-zinc-800 rounded-2xl px-1 py-1 sm:w-auto">
-            <Globe size={14} className="shrink-0 text-zinc-500 ml-2" />
+          <div className="flex w-fit items-center gap-1 overflow-x-auto bg-zinc-900 border border-zinc-800 rounded-xl px-1 py-1 sm:w-auto sm:gap-2 sm:rounded-2xl">
+            <Globe size={14} className="hidden shrink-0 text-zinc-500 ml-2 sm:block" />
             {LANGS.map(l => (
               <button key={l.code} onClick={() => setLang(l.code)}
-                className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-medium transition ${lang === l.code ? "bg-white text-black" : "text-zinc-400 hover:text-white"}`}>
-                {l.label}
+                className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition sm:rounded-xl ${lang === l.code ? "bg-white text-black" : "text-zinc-400 hover:text-white"}`}>
+                <span className="sm:hidden">{l.code.toUpperCase()}</span>
+                <span className="hidden sm:inline">{l.label}</span>
               </button>
             ))}
           </div>
         </div>
 
+        <div className="mb-5 sm:hidden">
+          <label className="text-[11px] uppercase tracking-[0.14em] text-zinc-500 mb-2 block">Section</label>
+          <select
+            value={activeTab}
+            onChange={(event) => setActiveTab(event.target.value)}
+            className="w-full bg-zinc-900 text-white border border-zinc-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-blue-500"
+          >
+            {ALL_TABS.map(tab => (
+              <option key={tab} value={tab}>{tabLabel(tab)}</option>
+            ))}
+          </select>
+        </div>
+
         {/* Tabs — grouped */}
-        <div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-2 mb-1 sm:mx-0 sm:flex-wrap sm:px-0">
+        <div className="hidden gap-1.5 overflow-x-auto pb-2 mb-1 sm:flex sm:flex-wrap">
           {["hero", "about", "services", "contact"].map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)}
               className={`shrink-0 px-4 py-2 rounded-xl text-sm capitalize font-medium transition ${activeTab === tab ? "bg-white text-black" : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"}`}>
@@ -317,20 +332,20 @@ export default function AdminPanel() {
         </div>
 
         {/* Division tabs */}
-        <div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-2 mb-1 mt-1 sm:mx-0 sm:flex-wrap sm:px-0">
+        <div className="hidden gap-1.5 overflow-x-auto pb-2 mb-1 mt-1 sm:flex sm:flex-wrap">
           {divisionTabs.map(tab => {
             const col = SECTION_COLORS[tab]
             return (
               <button key={tab} onClick={() => setActiveTab(tab)}
                 className={`shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition border ${activeTab === tab ? "bg-white text-black border-white" : `bg-zinc-900 border-zinc-800 hover:text-white ${col.tab}`}`}>
-                {col.icon} {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                {col.icon} {tabLabel(tab)}
               </button>
             )
           })}
         </div>
 
         {/* Utility tabs */}
-        <div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-2 mb-6 mt-1 sm:mx-0 sm:flex-wrap sm:px-0 sm:mb-8">
+        <div className="hidden gap-1.5 overflow-x-auto pb-2 mb-8 mt-1 sm:flex sm:flex-wrap">
           {["scope", "works"].map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)}
               className={`shrink-0 px-4 py-2 rounded-xl text-sm capitalize font-medium transition ${activeTab === tab ? "bg-white text-black" : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"}`}>
@@ -344,9 +359,9 @@ export default function AdminPanel() {
           <div>
             {/* Division info banner */}
             {SECTION_COLORS[activeTab] && (
-              <div className={`border rounded-2xl px-4 py-4 mb-5 text-sm sm:px-5 sm:mb-6 ${SECTION_COLORS[activeTab].banner}`}>
+              <div className={`border rounded-2xl px-4 py-3 mb-4 text-sm sm:px-5 sm:py-4 sm:mb-6 ${SECTION_COLORS[activeTab].banner}`}>
                 <p className="font-medium mb-1">{SECTION_COLORS[activeTab].icon} Konten Halaman {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</p>
-                <p className="opacity-70 text-xs">
+                <p className="hidden opacity-70 text-xs sm:block">
                   Tampil di halaman <code className="bg-black/20 px-1 rounded">/{activeTab}</code>.
                   Foto dikelola di tab <strong>Works</strong> → filter kategori <strong>{activeTab}</strong>.
                 </p>
@@ -354,15 +369,15 @@ export default function AdminPanel() {
             )}
 
             {!SECTION_COLORS[activeTab] && (
-              <div className="flex items-center gap-2 text-xs text-zinc-500 mb-6">
+              <div className="flex items-center gap-2 text-xs text-zinc-500 mb-4 sm:mb-6">
                 <Globe size={12} />
                 Mengedit bahasa: <span className="text-white font-medium">{lang === "id" ? "Indonesia" : "English"}</span>
               </div>
             )}
 
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 mb-5 sm:rounded-3xl sm:p-6 sm:mb-6">
-              <h2 className="text-lg font-semibold mb-6 capitalize">{activeTab}</h2>
-              <div className="flex flex-col gap-5">
+              <h2 className="text-base font-semibold mb-4 capitalize sm:text-lg sm:mb-6">{activeTab}</h2>
+              <div className="flex flex-col gap-4 sm:gap-5">
                 {CONTENT_SECTIONS[activeTab].map(f => (
                   <div key={f.key}>
                     <label className="text-zinc-400 text-sm mb-1.5 block">{f.label}</label>
