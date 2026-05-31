@@ -70,10 +70,13 @@ export default function ShaderAnimation({ className = "" }) {
     container.appendChild(renderer.domElement)
 
     const resize = () => {
-      const width = container.clientWidth
-      const height = container.clientHeight
+      const width = container.clientWidth || window.innerWidth
+      const height = container.clientHeight || window.innerHeight
 
       renderer.setSize(width, height, false)
+      renderer.domElement.style.width = "100%"
+      renderer.domElement.style.height = "100%"
+      renderer.domElement.style.display = "block"
       uniforms.resolution.value.set(
         renderer.domElement.width,
         renderer.domElement.height,
@@ -120,7 +123,7 @@ export default function ShaderAnimation({ className = "" }) {
   return (
     <div
       ref={containerRef}
-      className={`absolute inset-0 overflow-hidden bg-black ${className}`}
+      className={`absolute inset-0 h-full min-h-[100dvh] w-full min-w-[100vw] overflow-hidden bg-black ${className}`}
       aria-hidden="true"
     />
   )
