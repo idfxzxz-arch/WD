@@ -1138,7 +1138,7 @@ const css = `
 
 const MOMENT_TABS = ["All Moments", "Akad", "Resepsi", "Outdoor"];
 const MOMENTS_PER_SLIDE = 4;
-const WEDDING_WA_NUMBER = "628817134774";
+const WEDDING_WA_NUMBER = "6285707909415";
 const WEDDING_WA_MESSAGE = "Halo WD Sky Wedding, saya ingin konsultasi untuk wedding organizer.";
 
 export default function Wedding() {
