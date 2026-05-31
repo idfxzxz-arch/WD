@@ -46,7 +46,7 @@ const defaultSettings = {
   site_name: "WD Group",
   default_language: "id",
   contact_email: "",
-  whatsapp_url: "",
+  whatsapp_url: "https://wa.me/6285707909415",
   instagram_url: "",
   admin_panel_name: "WD Admin",
   maintenance_mode: "false",

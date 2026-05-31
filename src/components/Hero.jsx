@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { LanguageContext } from "../context/LanguageContext"
 import { supabase } from "../lib/supabase"
 
-const WA_NUMBER = "62XXXXXXXXXX"
+const WA_NUMBER = "6285707909415"
 
 const stickers = [
   {

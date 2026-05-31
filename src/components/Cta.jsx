@@ -22,7 +22,7 @@ export default function Cta() {
 
   const links = [
     { label: "Instagram", href: contact.instagram || "https://instagram.com/wdgroupcompany" },
-    { label: "WhatsApp", href: contact.whatsapp || "https://wa.me/628817134774" },
+    { label: "WhatsApp", href: contact.whatsapp || "https://wa.me/6285707909415" },
     { label: "Email", href: contact.email || "mailto:wdgroupcompany@gmail.com" },
   ]
 
