@@ -1102,8 +1102,8 @@ const css = `
 `;
 
 const MOMENT_TABS = ["All Moments", "Akad", "Resepsi", "Outdoor"];
-const INITIAL_VISIBLE_MOMENTS = 6;
-const LOAD_MORE_COUNT = 6;
+const INITIAL_VISIBLE_MOMENTS = 4;
+const LOAD_MORE_COUNT = 4;
 
 export default function Wedding() {
   const [works, setWorks] = useState([]);
