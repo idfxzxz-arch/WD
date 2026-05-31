@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { LanguageProvider } from "./context/LanguageContext"
 import Cursor from "./components/Cursor"
@@ -29,32 +28,12 @@ import TeamMembers from "./pages/TeamMembers"
 import AdminSettings from "./pages/AdminSettings"
 import AdminPanel from "./components/AdminPanel"
 
-function AppIntro() {
-  const [showIntro,setShowIntro] = useState(()=>{
-    return sessionStorage.getItem("wd-app-intro-seen") !== "true"
-  })
-
-  useEffect(()=>{
-
-    if(showIntro){
-      sessionStorage.setItem("wd-app-intro-seen","true")
-
-      const timer = setTimeout(()=>{
-        setShowIntro(false)
-      },2600)
-
-      return ()=>clearTimeout(timer)
-    }
-
-  },[showIntro])
-
-  if(!showIntro) return null
-
+function HomeIntro() {
   return (
-    <div className="fixed inset-0 z-[9999] flex min-h-screen w-screen items-center justify-center overflow-hidden bg-black animate-[loginIntroOut_2.6s_ease_forwards]">
+    <section className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden bg-black">
       <ShaderAnimation />
 
-      <div className="relative z-10 text-center px-6 animate-[loginIntroText_2.6s_ease_forwards]">
+      <div className="relative z-10 text-center px-6">
         <p className="text-blue-300 tracking-[0.55em] uppercase text-xs sm:text-sm mb-5">
           Welcome To
         </p>
@@ -67,7 +46,7 @@ function AppIntro() {
           <div className="h-full w-full bg-blue-400 animate-[loginIntroLine_1.7s_ease-in-out_forwards]" />
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
@@ -75,6 +54,7 @@ function Home() {
   return (
     <>
       <Cursor />
+      <HomeIntro />
       <Navbar />
       <Hero />
       <Section />
@@ -91,8 +71,6 @@ export default function App() {
   return (
     <LanguageProvider>
       <BrowserRouter>
-        <AppIntro />
-
         <Routes>
           {/* WEBSITE */}
           <Route path="/" element={<Home />} />
