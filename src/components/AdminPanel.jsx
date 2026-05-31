@@ -304,12 +304,85 @@ export default function AdminPanel() {
 
   if (adminRole !== "superadmin") {
     return (
-      <div className="max-w-3xl mx-auto bg-zinc-900 border border-zinc-800 rounded-3xl p-8 text-center text-white">
-        <h1 className="text-xl font-semibold">Akses edit konten dibatasi</h1>
-        <p className="text-zinc-400 text-sm mt-2">
-          Admin hanya bisa upload gambar melalui Media Library. Edit teks, scope,
-          works, dan konten lain hanya untuk superadmin.
-        </p>
+      <div className="min-h-screen overflow-x-hidden bg-zinc-950 text-white font-sans">
+        {toast && (
+          <div className="fixed left-4 right-4 top-4 z-50 bg-emerald-500 text-white text-sm px-4 py-3 rounded-2xl shadow-lg sm:left-auto sm:right-6 sm:top-6 sm:px-5">
+            {toast}
+          </div>
+        )}
+
+        <div className="w-full max-w-5xl mx-auto px-4 py-5 sm:px-6 sm:py-10">
+          <div className="mb-6">
+            <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">
+              Works Photo Upload
+            </h1>
+            <p className="text-zinc-500 text-xs mt-1 sm:text-sm">
+              Admin hanya bisa upload atau mengganti foto portfolio. Edit judul,
+              kategori, teks, dan urutan hanya untuk superadmin.
+            </p>
+          </div>
+
+          <div className="-mx-4 flex gap-2 mb-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:px-0 sm:mb-6">
+            {["all", "wedding", "music", "production", "workshop", "event", "it"].map((cat) => (
+              <button key={cat} onClick={() => setFilterCategory(cat)}
+                className={`shrink-0 px-4 py-1.5 rounded-lg text-xs capitalize transition ${filterCategory === cat ? "bg-white text-black" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>
+                {SECTION_COLORS[cat] ? `${SECTION_COLORS[cat].icon} ` : ""}{cat}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {works
+              .filter(item => filterCategory === "all" || item.category === filterCategory)
+              .map((item) => (
+                <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden group">
+                  <div className="relative aspect-[4/3] bg-zinc-800 overflow-hidden">
+                    {item.image
+                      ? <img src={item.image} className="w-full h-full object-cover" alt={item.title || "Works preview"} />
+                      : <div className="w-full h-full flex items-center justify-center text-zinc-600"><ImageIcon size={34} /></div>
+                    }
+
+                    <label className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center opacity-100 transition cursor-pointer sm:opacity-0 sm:group-hover:opacity-100">
+                      {uploading === item.id ? <Loader2 className="animate-spin" /> : <HardDriveUpload />}
+                      <span className="text-xs mt-1 text-white">Upload / ganti foto</span>
+                      <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, item.id)} />
+                    </label>
+                  </div>
+
+                  <div className="p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <h2 className="text-sm font-semibold text-white truncate">
+                          {item.title || "Untitled Work"}
+                        </h2>
+                        <p className="text-xs text-zinc-500 mt-1 capitalize">
+                          {item.category || "uncategorized"} · {item.subcategory || "no subcategory"}
+                        </p>
+                      </div>
+
+                      <span className={`shrink-0 text-[10px] px-2 py-1 rounded-lg font-medium ${
+                        item.category === "wedding"    ? "bg-amber-900/40 text-amber-400" :
+                        item.category === "music"      ? "bg-violet-900/40 text-violet-400" :
+                        item.category === "production" ? "bg-blue-900/40 text-blue-400" :
+                        item.category === "workshop"   ? "bg-green-900/40 text-green-400" :
+                        item.category === "event"      ? "bg-rose-900/40 text-rose-400" :
+                        item.category === "it"         ? "bg-sky-900/40 text-sky-400" :
+                        "bg-zinc-800 text-zinc-400"
+                      }`}>
+                        {SECTION_COLORS[item.category]?.icon || "IMG"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+
+          {works.filter(item => filterCategory === "all" || item.category === filterCategory).length === 0 && (
+            <div className="bg-zinc-900 border border-dashed border-zinc-800 rounded-3xl p-10 text-center text-zinc-500 text-sm">
+              Belum ada works untuk kategori ini.
+            </div>
+          )}
+        </div>
       </div>
     )
   }

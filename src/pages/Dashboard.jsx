@@ -36,7 +36,7 @@ export default function Dashboard() {
 
   const isSuperAdmin = role === "superadmin";
   const isAdminBiasa = role === "admin";
-  const adminAllowedPaths = ["/admin/media"];
+  const adminAllowedPaths = ["/admin/content"];
 
   const getAdminProfile = useCallback(async (user) => {
     const byId = await supabase
@@ -155,7 +155,7 @@ export default function Dashboard() {
     if (!profileReady || isSuperAdmin) return;
 
     if (!adminAllowedPaths.includes(location.pathname)) {
-      navigate("/admin/media", { replace: true });
+      navigate("/admin/content", { replace: true });
     }
   }, [profileReady, isSuperAdmin, location.pathname, navigate]);
 
@@ -258,15 +258,15 @@ export default function Dashboard() {
               </Link>
             )}
 
+            <Link to="/admin/content" className={navItemClass("/admin/content")}>
+              <FileText className="w-4 h-4" /> {isSuperAdmin ? "Content" : "Works Upload"}
+            </Link>
+
             {isSuperAdmin && (
-              <Link to="/admin/content" className={navItemClass("/admin/content")}>
-                <FileText className="w-4 h-4" /> Content
+              <Link to="/admin/media" className={navItemClass("/admin/media")}>
+                <ImageIcon className="w-4 h-4" /> Media Library
               </Link>
             )}
-
-            <Link to="/admin/media" className={navItemClass("/admin/media")}>
-              <ImageIcon className="w-4 h-4" /> Media Library
-            </Link>
           </nav>
 
           {isSuperAdmin && (
