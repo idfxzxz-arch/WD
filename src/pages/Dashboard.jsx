@@ -76,11 +76,13 @@ export default function Dashboard() {
       const profile = await getAdminProfile(user);
       const email = profile?.email || user.email || "";
       const id = profile?.id || user.id;
-      const adminRole =
-        profile?.role ||
-        user.app_metadata?.role ||
-        user.user_metadata?.role ||
-        "admin";
+      const adminRole = profile?.role || "pending";
+
+      if (!["admin", "superadmin"].includes(adminRole)) {
+        await supabase.auth.signOut();
+        navigate("/admin/login", { replace: true });
+        return;
+      }
 
       setAdminEmail(email);
       setAdminId(id);

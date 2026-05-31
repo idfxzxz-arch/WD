@@ -140,9 +140,6 @@ export default function TeamMembers() {
         supabase.auth.signUp({
           email,
           password,
-          options: {
-            data: { role: form.role },
-          },
         }),
         "Signup terlalu lama. Pastikan Email signups aktif di Supabase, lalu coba lagi."
       )
