@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { supabase } from "../lib/supabase"
-import ShaderAnimation from "../components/ui/ShaderAnimation"
 
 export default function Login() {
 
@@ -10,25 +9,6 @@ export default function Login() {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [loading,setLoading] = useState(false)
-  const [showIntro,setShowIntro] = useState(()=>{
-    return sessionStorage.getItem("wd-admin-login-intro-seen") !== "true"
-  })
-
-  useEffect(()=>{
-
-    const introKey = "wd-admin-login-intro-seen"
-
-    if(showIntro){
-      sessionStorage.setItem(introKey,"true")
-
-      const timer = setTimeout(()=>{
-        setShowIntro(false)
-      },2600)
-
-      return ()=>clearTimeout(timer)
-    }
-
-  },[showIntro])
 
   const login = async(e)=>{
 
@@ -53,33 +33,9 @@ export default function Login() {
 
   return (
 
-    <div className="relative min-h-screen overflow-hidden bg-zinc-950 flex items-center justify-center px-6">
+    <div className="min-h-screen bg-zinc-950 flex items-center justify-center px-6">
 
-      <ShaderAnimation className="opacity-40" />
-
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.18),transparent_34%),linear-gradient(180deg,rgba(9,9,11,0.48),rgba(9,9,11,0.95))]" />
-
-      {showIntro && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black animate-[loginIntroOut_2.6s_ease_forwards]">
-          <ShaderAnimation />
-
-          <div className="relative z-10 text-center px-6 animate-[loginIntroText_2.6s_ease_forwards]">
-            <p className="text-blue-300 tracking-[0.55em] uppercase text-xs sm:text-sm mb-5">
-              Welcome To
-            </p>
-
-            <h2 className="text-white text-5xl sm:text-7xl font-bold tracking-tight">
-              WD ADMIN
-            </h2>
-
-            <div className="mx-auto mt-7 h-px w-48 overflow-hidden bg-white/10">
-              <div className="h-full w-full bg-blue-400 animate-[loginIntroLine_1.7s_ease-in-out_forwards]" />
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="relative z-10 w-full max-w-md animate-[loginCardIn_0.8s_ease_forwards]">
+      <div className="w-full max-w-md">
 
         {/* LOGO / TITLE */}
 
