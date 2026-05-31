@@ -312,14 +312,27 @@ export default function AdminPanel() {
         )}
 
         <div className="w-full max-w-5xl mx-auto px-4 py-5 sm:px-6 sm:py-10">
-          <div className="mb-6">
-            <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">
-              Works Manager
-            </h1>
-            <p className="text-zinc-500 text-xs mt-1 sm:text-sm">
-              Admin bisa mengelola foto portfolio, nama project, divisi,
-              subkategori, info tambahan, tags, dan urutan tampil.
-            </p>
+          <div className="sticky top-16 z-20 -mx-4 mb-5 border-b border-zinc-800/80 bg-zinc-950/92 px-4 py-4 backdrop-blur sm:static sm:mx-0 sm:mb-6 sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-0">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0">
+                <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                  Works Manager
+                </h1>
+                <p className="text-zinc-500 text-xs mt-1 sm:text-sm">
+                  Kelola foto portfolio, nama project, divisi, subkategori,
+                  info tambahan, tags, dan urutan tampil.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:shrink-0">
+                <button onClick={addWork} className="inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-zinc-700 sm:text-sm">
+                  <Plus size={14} /> Tambah
+                </button>
+                <button onClick={saveWorks} disabled={saving} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-blue-500 disabled:opacity-50 sm:text-sm">
+                  <Save size={14} /> {saving ? "Saving..." : "Simpan"}
+                </button>
+              </div>
+            </div>
           </div>
 
           <div className="-mx-4 flex gap-2 mb-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:px-0 sm:mb-6">
@@ -335,8 +348,8 @@ export default function AdminPanel() {
             {works
               .filter(item => filterCategory === "all" || item.category === filterCategory)
               .map((item) => (
-                <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col gap-4 relative group sm:rounded-3xl sm:p-5 md:flex-row md:gap-6">
-                  <div className="self-start sm:absolute sm:top-4 sm:right-4">
+                <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col gap-4 relative group shadow-lg shadow-black/10 sm:rounded-3xl sm:p-5 md:flex-row md:gap-6">
+                  <div className="order-1 self-start md:absolute md:top-4 md:right-4">
                     <span className={`text-xs px-2 py-1 rounded-lg font-medium ${
                       item.category === "wedding"    ? "bg-amber-900/40 text-amber-400" :
                       item.category === "music"      ? "bg-violet-900/40 text-violet-400" :
@@ -350,7 +363,7 @@ export default function AdminPanel() {
                     </span>
                   </div>
 
-                  <div className="w-full h-48 bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700 shrink-0 relative flex items-center justify-center sm:h-40 md:w-40">
+                  <div className="order-2 w-full h-52 bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700 shrink-0 relative flex items-center justify-center sm:h-44 md:order-none md:h-40 md:w-40">
                     {item.image
                       ? <img src={item.image} className="w-full h-full object-cover" alt="Preview" />
                       : <div className="w-full h-full flex items-center justify-center text-zinc-600"><ImageIcon size={34} /></div>
@@ -363,7 +376,7 @@ export default function AdminPanel() {
                     </label>
                   </div>
 
-                  <div className="min-w-0 flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="order-3 min-w-0 flex-1 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:order-none">
                     <div>
                       <label className="text-zinc-500 text-xs mb-1 block">Nama Project</label>
                       <input className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
@@ -413,7 +426,7 @@ export default function AdminPanel() {
                         <input type="number" className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
                           value={item.order_index || 0} onChange={e => updateWork(item.id, "order_index", Number(e.target.value))} />
                       </div>
-                      <button onClick={() => deleteWork(item)} className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition">
+                      <button onClick={() => deleteWork(item)} className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition" aria-label="Hapus project">
                         <Trash2 size={16} />
                       </button>
                     </div>
@@ -433,15 +446,6 @@ export default function AdminPanel() {
               Belum ada works untuk kategori ini.
             </div>
           )}
-
-          <div className="flex flex-col gap-3 mt-8 sm:flex-row sm:gap-4">
-            <button onClick={addWork} className="flex-1 bg-zinc-800 hover:bg-zinc-700 py-3 rounded-xl text-sm border border-zinc-700">
-              <Plus size={14} className="inline mr-1" /> Tambah Project
-            </button>
-            <button onClick={saveWorks} disabled={saving} className="flex-1 bg-blue-600 hover:bg-blue-500 py-3 rounded-xl text-sm font-bold disabled:opacity-50">
-              {saving ? "Menyimpan..." : "Simpan Semua Works"}
-            </button>
-          </div>
         </div>
       </div>
     )
