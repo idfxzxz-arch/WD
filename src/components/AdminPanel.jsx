@@ -251,7 +251,7 @@ export default function AdminPanel() {
   }
   const addWork = () => {
     const cat = filterCategory !== "all" ? filterCategory : "wedding"
-    setWorks(prev => [...prev, {
+    setWorks(prev => [{
       id: `new_${Date.now()}`,
       title: "", tags: "", image: "",
       link: "",           // ← kosong, biar getLink() di Works.jsx fallback ke category
@@ -260,7 +260,14 @@ export default function AdminPanel() {
       meta: "",
       order_index: prev.length,
       _new: true
-    }])
+    }, ...prev])
+
+    window.requestAnimationFrame(() => {
+      document.querySelector("#works-list")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+    })
   }
   const deleteWork = async (item) => {
     if (!item._new) await supabase.from("works").delete().eq("id", item.id)
@@ -344,7 +351,7 @@ export default function AdminPanel() {
             ))}
           </div>
 
-          <div className="flex flex-col gap-6 mb-6">
+          <div id="works-list" className="scroll-mt-44 flex flex-col gap-6 mb-6">
             {works
               .filter(item => filterCategory === "all" || item.category === filterCategory)
               .map((item) => (
@@ -644,7 +651,7 @@ export default function AdminPanel() {
               ))}
             </div>
 
-            <div className="flex flex-col gap-6 mb-6">
+            <div id="works-list" className="scroll-mt-44 flex flex-col gap-6 mb-6">
               {works
                 .filter(item => filterCategory === "all" || item.category === filterCategory)
                 .map((item) => (
