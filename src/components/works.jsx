@@ -66,6 +66,26 @@ const DIVISION_META = {
   },
 }
 
+function getCategoryFromScope(item) {
+  const source = `${item.name || ""} ${item.link || ""}`.toLowerCase()
+
+  if (source.includes("wedding")) return "wedding"
+  if (source.includes("production")) return "production"
+  if (source.includes("event")) return "event"
+  if (source.includes("workshop")) return "workshop"
+  if (source.includes("music")) return "music"
+  if (
+    source.includes("it") ||
+    source.includes("digital") ||
+    source.includes("website") ||
+    source.includes("store")
+  ) {
+    return "it"
+  }
+
+  return ""
+}
+
 function getDivisionName(item) {
   const cat = (item.category || "").toLowerCase().trim()
   return DIVISION_NAMES[cat] || item.title
@@ -198,37 +218,52 @@ export default function Works() {
   const [projects, setProjects] = useState([])
 
   useEffect(() => {
-    supabase
-      .from("works")
-      .select("*")
-      .order("order_index")
-      .then(({ data }) => {
-        if (data) {
-          // KITA KEMBALIKAN LOGIKA FILTER UNIKNYA DI SINI
-          const uniqueDivisions = []
-          const seenCategories = new Set()
+    const fetchProjects = async () => {
+      const [{ data: worksData }, { data: scopeData }] = await Promise.all([
+        supabase.from("works").select("*").order("order_index"),
+        supabase.from("scope_services").select("*").order("order_index"),
+      ])
 
-          data.forEach((item) => {
-            const category = (item.category || "").toLowerCase().trim()
-            
-            // Jika kategorinya belum ada di dalam Set, masukkan ke array uniqueDivisions
-            if (!seenCategories.has(category)) {
-              seenCategories.add(category)
-              uniqueDivisions.push(item)
-            }
-          })
+      const byCategory = new Map()
+      const orderedProjects = []
+      const seenCategories = new Set()
 
-          FALLBACK_DIVISIONS.forEach((item) => {
-            const category = item.category.toLowerCase().trim()
-            if (!seenCategories.has(category)) {
-              seenCategories.add(category)
-              uniqueDivisions.push(item)
-            }
-          })
+      ;(worksData || []).forEach((item) => {
+        const category = (item.category || "").toLowerCase().trim()
 
-          setProjects(uniqueDivisions)
+        if (category && !byCategory.has(category)) {
+          byCategory.set(category, item)
         }
       })
+
+      FALLBACK_DIVISIONS.forEach((item) => {
+        const category = item.category.toLowerCase().trim()
+
+        if (!byCategory.has(category)) {
+          byCategory.set(category, item)
+        }
+      })
+
+      ;(scopeData || []).forEach((item) => {
+        const category = getCategoryFromScope(item)
+        const project = byCategory.get(category)
+
+        if (project && !seenCategories.has(category)) {
+          orderedProjects.push(project)
+          seenCategories.add(category)
+        }
+      })
+
+      byCategory.forEach((project, category) => {
+        if (!seenCategories.has(category)) {
+          orderedProjects.push(project)
+        }
+      })
+
+      setProjects(orderedProjects)
+    }
+
+    fetchProjects()
   }, [])
 
   useEffect(() => {
