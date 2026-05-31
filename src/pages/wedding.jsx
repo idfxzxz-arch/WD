@@ -438,6 +438,39 @@ const css = `
     border-radius: 18px;
     font-size: 13px;
   }
+  .wo-load-more-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 22px 0 4px;
+  }
+  .wo-load-more {
+    border: 1px solid rgba(76,49,37,.14);
+    background: #211916;
+    color: #fff;
+    border-radius: 999px;
+    padding: 13px 22px;
+    min-width: 190px;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    box-shadow: 0 18px 38px rgba(33,25,22,.16);
+  }
+  .wo-load-more:hover {
+    transform: translateY(-2px);
+    background: #3a2b25;
+    box-shadow: 0 24px 50px rgba(33,25,22,.20);
+  }
+  .wo-load-note {
+    display: block;
+    margin-top: 8px;
+    color: #9b897f;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+  }
   .wo-toast {
     position: fixed;
     top: 32px;
@@ -1014,6 +1047,13 @@ const css = `
     .wo-card-title {
       font-size: 13px;
     }
+    .wo-load-more-wrap {
+      padding-top: 18px;
+    }
+    .wo-load-more {
+      width: 100%;
+      min-height: 46px;
+    }
     .wo-lightbox {
       align-items: stretch;
       padding: 10px;
@@ -1062,10 +1102,13 @@ const css = `
 `;
 
 const MOMENT_TABS = ["All Moments", "Akad", "Resepsi", "Outdoor"];
+const INITIAL_VISIBLE_MOMENTS = 6;
+const LOAD_MORE_COUNT = 6;
 
 export default function Wedding() {
   const [works, setWorks] = useState([]);
   const [activeTab, setActiveTab] = useState("All Moments");
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_MOMENTS);
   const [shortlist, setShortlist] = useState([]);
   const [toastMsg, setToastMsg] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -1097,6 +1140,14 @@ export default function Wedding() {
     const sub = item.subcategory?.toLowerCase() || "";
     return sub === activeTab.toLowerCase();
   });
+  const visibleWorks = filteredWorks.slice(0, visibleCount);
+  const hasMoreWorks = visibleCount < filteredWorks.length;
+
+  const changeTab = (tab) => {
+    setActiveTab(tab);
+    setVisibleCount(INITIAL_VISIBLE_MOMENTS);
+    setSelectedIndex(null);
+  };
 
   const toggleShortlist = (item) => {
     const isExist = shortlist.find((s) => s.id === item.id);
@@ -1109,19 +1160,19 @@ export default function Wedding() {
     }
   };
 
-  const selectedWork = selectedIndex !== null ? filteredWorks[selectedIndex] : null;
+  const selectedWork = selectedIndex !== null ? visibleWorks[selectedIndex] : null;
   const openLightbox = (index) => setSelectedIndex(index);
   const closeLightbox = () => setSelectedIndex(null);
   const showPrev = () => {
     setSelectedIndex((current) => {
-      if (current === null || filteredWorks.length === 0) return null;
-      return (current - 1 + filteredWorks.length) % filteredWorks.length;
+      if (current === null || visibleWorks.length === 0) return null;
+      return (current - 1 + visibleWorks.length) % visibleWorks.length;
     });
   };
   const showNext = () => {
     setSelectedIndex((current) => {
-      if (current === null || filteredWorks.length === 0) return null;
-      return (current + 1) % filteredWorks.length;
+      if (current === null || visibleWorks.length === 0) return null;
+      return (current + 1) % visibleWorks.length;
     });
   };
 
@@ -1210,7 +1261,7 @@ export default function Wedding() {
                 <div className="wo-main-header">
                   <h2 className="wo-main-title">Wedding Moments</h2>
                   <span className="wo-main-meta">
-                    {filteredWorks.length} curated photos
+                    Showing {visibleWorks.length} of {filteredWorks.length} photos
                   </span>
                 </div>
 
@@ -1219,7 +1270,7 @@ export default function Wedding() {
                     <button
                       key={tab}
                       className={`wo-tab ${activeTab === tab ? "active" : ""}`}
-                      onClick={() => setActiveTab(tab)}
+                      onClick={() => changeTab(tab)}
                     >
                       {tab}
                     </button>
@@ -1228,12 +1279,15 @@ export default function Wedding() {
 
                 <div className="wo-grid">
                   {filteredWorks.length > 0 ? (
-                    filteredWorks.map((item, index) => {
+                    visibleWorks.map((item, index) => {
                       const isSaved = shortlist.some((s) => s.id === item.id);
                       return (
-                        <div
+                        <motion.div
                           key={item.id}
                           className="wo-card"
+                          initial={{ opacity: 0, y: 18 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.35, delay: Math.min(index * 0.03, 0.18) }}
                           onClick={() => openLightbox(index)}
                         >
                           <img
@@ -1254,7 +1308,7 @@ export default function Wedding() {
                               <span className="wo-card-save">Saved</span>
                             )}
                           </div>
-                        </div>
+                        </motion.div>
                       );
                     })
                   ) : (
@@ -1263,6 +1317,22 @@ export default function Wedding() {
                     </div>
                   )}
                 </div>
+
+                {hasMoreWorks && (
+                  <div className="wo-load-more-wrap">
+                    <div>
+                      <button
+                        className="wo-load-more"
+                        onClick={() => setVisibleCount((count) => count + LOAD_MORE_COUNT)}
+                      >
+                        Load More Moments
+                      </button>
+                      <span className="wo-load-note">
+                        {filteredWorks.length - visibleWorks.length} photos remaining
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
@@ -1280,7 +1350,7 @@ export default function Wedding() {
               <button className="wo-lightbox-close" onClick={closeLightbox} aria-label="Close image">
                 &times;
               </button>
-              {filteredWorks.length > 1 && (
+              {visibleWorks.length > 1 && (
                 <>
                   <button className="wo-lightbox-nav prev" onClick={(event) => { event.stopPropagation(); showPrev(); }} aria-label="Previous image">
                     &lsaquo;
