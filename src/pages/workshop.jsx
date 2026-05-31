@@ -3,7 +3,9 @@ import DivisionLayout from "../components/DivisionLayout";
 const workshopConfig = {
   category: "workshop",
   brand: "WD Jaya Workshop",
-  logoHtml: "WD <span>Jaya</span> Workshop",
+  logoText: "WD",
+  logoAccent: "Jaya",
+  logoSuffix: "Workshop",
   badge: "Workshop",
   kicker: "WD Jaya Workshop",
   title: "Skill programs,",

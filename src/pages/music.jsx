@@ -3,7 +3,8 @@ import DivisionLayout from "../components/DivisionLayout";
 const musicConfig = {
   category: "music",
   brand: "WD Music Entertaiment and Music Class",
-  logoHtml: "WD <span>Music</span>",
+  logoText: "WD",
+  logoAccent: "Music",
   badge: "Entertainment & Class",
   kicker: "WD Music Entertaiment and Music Class",
   title: "Music experiences,",

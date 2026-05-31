@@ -3,7 +3,9 @@ import DivisionLayout from "../components/DivisionLayout";
 const eventConfig = {
   category: "event",
   brand: "WD Event Organizer",
-  logoHtml: "WD <span>Event</span> Organizer",
+  logoText: "WD",
+  logoAccent: "Event",
+  logoSuffix: "Organizer",
   badge: "Event Organizer",
   kicker: "WD Event Organizer",
   title: "Events planned,",

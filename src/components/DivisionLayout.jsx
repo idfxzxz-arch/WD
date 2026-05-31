@@ -1161,7 +1161,10 @@ export default function DivisionLayout({ config }) {
           <button className="dp-back" onClick={() => navigate("/")}>
             &larr; Back
           </button>
-          <div className="dp-logo" dangerouslySetInnerHTML={{ __html: config.logoHtml }} />
+          <div className="dp-logo">
+            {config.logoText} <span>{config.logoAccent}</span>
+            {config.logoSuffix ? ` ${config.logoSuffix}` : ""}
+          </div>
           <div className="dp-badge">{config.badge}</div>
         </nav>
 

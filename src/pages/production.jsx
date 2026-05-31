@@ -3,7 +3,8 @@ import DivisionLayout from "../components/DivisionLayout";
 const productionConfig = {
   category: "production",
   brand: "WD Production",
-  logoHtml: "WD <span>Production</span>",
+  logoText: "WD",
+  logoAccent: "Production",
   badge: "Creative Production",
   kicker: "WD Production",
   title: "Visual stories,",

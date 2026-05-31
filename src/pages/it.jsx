@@ -3,7 +3,8 @@ import DivisionLayout from "../components/DivisionLayout";
 const itConfig = {
   category: "it",
   brand: "WD IT",
-  logoHtml: "WD <span>IT</span>",
+  logoText: "WD",
+  logoAccent: "IT",
   badge: "Digital Solution",
   kicker: "WD IT",
   title: "Digital solutions,",
