@@ -15,7 +15,55 @@ html {
   animation: float 6s ease-in-out infinite;
 }
 
+@keyframes loginIntroOut {
+  0%, 72% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes loginIntroText {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  22%, 70% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-18px) scale(1.03);
+  }
+}
+
+@keyframes loginIntroLine {
+  0% {
+    transform: translateX(-100%);
+  }
+  45%, 70% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes loginCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
-
