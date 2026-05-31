@@ -314,11 +314,11 @@ export default function AdminPanel() {
         <div className="w-full max-w-5xl mx-auto px-4 py-5 sm:px-6 sm:py-10">
           <div className="mb-6">
             <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">
-              Works Photo Upload
+              Works Manager
             </h1>
             <p className="text-zinc-500 text-xs mt-1 sm:text-sm">
-              Admin hanya bisa upload atau mengganti foto portfolio. Edit judul,
-              kategori, teks, dan urutan hanya untuk superadmin.
+              Admin bisa mengelola foto portfolio, nama project, divisi,
+              subkategori, info tambahan, tags, dan urutan tampil.
             </p>
           </div>
 
@@ -331,14 +331,28 @@ export default function AdminPanel() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-col gap-6 mb-6">
             {works
               .filter(item => filterCategory === "all" || item.category === filterCategory)
               .map((item) => (
-                <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden group">
-                  <div className="relative aspect-[4/3] bg-zinc-800 overflow-hidden">
+                <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col gap-4 relative group sm:rounded-3xl sm:p-5 md:flex-row md:gap-6">
+                  <div className="self-start sm:absolute sm:top-4 sm:right-4">
+                    <span className={`text-xs px-2 py-1 rounded-lg font-medium ${
+                      item.category === "wedding"    ? "bg-amber-900/40 text-amber-400" :
+                      item.category === "music"      ? "bg-violet-900/40 text-violet-400" :
+                      item.category === "production" ? "bg-blue-900/40 text-blue-400" :
+                      item.category === "workshop"   ? "bg-green-900/40 text-green-400" :
+                      item.category === "event"      ? "bg-rose-900/40 text-rose-400" :
+                      item.category === "it"         ? "bg-sky-900/40 text-sky-400" :
+                      "bg-zinc-800 text-zinc-400"
+                    }`}>
+                      {SECTION_COLORS[item.category]?.icon} → {CATEGORY_ROUTES[item.category] || "/"}
+                    </span>
+                  </div>
+
+                  <div className="w-full h-48 bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-700 shrink-0 relative flex items-center justify-center sm:h-40 md:w-40">
                     {item.image
-                      ? <img src={item.image} className="w-full h-full object-cover" alt={item.title || "Works preview"} />
+                      ? <img src={item.image} className="w-full h-full object-cover" alt="Preview" />
                       : <div className="w-full h-full flex items-center justify-center text-zinc-600"><ImageIcon size={34} /></div>
                     }
 
@@ -349,31 +363,62 @@ export default function AdminPanel() {
                     </label>
                   </div>
 
-                  <div className="p-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <h2 className="text-sm font-semibold text-white truncate">
-                          {item.title || "Untitled Work"}
-                        </h2>
-                        <p className="text-xs text-zinc-500 mt-1 capitalize">
-                          {item.category || "uncategorized"} · {item.subcategory || "no subcategory"}
-                        </p>
-                      </div>
-
-                      <span className={`shrink-0 text-[10px] px-2 py-1 rounded-lg font-medium ${
-                        item.category === "wedding"    ? "bg-amber-900/40 text-amber-400" :
-                        item.category === "music"      ? "bg-violet-900/40 text-violet-400" :
-                        item.category === "production" ? "bg-blue-900/40 text-blue-400" :
-                        item.category === "workshop"   ? "bg-green-900/40 text-green-400" :
-                        item.category === "event"      ? "bg-rose-900/40 text-rose-400" :
-                        item.category === "it"         ? "bg-sky-900/40 text-sky-400" :
-                        "bg-zinc-800 text-zinc-400"
-                      }`}>
-                        {SECTION_COLORS[item.category]?.icon || "IMG"}
-                      </span>
+                  <div className="min-w-0 flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-zinc-500 text-xs mb-1 block">Nama Project</label>
+                      <input className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                        value={item.title || ""} onChange={e => updateWork(item.id, "title", e.target.value)} placeholder="Nama project" />
                     </div>
 
-                    <label className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500 cursor-pointer">
+                    <div>
+                      <label className="text-zinc-500 text-xs mb-1 block">Divisi / Kategori</label>
+                      <select className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                        value={item.category || "wedding"} onChange={e => updateWork(item.id, "category", e.target.value)}>
+                        <option value="wedding">Wedding</option>
+                        <option value="music">Music</option>
+                        <option value="production">Production</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="event">Event</option>
+                        <option value="it">WD IT</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="text-zinc-500 text-xs mb-1 block">Subkategori</label>
+                      <select className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                        value={item.subcategory || ""}
+                        onChange={e => updateWork(item.id, "subcategory", e.target.value)}>
+                        <option value="">Pilih subkategori</option>
+                        {(SUBCATEGORIES[item.category] || []).map(s => (
+                          <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="text-zinc-500 text-xs mb-1 block">Info Tambahan</label>
+                      <input className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                        value={item.meta || ""} onChange={e => updateWork(item.id, "meta", e.target.value)} placeholder="cth: 2024 · 300 pax" />
+                    </div>
+
+                    <div>
+                      <label className="text-zinc-500 text-xs mb-1 block">Tags</label>
+                      <input className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                        value={item.tags || ""} onChange={e => updateWork(item.id, "tags", e.target.value)} placeholder="outdoor, intimate" />
+                    </div>
+
+                    <div className="flex gap-2 items-end">
+                      <div className="min-w-0 flex-1">
+                        <label className="text-zinc-500 text-xs mb-1 block">Urutan</label>
+                        <input type="number" className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
+                          value={item.order_index || 0} onChange={e => updateWork(item.id, "order_index", Number(e.target.value))} />
+                      </div>
+                      <button onClick={() => deleteWork(item)} className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition">
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+
+                    <label className="sm:col-span-2 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500 cursor-pointer">
                       {uploading === item.id ? <Loader2 size={16} className="animate-spin" /> : <HardDriveUpload size={16} />}
                       {uploading === item.id ? "Uploading..." : "Upload Foto"}
                       <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, item.id)} />
@@ -388,6 +433,15 @@ export default function AdminPanel() {
               Belum ada works untuk kategori ini.
             </div>
           )}
+
+          <div className="flex flex-col gap-3 mt-8 sm:flex-row sm:gap-4">
+            <button onClick={addWork} className="flex-1 bg-zinc-800 hover:bg-zinc-700 py-3 rounded-xl text-sm border border-zinc-700">
+              <Plus size={14} className="inline mr-1" /> Tambah Project
+            </button>
+            <button onClick={saveWorks} disabled={saving} className="flex-1 bg-blue-600 hover:bg-blue-500 py-3 rounded-xl text-sm font-bold disabled:opacity-50">
+              {saving ? "Menyimpan..." : "Simpan Semua Works"}
+            </button>
+          </div>
         </div>
       </div>
     )
