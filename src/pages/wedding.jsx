@@ -1138,6 +1138,8 @@ const css = `
 
 const MOMENT_TABS = ["All Moments", "Akad", "Resepsi", "Outdoor"];
 const MOMENTS_PER_SLIDE = 4;
+const WEDDING_WA_NUMBER = "628817134774";
+const WEDDING_WA_MESSAGE = "Halo WD Sky Wedding, saya ingin konsultasi untuk wedding organizer.";
 
 export default function Wedding() {
   const [works, setWorks] = useState([]);
@@ -1167,6 +1169,11 @@ export default function Wedding() {
   const triggerToast = (msg) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(""), 2500);
+  };
+
+  const openWeddingWhatsapp = () => {
+    const message = encodeURIComponent(WEDDING_WA_MESSAGE);
+    window.open(`https://wa.me/${WEDDING_WA_NUMBER}?text=${message}`, "_blank", "noopener,noreferrer");
   };
 
   const filteredWorks = works.filter((item) => {
@@ -1262,7 +1269,7 @@ export default function Wedding() {
             </p>
 
             <div className="wo-actions">
-              <button className="wo-primary" onClick={() => triggerToast("Consultation request noted")}>
+              <button className="wo-primary" onClick={openWeddingWhatsapp}>
                 Plan Your Wedding
               </button>
               <button className="wo-secondary" onClick={() => document.querySelector(".wo-gallery-frame")?.scrollIntoView({ behavior: "smooth" })}>
