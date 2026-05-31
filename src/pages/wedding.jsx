@@ -438,12 +438,14 @@ const css = `
     border-radius: 18px;
     font-size: 13px;
   }
-  .wo-load-more-wrap {
+  .wo-slide-controls {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
     padding: 22px 0 4px;
   }
-  .wo-load-more {
+  .wo-slide-button {
     border: 1px solid rgba(76,49,37,.14);
     background: #211916;
     color: #fff;
@@ -458,18 +460,43 @@ const css = `
     transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
     box-shadow: 0 18px 38px rgba(33,25,22,.16);
   }
-  .wo-load-more:hover {
+  .wo-slide-button:hover:not(:disabled) {
     transform: translateY(-2px);
     background: #3a2b25;
     box-shadow: 0 24px 50px rgba(33,25,22,.20);
   }
-  .wo-load-note {
-    display: block;
-    margin-top: 8px;
+  .wo-slide-button:disabled {
+    cursor: not-allowed;
+    opacity: .42;
+    box-shadow: none;
+  }
+  .wo-slide-status {
     color: #9b897f;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 900;
+    letter-spacing: .08em;
     text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .wo-slide-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 10px;
+  }
+  .wo-slide-dot {
+    width: 7px;
+    height: 7px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(33,25,22,.22);
+    cursor: pointer;
+    transition: width .2s ease, background .2s ease;
+  }
+  .wo-slide-dot.active {
+    width: 24px;
+    background: #211916;
   }
   .wo-toast {
     position: fixed;
@@ -1047,12 +1074,20 @@ const css = `
     .wo-card-title {
       font-size: 13px;
     }
-    .wo-load-more-wrap {
+    .wo-slide-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       padding-top: 18px;
     }
-    .wo-load-more {
+    .wo-slide-status {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      margin-bottom: 2px;
+    }
+    .wo-slide-button {
       width: 100%;
       min-height: 46px;
+      min-width: 0;
     }
     .wo-lightbox {
       align-items: stretch;
@@ -1102,13 +1137,12 @@ const css = `
 `;
 
 const MOMENT_TABS = ["All Moments", "Akad", "Resepsi", "Outdoor"];
-const INITIAL_VISIBLE_MOMENTS = 4;
-const LOAD_MORE_COUNT = 4;
+const MOMENTS_PER_SLIDE = 4;
 
 export default function Wedding() {
   const [works, setWorks] = useState([]);
   const [activeTab, setActiveTab] = useState("All Moments");
-  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_MOMENTS);
+  const [activeSlide, setActiveSlide] = useState(0);
   const [shortlist, setShortlist] = useState([]);
   const [toastMsg, setToastMsg] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -1140,12 +1174,19 @@ export default function Wedding() {
     const sub = item.subcategory?.toLowerCase() || "";
     return sub === activeTab.toLowerCase();
   });
-  const visibleWorks = filteredWorks.slice(0, visibleCount);
-  const hasMoreWorks = visibleCount < filteredWorks.length;
+  const totalSlides = Math.max(1, Math.ceil(filteredWorks.length / MOMENTS_PER_SLIDE));
+  const slideStart = activeSlide * MOMENTS_PER_SLIDE;
+  const visibleWorks = filteredWorks.slice(slideStart, slideStart + MOMENTS_PER_SLIDE);
+  const hasMultipleSlides = filteredWorks.length > MOMENTS_PER_SLIDE;
 
   const changeTab = (tab) => {
     setActiveTab(tab);
-    setVisibleCount(INITIAL_VISIBLE_MOMENTS);
+    setActiveSlide(0);
+    setSelectedIndex(null);
+  };
+
+  const goToSlide = (slide) => {
+    setActiveSlide(slide);
     setSelectedIndex(null);
   };
 
@@ -1261,7 +1302,7 @@ export default function Wedding() {
                 <div className="wo-main-header">
                   <h2 className="wo-main-title">Wedding Moments</h2>
                   <span className="wo-main-meta">
-                    Showing {visibleWorks.length} of {filteredWorks.length} photos
+                    Slide {Math.min(activeSlide + 1, totalSlides)} of {totalSlides} · {filteredWorks.length} photos
                   </span>
                 </div>
 
@@ -1318,20 +1359,41 @@ export default function Wedding() {
                   )}
                 </div>
 
-                {hasMoreWorks && (
-                  <div className="wo-load-more-wrap">
-                    <div>
+                {hasMultipleSlides && (
+                  <>
+                    <div className="wo-slide-controls">
                       <button
-                        className="wo-load-more"
-                        onClick={() => setVisibleCount((count) => count + LOAD_MORE_COUNT)}
+                        className="wo-slide-button"
+                        disabled={activeSlide === 0}
+                        onClick={() => goToSlide(activeSlide - 1)}
                       >
-                        Load More Moments
+                        Previous
                       </button>
-                      <span className="wo-load-note">
-                        {filteredWorks.length - visibleWorks.length} photos remaining
+
+                      <span className="wo-slide-status">
+                        Slide {activeSlide + 1} / {totalSlides}
                       </span>
+
+                      <button
+                        className="wo-slide-button"
+                        disabled={activeSlide >= totalSlides - 1}
+                        onClick={() => goToSlide(activeSlide + 1)}
+                      >
+                        Next Slide
+                      </button>
                     </div>
-                  </div>
+
+                    <div className="wo-slide-dots" aria-label="Wedding gallery slides">
+                      {Array.from({ length: totalSlides }).map((_, index) => (
+                        <button
+                          key={index}
+                          className={`wo-slide-dot ${activeSlide === index ? "active" : ""}`}
+                          onClick={() => goToSlide(index)}
+                          aria-label={`Show slide ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </>
                 )}
               </div>
             </div>
