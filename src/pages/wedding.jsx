@@ -331,6 +331,32 @@ const css = `
     grid-column: span 3;
     grid-row: span 2;
   }
+  .wo-card:nth-child(8n+7) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .wo-card:nth-child(8n+8) {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+  .wo-card:nth-child(8n+9),
+  .wo-card:nth-child(8n+10) {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+  .wo-card:nth-child(8n+11) {
+    grid-column: span 6;
+    grid-row: span 3;
+  }
+  .wo-card:nth-child(8n+12),
+  .wo-card:nth-child(8n+13) {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+  .wo-card:nth-child(8n+14) {
+    grid-column: span 6;
+    grid-row: span 2;
+  }
   .wo-card:hover {
     transform: translateY(-3px);
     border-color: rgba(200,159,103,.7);
