@@ -372,6 +372,12 @@ export default function AdminPanel() {
                         {SECTION_COLORS[item.category]?.icon || "IMG"}
                       </span>
                     </div>
+
+                    <label className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500 cursor-pointer">
+                      {uploading === item.id ? <Loader2 size={16} className="animate-spin" /> : <HardDriveUpload size={16} />}
+                      {uploading === item.id ? "Uploading..." : "Upload Foto"}
+                      <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, item.id)} />
+                    </label>
                   </div>
                 </div>
               ))}
