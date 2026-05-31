@@ -35,6 +35,8 @@ export default function MediaLibrary() {
   const [uploading, setUploading] = useState(false);
   const [query, setQuery] = useState("");
   const [toast, setToast] = useState("");
+  const [role, setRole] = useState("admin");
+  const isSuperAdmin = role === "superadmin";
 
   const showToast = (message) => {
     setToast(message);
@@ -74,6 +76,26 @@ export default function MediaLibrary() {
 
   useEffect(() => {
     fetchFiles();
+  }, []);
+
+  useEffect(() => {
+    const fetchRole = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) return;
+
+      const { data } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      setRole(data?.role || "admin");
+    };
+
+    fetchRole();
   }, []);
 
   const filteredFiles = useMemo(() => {
@@ -116,6 +138,11 @@ export default function MediaLibrary() {
   };
 
   const deleteFile = async (file) => {
+    if (!isSuperAdmin) {
+      alert("Hanya superadmin yang bisa menghapus media.");
+      return;
+    }
+
     const confirmed = window.confirm(`Hapus media "${file.name}"?`);
     if (!confirmed) return;
 
@@ -143,7 +170,8 @@ export default function MediaLibrary() {
             Media Library
           </h1>
           <p className="text-sm text-zinc-500 mt-1">
-            Kelola file di bucket Supabase <code>photos/{FOLDER}</code>.
+            Upload gambar ke bucket Supabase <code>photos/{FOLDER}</code>.
+            {!isSuperAdmin && " Admin hanya memiliki akses upload media."}
           </p>
         </div>
 
@@ -218,7 +246,7 @@ export default function MediaLibrary() {
                   {formatSize(file.metadata?.size)} · {formatDate(file.created_at)}
                 </p>
 
-                <div className="grid grid-cols-3 gap-2 mt-4">
+                <div className={`grid gap-2 mt-4 ${isSuperAdmin ? "grid-cols-3" : "grid-cols-2"}`}>
                   <button
                     onClick={() => copyUrl(file.publicUrl)}
                     className="flex items-center justify-center gap-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-2 py-2 text-xs text-zinc-300 transition"
@@ -235,13 +263,15 @@ export default function MediaLibrary() {
                     <Download className="w-3.5 h-3.5" />
                     Open
                   </a>
-                  <button
-                    onClick={() => deleteFile(file)}
-                    className="flex items-center justify-center gap-1.5 bg-red-500/10 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-lg px-2 py-2 text-xs text-red-400 transition"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                    Hapus
-                  </button>
+                  {isSuperAdmin && (
+                    <button
+                      onClick={() => deleteFile(file)}
+                      className="flex items-center justify-center gap-1.5 bg-red-500/10 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-lg px-2 py-2 text-xs text-red-400 transition"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      Hapus
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

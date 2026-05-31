@@ -26,6 +26,7 @@ export default function Dashboard() {
   const [adminEmail, setAdminEmail] = useState("");
   const [adminId, setAdminId] = useState("");
   const [role, setRole] = useState("admin");
+  const [profileReady, setProfileReady] = useState(false);
 
   const [totalAdmins, setTotalAdmins] = useState(0);
   const [activities, setActivities] = useState([]);
@@ -35,6 +36,7 @@ export default function Dashboard() {
 
   const isSuperAdmin = role === "superadmin";
   const isAdminBiasa = role === "admin";
+  const adminAllowedPaths = ["/admin/media"];
 
   const getAdminProfile = useCallback(async (user) => {
     const byId = await supabase
@@ -83,6 +85,7 @@ export default function Dashboard() {
       setAdminEmail(email);
       setAdminId(id);
       setRole(adminRole);
+      setProfileReady(true);
 
       const sessionKey = `logged_${id}`;
 
@@ -147,6 +150,14 @@ export default function Dashboard() {
   useEffect(() => {
     fetchProfile();
   }, [fetchProfile]);
+
+  useEffect(() => {
+    if (!profileReady || isSuperAdmin) return;
+
+    if (!adminAllowedPaths.includes(location.pathname)) {
+      navigate("/admin/media", { replace: true });
+    }
+  }, [profileReady, isSuperAdmin, location.pathname, navigate]);
 
   useEffect(() => {
     fetchAdminCount();
@@ -241,32 +252,40 @@ export default function Dashboard() {
           </p>
 
           <nav className="space-y-1 mb-8">
-            <Link to="/admin/dashboard" className={navItemClass("/admin/dashboard")}>
-              <LayoutDashboard className="w-4 h-4" /> Dashboard
-            </Link>
+            {isSuperAdmin && (
+              <Link to="/admin/dashboard" className={navItemClass("/admin/dashboard")}>
+                <LayoutDashboard className="w-4 h-4" /> Dashboard
+              </Link>
+            )}
 
-            <Link to="/admin/content" className={navItemClass("/admin/content")}>
-              <FileText className="w-4 h-4" /> Content
-            </Link>
+            {isSuperAdmin && (
+              <Link to="/admin/content" className={navItemClass("/admin/content")}>
+                <FileText className="w-4 h-4" /> Content
+              </Link>
+            )}
 
             <Link to="/admin/media" className={navItemClass("/admin/media")}>
               <ImageIcon className="w-4 h-4" /> Media Library
             </Link>
           </nav>
 
-          <p className="px-3 text-xs font-semibold text-zinc-500 mb-2 uppercase tracking-wider">
-            System
-          </p>
+          {isSuperAdmin && (
+            <p className="px-3 text-xs font-semibold text-zinc-500 mb-2 uppercase tracking-wider">
+              System
+            </p>
+          )}
 
-          <nav className="space-y-1">
-            <Link to="/admin/team" className={navItemClass("/admin/team")}>
-              <Users className="w-4 h-4" /> Team Members
-            </Link>
+          {isSuperAdmin && (
+            <nav className="space-y-1">
+              <Link to="/admin/team" className={navItemClass("/admin/team")}>
+                <Users className="w-4 h-4" /> Team Members
+              </Link>
 
-            <Link to="/admin/settings" className={navItemClass("/admin/settings")}>
-              <Settings className="w-4 h-4" /> Settings
-            </Link>
-          </nav>
+              <Link to="/admin/settings" className={navItemClass("/admin/settings")}>
+                <Settings className="w-4 h-4" /> Settings
+              </Link>
+            </nav>
+          )}
         </div>
 
         <div className="p-4 border-t border-white/5">

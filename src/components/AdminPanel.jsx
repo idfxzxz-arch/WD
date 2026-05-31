@@ -105,6 +105,8 @@ export default function AdminPanel() {
   const [uploading, setUploading] = useState(null)
   const [toast, setToast] = useState("")
   const [adminEmail, setAdminEmail] = useState("System")
+  const [adminRole, setAdminRole] = useState("admin")
+  const [roleReady, setRoleReady] = useState(false)
 
   useEffect(() => { fetchContent() }, [lang])
   useEffect(() => { fetchScope() }, [])
@@ -113,6 +115,18 @@ export default function AdminPanel() {
     const getAdminProfile = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (user?.email) setAdminEmail(user.email)
+
+      if (user?.id) {
+        const { data } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .maybeSingle()
+
+        setAdminRole(data?.role || "admin")
+      }
+
+      setRoleReady(true)
     }
     getAdminProfile()
   }, [])
@@ -279,6 +293,26 @@ export default function AdminPanel() {
   // ─── RENDER ───────────────────────────────────────────────────────────────
   const divisionTabs = ["wedding", "music", "production", "workshop", "event"]
   const tabLabel = (tab) => tab === "it" ? "WD IT" : tab.charAt(0).toUpperCase() + tab.slice(1)
+
+  if (!roleReady) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center bg-zinc-950 text-zinc-500">
+        Loading access...
+      </div>
+    )
+  }
+
+  if (adminRole !== "superadmin") {
+    return (
+      <div className="max-w-3xl mx-auto bg-zinc-900 border border-zinc-800 rounded-3xl p-8 text-center text-white">
+        <h1 className="text-xl font-semibold">Akses edit konten dibatasi</h1>
+        <p className="text-zinc-400 text-sm mt-2">
+          Admin hanya bisa upload gambar melalui Media Library. Edit teks, scope,
+          works, dan konten lain hanya untuk superadmin.
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-zinc-950 text-white font-sans">
