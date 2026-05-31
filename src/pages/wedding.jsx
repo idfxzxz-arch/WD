@@ -851,6 +851,214 @@ const css = `
       grid-row: span 1;
     }
   }
+
+  @media (max-width: 640px) {
+    .wo-root {
+      background: #fbf7f1;
+    }
+    .wo-nav {
+      position: sticky;
+      top: 0;
+      padding: 12px 14px;
+      gap: 10px;
+    }
+    .wo-back {
+      width: 42px;
+      height: 42px;
+      justify-content: center;
+      padding: 0;
+      border-radius: 999px;
+      font-size: 0;
+    }
+    .wo-back::first-letter {
+      font-size: 0;
+    }
+    .wo-back::before {
+      content: "<";
+      font-size: 18px;
+      line-height: 1;
+      color: #211916;
+    }
+    .wo-nav-logo {
+      min-width: 0;
+      flex: 1;
+      text-align: right;
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .wo-hero {
+      display: block;
+      padding: 24px 14px 34px;
+    }
+    .wo-copy {
+      max-width: none;
+    }
+    .wo-tag {
+      max-width: 100%;
+      font-size: 9px;
+      letter-spacing: .08em;
+      padding: 7px 11px;
+      margin-bottom: 13px;
+    }
+    .wo-title {
+      font-size: clamp(38px, 13.4vw, 50px);
+      line-height: .98;
+      letter-spacing: -.055em;
+      margin-bottom: 15px;
+    }
+    .wo-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: none;
+    }
+    .wo-actions {
+      grid-template-columns: 1fr;
+      margin-top: 22px;
+    }
+    .wo-primary,
+    .wo-secondary {
+      min-height: 46px;
+    }
+    .wo-stats {
+      grid-template-columns: 1fr;
+      gap: 9px;
+      margin: 22px 0 24px;
+    }
+    .wo-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 14px;
+      border-radius: 16px;
+    }
+    .wo-gallery-frame {
+      width: calc(100vw - 28px);
+      margin: 0 auto;
+      padding: 0;
+      border-radius: 24px;
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 24px 70px -38px rgba(89,62,45,.52);
+    }
+    .wo-gallery-screen {
+      min-height: 0;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    .wo-main {
+      padding: 14px;
+    }
+    .wo-main-header {
+      display: grid;
+      gap: 5px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+    .wo-main-title {
+      font-size: 22px;
+      line-height: 1.1;
+    }
+    .wo-main-meta {
+      text-align: left;
+      font-size: 11px;
+    }
+    .wo-tabs {
+      display: flex;
+      gap: 8px;
+      margin: 0 -14px 14px;
+      padding: 0 14px 2px;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+    }
+    .wo-tab {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      padding: 9px 14px;
+      font-size: 11px;
+    }
+    .wo-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+      gap: 12px;
+      overflow: visible;
+      padding: 0;
+    }
+    .wo-card,
+    .wo-card:first-child,
+    .wo-card:nth-child(2),
+    .wo-card:nth-child(3),
+    .wo-card:nth-child(4),
+    .wo-card:nth-child(5),
+    .wo-card:nth-child(6),
+    .wo-card:nth-child(8n+7),
+    .wo-card:nth-child(8n+8),
+    .wo-card:nth-child(8n+9),
+    .wo-card:nth-child(8n+10),
+    .wo-card:nth-child(8n+11),
+    .wo-card:nth-child(8n+12),
+    .wo-card:nth-child(8n+13),
+    .wo-card:nth-child(8n+14) {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+      border-radius: 18px;
+    }
+    .wo-card:first-child {
+      aspect-ratio: 1 / 1.04;
+    }
+    .wo-card-info {
+      padding: 44px 14px 14px;
+    }
+    .wo-card-title {
+      font-size: 13px;
+    }
+    .wo-lightbox {
+      align-items: stretch;
+      padding: 10px;
+    }
+    .wo-lightbox-panel {
+      width: 100%;
+      max-height: calc(100dvh - 20px);
+      grid-template-columns: 1fr;
+      border-radius: 20px;
+    }
+    .wo-lightbox-media {
+      min-height: 0;
+      height: min(58dvh, 430px);
+    }
+    .wo-lightbox-media img {
+      max-height: min(58dvh, 430px);
+    }
+    .wo-lightbox-info {
+      padding: 16px;
+      gap: 12px;
+    }
+    .wo-lightbox-title {
+      font-size: 21px;
+    }
+    .wo-lightbox-actions {
+      grid-template-columns: 1fr;
+    }
+    .wo-lightbox-close {
+      top: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+    }
+    .wo-lightbox-nav {
+      width: 40px;
+      height: 40px;
+    }
+    .wo-toast {
+      top: 74px;
+      left: 14px;
+      right: 14px;
+      text-align: center;
+      padding: 12px 16px;
+    }
+  }
 `;
 
 const MOMENT_TABS = ["All Moments", "Akad", "Resepsi", "Outdoor"];
