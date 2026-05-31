@@ -190,28 +190,31 @@ const css = `
   }
   .wo-gallery-frame {
     width: 100%;
-    height: 680px;
-    background: linear-gradient(135deg, #fff, #efe4d6);
-    border-radius: 36px;
-    padding: 14px;
-    border: 1px solid rgba(76,49,37,0.12);
-    box-shadow: 0 40px 90px -30px rgba(89,62,45,0.35);
+    min-height: 680px;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.94), rgba(239,228,214,.78)),
+      radial-gradient(circle at 78% 12%, rgba(200,159,103,.18), transparent 34%);
+    border-radius: 34px;
+    padding: 12px;
+    border: 1px solid rgba(76,49,37,0.10);
+    box-shadow: 0 42px 100px -34px rgba(89,62,45,0.42);
   }
   .wo-gallery-screen {
-    background: #fffdf9;
+    background: rgba(255,253,249,.92);
     width: 100%;
     height: 100%;
-    border-radius: 24px;
+    min-height: 656px;
+    border-radius: 26px;
     color: #1c1c1e;
     display: grid;
-    grid-template-columns: 80px 1fr;
+    grid-template-columns: 1fr;
     overflow: hidden;
     position: relative;
   }
   .wo-sidebar {
+    display: none;
     background: #2a201c;
     border-right: 1px solid rgba(76,49,37,0.08);
-    display: flex;
     flex-direction: column;
     align-items: center;
     padding: 24px 0;
@@ -235,7 +238,7 @@ const css = `
     color: #211916;
   }
   .wo-main {
-    padding: 24px;
+    padding: 26px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -244,14 +247,14 @@ const css = `
   .wo-main-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     gap: 18px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
   .wo-main-title {
-    font-size: 22px;
+    font-size: 28px;
     font-weight: 800;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.04em;
     color: #211916;
   }
   .wo-main-meta {
@@ -262,20 +265,20 @@ const css = `
   }
   .wo-tabs {
     display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 22px;
     overflow-x: auto;
     scrollbar-width: none;
   }
   .wo-tabs::-webkit-scrollbar { display: none; }
   .wo-tab {
-    padding: 8px 18px;
+    padding: 10px 18px;
     font-size: 12px;
     font-weight: 800;
-    border-radius: 12px;
-    background: #fff;
+    border-radius: 999px;
+    background: rgba(255,255,255,.78);
     color: #7a665b;
-    border: 1px solid #efe4d6;
+    border: 1px solid rgba(76,49,37,.12);
     cursor: pointer;
     transition: 0.15s;
     white-space: nowrap;
@@ -287,38 +290,97 @@ const css = `
   }
   .wo-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: 118px;
+    grid-auto-flow: dense;
+    gap: 14px;
     overflow-y: auto;
     flex: 1;
-    padding-bottom: 20px;
+    padding: 2px 2px 6px;
     scrollbar-width: none;
   }
   .wo-grid::-webkit-scrollbar { display: none; }
   .wo-card {
     position: relative;
-    background: #ffffff;
-    border-radius: 14px;
+    background: #efe4d6;
+    border-radius: 22px;
     overflow: hidden;
-    border: 2px solid transparent;
+    border: 1px solid rgba(255,255,255,.62);
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    aspect-ratio: 16/10;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    grid-column: span 3;
+    grid-row: span 2;
     display: flex;
+    box-shadow: 0 18px 44px rgba(89,62,45,.12);
   }
   .wo-card:first-child {
-    grid-column: 1 / -1;
-    aspect-ratio: 16/7;
+    grid-column: span 6;
+    grid-row: span 3;
+  }
+  .wo-card:nth-child(2),
+  .wo-card:nth-child(3) {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+  .wo-card:nth-child(4) {
+    grid-column: span 6;
+    grid-row: span 2;
+  }
+  .wo-card:nth-child(5),
+  .wo-card:nth-child(6) {
+    grid-column: span 3;
+    grid-row: span 2;
   }
   .wo-card:hover {
-    transform: scale(0.98);
-    box-shadow: 0 8px 20px rgba(89,62,45,0.12);
+    transform: translateY(-3px);
+    border-color: rgba(200,159,103,.7);
+    box-shadow: 0 24px 58px rgba(89,62,45,.18);
   }
   .wo-card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     background: #eee;
+    transition: transform .45s ease;
+  }
+  .wo-card:hover .wo-card-img {
+    transform: scale(1.035);
+  }
+  .wo-card-info {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 2;
+    padding: 42px 18px 16px;
+    color: #fff;
+    background: linear-gradient(180deg, transparent, rgba(22,14,10,.78));
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 14px;
+  }
+  .wo-card-title {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    text-shadow: 0 2px 12px rgba(0,0,0,.28);
+  }
+  .wo-card-kicker {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.72);
+  }
+  .wo-card-save {
+    flex: none;
+    border-radius: 999px;
+    padding: 7px 10px;
+    background: rgba(255,255,255,.9);
+    color: #211916;
+    font-size: 10px;
+    font-weight: 900;
   }
   .wo-card::after {
     content: "View";
@@ -334,6 +396,7 @@ const css = `
     opacity: 0;
     transform: translateY(6px);
     transition: .2s;
+    display: none;
   }
   .wo-card:hover::after {
     opacity: 1;
@@ -542,8 +605,11 @@ const css = `
       padding: 7px;
       box-shadow: 0 28px 70px -34px rgba(89,62,45,0.45);
     }
-    .wo-gallery-screen { grid-template-columns: 1fr; border-radius: 20px; }
-    .wo-sidebar { display: none; }
+    .wo-gallery-screen {
+      grid-template-columns: 1fr;
+      border-radius: 20px;
+      min-height: 0;
+    }
     .wo-main {
       min-height: 546px;
       padding: 15px;
@@ -567,14 +633,24 @@ const css = `
       font-size: 11px;
     }
     .wo-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: 150px;
       gap: 12px;
       padding-bottom: 6px;
     }
     .wo-card,
+    .wo-card:first-child,
+    .wo-card:nth-child(2),
+    .wo-card:nth-child(3),
+    .wo-card:nth-child(4),
+    .wo-card:nth-child(5),
+    .wo-card:nth-child(6) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
     .wo-card:first-child {
-      grid-column: auto;
-      aspect-ratio: 16/11;
+      grid-column: 1 / -1;
+      grid-row: span 2;
     }
     .wo-lightbox { padding: 14px; }
     .wo-lightbox-panel {
@@ -698,15 +774,15 @@ const css = `
       flex: initial;
       overflow: visible;
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: 150px;
       gap: 12px;
       padding-bottom: 0;
     }
     .wo-card:first-child {
       grid-column: 1 / -1;
-      aspect-ratio: 16/10;
+      grid-row: span 2;
     }
     .wo-card {
-      aspect-ratio: 4/3.2;
       border-radius: 16px;
       box-shadow: 0 14px 34px rgba(89,62,45,.12);
     }
@@ -740,11 +816,13 @@ const css = `
     }
     .wo-grid {
       grid-template-columns: 1fr;
+      grid-auto-rows: 230px;
       gap: 12px;
     }
     .wo-card:first-child,
     .wo-card {
-      aspect-ratio: 16/10.5;
+      grid-column: 1 / -1;
+      grid-row: span 1;
     }
   }
 `;
@@ -769,12 +847,6 @@ export default function Wedding() {
 
       if (worksData) {
         setWorks(worksData);
-
-        if (worksData.length > 0) {
-          setShortlist([
-            { id: worksData[0].id, title: worksData[0].title, image: worksData[0].image }
-          ]);
-        }
       }
     };
 
@@ -928,10 +1000,6 @@ export default function Wedding() {
                         <div
                           key={item.id}
                           className="wo-card"
-                          style={{
-                            borderColor: isSaved ? "#c89f67" : "transparent",
-                            boxShadow: isSaved ? "0 0 0 2px #c89f67" : ""
-                          }}
                           onClick={() => openLightbox(index)}
                         >
                           <img
@@ -939,6 +1007,19 @@ export default function Wedding() {
                             className="wo-card-img"
                             alt={item.title || "WD Sky Wedding moment"}
                           />
+                          <div className="wo-card-info">
+                            <div>
+                              <div className="wo-card-kicker">
+                                {item.subcategory || "Wedding"}
+                              </div>
+                              <p className="wo-card-title">
+                                {item.title || "WD Sky Wedding Moment"}
+                              </p>
+                            </div>
+                            {isSaved && (
+                              <span className="wo-card-save">Saved</span>
+                            )}
+                          </div>
                         </div>
                       );
                     })
