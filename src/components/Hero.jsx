@@ -182,7 +182,7 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      <div className="pointer-events-none absolute left-1/2 top-[64%] z-0 h-16 w-full -translate-x-1/2 -translate-y-1/2 px-4 sm:top-[60%] sm:h-24 sm:px-6">
+      <div className="pointer-events-none absolute left-1/2 top-[61%] z-0 h-16 w-full -translate-x-1/2 -translate-y-1/2 px-4 sm:top-[57%] sm:h-24 sm:px-6">
         <GooeyText
           texts={["GROUP", "COMPANY"]}
           morphTime={1.1}
