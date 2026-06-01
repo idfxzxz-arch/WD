@@ -114,14 +114,14 @@ export function GooeyText({
         <span
           ref={text1Ref}
           className={joinClasses(
-            "absolute left-1/2 top-1/2 inline-block -translate-x-1/2 -translate-y-1/2 select-none text-center text-black",
+            "absolute inset-0 flex select-none items-center justify-center text-center text-black",
             textClassName
           )}
         />
         <span
           ref={text2Ref}
           className={joinClasses(
-            "absolute left-1/2 top-1/2 inline-block -translate-x-1/2 -translate-y-1/2 select-none text-center text-black",
+            "absolute inset-0 flex select-none items-center justify-center text-center text-black",
             textClassName
           )}
         />

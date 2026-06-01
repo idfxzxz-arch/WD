@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { LanguageContext } from "../context/LanguageContext"
 import { supabase } from "../lib/supabase"
+import { GooeyText } from "./ui/GooeyText"
 
 const WA_NUMBER = "6285707909415"
 
@@ -49,7 +50,6 @@ export default function Hero() {
   const [clickCount, setClickCount] = useState(0)
   const [openLang, setOpenLang] = useState(false)
   const [hero, setHero] = useState({})
-  const [heroWord, setHeroWord] = useState("GROUP")
 
   const { lang, changeLang } = useContext(LanguageContext)
 
@@ -65,14 +65,6 @@ export default function Hero() {
   useEffect(() => {
     fetchHero()
   }, [lang.code])
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setHeroWord((current) => current === "GROUP" ? "COMPANY" : "GROUP")
-    }, 1800)
-
-    return () => clearInterval(timer)
-  }, [])
 
   const fetchHero = async () => {
     const { data, error } = await supabase
@@ -191,18 +183,13 @@ export default function Hero() {
       </AnimatePresence>
 
       <div className="pointer-events-none relative z-0 mt-[clamp(1.5rem,5svh,3rem)] hidden h-14 w-full px-4 sm:absolute sm:left-1/2 sm:top-[57%] sm:mt-0 sm:flex sm:h-24 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:px-6">
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={heroWord}
-            initial={{ opacity: 0, y: 12, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -12, filter: "blur(10px)" }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto block whitespace-nowrap text-center text-[clamp(1.65rem,7vw,4.5rem)] font-black uppercase leading-none tracking-[-0.06em] text-black"
-          >
-            {heroWord}
-          </motion.span>
-        </AnimatePresence>
+        <GooeyText
+          texts={["GROUP", "COMPANY"]}
+          morphTime={1.1}
+          cooldownTime={0.35}
+          className="flex h-full w-full items-center justify-center"
+          textClassName="whitespace-nowrap text-[clamp(1.65rem,7vw,4.5rem)] font-black uppercase leading-none tracking-[-0.06em]"
+        />
       </div>
 
       {/* SUBTITLE */}
