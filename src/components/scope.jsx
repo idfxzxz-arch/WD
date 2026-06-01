@@ -1,183 +1,198 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { motion } from "framer-motion"
+import { CalendarHeart, Code2, GraduationCap, Mic2, Sparkles, Video, ArrowRight } from "lucide-react"
 import { supabase } from "../lib/supabase"
 
-const DEFAULT_IMAGES = [
-  "/resources/Wedding/WO/WO1.webp",
-  "/resources/Wedding/WO/WO2.webp",
-  "/resources/Wedding/WO/WO3.webp",
-  "/resources/Wedding/WO/WO4.webp",
-  "/resources/Wedding/WO/WO5.webp",
-  "/resources/Wedding/WO/WO6.webp"
-]
-
-const SERVICE_NAMES = {
-  wedding: "WD Sky Wedding Organizer",
-  production: "WD Production",
-  event: "WD Event Organizer",
-  workshop: "WD Jaya Workshop",
-  music: "WD Music Entertaiment and Music Class",
-  it: "WD IT",
+const SERVICE_META = {
+  wedding: {
+    title: "Wedding Organizer",
+    brand: "WD Sky Wedding",
+    desc: "Perencanaan, vendor coordination, dan eksekusi detail untuk momen pernikahan.",
+    link: "/wedding",
+    icon: CalendarHeart,
+    accent: "#c89f67",
+  },
+  event: {
+    title: "Event Organizer",
+    brand: "WD Event",
+    desc: "Konsep acara, rundown, koordinasi vendor, dan kontrol lapangan.",
+    link: "/event",
+    icon: Sparkles,
+    accent: "#6366f1",
+  },
+  production: {
+    title: "Creative Production",
+    brand: "WD Production",
+    desc: "Foto, video, dokumentasi, dan visual komersial untuk brand maupun acara.",
+    link: "/production",
+    icon: Video,
+    accent: "#f59e0b",
+  },
+  music: {
+    title: "Music Entertainment",
+    brand: "WD Music",
+    desc: "Performance, kelas musik, recording, dan dukungan talent panggung.",
+    link: "/music",
+    icon: Mic2,
+    accent: "#a855f7",
+  },
+  workshop: {
+    title: "Workshop Program",
+    brand: "WD Jaya Workshop",
+    desc: "Program praktik, kelas, dan pelatihan dengan output yang bisa digunakan.",
+    link: "/workshop",
+    icon: GraduationCap,
+    accent: "#22c55e",
+  },
+  it: {
+    title: "Digital Solution",
+    brand: "WD IT",
+    desc: "Website, aplikasi, sistem internal, dan dukungan teknis untuk bisnis.",
+    link: "/it",
+    icon: Code2,
+    accent: "#0ea5e9",
+  },
 }
 
-function getServiceName(item) {
+const ORDER = ["wedding", "event", "production", "music", "workshop", "it"]
+
+function getCategory(item) {
   const source = `${item.name || ""} ${item.link || ""}`.toLowerCase()
-
-  if (source.includes("wedding")) return SERVICE_NAMES.wedding
-  if (source.includes("production")) return SERVICE_NAMES.production
-  if (source.includes("event")) return SERVICE_NAMES.event
-  if (source.includes("workshop")) return SERVICE_NAMES.workshop
-  if (source.includes("music")) return SERVICE_NAMES.music
-  if (
-    source.includes("it") ||
-    source.includes("digital") ||
-    source.includes("website") ||
-    source.includes("store")
-  ) {
-    return SERVICE_NAMES.it
-  }
-
-  return item.name
-}
-
-function getServiceLink(item) {
-  const source = `${item.name || ""} ${item.link || ""}`.toLowerCase()
-  if (source.includes("store")) return "/it"
-  return item.link
+  if (source.includes("wedding")) return "wedding"
+  if (source.includes("event")) return "event"
+  if (source.includes("production")) return "production"
+  if (source.includes("music")) return "music"
+  if (source.includes("workshop")) return "workshop"
+  if (source.includes("it") || source.includes("digital") || source.includes("website") || source.includes("store")) return "it"
+  return null
 }
 
 export default function Scope() {
-  const [services, setServices] = useState([])
-
-  const sectionRef = useRef(null)
-  const canvasRef = useRef(null)
-  const imagesRef = useRef([])
-  const particles = useRef([])
-  const rafRef = useRef(null)
-  const lastMove = useRef(0)
-  const imgIndexRef = useRef(0)
+  const [scopeItems, setScopeItems] = useState([])
+  const [activeId, setActiveId] = useState("wedding")
 
   useEffect(() => {
     supabase
       .from("scope_services")
       .select("*")
       .order("order_index")
-      .then(({ data }) => setServices(data || []))
+      .then(({ data }) => setScopeItems(data || []))
   }, [])
 
-  useEffect(() => {
-    DEFAULT_IMAGES.forEach((src, i) => {
-      const img = new Image()
-      img.src = src
-      imagesRef.current[i] = img
-    })
+  const services = useMemo(() => {
+    const existing = new Set(scopeItems.map(getCategory).filter(Boolean))
+    const keys = ORDER.filter((key) => existing.size === 0 || existing.has(key))
+    return keys.map((key) => ({ id: key, ...SERVICE_META[key] }))
+  }, [scopeItems])
 
-    const canvas = canvasRef.current
-    const section = sectionRef.current
-    if (!canvas || !section) return
+  const active = services.find((item) => item.id === activeId) || services[0] || SERVICE_META.wedding
 
-    const ctx = canvas.getContext("2d")
-
-    const resize = () => {
-      canvas.width = section.offsetWidth
-      canvas.height = section.offsetHeight
-    }
-    resize()
-    window.addEventListener("resize", resize)
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      particles.current = particles.current.filter(p => p.opacity > 0.01)
-      particles.current.forEach(p => {
-        ctx.save()
-        ctx.globalAlpha = p.opacity
-        ctx.translate(p.x, p.y)
-        ctx.rotate((p.rotate * Math.PI) / 180)
-        const w = p.size
-        const h = p.size * 1.2
-        const r = 10
-        ctx.beginPath()
-        ctx.moveTo(-w / 2 + r, -h / 2)
-        ctx.lineTo(w / 2 - r, -h / 2)
-        ctx.quadraticCurveTo(w / 2, -h / 2, w / 2, -h / 2 + r)
-        ctx.lineTo(w / 2, h / 2 - r)
-        ctx.quadraticCurveTo(w / 2, h / 2, w / 2 - r, h / 2)
-        ctx.lineTo(-w / 2 + r, h / 2)
-        ctx.quadraticCurveTo(-w / 2, h / 2, -w / 2, h / 2 - r)
-        ctx.lineTo(-w / 2, -h / 2 + r)
-        ctx.quadraticCurveTo(-w / 2, -h / 2, -w / 2 + r, -h / 2)
-        ctx.closePath()
-        ctx.clip()
-        if (p.img.complete) ctx.drawImage(p.img, -w / 2, -h / 2, w, h)
-        ctx.restore()
-        p.opacity -= 0.008
-        p.y -= 0.3
-      })
-      rafRef.current = requestAnimationFrame(animate)
-    }
-    animate()
-
-    const handleMove = (e) => {
-      const now = Date.now()
-      if (now - lastMove.current < 80) return
-      lastMove.current = now
-      const rect = section.getBoundingClientRect()
-      if (
-        e.clientX < rect.left || e.clientX > rect.right ||
-        e.clientY < rect.top || e.clientY > rect.bottom
-      ) return
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-      const img = imagesRef.current[imgIndexRef.current % DEFAULT_IMAGES.length]
-      imgIndexRef.current++
-      particles.current.push({
-        x: x + (Math.random() - 0.5) * 60,
-        y: y + (Math.random() - 0.5) * 40,
-        img,
-        size: 80 + Math.random() * 60,
-        rotate: Math.random() * 40 - 20,
-        opacity: 0.85,
-      })
-      if (particles.current.length > 20) {
-        particles.current = particles.current.slice(-20)
-      }
-    }
-
-    window.addEventListener("mousemove", handleMove)
-    return () => {
-      window.removeEventListener("mousemove", handleMove)
-      window.removeEventListener("resize", resize)
-      cancelAnimationFrame(rafRef.current)
-    }
-  }, [])
-
-  const handleClick = (link) => {
-    if (link.startsWith("#")) {
-      const el = document.querySelector(link)
-      if (el) el.scrollIntoView({ behavior: "smooth" })
-    } else {
-      window.location.href = link
-    }
+  const goTo = (link) => {
+    window.location.href = link
   }
 
   return (
-    <section
-      id="scope"
-      ref={sectionRef}
-      className="relative min-h-[88svh] sm:min-h-screen bg-black flex items-center justify-center overflow-hidden py-24 sm:py-32"
-    >
-      <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-10" />
-      <div className="relative z-20 flex w-full max-w-5xl flex-col items-center text-center gap-3 sm:gap-5 text-white px-5">
-        {services.map((item, i) => (
-          <motion.span
-            key={item.id}
-            onClick={() => handleClick(getServiceLink(item))}
-            whileHover={{ scale: 1.05, opacity: 1 }}
-            className="max-w-full text-[1.45rem] min-[390px]:text-3xl sm:text-2xl md:text-3xl lg:text-5xl leading-tight font-light cursor-pointer opacity-55 sm:opacity-40 hover:opacity-100 transition-all duration-300"
+    <section id="scope" className="relative overflow-hidden bg-black px-5 py-24 text-white sm:py-32">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(255,255,255,0.13),transparent_30%),radial-gradient(circle_at_18%_18%,rgba(99,102,241,0.16),transparent_30%),radial-gradient(circle_at_82%_78%,rgba(200,159,103,0.14),transparent_28%)]" />
+      <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(90deg,#fff_1px,transparent_1px),linear-gradient(180deg,#fff_1px,transparent_1px)] bg-[length:72px_72px]" />
+
+      <div className="relative z-10 mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/45">
+            Scope Of Work
+          </p>
+          <h2 className="mt-5 max-w-xl text-4xl font-semibold leading-[0.98] tracking-[-0.05em] sm:text-6xl">
+            Six divisions, one creative ecosystem.
+          </h2>
+          <p className="mt-6 max-w-lg text-sm leading-7 text-white/55 sm:text-base">
+            WD Group menghubungkan event, wedding, produksi visual, musik, workshop, dan solusi digital dalam satu sistem kerja yang rapi.
+          </p>
+
+          <button
+            type="button"
+            onClick={() => goTo(active.link)}
+            className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/86"
           >
-            {getServiceName(item)}
-          </motion.span>
-        ))}
+            View {active.brand}
+            <ArrowRight size={16} />
+          </button>
+        </div>
+
+        <div className="relative hidden min-h-[620px] items-center justify-center lg:flex">
+          <div className="absolute h-[430px] w-[430px] rounded-full border border-white/10" />
+          <div className="absolute h-[300px] w-[300px] rounded-full border border-white/10" />
+          <div className="absolute flex h-28 w-28 items-center justify-center rounded-full border border-white/15 bg-white text-center text-sm font-black uppercase leading-tight tracking-[-0.04em] text-black shadow-2xl">
+            WD<br />Group
+          </div>
+
+          {services.map((item, index) => {
+            const angle = (index / services.length) * Math.PI * 2 - Math.PI / 2
+            const x = Math.cos(angle) * 215
+            const y = Math.sin(angle) * 215
+            const Icon = item.icon
+            const isActive = active.id === item.id
+
+            return (
+              <motion.button
+                type="button"
+                key={item.id}
+                onClick={() => setActiveId(item.id)}
+                className="absolute flex items-center gap-3 rounded-full border px-4 py-3 text-left backdrop-blur transition"
+                style={{
+                  transform: `translate(${x}px, ${y}px)`,
+                  borderColor: isActive ? item.accent : "rgba(255,255,255,0.16)",
+                  background: isActive ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.05)",
+                  boxShadow: isActive ? `0 0 38px ${item.accent}45` : "none",
+                }}
+                whileHover={{ scale: 1.04 }}
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: item.accent, color: "#050505" }}>
+                  <Icon size={18} />
+                </span>
+                <span>
+                  <span className="block text-sm font-semibold text-white">{item.title}</span>
+                  <span className="block text-[11px] uppercase tracking-[0.16em] text-white/45">{item.brand}</span>
+                </span>
+              </motion.button>
+            )
+          })}
+
+          <motion.div
+            key={active.id}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="absolute bottom-0 left-1/2 w-[380px] -translate-x-1/2 rounded-2xl border border-white/12 bg-white/[0.06] p-5 backdrop-blur-xl"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: active.accent }}>
+              {active.brand}
+            </p>
+            <h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em]">{active.title}</h3>
+            <p className="mt-3 text-sm leading-6 text-white/58">{active.desc}</p>
+          </motion.div>
+        </div>
+
+        <div className="grid gap-3 lg:hidden">
+          {services.map((item) => {
+            const Icon = item.icon
+            return (
+              <button
+                type="button"
+                key={item.id}
+                onClick={() => goTo(item.link)}
+                className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-4 text-left"
+              >
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full" style={{ background: item.accent, color: "#050505" }}>
+                  <Icon size={18} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-base font-semibold text-white">{item.title}</span>
+                  <span className="mt-1 block text-xs leading-5 text-white/48">{item.desc}</span>
+                </span>
+                <ArrowRight size={17} className="text-white/45" />
+              </button>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
