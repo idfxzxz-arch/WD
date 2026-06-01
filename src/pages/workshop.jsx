@@ -17,7 +17,7 @@ const workshopConfig = {
   savedMessage: "Workshop reference saved",
   galleryTitle: "Workshop Portfolio",
   mark: "WS",
-  tabs: ["All Projects", "Class", "Seminar", "Training", "Bootcamp"],
+  tabs: ["All Programs", "Workshop", "Seminar", "Training", "Bootcamp"],
   stats: [
     { value: "Hands-on", label: "Practice" },
     { value: "Guided", label: "Learning" },
