@@ -58,7 +58,7 @@ export default function Navbar() {
       initial={{ y: 80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-full px-3 flex justify-center"
+      className="fixed inset-x-0 bottom-3 sm:bottom-6 z-[80] w-full px-3 flex justify-center"
     >
       <nav className="flex w-full max-w-[23rem] sm:w-auto sm:max-w-fit items-center justify-between sm:justify-center gap-0.5 sm:gap-1 bg-white/95 backdrop-blur border border-black/8 shadow-lg rounded-full px-1.5 sm:px-2 py-1.5 sm:py-2">
         {menus.map(({ label, value, id }) => {
