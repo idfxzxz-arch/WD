@@ -68,7 +68,7 @@ const CATEGORY_ROUTES = {
 }
 
 const SUBCATEGORIES = {
-  wedding:    ["ceremony", "reception", "decor", "portrait"],
+  wedding:    ["akad", "resepsi", "outdoor", "pricelist"],
   music:      ["performance", "recording", "concert", "behind the scene"],
   production: ["film", "photo", "video", "commercial"],
   workshop:   ["workshop"],
