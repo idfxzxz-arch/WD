@@ -72,12 +72,12 @@ const STATUS = {
   it: "progress",
 }
 const ENERGY = {
-  wedding: 95,
-  event: 88,
-  production: 82,
-  music: 78,
-  workshop: 72,
-  it: 86,
+  wedding: 100,
+  event: 100,
+  production: 100,
+  music: 100,
+  workshop: 100,
+  it: 100,
 }
 
 function getCategory(item) {
