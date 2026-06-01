@@ -119,9 +119,9 @@ export default function Scope() {
         </div>
 
         <div className="relative hidden min-h-[700px] items-start justify-center pt-10 lg:flex">
-          <div className="absolute h-[430px] w-[430px] rounded-full border border-white/10" />
-          <div className="absolute h-[300px] w-[300px] rounded-full border border-white/10" />
-          <div className="absolute flex h-28 w-28 items-center justify-center rounded-full border border-white/15 bg-white text-center text-sm font-black uppercase leading-tight tracking-[-0.04em] text-black shadow-2xl">
+          <div className="absolute z-0 h-[430px] w-[430px] rounded-full border border-white/10" />
+          <div className="absolute z-0 h-[300px] w-[300px] rounded-full border border-white/10" />
+          <div className="absolute z-0 flex h-20 w-20 items-center justify-center rounded-full border border-white/15 bg-black/75 text-center text-[11px] font-black uppercase leading-tight tracking-[-0.04em] text-white shadow-2xl backdrop-blur">
             WD<br />Group
           </div>
 
@@ -135,7 +135,7 @@ export default function Scope() {
             return (
               <div
                 key={item.id}
-                className="absolute"
+                className="absolute z-10"
                 style={{
                   left: `calc(50% + ${x}px)`,
                   top: `calc(43% + ${y}px)`,
