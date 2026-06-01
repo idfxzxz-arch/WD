@@ -54,9 +54,9 @@ export function RevealText({
             }}
           >
             <motion.span
-              className="bg-cover bg-no-repeat text-transparent bg-clip-text drop-shadow-[0_18px_42px_rgba(0,0,0,0.18)]"
+              className="bg-cover bg-no-repeat text-transparent bg-clip-text saturate-125 contrast-125 brightness-95 drop-shadow-[0_18px_42px_rgba(0,0,0,0.22)]"
               animate={{
-                opacity: hoveredIndex === index ? 1 : 0.88,
+                opacity: 1,
                 backgroundPosition: hoveredIndex === index ? "18% center" : "0% center",
               }}
               transition={{

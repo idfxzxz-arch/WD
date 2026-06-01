@@ -191,7 +191,7 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      <div className="pointer-events-auto absolute left-1/2 top-[58%] z-0 flex w-full -translate-x-1/2 -translate-y-1/2 justify-center px-4 opacity-40 sm:top-[57%] sm:px-6 sm:opacity-45">
+      <div className="pointer-events-auto absolute left-1/2 top-[58%] z-0 flex w-full -translate-x-1/2 -translate-y-1/2 justify-center px-4 sm:top-[57%] sm:px-6">
         <RevealText
           text="CREATIVE"
           overlayColor="text-blue-500"
