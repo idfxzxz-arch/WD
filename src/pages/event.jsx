@@ -1,5 +1,7 @@
 import DivisionLayout from "../components/DivisionLayout";
 
+const bookingHref = "https://wa.me/6285707909415?text=Halo%20WD%20Group%2C%20saya%20ingin%20booking%20layanan%20WD%20Event.";
+
 const eventConfig = {
   category: "event",
   brand: "WD Event Organizer",
@@ -12,7 +14,8 @@ const eventConfig = {
   titleAccent: "executed with control.",
   description:
     "WD Event Organizer membantu merancang dan menjalankan acara dengan konsep yang jelas, koordinasi vendor yang rapi, serta eksekusi lapangan yang tenang. Dari corporate event, konser, exhibition, hingga private gathering, setiap detail diarahkan agar acara berjalan tertib, berkesan, dan sesuai tujuan.",
-  primaryCta: "Plan Event",
+  primaryCta: "Booking Now",
+  primaryHref: bookingHref,
   primaryToast: "Event inquiry noted",
   savedMessage: "Event reference saved",
   galleryTitle: "Event Portfolio",

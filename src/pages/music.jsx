@@ -1,5 +1,7 @@
 import DivisionLayout from "../components/DivisionLayout";
 
+const bookingHref = "https://wa.me/6285707909415?text=Halo%20WD%20Group%2C%20saya%20ingin%20booking%20layanan%20WD%20Music.";
+
 const musicConfig = {
   category: "music",
   brand: "WD Music Entertaiment and Music Class",
@@ -11,7 +13,8 @@ const musicConfig = {
   titleAccent: "ready for the stage.",
   description:
     "WD Music Entertaiment and Music Class menghadirkan layanan performance, kelas musik, recording, concert support, dan kebutuhan talent dengan koordinasi yang profesional. Kami menggabungkan energi panggung, pengembangan skill, serta detail teknis agar setiap pengalaman musik terdengar hidup dan tampil percaya diri.",
-  primaryCta: "Arrange Music Program",
+  primaryCta: "Booking Now",
+  primaryHref: bookingHref,
   primaryToast: "Music inquiry noted",
   savedMessage: "Music reference saved",
   galleryTitle: "Music Portfolio",

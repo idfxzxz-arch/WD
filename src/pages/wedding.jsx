@@ -1,5 +1,7 @@
 import DivisionLayout from "../components/DivisionLayout";
 
+const bookingHref = "https://wa.me/6285707909415?text=Halo%20WD%20Sky%20Wedding%2C%20saya%20ingin%20booking%20layanan%20wedding%20organizer.";
+
 const weddingConfig = {
   category: "wedding",
   brand: "WD Sky Wedding Organizer",
@@ -12,9 +14,8 @@ const weddingConfig = {
   titleAccent: "beautifully directed.",
   description:
     "WD Sky Wedding Organizer membantu pasangan merancang hari pernikahan yang tenang, rapi, dan berkesan. Dari alur acara, koordinasi vendor, hingga detail visual, setiap momen diarahkan agar berjalan teratur tanpa menghilangkan rasa personal dari cerita cinta Anda.",
-  primaryCta: "Plan Your Wedding",
-  primaryHref:
-    "https://wa.me/6285707909415?text=Halo%20WD%20Sky%20Wedding%2C%20saya%20ingin%20konsultasi%20untuk%20wedding%20organizer.",
+  primaryCta: "Booking Now",
+  primaryHref: bookingHref,
   primaryToast: "Wedding inquiry noted",
   savedMessage: "Wedding reference saved",
   galleryTitle: "Wedding Portfolio",

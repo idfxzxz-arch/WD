@@ -1,5 +1,7 @@
 import DivisionLayout from "../components/DivisionLayout";
 
+const bookingHref = "https://wa.me/6285707909415?text=Halo%20WD%20Group%2C%20saya%20ingin%20booking%20layanan%20WD%20Production.";
+
 const productionConfig = {
   category: "production",
   brand: "WD Production",
@@ -11,7 +13,8 @@ const productionConfig = {
   titleAccent: "produced with purpose.",
   description:
     "WD Production menghadirkan layanan dokumentasi, video, foto, dan produksi komersial dengan standar kerja yang terarah. Dari konsep visual, proses shooting, hingga hasil akhir, setiap karya dibuat untuk memperkuat pesan brand, acara, dan kebutuhan publikasi Anda.",
-  primaryCta: "Plan Production",
+  primaryCta: "Booking Now",
+  primaryHref: bookingHref,
   primaryToast: "Production inquiry noted",
   savedMessage: "Production reference saved",
   galleryTitle: "Production Portfolio",
