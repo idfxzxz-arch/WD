@@ -157,11 +157,11 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* WD */}
-      <div className="relative mt-28 sm:mt-32 flex justify-center select-none">
+      <div className="relative mt-[clamp(5rem,13svh,7rem)] lg:mt-32 flex justify-center select-none">
         <motion.h1
           onClick={handleWDClick}
           whileTap={{ scale: 0.95 }}
-          className="text-[31vw] sm:text-[18vw] font-serif leading-none cursor-pointer tracking-[-0.08em] sm:tracking-normal"
+          className="text-[clamp(7rem,31vw,12rem)] sm:text-[clamp(8rem,16vw,14rem)] lg:text-[18vw] font-serif leading-none cursor-pointer tracking-[-0.08em] sm:tracking-[-0.04em] lg:tracking-normal"
         >
           WD
         </motion.h1>
@@ -182,8 +182,8 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* SUBTITLE */}
-      <div className="relative z-10 mt-10 w-full px-5 pb-32 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0 sm:pb-0">
-        <h2 className="max-w-[22rem] text-[1.7rem] min-[390px]:text-3xl sm:max-w-none sm:text-4xl font-normal leading-[1.12] sm:leading-snug">
+      <div className="relative z-10 mt-5 w-full px-5 pb-24 sm:mt-6 sm:px-8 sm:pb-24 lg:absolute lg:bottom-20 lg:left-12 lg:mt-0 lg:w-auto lg:px-0 lg:pb-0">
+        <h2 className="max-w-[22rem] text-[clamp(1.45rem,7vw,2rem)] sm:max-w-[26rem] sm:text-[clamp(1.8rem,4vw,2.4rem)] lg:max-w-none lg:text-4xl font-normal leading-[1.08] sm:leading-[1.1] lg:leading-snug">
           {hero.title || lang.subtitle1}
           <br />
           {hero.subtitle || lang.subtitle2}  {/* ✅ ganti description → subtitle */}
