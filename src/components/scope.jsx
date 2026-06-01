@@ -118,7 +118,7 @@ export default function Scope() {
           </button>
         </div>
 
-        <div className="relative hidden min-h-[620px] items-center justify-center lg:flex">
+        <div className="relative hidden min-h-[700px] items-start justify-center pt-10 lg:flex">
           <div className="absolute h-[430px] w-[430px] rounded-full border border-white/10" />
           <div className="absolute h-[300px] w-[300px] rounded-full border border-white/10" />
           <div className="absolute flex h-28 w-28 items-center justify-center rounded-full border border-white/15 bg-white text-center text-sm font-black uppercase leading-tight tracking-[-0.04em] text-black shadow-2xl">
@@ -128,7 +128,7 @@ export default function Scope() {
           {services.map((item, index) => {
             const angle = (index / services.length) * Math.PI * 2 - Math.PI / 2
             const x = Math.cos(angle) * 245
-            const y = Math.sin(angle) * 245
+            const y = Math.sin(angle) * 205
             const Icon = item.icon
             const isActive = active.id === item.id
 
@@ -138,7 +138,7 @@ export default function Scope() {
                 className="absolute"
                 style={{
                   left: `calc(50% + ${x}px)`,
-                  top: `calc(50% + ${y}px)`,
+                  top: `calc(43% + ${y}px)`,
                   transform: "translate(-50%, -50%)",
                 }}
               >
@@ -169,7 +169,7 @@ export default function Scope() {
             key={active.id}
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute bottom-0 left-1/2 w-[380px] -translate-x-1/2 rounded-2xl border border-white/12 bg-white/[0.06] p-5 backdrop-blur-xl"
+            className="absolute bottom-0 left-1/2 z-20 w-[420px] -translate-x-1/2 rounded-2xl border border-white/12 bg-black/70 p-5 shadow-2xl backdrop-blur-xl"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: active.accent }}>
               {active.brand}
