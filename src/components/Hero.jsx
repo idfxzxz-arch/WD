@@ -182,7 +182,7 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      <div className="pointer-events-none absolute left-1/2 top-[61%] z-0 h-16 w-full -translate-x-1/2 -translate-y-1/2 px-4 sm:top-[57%] sm:h-24 sm:px-6">
+      <div className="pointer-events-none relative z-0 mt-8 h-14 w-full px-4 sm:absolute sm:left-1/2 sm:top-[57%] sm:mt-0 sm:h-24 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:px-6">
         <GooeyText
           texts={["GROUP", "COMPANY"]}
           morphTime={1.1}
@@ -193,7 +193,7 @@ export default function Hero() {
       </div>
 
       {/* SUBTITLE */}
-      <div className="relative z-10 mt-10 w-full px-5 pb-32 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0 sm:pb-0">
+      <div className="relative z-10 mt-7 w-full px-5 pb-32 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0 sm:pb-0">
         <h2 className="max-w-[22rem] text-[1.7rem] min-[390px]:text-3xl sm:max-w-none sm:text-4xl font-normal leading-[1.12] sm:leading-snug">
           {hero.title || lang.subtitle1}
           <br />
