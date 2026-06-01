@@ -2,18 +2,9 @@ import { useState, useContext, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { LanguageContext } from "../context/LanguageContext"
 import { supabase } from "../lib/supabase"
-import { RevealText } from "./ui/RevealText"
+import { GooeyText } from "./ui/GooeyText"
 
 const WA_NUMBER = "6285707909415"
-
-const revealImages = [
-  "/resources/Wedding/wedding.webp",
-  "/resources/Workshop/Workshop.webp",
-  "/resources/Music_ENT/Music_ENT.webp",
-  "/resources/Production/Production.webp",
-  "/resources/Event_Organizer/Event.webp",
-  "/resources/hero.webp",
-]
 
 const stickers = [
   {
@@ -191,12 +182,13 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      <div className="pointer-events-auto absolute left-1/2 top-[58%] z-0 flex w-full -translate-x-1/2 -translate-y-1/2 justify-center px-4 sm:top-[57%] sm:px-6">
-        <RevealText
-          text="CREATIVE"
-          overlayColor="text-blue-500"
-          fontSize="text-[clamp(3.25rem,18vw,9rem)]"
-          letterImages={revealImages}
+      <div className="pointer-events-none absolute left-1/2 top-[57%] z-0 h-24 w-full -translate-x-1/2 -translate-y-1/2 px-4 sm:top-[56%] sm:h-32 sm:px-6">
+        <GooeyText
+          texts={["GROUP COMPANY", "GROUP COMPANY"]}
+          morphTime={1.1}
+          cooldownTime={0.35}
+          className="flex h-full items-center justify-center"
+          textClassName="w-full text-[clamp(2.4rem,12vw,7.5rem)] font-black uppercase leading-none tracking-[-0.07em]"
         />
       </div>
 
