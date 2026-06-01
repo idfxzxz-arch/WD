@@ -5,6 +5,12 @@ import { supabase } from "../lib/supabase"
 export default function About() {
   const { lang } = useContext(LanguageContext)
   const [about, setAbout] = useState({})
+  const stats = [
+    { value: "6", label: "Divisi" },
+    { value: "Creative", label: "Media" },
+    { value: "Event", label: "Production" },
+    { value: "Digital", label: "Solution" },
+  ]
 
   useEffect(() => {
     supabase
@@ -31,6 +37,22 @@ export default function About() {
         <p className="text-base sm:text-xl leading-relaxed text-gray-600 max-w-3xl">
           {about.description || lang.aboutDesc}
         </p>
+
+        <div className="mt-8 grid max-w-3xl grid-cols-2 gap-3 sm:mt-10 sm:grid-cols-4">
+          {stats.map((item) => (
+            <div
+              key={`${item.value}-${item.label}`}
+              className="border-t border-black/15 pt-3"
+            >
+              <p className="text-2xl font-medium leading-none tracking-[-0.04em] text-black sm:text-3xl">
+                {item.value}
+              </p>
+              <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-black/40 sm:text-xs">
+                {item.label}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
