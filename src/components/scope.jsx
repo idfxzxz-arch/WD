@@ -127,33 +127,41 @@ export default function Scope() {
 
           {services.map((item, index) => {
             const angle = (index / services.length) * Math.PI * 2 - Math.PI / 2
-            const x = Math.cos(angle) * 215
-            const y = Math.sin(angle) * 215
+            const x = Math.cos(angle) * 245
+            const y = Math.sin(angle) * 245
             const Icon = item.icon
             const isActive = active.id === item.id
 
             return (
-              <motion.button
-                type="button"
+              <div
                 key={item.id}
-                onClick={() => setActiveId(item.id)}
-                className="absolute flex items-center gap-3 rounded-full border px-4 py-3 text-left backdrop-blur transition"
+                className="absolute"
                 style={{
-                  transform: `translate(${x}px, ${y}px)`,
-                  borderColor: isActive ? item.accent : "rgba(255,255,255,0.16)",
-                  background: isActive ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.05)",
-                  boxShadow: isActive ? `0 0 38px ${item.accent}45` : "none",
+                  left: `calc(50% + ${x}px)`,
+                  top: `calc(50% + ${y}px)`,
+                  transform: "translate(-50%, -50%)",
                 }}
-                whileHover={{ scale: 1.04 }}
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: item.accent, color: "#050505" }}>
-                  <Icon size={18} />
-                </span>
-                <span>
-                  <span className="block text-sm font-semibold text-white">{item.title}</span>
-                  <span className="block text-[11px] uppercase tracking-[0.16em] text-white/45">{item.brand}</span>
-                </span>
-              </motion.button>
+                <motion.button
+                  type="button"
+                  onClick={() => setActiveId(item.id)}
+                  className="flex min-w-[245px] items-center gap-3 rounded-full border px-4 py-3 text-left backdrop-blur transition"
+                  style={{
+                    borderColor: isActive ? item.accent : "rgba(255,255,255,0.16)",
+                    background: isActive ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.05)",
+                    boxShadow: isActive ? `0 0 38px ${item.accent}45` : "none",
+                  }}
+                  whileHover={{ scale: 1.04 }}
+                >
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full" style={{ background: item.accent, color: "#050505" }}>
+                    <Icon size={18} />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-semibold text-white">{item.title}</span>
+                    <span className="block truncate text-[11px] uppercase tracking-[0.16em] text-white/45">{item.brand}</span>
+                  </span>
+                </motion.button>
+              </div>
             )
           })}
 
