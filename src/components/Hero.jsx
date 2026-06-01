@@ -182,7 +182,7 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* SUBTITLE */}
-      <div className="relative z-10 mt-5 w-full px-5 pb-24 sm:mt-6 sm:px-8 sm:pb-24 lg:absolute lg:bottom-20 lg:left-12 lg:mt-0 lg:w-auto lg:px-0 lg:pb-0">
+      <div className="relative z-10 mt-4 w-full px-5 pb-24 sm:mt-5 sm:px-8 sm:pb-24 lg:mt-6 lg:px-12">
         <h2 className="max-w-[22rem] text-[clamp(1.45rem,7vw,2rem)] sm:max-w-[26rem] sm:text-[clamp(1.8rem,4vw,2.4rem)] lg:max-w-none lg:text-4xl font-normal leading-[1.08] sm:leading-[1.1] lg:leading-snug">
           {hero.title || lang.subtitle1}
           <br />
