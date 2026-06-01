@@ -91,7 +91,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-[100svh] bg-white relative overflow-hidden flex flex-col items-center"
+      className="min-h-[78svh] bg-white relative overflow-hidden flex flex-col items-center sm:min-h-[100svh]"
     >
       {/* LANGUAGE */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
@@ -193,7 +193,7 @@ export default function Hero() {
       </div>
 
       {/* SUBTITLE */}
-      <div className="relative z-10 mt-7 w-full px-5 pb-32 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0 sm:pb-0">
+      <div className="relative z-10 mt-7 w-full px-5 pb-20 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0 sm:pb-0">
         <h2 className="max-w-[22rem] text-[1.7rem] min-[390px]:text-3xl sm:max-w-none sm:text-4xl font-normal leading-[1.12] sm:leading-snug">
           {hero.title || lang.subtitle1}
           <br />
@@ -202,7 +202,7 @@ export default function Hero() {
       </div>
 
       {/* SCROLL */}
-      <div className="absolute bottom-24 right-5 sm:bottom-10 sm:right-10">
+      <div className="absolute bottom-10 right-5 sm:bottom-10 sm:right-10">
         <div className="w-11 h-11 sm:w-16 sm:h-16 border rounded-full flex items-center justify-center text-lg sm:text-xl cursor-pointer hover:bg-black hover:text-white transition">
           ↓
         </div>
