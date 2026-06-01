@@ -91,7 +91,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-[100svh] bg-white relative overflow-hidden flex flex-col items-center"
+      className="min-h-[100svh] bg-white relative overflow-hidden grid grid-rows-[auto_auto_auto_1fr_auto] justify-items-center px-0 pb-24 sm:flex sm:flex-col sm:items-center sm:pb-0"
     >
       {/* LANGUAGE */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
@@ -158,7 +158,7 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* WD */}
-      <div className="relative mt-28 sm:mt-32 flex justify-center select-none">
+      <div className="relative mt-[clamp(5.5rem,14svh,8rem)] sm:mt-32 flex justify-center select-none">
         <motion.h1
           onClick={handleWDClick}
           whileTap={{ scale: 0.95 }}
@@ -182,7 +182,7 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      <div className="pointer-events-none absolute left-1/2 top-[50%] z-0 h-14 w-full -translate-x-1/2 -translate-y-1/2 px-4 sm:top-[57%] sm:h-24 sm:px-6">
+      <div className="pointer-events-none relative z-0 mt-[clamp(1.5rem,5svh,3rem)] hidden h-14 w-full px-4 sm:absolute sm:left-1/2 sm:top-[57%] sm:mt-0 sm:flex sm:h-24 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:px-6">
         <GooeyText
           texts={["GROUP", "COMPANY"]}
           morphTime={1.1}
@@ -193,7 +193,7 @@ export default function Hero() {
       </div>
 
       {/* SUBTITLE */}
-      <div className="absolute bottom-28 left-0 z-10 w-full px-5 sm:bottom-24 sm:left-12 sm:w-auto sm:px-0">
+      <div className="relative z-10 mt-[clamp(2.5rem,9svh,5rem)] w-full self-end px-5 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0">
         <h2 className="max-w-[22rem] text-[1.7rem] min-[390px]:text-3xl sm:max-w-none sm:text-4xl font-normal leading-[1.12] sm:leading-snug">
           {hero.title || lang.subtitle1}
           <br />
@@ -202,7 +202,7 @@ export default function Hero() {
       </div>
 
       {/* SCROLL */}
-      <div className="absolute bottom-24 right-5 sm:bottom-10 sm:right-10">
+      <div className="absolute bottom-[calc(5.75rem+env(safe-area-inset-bottom))] right-5 sm:bottom-10 sm:right-10">
         <div className="w-11 h-11 sm:w-16 sm:h-16 border rounded-full flex items-center justify-center text-lg sm:text-xl cursor-pointer hover:bg-black hover:text-white transition">
           ↓
         </div>
