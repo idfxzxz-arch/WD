@@ -5,6 +5,7 @@ import { supabase } from "../lib/supabase"
 export default function Section() {
   const { lang } = useContext(LanguageContext)
   const [services, setServices] = useState({})
+  const marqueeText = "WD GROUP COMPANY · CREATIVE MEDIA · EVENT ORGANIZER · PRODUCTION · DIGITAL SOLUTION · "
 
   useEffect(() => {
     supabase
@@ -28,6 +29,12 @@ export default function Section() {
         <h2 className="text-[2.35rem] min-[390px]:text-5xl md:text-6xl leading-[1.05] sm:leading-tight font-medium tracking-[-0.04em] sm:tracking-normal">
           {services.title || lang.sectionTitle}
         </h2>
+      </div>
+
+      <div className="mt-12 sm:mt-16 overflow-hidden border-y border-black/10 py-4 text-black/30">
+        <div className="flex w-max animate-[wdMarquee_28s_linear_infinite] whitespace-nowrap text-xs font-semibold uppercase tracking-[0.28em] sm:text-sm">
+          <span>{marqueeText.repeat(3)}</span>
+        </div>
       </div>
     </section>
   )

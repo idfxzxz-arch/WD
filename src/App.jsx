@@ -30,6 +30,13 @@ import AdminSettings from "./pages/AdminSettings"
 import AdminPanel from "./components/AdminPanel"
 import { supabase } from "./lib/supabase"
 
+const appStyles = `
+@keyframes wdMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.333%); }
+}
+`
+
 function MaintenancePage() {
   return (
     <main className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-[#080604] px-6 text-white">
@@ -156,6 +163,7 @@ function Home() {
 export default function App() {
   return (
     <LanguageProvider>
+      <style>{appStyles}</style>
       <BrowserRouter>
         <Routes>
           {/* WEBSITE */}
