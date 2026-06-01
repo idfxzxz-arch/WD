@@ -182,13 +182,13 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      <div className="pointer-events-none absolute left-1/2 top-[57%] z-0 h-24 w-full -translate-x-1/2 -translate-y-1/2 px-4 sm:top-[56%] sm:h-32 sm:px-6">
+      <div className="pointer-events-none absolute left-1/2 top-[64%] z-0 h-16 w-full -translate-x-1/2 -translate-y-1/2 px-4 sm:top-[60%] sm:h-24 sm:px-6">
         <GooeyText
           texts={["GROUP COMPANY", "GROUP COMPANY"]}
           morphTime={1.1}
           cooldownTime={0.35}
           className="flex h-full items-center justify-center"
-          textClassName="w-full text-[clamp(2.4rem,12vw,7.5rem)] font-black uppercase leading-none tracking-[-0.07em]"
+          textClassName="w-max whitespace-nowrap text-[clamp(1.65rem,7vw,4.5rem)] font-black uppercase leading-none tracking-[-0.06em]"
         />
       </div>
 
