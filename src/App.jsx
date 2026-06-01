@@ -190,7 +190,10 @@ export default function App() {
             <Route path="media" element={<MediaLibrary />} />
             <Route path="team" element={<TeamMembers />} />
             <Route path="settings" element={<AdminSettings />} />
+            <Route path="*" element={<Navigate to="dashboard" replace />} />
           </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </LanguageProvider>
