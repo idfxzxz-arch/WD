@@ -6,6 +6,15 @@ import { RevealText } from "./ui/RevealText"
 
 const WA_NUMBER = "6285707909415"
 
+const revealImages = [
+  "/resources/Wedding/wedding.webp",
+  "/resources/Workshop/Workshop.webp",
+  "/resources/Music_ENT/Music_ENT.webp",
+  "/resources/Production/Production.webp",
+  "/resources/Event_Organizer/Event.webp",
+  "/resources/hero.webp",
+]
+
 const stickers = [
   {
     id: 1,
@@ -182,12 +191,12 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
-      <div className="pointer-events-auto absolute left-1/2 top-[58%] z-0 flex w-full -translate-x-1/2 -translate-y-1/2 justify-center px-4 opacity-[0.07] sm:top-[57%] sm:px-6 sm:opacity-[0.08]">
+      <div className="pointer-events-auto absolute left-1/2 top-[58%] z-0 flex w-full -translate-x-1/2 -translate-y-1/2 justify-center px-4 opacity-40 sm:top-[57%] sm:px-6 sm:opacity-45">
         <RevealText
           text="CREATIVE"
-          textColor="text-black"
           overlayColor="text-blue-500"
           fontSize="text-[clamp(3.25rem,18vw,9rem)]"
+          letterImages={revealImages}
         />
       </div>
 

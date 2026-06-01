@@ -14,7 +14,6 @@ const defaultLetterImages = [
 
 export function RevealText({
   text = "CREATIVE",
-  textColor = "text-black",
   overlayColor = "text-blue-500",
   fontSize = "text-[clamp(3.5rem,12vw,8rem)]",
   letterDelay = 0.06,
@@ -55,21 +54,13 @@ export function RevealText({
             }}
           >
             <motion.span
-              className={`absolute inset-0 ${textColor}`}
-              animate={{ opacity: hoveredIndex === index ? 0 : 1 }}
-              transition={{ duration: 0.1 }}
-            >
-              {letter}
-            </motion.span>
-
-            <motion.span
-              className="bg-cover bg-no-repeat text-transparent bg-clip-text"
+              className="bg-cover bg-no-repeat text-transparent bg-clip-text drop-shadow-[0_18px_42px_rgba(0,0,0,0.18)]"
               animate={{
-                opacity: hoveredIndex === index ? 1 : 0,
-                backgroundPosition: hoveredIndex === index ? "10% center" : "0% center",
+                opacity: hoveredIndex === index ? 1 : 0.88,
+                backgroundPosition: hoveredIndex === index ? "18% center" : "0% center",
               }}
               transition={{
-                opacity: { duration: 0.1 },
+                opacity: { duration: 0.18 },
                 backgroundPosition: { duration: 3, ease: "easeInOut" },
               }}
               style={{
