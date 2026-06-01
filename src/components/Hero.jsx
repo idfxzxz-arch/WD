@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { LanguageContext } from "../context/LanguageContext"
 import { supabase } from "../lib/supabase"
+import { RevealText } from "./ui/RevealText"
 
 const WA_NUMBER = "6285707909415"
 
@@ -90,7 +91,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-[72svh] sm:min-h-[78svh] lg:min-h-[82svh] bg-white relative overflow-hidden flex flex-col items-center"
+      className="min-h-[100svh] bg-white relative overflow-hidden flex flex-col items-center"
     >
       {/* LANGUAGE */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
@@ -157,11 +158,11 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* WD */}
-      <div className="relative mt-[clamp(5rem,13svh,7rem)] lg:mt-32 flex justify-center select-none">
+      <div className="relative mt-28 sm:mt-32 flex justify-center select-none">
         <motion.h1
           onClick={handleWDClick}
           whileTap={{ scale: 0.95 }}
-          className="text-[clamp(7rem,31vw,12rem)] sm:text-[clamp(8rem,16vw,14rem)] lg:text-[18vw] font-serif leading-none cursor-pointer tracking-[-0.08em] sm:tracking-[-0.04em] lg:tracking-normal"
+          className="text-[31vw] sm:text-[18vw] font-serif leading-none cursor-pointer tracking-[-0.08em] sm:tracking-normal"
         >
           WD
         </motion.h1>
@@ -181,9 +182,18 @@ export default function Hero() {
         )}
       </AnimatePresence>
 
+      <div className="pointer-events-auto absolute left-1/2 top-[58%] z-0 flex w-full -translate-x-1/2 -translate-y-1/2 justify-center px-4 opacity-[0.07] sm:top-[57%] sm:px-6 sm:opacity-[0.08]">
+        <RevealText
+          text="CREATIVE"
+          textColor="text-black"
+          overlayColor="text-blue-500"
+          fontSize="text-[clamp(3.25rem,18vw,9rem)]"
+        />
+      </div>
+
       {/* SUBTITLE */}
-      <div className="relative z-10 mt-4 w-full px-5 pb-24 sm:mt-5 sm:px-8 sm:pb-24 lg:mt-6 lg:px-12">
-        <h2 className="max-w-[22rem] text-[clamp(1.45rem,7vw,2rem)] sm:max-w-[26rem] sm:text-[clamp(1.8rem,4vw,2.4rem)] lg:max-w-none lg:text-4xl font-normal leading-[1.08] sm:leading-[1.1] lg:leading-snug">
+      <div className="relative z-10 mt-10 w-full px-5 pb-32 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0 sm:pb-0">
+        <h2 className="max-w-[22rem] text-[1.7rem] min-[390px]:text-3xl sm:max-w-none sm:text-4xl font-normal leading-[1.12] sm:leading-snug">
           {hero.title || lang.subtitle1}
           <br />
           {hero.subtitle || lang.subtitle2}  {/* ✅ ganti description → subtitle */}
