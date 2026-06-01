@@ -90,7 +90,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-[100svh] bg-white relative overflow-hidden flex flex-col items-center"
+      className="min-h-[72svh] sm:min-h-[78svh] lg:min-h-[82svh] bg-white relative overflow-hidden flex flex-col items-center"
     >
       {/* LANGUAGE */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
