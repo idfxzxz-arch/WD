@@ -1182,7 +1182,16 @@ export default function DivisionLayout({ config }) {
             <p className="dp-desc">{config.description}</p>
 
             <div className="dp-actions">
-              <button className="dp-primary" onClick={() => showToast(config.primaryToast)}>
+              <button
+                className="dp-primary"
+                onClick={() => {
+                  if (config.primaryHref) {
+                    window.open(config.primaryHref, "_blank", "noopener,noreferrer");
+                    return;
+                  }
+                  showToast(config.primaryToast);
+                }}
+              >
                 {config.primaryCta}
               </button>
               <button
