@@ -184,7 +184,7 @@ export default function Hero() {
 
       <div className="pointer-events-none absolute left-1/2 top-[64%] z-0 h-16 w-full -translate-x-1/2 -translate-y-1/2 px-4 sm:top-[60%] sm:h-24 sm:px-6">
         <GooeyText
-          texts={["GROUP COMPANY", "GROUP COMPANY"]}
+          texts={["GROUP", "COMPANY"]}
           morphTime={1.1}
           cooldownTime={0.35}
           className="flex h-full items-center justify-center"
