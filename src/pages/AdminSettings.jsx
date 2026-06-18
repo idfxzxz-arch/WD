@@ -14,30 +14,31 @@ import {
   Users,
 } from "lucide-react"
 import { supabase } from "../lib/supabase"
+import { privateLoginPath, privatePath } from "../lib/privateRoutes"
 
 const cards = [
   {
     title: "Website Content",
     desc: "Atur teks halaman, scope, dan works dari admin panel.",
-    href: "/admin/content",
+    href: privatePath("content"),
     icon: FileText,
   },
   {
     title: "Media Library",
     desc: "Kelola file dan aset foto yang dipakai website.",
-    href: "/admin/media",
+    href: privatePath("media"),
     icon: Image,
   },
   {
     title: "Team Members",
     desc: "Lihat admin terdaftar dan atur role akses.",
-    href: "/admin/team",
+    href: privatePath("team"),
     icon: Users,
   },
   {
     title: "Dashboard",
     desc: "Kembali ke ringkasan aktivitas dan statistik.",
-    href: "/admin/dashboard",
+    href: privatePath("dashboard"),
     icon: LayoutDashboard,
   },
 ]
@@ -146,7 +147,7 @@ export default function AdminSettings() {
 
   const signOut = async () => {
     await supabase.auth.signOut()
-    window.location.href = "/admin/login"
+    window.location.href = privateLoginPath
   }
 
   return (

@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, Link, Outlet, useLocation } from "react-router-dom";
 import { supabase } from "../lib/supabase";
+import { privateLoginPath, privatePath } from "../lib/privateRoutes";
 import {
   LayoutDashboard,
   FileText,
@@ -36,7 +37,7 @@ export default function Dashboard() {
 
   const isSuperAdmin = role === "superadmin";
   const isAdminBiasa = role === "admin";
-  const adminAllowedPaths = ["/admin/content"];
+  const adminAllowedPaths = [privatePath("content")];
 
   const getAdminProfile = useCallback(async (user) => {
     const byId = await supabase
@@ -69,7 +70,7 @@ export default function Dashboard() {
 
       if (error || !user) {
         await supabase.auth.signOut();
-        navigate("/admin/login", { replace: true });
+        navigate(privateLoginPath, { replace: true });
         return;
       }
 
@@ -80,7 +81,7 @@ export default function Dashboard() {
 
       if (!["admin", "superadmin"].includes(adminRole)) {
         await supabase.auth.signOut();
-        navigate("/admin/login", { replace: true });
+        navigate(privateLoginPath, { replace: true });
         return;
       }
 
@@ -105,7 +106,7 @@ export default function Dashboard() {
     } catch (error) {
       console.error(error);
       await supabase.auth.signOut();
-      navigate("/admin/login", { replace: true });
+      navigate(privateLoginPath, { replace: true });
     }
   }, [getAdminProfile, navigate]);
 
@@ -157,7 +158,7 @@ export default function Dashboard() {
     if (!profileReady || isSuperAdmin) return;
 
     if (!adminAllowedPaths.includes(location.pathname)) {
-      navigate("/admin/content", { replace: true });
+      navigate(privatePath("content"), { replace: true });
     }
   }, [profileReady, isSuperAdmin, location.pathname, navigate]);
 
@@ -200,7 +201,7 @@ export default function Dashboard() {
 
   const logout = async () => {
     await supabase.auth.signOut();
-    navigate("/admin/login", { replace: true });
+    navigate(privateLoginPath, { replace: true });
   };
 
   const isActive = (path) => location.pathname === path;
@@ -255,17 +256,17 @@ export default function Dashboard() {
 
           <nav className="space-y-1 mb-8">
             {isSuperAdmin && (
-              <Link to="/admin/dashboard" className={navItemClass("/admin/dashboard")}>
+              <Link to={privatePath("dashboard")} className={navItemClass(privatePath("dashboard"))}>
                 <LayoutDashboard className="w-4 h-4" /> Dashboard
               </Link>
             )}
 
-            <Link to="/admin/content" className={navItemClass("/admin/content")}>
+            <Link to={privatePath("content")} className={navItemClass(privatePath("content"))}>
               <FileText className="w-4 h-4" /> {isSuperAdmin ? "Content" : "Works Upload"}
             </Link>
 
             {isSuperAdmin && (
-              <Link to="/admin/media" className={navItemClass("/admin/media")}>
+              <Link to={privatePath("media")} className={navItemClass(privatePath("media"))}>
                 <ImageIcon className="w-4 h-4" /> Media Library
               </Link>
             )}
@@ -279,11 +280,11 @@ export default function Dashboard() {
 
           {isSuperAdmin && (
             <nav className="space-y-1">
-              <Link to="/admin/team" className={navItemClass("/admin/team")}>
+              <Link to={privatePath("team")} className={navItemClass(privatePath("team"))}>
                 <Users className="w-4 h-4" /> Team Members
               </Link>
 
-              <Link to="/admin/settings" className={navItemClass("/admin/settings")}>
+              <Link to={privatePath("settings")} className={navItemClass(privatePath("settings"))}>
                 <Settings className="w-4 h-4" /> Settings
               </Link>
             </nav>
@@ -359,7 +360,7 @@ export default function Dashboard() {
         </header>
 
         <main className="flex-1 p-4 md:p-8 overflow-y-auto w-full">
-          {location.pathname === "/admin/dashboard" && (
+          {location.pathname === privatePath("dashboard") && (
             <div className="max-w-6xl mx-auto animate-in fade-in duration-500">
               <div className="mb-6 md:mb-8">
                 <h1 className="text-xl md:text-2xl font-bold text-white tracking-tight">

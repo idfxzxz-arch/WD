@@ -201,12 +201,6 @@ export default function Hero() {
         </h2>
       </div>
 
-      {/* SCROLL */}
-      <div className="absolute bottom-[calc(5.75rem+env(safe-area-inset-bottom))] right-5 sm:bottom-10 sm:right-10">
-        <div className="w-11 h-11 sm:w-16 sm:h-16 border rounded-full flex items-center justify-center text-lg sm:text-xl cursor-pointer hover:bg-black hover:text-white transition">
-          ↓
-        </div>
-      </div>
     </section>
   )
 }

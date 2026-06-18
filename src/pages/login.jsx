@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { supabase } from "../lib/supabase"
+import { privatePath } from "../lib/privateRoutes"
 
 export default function Login() {
 
@@ -28,7 +29,7 @@ export default function Login() {
       return
     }
 
-    navigate("/admin/dashboard")
+    navigate(privatePath("dashboard"))
   }
 
   return (
@@ -42,11 +43,11 @@ export default function Login() {
         <div className="text-center mb-8">
 
           <h1 className="text-4xl font-bold text-white">
-            WD ADMIN
+            Workspace
           </h1>
 
           <p className="text-zinc-400 mt-2">
-            Welcome back, administrator.
+            Authorized access only.
           </p>
 
         </div>
@@ -100,7 +101,7 @@ export default function Login() {
 
               {loading
                 ? "Signing in..."
-                : "Login Admin"}
+                : "Sign In"}
 
             </button>
 

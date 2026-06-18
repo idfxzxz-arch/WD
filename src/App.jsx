@@ -11,10 +11,9 @@ import Works from "./components/works"
 import Cta from "./components/Cta"
 import TeamHero from "./components/TeamHero"
 import Scope from "./components/scope"
+import Chatbot from "./components/Chatbot"
 import ShaderAnimation from "./components/ui/ShaderAnimation"
 
-// 👇 1. PASTIKAN IMPORT INI MENGARAH KE FILE KODE IPAD SHOWCASE ANDA
-// Jika kode iPad tadi Anda simpan di folder pages dengan nama WeddingTestimonialsIpad.jsx:
 import Wedding from "./pages/wedding" 
 
 import Workshop from "./pages/workshop" 
@@ -22,6 +21,7 @@ import Music from "./pages/music"
 import Event from "./pages/event"
 import Production from "./pages/production"
 import ITPage from "./pages/it"
+import AssistantPage from "./pages/Assistant"
 import Login from "./pages/login"
 import Dashboard from "./pages/Dashboard"
 import MediaLibrary from "./pages/MediaLibrary"
@@ -29,6 +29,7 @@ import TeamMembers from "./pages/TeamMembers"
 import AdminSettings from "./pages/AdminSettings"
 import AdminPanel from "./components/AdminPanel"
 import { supabase } from "./lib/supabase"
+import { PRIVATE_BASE_PATH, privateLoginPath } from "./lib/privateRoutes"
 
 const appStyles = `
 @keyframes wdMarquee {
@@ -70,7 +71,7 @@ function MaintenancePage() {
   )
 }
 
-function PublicPage({ children }) {
+function PublicPage({ children, showChatbot = true }) {
   const [loading,setLoading] = useState(true)
   const [maintenance,setMaintenance] = useState(false)
 
@@ -106,7 +107,12 @@ function PublicPage({ children }) {
 
   if(maintenance) return <MaintenancePage />
 
-  return children
+  return (
+    <>
+      {children}
+      {showChatbot && <Chatbot />}
+    </>
+  )
 }
 
 function HomeIntro() {
@@ -166,11 +172,9 @@ export default function App() {
       <style>{appStyles}</style>
       <BrowserRouter>
         <Routes>
-          {/* WEBSITE */}
           <Route path="/" element={<PublicPage><Home /></PublicPage>} />
           <Route path="/works" element={<PublicPage><Works /></PublicPage>} />
           
-          {/* 👇 2. GANTI ELEMENTNYA DENGAN KOMPONEN WEDDING IPAD */}
           <Route path="/wedding" element={<PublicPage><Wedding /></PublicPage>} />
           
           <Route path="/workshop" element={<PublicPage><Workshop /></PublicPage>} />
@@ -178,20 +182,17 @@ export default function App() {
           <Route path="/event" element={<PublicPage><Event /></PublicPage>} />
           <Route path="/production" element={<PublicPage><Production /></PublicPage>} />
           <Route path="/it" element={<PublicPage><ITPage /></PublicPage>} />
+          <Route path="/assistant" element={<PublicPage showChatbot={false}><AssistantPage /></PublicPage>} />
 
-          {/* LOGIN */}
-          <Route path="/admin/login" element={<Login />} />
-
-          {/* ADMIN */}
+          <Route path={privateLoginPath} element={<Login />} />
           <Route
-            path="/admin"
+            path={PRIVATE_BASE_PATH}
             element = {
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
             }
           >
-            {/* /admin → redirect ke /admin/dashboard */}
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<></>} />
             <Route path="content" element={<AdminPanel />} />

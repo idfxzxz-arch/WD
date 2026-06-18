@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { supabase } from "../lib/supabase"
+import { privateLoginPath } from "../lib/privateRoutes"
 
 
 export default function ProtectedRoute({ children }) {
@@ -33,7 +34,7 @@ export default function ProtectedRoute({ children }) {
   }
 
   if(!session){
-    return <Navigate to="/admin/login" replace />
+    return <Navigate to={privateLoginPath} replace />
   }
 
   return children
