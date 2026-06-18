@@ -290,6 +290,44 @@ const css = `
     scrollbar-width: none;
   }
   .dp-grid::-webkit-scrollbar { display: none; }
+  .dp-gallery-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid #e6e6ea;
+    padding-top: 12px;
+  }
+  .dp-gallery-page {
+    color: #8a8a91;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .dp-gallery-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .dp-page-btn {
+    border: 1px solid #d8d8dd;
+    background: #fff;
+    color: #111216;
+    border-radius: 999px;
+    padding: 8px 13px;
+    font-size: 11px;
+    font-weight: 900;
+    font-family: inherit;
+    cursor: pointer;
+    transition: .2s;
+  }
+  .dp-page-btn:hover:not(:disabled) {
+    border-color: #111216;
+    background: #111216;
+    color: #fff;
+  }
+  .dp-page-btn:disabled {
+    cursor: not-allowed;
+    opacity: .36;
+  }
   .dp-card {
     position: relative;
     aspect-ratio: 4/3;
@@ -565,6 +603,16 @@ const css = `
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
       padding-bottom: 6px;
+    }
+    .dp-gallery-footer {
+      padding-top: 10px;
+    }
+    .dp-gallery-page {
+      font-size: 11px;
+    }
+    .dp-page-btn {
+      padding: 7px 11px;
+      font-size: 10px;
     }
     .dp-card {
       aspect-ratio: 4/3.35;
@@ -1062,8 +1110,10 @@ const css = `
 `;
 
 export default function DivisionLayout({ config }) {
+  const itemsPerPage = 9;
   const [works, setWorks] = useState([]);
   const [activeTab, setActiveTab] = useState(config.tabs[0]);
+  const [galleryPage, setGalleryPage] = useState(0);
   const [saved, setSaved] = useState([]);
   const [toast, setToast] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -1103,6 +1153,22 @@ export default function DivisionLayout({ config }) {
     if (activeTab === config.tabs[0]) return true;
     return (item.subcategory || "").toLowerCase().trim() === activeTab.toLowerCase().trim();
   });
+  const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
+  const safePage = Math.min(galleryPage, totalPages - 1);
+  const pageStart = safePage * itemsPerPage;
+  const visibleWorks = filtered.slice(pageStart, pageStart + itemsPerPage);
+
+  useEffect(() => {
+    setGalleryPage(0);
+    setSelectedIndex(null);
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (galleryPage > totalPages - 1) {
+      setGalleryPage(Math.max(0, totalPages - 1));
+      setSelectedIndex(null);
+    }
+  }, [galleryPage, totalPages]);
 
   const toggleSaved = (item) => {
     const exists = saved.some((savedItem) => savedItem.id === item.id);
@@ -1115,19 +1181,19 @@ export default function DivisionLayout({ config }) {
     }
   };
 
-  const selectedWork = selectedIndex !== null ? filtered[selectedIndex] : null;
+  const selectedWork = selectedIndex !== null ? visibleWorks[selectedIndex] : null;
   const openLightbox = (index) => setSelectedIndex(index);
   const closeLightbox = () => setSelectedIndex(null);
   const showPrev = () => {
     setSelectedIndex((current) => {
-      if (current === null || filtered.length === 0) return null;
-      return (current - 1 + filtered.length) % filtered.length;
+      if (current === null || visibleWorks.length === 0) return null;
+      return (current - 1 + visibleWorks.length) % visibleWorks.length;
     });
   };
   const showNext = () => {
     setSelectedIndex((current) => {
-      if (current === null || filtered.length === 0) return null;
-      return (current + 1) % filtered.length;
+      if (current === null || visibleWorks.length === 0) return null;
+      return (current + 1) % visibleWorks.length;
     });
   };
 
@@ -1245,7 +1311,7 @@ export default function DivisionLayout({ config }) {
 
                 <div className="dp-grid">
                   {filtered.length > 0 ? (
-                    filtered.map((item, index) => {
+                    visibleWorks.map((item, index) => {
                       const isSaved = saved.some((savedItem) => savedItem.id === item.id);
                       return (
                         <button
@@ -1264,6 +1330,38 @@ export default function DivisionLayout({ config }) {
                     </div>
                   )}
                 </div>
+
+                {filtered.length > itemsPerPage && (
+                  <div className="dp-gallery-footer">
+                    <div className="dp-gallery-page">
+                      Slide {safePage + 1} / {totalPages} · {filtered.length} items
+                    </div>
+                    <div className="dp-gallery-actions">
+                      <button
+                        type="button"
+                        className="dp-page-btn"
+                        disabled={safePage === 0}
+                        onClick={() => {
+                          setSelectedIndex(null);
+                          setGalleryPage((page) => Math.max(0, page - 1));
+                        }}
+                      >
+                        Previous
+                      </button>
+                      <button
+                        type="button"
+                        className="dp-page-btn"
+                        disabled={safePage >= totalPages - 1}
+                        onClick={() => {
+                          setSelectedIndex(null);
+                          setGalleryPage((page) => Math.min(totalPages - 1, page + 1));
+                        }}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                )}
               </section>
             </div>
           </motion.div>
@@ -1281,7 +1379,7 @@ export default function DivisionLayout({ config }) {
               <button className="dp-lightbox-close" onClick={closeLightbox} aria-label="Close image">
                 &times;
               </button>
-              {filtered.length > 1 && (
+              {visibleWorks.length > 1 && (
                 <>
                   <button className="dp-lightbox-nav prev" onClick={(event) => { event.stopPropagation(); showPrev(); }} aria-label="Previous image">
                     &lsaquo;
