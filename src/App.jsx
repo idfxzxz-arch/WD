@@ -17,7 +17,7 @@ import ShaderAnimation from "./components/ui/ShaderAnimation"
 // Jika kode iPad tadi Anda simpan di folder pages dengan nama WeddingTestimonialsIpad.jsx:
 import Wedding from "./pages/wedding" 
 
-import Workshop from "./pages/workshop"
+import Workshop from "./pages/workshop" 
 import Music from "./pages/music"
 import Event from "./pages/event"
 import Production from "./pages/production"
