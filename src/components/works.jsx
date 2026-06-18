@@ -4,6 +4,9 @@ import { ArrowUpRight } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { supabase } from "../lib/supabase"
 
+const MotionDiv = motion.div
+const MotionImg = motion.img
+
 const CATEGORY_ROUTES = {
   wedding:    "/wedding",
   music:      "/music",
@@ -120,97 +123,59 @@ function getLink(item) {
 function ProjectCard({ item, index }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-80px" })
-  const isEven = index % 2 === 0
-  const [rotate, setRotate] = useState({ x: 0, y: 0 })
-
-  const tags = Array.isArray(item.tags)
-    ? item.tags
-    : (item.tags || "").split(",").map(t => t.trim()).filter(Boolean)
+  const isWide = index % 4 === 0 || index % 4 === 3
 
   const dest = getLink(item)
   const title = getDivisionName(item)
   const meta = getDivisionMeta(item)
 
   return (
-    <motion.div
+    <MotionDiv
       ref={ref}
       initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      style={{ rotateX: rotate.x, rotateY: rotate.y, transformStyle: "preserve-3d" }}
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        setRotate({
-          x: -(e.clientY - rect.top - rect.height / 2) / 25,
-          y: (e.clientX - rect.left - rect.width / 2) / 25,
-        })
-      }}
-      onMouseLeave={() => setRotate({ x: 0, y: 0 })}
+      transition={{ duration: 0.85, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+      className={isWide ? "md:col-span-7" : "md:col-span-5"}
     >
-      <Link to={dest} className="group block no-underline text-inherit z-30 relative">
-        <div className="relative rounded-[1.25rem] sm:rounded-[1.75rem] overflow-hidden bg-neutral-100 shadow-[0_20px_54px_-38px_rgba(0,0,0,0.55)] sm:shadow-[0_24px_70px_-44px_rgba(0,0,0,0.55)] ring-1 ring-black/5 transition duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_34px_90px_-42px_rgba(0,0,0,0.62)]">
-          <div className="absolute left-3 top-3 sm:left-4 sm:top-4 z-20 flex items-center gap-2">
-            <span
-              className="rounded-full px-2.5 sm:px-3 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.12em] sm:tracking-[0.14em] text-white shadow-lg"
-              style={{ backgroundColor: meta.accent }}
-            >
+      <Link to={dest} className="group relative block overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-[#141414] no-underline text-inherit transition duration-500 hover:border-white/20">
+        <div className={`relative overflow-hidden ${isWide ? "aspect-[1.25/1] sm:aspect-[1.45/1]" : "aspect-[1.05/1] sm:aspect-[0.92/1]"}`}>
+          <MotionImg
+            src={item.image}
+            alt={title}
+            className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+            whileHover={{ scale: 1.04 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          />
+
+          <div className="pointer-events-none absolute inset-0 opacity-20 mix-blend-multiply [background-image:radial-gradient(circle,#000_1px,transparent_1px)] [background-size:4px_4px]" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+          <div className="absolute left-4 top-4 z-20 flex items-center gap-2">
+            <span className="rounded-full border border-white/10 bg-black/35 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/82 backdrop-blur-md">
               {meta.label}
             </span>
           </div>
-          <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500 bg-black/10">
-            <motion.div
-              className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-xl"
-              whileHover={{ scale: 1.1 }}
-            >
-              <ArrowUpRight size={20} />
-            </motion.div>
-          </div>
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1/2 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 z-20 p-5 text-white">
-            <p className="mb-2 max-w-[22rem] text-[11px] sm:text-xs leading-relaxed text-white/72">
+
+          <div className="absolute inset-x-0 bottom-0 z-20 p-5 sm:p-6">
+            <p className="mb-3 max-w-[22rem] text-xs leading-relaxed text-white/58">
               {meta.desc}
             </p>
-            <h3 className="max-w-[24rem] text-xl sm:text-2xl font-semibold leading-tight tracking-[-0.03em]">
+            <h3 className="max-w-[28rem] text-2xl font-semibold leading-tight tracking-tight text-white sm:text-3xl">
               {title}
             </h3>
           </div>
-          <div className={`overflow-hidden ${isEven ? "aspect-[4/4.75] sm:aspect-[4/5]" : "aspect-[4/4.2] sm:aspect-[4/4]"}`}>
-            <motion.img
-              src={item.image}
-              alt={title}
-              className="w-full h-full object-cover"
-              whileHover={{ scale: 1.08 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            />
-          </div>
-        </div>
 
-        <div className="mt-4 sm:mt-5 flex items-start justify-between gap-3 sm:gap-4">
-          <div className="space-y-2">
-            <div className="flex flex-wrap gap-2">
-              {tags.slice(0, 3).map((tag, j) => (
-                <span
-                  key={j}
-                  className="text-[11px] sm:text-xs text-neutral-500 border border-neutral-200 bg-white px-2.5 sm:px-3 py-1 rounded-full shadow-sm"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <p className="text-xs sm:text-sm leading-relaxed text-neutral-500">
-              Explore the division portfolio and service direction.
-            </p>
+          <div className="absolute inset-0 z-30 flex items-center justify-center bg-[#050505]/70 opacity-0 backdrop-blur-lg transition duration-500 group-hover:opacity-100">
+            <span className="relative rounded-full p-[2px] [background:linear-gradient(90deg,#89AACC_0%,#4E85BF_100%)]">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-black">
+                View <span className="font-serif italic font-normal">{title}</span>
+                <ArrowUpRight size={15} />
+              </span>
+            </span>
           </div>
-          <motion.div
-            className="shrink-0 mt-1 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-neutral-200 bg-white flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:border-black transition duration-300 shadow-sm"
-            whileHover={{ rotate: -45, scale: 1.1 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <ArrowUpRight size={15} />
-          </motion.div>
         </div>
       </Link>
-    </motion.div>
+    </MotionDiv>
   )
 }
 
@@ -275,48 +240,62 @@ export default function Works() {
   }, [])
 
   return (
-    <section id="works" className="pt-24 sm:pt-32 pb-24 sm:pb-32 bg-white">
-      <div className="max-w-5xl mx-auto px-5 sm:px-6">
-        <motion.div
+    <section id="works" className="bg-[#0a0a0a] py-12 text-white md:py-16">
+      <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
+        <MotionDiv
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex items-end justify-between gap-4 mb-10 sm:mb-16"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+          className="mb-10 flex flex-col gap-8 md:mb-14 md:flex-row md:items-end md:justify-between"
         >
-          <h2 className="text-3xl sm:text-4xl font-light tracking-tight">Selected Works</h2>
-          <span className="shrink-0 text-xs sm:text-sm text-neutral-400 mb-1">{projects.length} divisions</span>
-        </motion.div>
+          <div>
+            <div className="mb-5 flex items-center gap-3">
+              <span className="h-px w-8 bg-white/14" />
+              <p className="text-xs font-medium uppercase tracking-[0.3em] text-white/45">
+                Selected Work
+              </p>
+            </div>
 
-        <div className="grid md:grid-cols-2 gap-x-10 gap-y-14 sm:gap-y-20">
-          {/* Kolom Kiri */}
-          <div className="flex flex-col gap-14 sm:gap-20">
-            {projects.filter((_, i) => i % 2 === 0).map((item, i) => (
-              <ProjectCard key={item.id} item={item} index={i * 2} />
-            ))}
+            <h2 className="text-4xl font-light tracking-tight text-white sm:text-5xl md:text-6xl">
+              Featured <span className="font-serif italic text-white/90">divisions</span>
+            </h2>
+
+            <p className="mt-4 max-w-xl text-sm leading-7 text-white/48 md:text-base">
+              A selection of WD Group portfolios, from concept to launch across events, production, music, wedding, workshop, and digital work.
+            </p>
           </div>
-          {/* Kolom Kanan (Masonry Offset Effect) */}
-          <div className="flex flex-col gap-14 sm:gap-20 md:mt-32">
-            {projects.filter((_, i) => i % 2 !== 0).map((item, i) => (
-              <ProjectCard key={item.id} item={item} index={i * 2 + 1} />
-            ))}
-          </div>
+
+          <Link
+            to="/works"
+            className="relative hidden rounded-full p-[2px] transition hover:scale-105 md:inline-flex md:shrink-0 [background:linear-gradient(90deg,transparent,transparent)] hover:[background:linear-gradient(90deg,#89AACC_0%,#4E85BF_100%)]"
+          >
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#141414] px-5 py-3 text-sm font-semibold text-white">
+              View all work <ArrowUpRight size={15} />
+            </span>
+          </Link>
+        </MotionDiv>
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
+          {projects.map((item, index) => (
+            <ProjectCard key={item.id} item={item} index={index} />
+          ))}
         </div>
 
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mt-16 sm:mt-24 text-center"
+          className="mt-10 text-center md:hidden"
         >
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-black transition border-b border-neutral-200 hover:border-black pb-0.5"
+          <Link
+            to="/works"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#141414] px-5 py-3 text-sm font-semibold text-white transition hover:border-white/25"
           >
-            View all works <ArrowUpRight size={14} />
-          </a>
-        </motion.div>
+            View all work <ArrowUpRight size={14} />
+          </Link>
+        </MotionDiv>
       </div>
     </section>
   )

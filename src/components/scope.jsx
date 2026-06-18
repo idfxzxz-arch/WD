@@ -3,6 +3,8 @@ import { motion } from "framer-motion"
 import { CalendarHeart, Code2, GraduationCap, Mic2, Sparkles, Video, ArrowRight, Link, Zap } from "lucide-react"
 import { supabase } from "../lib/supabase"
 
+const MotionDiv = motion.div
+
 const SERVICE_META = {
   wedding: {
     title: "Wedding Organizer",
@@ -116,8 +118,10 @@ export default function Scope() {
   }, [autoRotate])
 
   const services = useMemo(() => {
-    const existing = new Set(scopeItems.map(getCategory).filter(Boolean))
-    const keys = ORDER.filter((key) => existing.size === 0 || existing.has(key))
+    const categoryOrder = scopeItems.map(getCategory).filter(Boolean)
+    const scopedKeys = [...new Set(categoryOrder)].filter((key) => ORDER.includes(key))
+    const keys = [...scopedKeys, ...ORDER.filter((key) => !scopedKeys.includes(key))]
+
     return keys.map((key) => ({
       id: key,
       ...SERVICE_META[key],
@@ -234,7 +238,7 @@ export default function Scope() {
                   }}
                 />
 
-                <motion.div
+                <MotionDiv
                   className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300 ${
                     isExpanded
                       ? "border-white bg-white text-black shadow-lg shadow-white/30"
@@ -246,14 +250,14 @@ export default function Scope() {
                   whileHover={{ scale: isExpanded ? 1.55 : 1.12 }}
                 >
                     <Icon size={18} />
-                </motion.div>
+                </MotionDiv>
 
                 <div className={`absolute left-1/2 top-12 -translate-x-1/2 whitespace-nowrap text-xs font-semibold tracking-wider transition-all duration-300 ${isExpanded ? "scale-125 text-white" : "text-white/70"}`}>
                   {item.brand}
                 </div>
 
                 {isExpanded && (
-                  <motion.div
+                  <MotionDiv
                     initial={{ opacity: 0, y: 14, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     className="absolute left-1/2 top-20 w-72 -translate-x-1/2 overflow-visible rounded-2xl border border-white/30 bg-black/90 p-5 text-left shadow-xl shadow-white/10 backdrop-blur-lg"
@@ -320,7 +324,7 @@ export default function Scope() {
                         })}
                       </div>
                     </div>
-                  </motion.div>
+                  </MotionDiv>
                 )}
               </div>
             )
