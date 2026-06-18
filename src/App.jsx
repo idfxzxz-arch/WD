@@ -71,9 +71,10 @@ function MaintenancePage() {
   )
 }
 
-function PublicPage({ children, showChatbot = true }) {
+function PublicPage({ children, showChatbot = true, chatbotDelayMs = 0 }) {
   const [loading,setLoading] = useState(true)
   const [maintenance,setMaintenance] = useState(false)
+  const [chatbotReady,setChatbotReady] = useState(chatbotDelayMs === 0)
 
   useEffect(()=>{
     const fetchSettings = async()=>{
@@ -97,6 +98,16 @@ function PublicPage({ children, showChatbot = true }) {
     fetchSettings()
   },[])
 
+  useEffect(()=>{
+    if(!showChatbot || chatbotDelayMs === 0) return
+
+    const timer = setTimeout(()=>{
+      setChatbotReady(true)
+    }, chatbotDelayMs)
+
+    return ()=>clearTimeout(timer)
+  },[showChatbot, chatbotDelayMs])
+
   if(loading){
     return (
       <div className="flex min-h-[100dvh] items-center justify-center bg-black text-sm text-white/50">
@@ -110,21 +121,22 @@ function PublicPage({ children, showChatbot = true }) {
   return (
     <>
       {children}
-      {showChatbot && <Chatbot />}
+      {showChatbot && chatbotReady && <Chatbot />}
     </>
   )
 }
 
-function HomeIntro() {
+function HomeIntro({ onDone }) {
   const [showIntro,setShowIntro] = useState(true)
 
   useEffect(()=>{
     const timer = setTimeout(()=>{
       setShowIntro(false)
+      onDone?.()
     },2600)
 
     return ()=>clearTimeout(timer)
-  },[])
+  },[onDone])
 
   if(!showIntro) return null
 
@@ -150,11 +162,13 @@ function HomeIntro() {
 }
 
 function Home() {
+  const [introActive,setIntroActive] = useState(true)
+
   return (
     <>
       <Cursor />
-      <HomeIntro />
-      <Navbar />
+      <HomeIntro onDone={()=>setIntroActive(false)} />
+      {!introActive && <Navbar />}
       <Hero />
       <Section />
       <About />
@@ -172,7 +186,7 @@ export default function App() {
       <style>{appStyles}</style>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<PublicPage><Home /></PublicPage>} />
+          <Route path="/" element={<PublicPage chatbotDelayMs={2700}><Home /></PublicPage>} />
           <Route path="/works" element={<PublicPage><Works /></PublicPage>} />
           
           <Route path="/wedding" element={<PublicPage><Wedding /></PublicPage>} />
