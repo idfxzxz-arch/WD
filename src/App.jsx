@@ -36,6 +36,29 @@ const appStyles = `
   from { transform: translateX(0); }
   to { transform: translateX(-33.333%); }
 }
+
+@keyframes wdLoadingPulse {
+  0%, 100% {
+    opacity: 0.52;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes wdLoadingBar {
+  0% {
+    transform: translateX(-100%);
+  }
+  55% {
+    transform: translateX(-8%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
 `
 
 function MaintenancePage() {
@@ -110,9 +133,27 @@ function PublicPage({ children, showChatbot = true, chatbotDelayMs = 0 }) {
 
   if(loading){
     return (
-      <div className="flex min-h-[100dvh] items-center justify-center bg-black text-sm text-white/50">
-        Loading...
-      </div>
+      <main className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-black px-6 text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_18%_18%,rgba(88,166,255,0.16),transparent_26%),linear-gradient(180deg,#050505,#000)]" />
+        <section className="relative z-10 flex w-full max-w-xs flex-col items-center text-center">
+          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white shadow-[0_24px_70px_rgba(255,255,255,0.12)]">
+            <img
+              src="/wd-group-logo.jpeg"
+              alt="WD Group Company"
+              className="h-14 w-14 object-contain animate-[wdLoadingPulse_1.8s_ease-in-out_infinite]"
+            />
+          </div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-white/45">
+            WD Group Company
+          </p>
+          <h1 className="mt-3 text-xl font-semibold tracking-tight text-white">
+            Preparing Experience
+          </h1>
+          <div className="mt-7 h-px w-full max-w-56 overflow-hidden bg-white/10">
+            <div className="h-full w-1/2 bg-white animate-[wdLoadingBar_1.35s_ease-in-out_infinite]" />
+          </div>
+        </section>
+      </main>
     )
   }
 
