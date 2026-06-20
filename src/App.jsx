@@ -37,58 +37,37 @@ const appStyles = `
   to { transform: translateX(-33.333%); }
 }
 
-@keyframes wdLoadingPulse {
-  0%, 100% {
-    opacity: 0.52;
-    transform: scale(0.96);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes wdLoadingBar {
-  0% {
-    transform: translateX(-100%);
-  }
-  55% {
-    transform: translateX(-8%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+@keyframes wdPreparingBar {
+  0% { transform: translateX(-110%); }
+  55% { transform: translateX(-8%); }
+  100% { transform: translateX(110%); }
 }
 `
 
 function MaintenancePage() {
   return (
-    <main className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-[#080604] px-6 text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(200,159,103,0.24),transparent_34%),radial-gradient(circle_at_80%_12%,rgba(59,130,246,0.14),transparent_30%),linear-gradient(135deg,#080604,#17100d_48%,#050505)]" />
-      <div className="absolute inset-0 opacity-[0.08] bg-[linear-gradient(135deg,transparent_0_42%,rgba(255,255,255,.55)_42%_43%,transparent_43%_100%)] bg-[length:34px_34px]" />
-
-      <section className="relative z-10 max-w-2xl text-center">
-        <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-2xl font-bold shadow-2xl">
-          WD
+    <main className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-black px-6 text-white">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_18%_18%,rgba(88,166,255,0.16),transparent_26%),linear-gradient(180deg,#050505,#000)]" />
+      <section className="relative z-10 flex w-full max-w-xs flex-col items-center text-center">
+        <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white shadow-[0_24px_70px_rgba(255,255,255,0.12)]">
+          <img
+            src="/wd-group-logo.jpeg"
+            alt="WD Group Company"
+            className="h-14 w-14 animate-pulse object-contain"
+          />
         </div>
-        <p className="mb-4 text-xs font-bold uppercase tracking-[0.38em] text-amber-200/80">
-          Maintenance Mode
+        <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-white/45">
+          WD Group Company
         </p>
-        <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-          Website sedang dalam perawatan.
+        <h1 className="mt-3 text-xl font-semibold tracking-tight text-white">
+          Preparing Experience
         </h1>
-        <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/62 sm:text-base">
-          Kami sedang merapikan beberapa bagian website agar pengalaman Anda
-          lebih baik. Silakan kembali beberapa saat lagi.
+        <p className="mt-3 text-xs leading-6 text-white/40">
+          Kami sedang menyiapkan pengalaman terbaik untuk Anda.
         </p>
-        <a
-          href="https://wa.me/6285707909415"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-8 inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-bold text-black transition hover:bg-amber-100"
-        >
-          Hubungi Admin
-        </a>
+        <div className="mt-7 h-px w-full max-w-56 overflow-hidden bg-white/10">
+          <div className="h-full w-1/2 bg-white animate-[wdPreparingBar_1.35s_ease-in-out_infinite]" />
+        </div>
       </section>
     </main>
   )
@@ -100,25 +79,52 @@ function PublicPage({ children, showChatbot = true, chatbotDelayMs = 0 }) {
   const [chatbotReady,setChatbotReady] = useState(chatbotDelayMs === 0)
 
   useEffect(()=>{
-    const fetchSettings = async()=>{
-      const { data } = await supabase
-        .from("site_settings")
-        .select("key,value")
-        .in("key", ["maintenance_mode", "show_public_website"])
-
+    const applySettings = (rows = []) => {
       const settings = {}
-      data?.forEach((item)=>{
-        settings[item.key] = item.value
+      rows.forEach((item) => {
+        settings[item.key] = String(item.value ?? "").trim().toLowerCase()
       })
 
       setMaintenance(
         settings.maintenance_mode === "true" ||
         settings.show_public_website === "false"
       )
+    }
+
+    const fetchSettings = async()=>{
+      const { data, error } = await supabase
+        .from("site_settings")
+        .select("key,value")
+        .in("key", ["maintenance_mode", "show_public_website"])
+
+      if (!error) applySettings(data)
       setLoading(false)
     }
 
     fetchSettings()
+
+    const syncOnFocus = () => fetchSettings()
+    const syncOnVisibility = () => {
+      if (document.visibilityState === "visible") fetchSettings()
+    }
+
+    window.addEventListener("focus", syncOnFocus)
+    document.addEventListener("visibilitychange", syncOnVisibility)
+
+    const settingsChannel = supabase
+      .channel("public-site-settings")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "site_settings" },
+        fetchSettings
+      )
+      .subscribe()
+
+    return () => {
+      window.removeEventListener("focus", syncOnFocus)
+      document.removeEventListener("visibilitychange", syncOnVisibility)
+      supabase.removeChannel(settingsChannel)
+    }
   },[])
 
   useEffect(()=>{
@@ -131,38 +137,12 @@ function PublicPage({ children, showChatbot = true, chatbotDelayMs = 0 }) {
     return ()=>clearTimeout(timer)
   },[showChatbot, chatbotDelayMs])
 
-  if(loading){
-    return (
-      <main className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-black px-6 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_18%_18%,rgba(88,166,255,0.16),transparent_26%),linear-gradient(180deg,#050505,#000)]" />
-        <section className="relative z-10 flex w-full max-w-xs flex-col items-center text-center">
-          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white shadow-[0_24px_70px_rgba(255,255,255,0.12)]">
-            <img
-              src="/wd-group-logo.jpeg"
-              alt="WD Group Company"
-              className="h-14 w-14 object-contain animate-[wdLoadingPulse_1.8s_ease-in-out_infinite]"
-            />
-          </div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-white/45">
-            WD Group Company
-          </p>
-          <h1 className="mt-3 text-xl font-semibold tracking-tight text-white">
-            Preparing Experience
-          </h1>
-          <div className="mt-7 h-px w-full max-w-56 overflow-hidden bg-white/10">
-            <div className="h-full w-1/2 bg-white animate-[wdLoadingBar_1.35s_ease-in-out_infinite]" />
-          </div>
-        </section>
-      </main>
-    )
-  }
-
-  if(maintenance) return <MaintenancePage />
+  if(!loading && maintenance) return <MaintenancePage />
 
   return (
     <>
       {children}
-      {showChatbot && chatbotReady && <Chatbot />}
+      {!loading && showChatbot && chatbotReady && <Chatbot />}
     </>
   )
 }

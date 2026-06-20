@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { Check, Languages } from "lucide-react"
 import { LanguageContext } from "../context/LanguageContext"
 import { supabase } from "../lib/supabase"
 import { GooeyText } from "./ui/GooeyText"
@@ -96,10 +97,14 @@ export default function Hero() {
       {/* LANGUAGE */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
         <button
+          type="button"
           onClick={() => setOpenLang(!openLang)}
-          className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-black/5 backdrop-blur hover:bg-black/10 transition text-xl"
+          aria-label="Pilih bahasa"
+          aria-expanded={openLang}
+          className="flex h-10 items-center gap-2 rounded-full border border-black/10 bg-white/90 px-3 text-xs font-bold text-black shadow-sm backdrop-blur-xl transition hover:border-black/20 hover:bg-white"
         >
-          ⋯
+          <Languages size={16} strokeWidth={1.8} />
+          <span>{lang.code === "id" ? "ID" : "EN"}</span>
         </button>
         <AnimatePresence>
           {openLang && (
@@ -108,23 +113,37 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute right-0 mt-2 w-36 bg-white rounded-xl shadow-lg overflow-hidden"
+              className="absolute right-0 mt-2 w-52 overflow-hidden rounded-lg border border-black/10 bg-white p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.16)]"
             >
               <button
+                type="button"
                 onClick={() => { changeLang("id"); setOpenLang(false) }}
-                className={`w-full px-4 py-2 text-left text-sm hover:bg-black/5 ${
-                  lang.code === "id" ? "font-semibold" : "text-black/60"
+                className={`flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left text-sm transition ${
+                  lang.code === "id" ? "bg-black font-semibold text-white" : "text-black/60 hover:bg-black/5 hover:text-black"
                 }`}
               >
-                🇮🇩 Indonesia
+                <span>
+                  <span className="block">Bahasa Indonesia</span>
+                  <span className={`mt-0.5 block text-[10px] font-medium uppercase tracking-[0.16em] ${lang.code === "id" ? "text-white/55" : "text-black/35"}`}>
+                    ID · Bahasa utama
+                  </span>
+                </span>
+                {lang.code === "id" && <Check size={15} aria-hidden="true" />}
               </button>
               <button
+                type="button"
                 onClick={() => { changeLang("en"); setOpenLang(false) }}
-                className={`w-full px-4 py-2 text-left text-sm hover:bg-black/5 ${
-                  lang.code === "en" ? "font-semibold" : "text-black/60"
+                className={`mt-1 flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left text-sm transition ${
+                  lang.code === "en" ? "bg-black font-semibold text-white" : "text-black/60 hover:bg-black/5 hover:text-black"
                 }`}
               >
-                🇬🇧 English
+                <span>
+                  <span className="block">English</span>
+                  <span className={`mt-0.5 block text-[10px] font-medium uppercase tracking-[0.16em] ${lang.code === "en" ? "text-white/55" : "text-black/35"}`}>
+                    EN · International
+                  </span>
+                </span>
+                {lang.code === "en" && <Check size={15} aria-hidden="true" />}
               </button>
             </motion.div>
           )}

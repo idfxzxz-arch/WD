@@ -1,15 +1,15 @@
 export const id = {
   code: "id",
   company: "WD Group Company",
-  subtitle1: "Agensi Kreatif",
-  subtitle2: "Penuh Passion",
-  aboutLabel: "Tentang Kami",
-  aboutTitle: "Menciptakan pengalaman digital di mana kreativitas bertemu strategi.",
-  aboutDesc: "WD Jaya Group adalah perusahaan media kreatif yang berfokus pada branding, produksi multimedia, dan solusi digital. Kami membantu bisnis membangun identitas visual yang kuat dan kehadiran digital yang berdampak melalui desain yang matang dan teknologi modern.",
+  subtitle1: "Kreativitas yang Relevan.",
+  subtitle2: "Dampak yang Terasa.",
+  aboutLabel: "Tentang WD Group",
+  aboutTitle: "Kami mengubah ide menjadi pengalaman yang relevan dan berdampak.",
+  aboutDesc: "WD Jaya Group adalah perusahaan kreatif yang menyatukan strategi, produksi multimedia, dan teknologi digital. Kami mendampingi brand membangun identitas yang kuat, menyampaikan cerita dengan tepat, dan tumbuh melalui karya yang dirancang secara matang.",
   sectionLabel: "WD Group Company",
-  sectionTitle: "Menciptakan desain di persimpangan estetika dan fungsi untuk menghasilkan karya yang berdampak dan mampu meningkatkan penjualan.",
-  navAbout: "Tentang",
-  navWorks: "Karya",
-  navScope: "Layanan",
-  navContact: "Kontak"
+  sectionTitle: "Strategi yang tajam, visual yang kuat, dan eksekusi yang dirancang untuk menggerakkan bisnis.",
+  navAbout: "Profil",
+  navWorks: "Portofolio",
+  navScope: "Keahlian",
+  navContact: "Hubungi"
 }
