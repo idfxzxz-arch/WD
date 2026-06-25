@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { motion as Motion } from "framer-motion"
 
 export default function Cursor() {
   const [pos, setPos] = useState({ x: 0, y: 0 })
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
+    document.documentElement.classList.add("custom-cursor-active")
+
     const onMove = (e) => {
       setPos({ x: e.clientX, y: e.clientY })
       setVisible(true)
@@ -18,6 +20,7 @@ export default function Cursor() {
     document.addEventListener("mouseenter", onEnter)
 
     return () => {
+      document.documentElement.classList.remove("custom-cursor-active")
       document.removeEventListener("mousemove", onMove)
       document.removeEventListener("mouseleave", onLeave)
       document.removeEventListener("mouseenter", onEnter)
@@ -25,7 +28,7 @@ export default function Cursor() {
   }, [])
 
   return (
-    <motion.div
+    <Motion.div
       className="fixed top-0 left-0 z-[9999] w-3 h-3 bg-white rounded-full pointer-events-none"
       style={{ mixBlendMode: "difference" }}
       animate={{

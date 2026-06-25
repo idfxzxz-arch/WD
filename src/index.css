@@ -5,6 +5,13 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor-active,
+  html.custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
 @keyframes float {
   0% { transform: translateY(0); }
   50% { transform: translateY(-20px); }
