@@ -240,6 +240,7 @@ export default function Chatbot() {
   const { lang } = useContext(LanguageContext)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
+  const [isMobileCompact, setIsMobileCompact] = useState(false)
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState(() => [
     { id: "intro", role: "bot", text: getInitialMessage(lang.code) },
@@ -247,6 +248,21 @@ export default function Chatbot() {
   const messageEndRef = useRef(null)
 
   const currentServices = useMemo(() => chatbotServices, [])
+
+  useEffect(() => {
+    const compactQuery = window.matchMedia("(max-width: 767px)")
+    const syncCompactMode = () => setIsMobileCompact(compactQuery.matches)
+
+    syncCompactMode()
+
+    if (compactQuery.addEventListener) {
+      compactQuery.addEventListener("change", syncCompactMode)
+      return () => compactQuery.removeEventListener("change", syncCompactMode)
+    }
+
+    compactQuery.addListener(syncCompactMode)
+    return () => compactQuery.removeListener(syncCompactMode)
+  }, [])
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
@@ -278,7 +294,7 @@ export default function Chatbot() {
   }
 
   return (
-    <div className="fixed bottom-[5.25rem] right-3 z-[10000] sm:bottom-6 sm:right-6">
+    <div className="fixed bottom-[calc(5.75rem+env(safe-area-inset-bottom))] right-3 z-[10000] sm:bottom-6 sm:right-6">
       <AnimatePresence>
         {isOpen && (
           <motion.section
@@ -448,7 +464,7 @@ export default function Chatbot() {
             setIsOpen((current) => !current)
           }}
           initial={false}
-          animate={isOpen ? { width: 56, y: 0 } : { width: 154, y: [0, -4, 0] }}
+          animate={isOpen ? { width: 56, y: 0 } : { width: isMobileCompact ? 56 : 154, y: [0, -4, 0] }}
           transition={
             isOpen
               ? { type: "spring", stiffness: 420, damping: 34 }
@@ -479,7 +495,7 @@ export default function Chatbot() {
           </span>
 
           <AnimatePresence initial={false}>
-            {!isOpen && (
+            {!isOpen && !isMobileCompact && (
               <motion.span
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -498,7 +514,7 @@ export default function Chatbot() {
             )}
           </AnimatePresence>
 
-          {!isOpen && (
+          {!isOpen && !isMobileCompact && (
             <span className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full border-[3px] border-white bg-black text-white shadow-lg sm:h-7 sm:w-7">
               <MessageCircle size={13} strokeWidth={2.5} />
             </span>
