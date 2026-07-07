@@ -1151,7 +1151,9 @@ export default function DivisionLayout({ config }) {
 
   const filtered = works.filter((item) => {
     if (activeTab === config.tabs[0]) return true;
-    return (item.subcategory || "").toLowerCase().trim() === activeTab.toLowerCase().trim();
+    const subcategory = (item.subcategory || "").toLowerCase().trim();
+    const tabMatches = config.tabAliases?.[activeTab] || [activeTab];
+    return tabMatches.some((tab) => subcategory === tab.toLowerCase().trim());
   });
   const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const safePage = Math.min(galleryPage, totalPages - 1);

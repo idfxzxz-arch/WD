@@ -20,7 +20,7 @@ const weddingConfig = {
   savedMessage: "Wedding reference saved",
   galleryTitle: "Wedding Portfolio",
   mark: "SKY",
-  tabs: ["All Projects", "Akad", "Resepsi", "Outdoor", "Pricelist"],
+  tabs: ["All Projects", "Akad", "Resepsi", "Pricelist"],
   stats: [
     { value: "End-to-end", label: "Planning" },
     { value: "Vendor", label: "Coordination" },

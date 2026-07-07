@@ -19,7 +19,11 @@ const musicConfig = {
   savedMessage: "Music reference saved",
   galleryTitle: "Music Portfolio",
   mark: "MU",
-  tabs: ["All Projects", "Performance", "Recording", "Concert", "Behind The Scene"],
+  tabs: ["All Projects", "Music", "Music Class"],
+  tabAliases: {
+    Music: ["music", "performance", "recording", "concert", "behind the scene"],
+    "Music Class": ["music class"],
+  },
   stats: [
     { value: "Live", label: "Stage" },
     { value: "Class", label: "Learning" },

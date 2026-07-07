@@ -68,9 +68,9 @@ const CATEGORY_ROUTES = {
 }
 
 const SUBCATEGORIES = {
-  wedding:    ["akad", "resepsi", "outdoor", "pricelist"],
-  music:      ["performance", "recording", "concert", "behind the scene"],
-  production: ["film", "photo", "video", "commercial"],
+  wedding:    ["akad", "resepsi", "pricelist"],
+  music:      ["music", "music class"],
+  production: ["photo", "video"],
   workshop:   ["workshop"],
   event:      ["corporate", "concert", "exhibition", "private"],
   it:         ["website", "app", "system", "support"],
@@ -424,7 +424,7 @@ export default function AdminPanel() {
                     <div>
                       <label className="text-zinc-500 text-xs mb-1 block">Tags</label>
                       <input className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
-                        value={item.tags || ""} onChange={e => updateWork(item.id, "tags", e.target.value)} placeholder="outdoor, intimate" />
+                        value={item.tags || ""} onChange={e => updateWork(item.id, "tags", e.target.value)} placeholder="akad, intimate" />
                     </div>
 
                     <div className="flex gap-2 items-end">
@@ -730,7 +730,7 @@ export default function AdminPanel() {
                       <div>
                         <label className="text-zinc-500 text-xs mb-1 block">Tags <span className="text-zinc-600">(pisah koma)</span></label>
                         <input className="w-full bg-zinc-800 text-white rounded-xl px-3 py-2 text-sm border border-zinc-700"
-                          value={item.tags || ""} onChange={e => updateWork(item.id, "tags", e.target.value)} placeholder="outdoor, intimate" />
+                          value={item.tags || ""} onChange={e => updateWork(item.id, "tags", e.target.value)} placeholder="akad, intimate" />
                       </div>
 
                       <div className="flex gap-2 items-end">

@@ -19,7 +19,7 @@ const productionConfig = {
   savedMessage: "Production reference saved",
   galleryTitle: "Production Portfolio",
   mark: "PR",
-  tabs: ["All Projects", "Film", "Photo", "Video", "Commercial"],
+  tabs: ["All Projects", "Photo", "Video"],
   stats: [
     { value: "Concept", label: "Direction" },
     { value: "Shooting", label: "Production" },

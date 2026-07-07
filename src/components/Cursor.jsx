@@ -4,8 +4,25 @@ import { motion as Motion } from "framer-motion"
 export default function Cursor() {
   const [pos, setPos] = useState({ x: 0, y: 0 })
   const [visible, setVisible] = useState(false)
+  const [enabled, setEnabled] = useState(false)
 
   useEffect(() => {
+    const desktopCursor = window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)")
+    const updateEnabled = () => setEnabled(desktopCursor.matches)
+
+    updateEnabled()
+    desktopCursor.addEventListener("change", updateEnabled)
+
+    return () => desktopCursor.removeEventListener("change", updateEnabled)
+  }, [])
+
+  useEffect(() => {
+    if (!enabled) {
+      document.documentElement.classList.remove("custom-cursor-active")
+      setVisible(false)
+      return undefined
+    }
+
     document.documentElement.classList.add("custom-cursor-active")
 
     const onMove = (e) => {
@@ -25,11 +42,13 @@ export default function Cursor() {
       document.removeEventListener("mouseleave", onLeave)
       document.removeEventListener("mouseenter", onEnter)
     }
-  }, [])
+  }, [enabled])
+
+  if (!enabled) return null
 
   return (
     <Motion.div
-      className="fixed top-0 left-0 z-[9999] w-3 h-3 bg-white rounded-full pointer-events-none"
+      className="fixed top-0 left-0 z-[10000] w-3 h-3 bg-white rounded-full pointer-events-none"
       style={{ mixBlendMode: "difference" }}
       animate={{
         x: pos.x - 6,
