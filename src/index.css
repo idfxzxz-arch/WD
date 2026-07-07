@@ -103,6 +103,7 @@ body,
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #050505;
 }
 
 @media (max-width: 639px) {
