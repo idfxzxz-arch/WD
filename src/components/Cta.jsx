@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react"
 import { motion as Motion } from "framer-motion"
-import { ArrowUpRight, Instagram, Mail, MessageCircle } from "lucide-react"
+import { ArrowUpRight, Instagram, Mail, MapPin, MessageCircle } from "lucide-react"
 import { LanguageContext } from "../context/LanguageContext"
 import { supabase } from "../lib/supabase"
 import AnimatedWords from "./ui/AnimatedWords"
@@ -52,6 +52,11 @@ export default function Cta() {
       label: "Email",
       href: normalizeEmail(contact.email),
       icon: Mail,
+    },
+    {
+      label: "Maps",
+      href: "https://maps.app.goo.gl/GbrdfnM6pe2K9GvC6",
+      icon: MapPin,
     },
   ]
 
