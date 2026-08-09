@@ -18,6 +18,46 @@ const CATEGORY_ROUTES = {
 
 const FALLBACK_DIVISIONS = [
   {
+    id: "fallback-wd-wedding",
+    title: "WD Sky Wedding Organizer",
+    category: "wedding",
+    image: "/resources/Wedding/wedding.webp",
+    tags: "Wedding,Organizer",
+    link: "/wedding",
+  },
+  {
+    id: "fallback-wd-production",
+    title: "WD Production",
+    category: "production",
+    image: "/resources/Production/Production.webp",
+    tags: "Production,Creative",
+    link: "/production",
+  },
+  {
+    id: "fallback-wd-event",
+    title: "WD Event Organizer",
+    category: "event",
+    image: "/resources/Event_Organizer/Event.webp",
+    tags: "Event,Organizer",
+    link: "/event",
+  },
+  {
+    id: "fallback-wd-workshop",
+    title: "WD Jaya Workshop",
+    category: "workshop",
+    image: "/resources/Workshop/Workshop.webp",
+    tags: "Workshop,Training",
+    link: "/workshop",
+  },
+  {
+    id: "fallback-wd-music",
+    title: "WD Music Entertainment",
+    category: "music",
+    image: "/resources/Music_ENT/Music_ENT.webp",
+    tags: "Music,Entertainment",
+    link: "/music",
+  },
+  {
     id: "fallback-wd-it",
     title: "WD IT",
     category: "it",
@@ -184,48 +224,59 @@ export default function Works() {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const [{ data: worksData }, { data: scopeData }] = await Promise.all([
-        supabase.from("works").select("*").order("order_index"),
-        supabase.from("scope_services").select("*").order("order_index"),
-      ])
+      try {
+        const fetchPromise = Promise.all([
+          supabase.from("works").select("*").order("order_index"),
+          supabase.from("scope_services").select("*").order("order_index"),
+        ])
+        
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error("Timeout")), 15000)
+        )
 
-      const byCategory = new Map()
-      const orderedProjects = []
-      const seenCategories = new Set()
+        const [{ data: worksData }, { data: scopeData }] = await Promise.race([fetchPromise, timeoutPromise])
 
-      ;(worksData || []).forEach((item) => {
-        const category = (item.category || "").toLowerCase().trim()
+        const byCategory = new Map()
+        const orderedProjects = []
+        const seenCategories = new Set()
 
-        if (category && !byCategory.has(category)) {
-          byCategory.set(category, item)
-        }
-      })
+        ;(worksData || []).forEach((item) => {
+          const category = (item.category || "").toLowerCase().trim()
 
-      FALLBACK_DIVISIONS.forEach((item) => {
-        const category = item.category.toLowerCase().trim()
+          if (category && !byCategory.has(category)) {
+            byCategory.set(category, item)
+          }
+        })
 
-        if (!byCategory.has(category)) {
-          byCategory.set(category, item)
-        }
-      })
+        FALLBACK_DIVISIONS.forEach((item) => {
+          const category = item.category.toLowerCase().trim()
 
-      ;(scopeData || []).forEach((item) => {
-        const category = getCategoryFromScope(item)
-        const project = byCategory.get(category)
+          if (!byCategory.has(category)) {
+            byCategory.set(category, item)
+          }
+        })
 
-        if (project && !seenCategories.has(category)) {
-          orderedProjects.push(project)
-          seenCategories.add(category)
-        }
-      })
+        ;(scopeData || []).forEach((item) => {
+          const category = getCategoryFromScope(item)
+          const project = byCategory.get(category)
 
-      byCategory.forEach((project, category) => {
-        if (!seenCategories.has(category)) {
-          orderedProjects.push(project)
-        }
-      })
+          if (project && !seenCategories.has(category)) {
+            orderedProjects.push(project)
+            seenCategories.add(category)
+          }
+        })
 
-      setProjects(orderedProjects)
+        byCategory.forEach((project, category) => {
+          if (!seenCategories.has(category)) {
+            orderedProjects.push(project)
+          }
+        })
+
+        setProjects(orderedProjects)
+      } catch (error) {
+        console.error("Error fetching projects:", error)
+        setProjects(FALLBACK_DIVISIONS)
+      }
     }
 
     fetchProjects()

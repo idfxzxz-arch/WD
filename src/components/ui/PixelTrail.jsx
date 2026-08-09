@@ -1,6 +1,6 @@
 import { memo, useCallback, useId, useMemo, useRef } from "react"
 import { motion as Motion, useAnimationControls } from "framer-motion"
-import { useDimensions } from "../hooks/useDebouncedDimensions"
+import { useDimensions } from "../../hook/useDebouncedDimensions"
 
 function cx(...classes) {
   return classes.filter(Boolean).join(" ")

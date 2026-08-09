@@ -1119,24 +1119,56 @@ export default function DivisionLayout({ config }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const navigate = useNavigate();
 
+  const getFallbackWorks = (category) => {
+    const defaultImage = {
+      wedding: "/resources/Wedding/wedding.webp",
+      production: "/resources/Production/Production.webp",
+      event: "/resources/Event_Organizer/Event.webp",
+      workshop: "/resources/Workshop/Workshop.webp",
+      music: "/resources/Music_ENT/Music_ENT.webp",
+    }[category] || "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=800&q=80";
+
+    return Array.from({ length: 6 }).map((_, i) => ({
+      id: `fallback-${category}-${i}`,
+      category: category,
+      title: `Sample ${config.brand} Project ${i + 1}`,
+      subcategory: config.tabs[ (i % (config.tabs.length - 1)) + 1 ] || config.tabs[0],
+      image: defaultImage,
+      meta: "This is a sample portfolio item.",
+    }));
+  };
+
   useEffect(() => {
     let mounted = true;
 
     const fetchWorks = async () => {
-      const { data, error } = await supabase
-        .from("works")
-        .select("*")
-        .eq("category", config.category)
-        .order("order_index");
+      try {
+        const fetchPromise = supabase
+          .from("works")
+          .select("*")
+          .eq("category", config.category)
+          .order("order_index");
 
-      if (error) {
-        console.error(`Error loading ${config.category} works:`, error.message);
-        return;
-      }
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error("Timeout")), 15000)
+        );
 
-      if (mounted) {
-        setWorks(data || []);
-        if (data?.[0]) setSaved([{ id: data[0].id }]);
+        const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
+
+        if (error) throw error;
+
+        if (mounted) {
+          const finalData = data && data.length > 0 ? data : getFallbackWorks(config.category);
+          setWorks(finalData);
+          if (finalData?.[0]) setSaved([{ id: finalData[0].id }]);
+        }
+      } catch (err) {
+        console.error(`Error loading ${config.category} works:`, err);
+        if (mounted) {
+          const finalData = getFallbackWorks(config.category);
+          setWorks(finalData);
+          if (finalData?.[0]) setSaved([{ id: finalData[0].id }]);
+        }
       }
     };
 
@@ -1172,6 +1204,13 @@ export default function DivisionLayout({ config }) {
     }
   }, [galleryPage, totalPages]);
 
+  useEffect(() => {
+    // Reset selectedIndex jika visibleWorks berubah (pagination/filter)
+    if (selectedIndex !== null && (selectedIndex < 0 || selectedIndex >= visibleWorks.length)) {
+      setSelectedIndex(null);
+    }
+  }, [visibleWorks, selectedIndex]);
+
   const toggleSaved = (item) => {
     const exists = saved.some((savedItem) => savedItem.id === item.id);
     if (exists) {
@@ -1183,7 +1222,7 @@ export default function DivisionLayout({ config }) {
     }
   };
 
-  const selectedWork = selectedIndex !== null ? visibleWorks[selectedIndex] : null;
+  const selectedWork = selectedIndex !== null && selectedIndex >= 0 && selectedIndex < visibleWorks.length ? visibleWorks[selectedIndex] : null;
   const openLightbox = (index) => setSelectedIndex(index);
   const closeLightbox = () => setSelectedIndex(null);
   const showPrev = () => {

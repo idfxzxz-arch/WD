@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense, lazy } from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { LanguageProvider } from "./context/LanguageContext"
 import Cursor from "./components/Cursor"
@@ -14,20 +14,19 @@ import Scope from "./components/scope"
 import Chatbot from "./components/Chatbot"
 import ShaderAnimation from "./components/ui/ShaderAnimation"
 
-import Wedding from "./pages/wedding" 
-
-import Workshop from "./pages/workshop" 
-import Music from "./pages/music"
-import Event from "./pages/event"
-import Production from "./pages/production"
-import ITPage from "./pages/it"
-import AssistantPage from "./pages/Assistant"
-import Login from "./pages/login"
-import Dashboard from "./pages/Dashboard"
-import MediaLibrary from "./pages/MediaLibrary"
-import TeamMembers from "./pages/TeamMembers"
-import AdminSettings from "./pages/AdminSettings"
-import AdminPanel from "./components/AdminPanel"
+const Wedding = lazy(() => import("./pages/wedding"))
+const Workshop = lazy(() => import("./pages/workshop"))
+const Music = lazy(() => import("./pages/music"))
+const Event = lazy(() => import("./pages/event"))
+const Production = lazy(() => import("./pages/production"))
+const ITPage = lazy(() => import("./pages/it"))
+const AssistantPage = lazy(() => import("./pages/Assistant"))
+const Login = lazy(() => import("./pages/login"))
+const Dashboard = lazy(() => import("./pages/Dashboard"))
+const MediaLibrary = lazy(() => import("./pages/MediaLibrary"))
+const TeamMembers = lazy(() => import("./pages/TeamMembers"))
+const AdminSettings = lazy(() => import("./pages/AdminSettings"))
+const AdminPanel = lazy(() => import("./components/AdminPanel"))
 import { supabase } from "./lib/supabase"
 import { PRIVATE_BASE_PATH, privateLoginPath } from "./lib/privateRoutes"
 
@@ -206,39 +205,41 @@ export default function App() {
     <LanguageProvider>
       <style>{appStyles}</style>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<PublicPage chatbotDelayMs={2700}><Home /></PublicPage>} />
-          <Route path="/works" element={<PublicPage><Works /></PublicPage>} />
-          
-          <Route path="/wedding" element={<PublicPage><Wedding /></PublicPage>} />
-          
-          <Route path="/workshop" element={<PublicPage><Workshop /></PublicPage>} />
-          <Route path="/music" element={<PublicPage><Music /></PublicPage>} />
-          <Route path="/event" element={<PublicPage><Event /></PublicPage>} />
-          <Route path="/production" element={<PublicPage><Production /></PublicPage>} />
-          <Route path="/it" element={<PublicPage><ITPage /></PublicPage>} />
-          <Route path="/assistant" element={<PublicPage showChatbot={false}><AssistantPage /></PublicPage>} />
+        <Suspense fallback={<div className="flex min-h-[100dvh] items-center justify-center bg-black"><div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white" /></div>}>
+          <Routes>
+            <Route path="/" element={<PublicPage chatbotDelayMs={2700}><Home /></PublicPage>} />
+            <Route path="/works" element={<PublicPage><Works /></PublicPage>} />
+            
+            <Route path="/wedding" element={<PublicPage><Wedding /></PublicPage>} />
+            
+            <Route path="/workshop" element={<PublicPage><Workshop /></PublicPage>} />
+            <Route path="/music" element={<PublicPage><Music /></PublicPage>} />
+            <Route path="/event" element={<PublicPage><Event /></PublicPage>} />
+            <Route path="/production" element={<PublicPage><Production /></PublicPage>} />
+            <Route path="/it" element={<PublicPage><ITPage /></PublicPage>} />
+            <Route path="/assistant" element={<PublicPage showChatbot={false}><AssistantPage /></PublicPage>} />
 
-          <Route path={privateLoginPath} element={<Login />} />
-          <Route
-            path={PRIVATE_BASE_PATH}
-            element = {
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<Navigate to="dashboard" replace />} />
-            <Route path="dashboard" element={<></>} />
-            <Route path="content" element={<AdminPanel />} />
-            <Route path="media" element={<MediaLibrary />} />
-            <Route path="team" element={<TeamMembers />} />
-            <Route path="settings" element={<AdminSettings />} />
-            <Route path="*" element={<Navigate to="dashboard" replace />} />
-          </Route>
+            <Route path={privateLoginPath} element={<Login />} />
+            <Route
+              path={PRIVATE_BASE_PATH}
+              element = {
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Navigate to="dashboard" replace />} />
+              <Route path="dashboard" element={<></>} />
+              <Route path="content" element={<AdminPanel />} />
+              <Route path="media" element={<MediaLibrary />} />
+              <Route path="team" element={<TeamMembers />} />
+              <Route path="settings" element={<AdminSettings />} />
+              <Route path="*" element={<Navigate to="dashboard" replace />} />
+            </Route>
 
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </LanguageProvider>
   )
