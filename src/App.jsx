@@ -13,6 +13,9 @@ import TeamHero from "./components/TeamHero"
 import Scope from "./components/scope"
 import Chatbot from "./components/Chatbot"
 import ShaderAnimation from "./components/ui/ShaderAnimation"
+import { PageTransitionProvider } from "./components/PageTransition"
+import { HelmetProvider } from "react-helmet-async"
+import SEO from "./components/SEO"
 
 const Wedding = lazy(() => import("./pages/wedding"))
 const Workshop = lazy(() => import("./pages/workshop"))
@@ -50,7 +53,7 @@ function MaintenancePage() {
       <section className="relative z-10 flex w-full max-w-xs flex-col items-center text-center">
         <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white shadow-[0_24px_70px_rgba(255,255,255,0.12)]">
           <img
-            src="/wd-group-logo.jpeg"
+            src="/wd-group-logo.webp"
             alt="WD Group Company"
             className="h-14 w-14 animate-pulse object-contain"
           />
@@ -186,6 +189,7 @@ function Home() {
 
   return (
     <>
+      <SEO />
       <Cursor />
       <HomeIntro onDone={()=>setIntroActive(false)} />
       {!introActive && <Navbar />}
@@ -202,45 +206,49 @@ function Home() {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <style>{appStyles}</style>
-      <BrowserRouter>
-        <Suspense fallback={<div className="flex min-h-[100dvh] items-center justify-center bg-black"><div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white" /></div>}>
-          <Routes>
-            <Route path="/" element={<PublicPage chatbotDelayMs={2700}><Home /></PublicPage>} />
-            <Route path="/works" element={<PublicPage><Works /></PublicPage>} />
-            
-            <Route path="/wedding" element={<PublicPage><Wedding /></PublicPage>} />
-            
-            <Route path="/workshop" element={<PublicPage><Workshop /></PublicPage>} />
-            <Route path="/music" element={<PublicPage><Music /></PublicPage>} />
-            <Route path="/event" element={<PublicPage><Event /></PublicPage>} />
-            <Route path="/production" element={<PublicPage><Production /></PublicPage>} />
-            <Route path="/it" element={<PublicPage><ITPage /></PublicPage>} />
-            <Route path="/assistant" element={<PublicPage showChatbot={false}><AssistantPage /></PublicPage>} />
+    <HelmetProvider>
+      <LanguageProvider>
+        <style>{appStyles}</style>
+        <BrowserRouter>
+          <PageTransitionProvider>
+            <Suspense fallback={<div className="flex min-h-[100dvh] items-center justify-center bg-black"><div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white" /></div>}>
+              <Routes>
+                <Route path="/" element={<PublicPage chatbotDelayMs={2700}><Home /></PublicPage>} />
+                <Route path="/works" element={<PublicPage><Works /></PublicPage>} />
+                
+                <Route path="/wedding" element={<PublicPage><Wedding /></PublicPage>} />
+                
+                <Route path="/workshop" element={<PublicPage><Workshop /></PublicPage>} />
+                <Route path="/music" element={<PublicPage><Music /></PublicPage>} />
+                <Route path="/event" element={<PublicPage><Event /></PublicPage>} />
+                <Route path="/production" element={<PublicPage><Production /></PublicPage>} />
+                <Route path="/it" element={<PublicPage><ITPage /></PublicPage>} />
+                <Route path="/assistant" element={<PublicPage showChatbot={false}><AssistantPage /></PublicPage>} />
 
-            <Route path={privateLoginPath} element={<Login />} />
-            <Route
-              path={PRIVATE_BASE_PATH}
-              element = {
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<Navigate to="dashboard" replace />} />
-              <Route path="dashboard" element={<></>} />
-              <Route path="content" element={<AdminPanel />} />
-              <Route path="media" element={<MediaLibrary />} />
-              <Route path="team" element={<TeamMembers />} />
-              <Route path="settings" element={<AdminSettings />} />
-              <Route path="*" element={<Navigate to="dashboard" replace />} />
-            </Route>
+                <Route path={privateLoginPath} element={<Login />} />
+                <Route
+                  path={PRIVATE_BASE_PATH}
+                  element = {
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route index element={<Navigate to="dashboard" replace />} />
+                  <Route path="dashboard" element={<></>} />
+                  <Route path="content" element={<AdminPanel />} />
+                  <Route path="media" element={<MediaLibrary />} />
+                  <Route path="team" element={<TeamMembers />} />
+                  <Route path="settings" element={<AdminSettings />} />
+                  <Route path="*" element={<Navigate to="dashboard" replace />} />
+                </Route>
 
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </LanguageProvider>
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+          </PageTransitionProvider>
+        </BrowserRouter>
+      </LanguageProvider>
+    </HelmetProvider>
   )
 }

@@ -30,7 +30,7 @@ export default function ShaderAnimation({ className = "" }) {
         vec3 color = vec3(0.0);
 
         for (int j = 0; j < 3; j++) {
-          for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < 3; i++) {
             color[j] += lineWidth * float(i * i) / abs(
               fract(t - 0.01 * float(j) + float(i) * 0.01) * 5.0
               - length(uv)
@@ -66,7 +66,7 @@ export default function ShaderAnimation({ className = "" }) {
       antialias: true,
       alpha: true,
     })
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1))
     container.appendChild(renderer.domElement)
 
     const resize = () => {

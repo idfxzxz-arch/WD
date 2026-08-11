@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { TransitionLink } from "./PageTransition"
 import { useRef, useEffect, useState } from "react"
 import { ArrowUpRight } from "lucide-react"
 import { motion, useInView } from "framer-motion"
@@ -177,7 +178,7 @@ function ProjectCard({ item, index }) {
       transition={{ duration: 0.85, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
       className={isWide ? "md:col-span-7" : "md:col-span-5"}
     >
-      <Link to={dest} className="group relative block overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-[#141414] no-underline text-inherit transition duration-500 hover:border-white/20">
+      <TransitionLink to={dest} className="group relative block overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-[#141414] no-underline text-inherit transition duration-500 hover:border-white/20">
         <div className={`relative overflow-hidden ${isWide ? "aspect-[1.25/1] sm:aspect-[1.45/1]" : "aspect-[1.05/1] sm:aspect-[0.92/1]"}`}>
           <MotionImg
             src={item.image}
@@ -214,7 +215,7 @@ function ProjectCard({ item, index }) {
             </span>
           </div>
         </div>
-      </Link>
+      </TransitionLink>
     </MotionDiv>
   )
 }
@@ -317,14 +318,14 @@ export default function Works() {
             </p>
           </div>
 
-          <Link
+          <TransitionLink
             to="/works"
             className="relative hidden rounded-full p-[2px] transition hover:scale-105 md:inline-flex md:shrink-0 [background:linear-gradient(90deg,transparent,transparent)] hover:[background:linear-gradient(90deg,#89AACC_0%,#4E85BF_100%)]"
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#141414] px-5 py-3 text-sm font-semibold text-white">
               View all work <ArrowUpRight size={15} />
             </span>
-          </Link>
+          </TransitionLink>
         </MotionDiv>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
@@ -340,12 +341,12 @@ export default function Works() {
           transition={{ delay: 0.3 }}
           className="mt-10 text-center md:hidden"
         >
-          <Link
+          <TransitionLink
             to="/works"
             className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#141414] px-5 py-3 text-sm font-semibold text-white transition hover:border-white/25"
           >
             View all work <ArrowUpRight size={14} />
-          </Link>
+          </TransitionLink>
         </MotionDiv>
       </div>
     </section>
