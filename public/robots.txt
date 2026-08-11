@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wd-beryl-alpha.vercel.app/sitemap.xml
+Sitemap: https://www.wdgroupcompany.biz.id/sitemap.xml
