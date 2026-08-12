@@ -5,7 +5,7 @@ import { LanguageContext } from "../context/LanguageContext"
 export default function SEO({ title, description, url = "https://www.wdgroupcompany.biz.id/" }) {
   const { lang } = useContext(LanguageContext)
   const defaultTitle = `${lang.company} – WD Group Company | Creative Media & Event Organizer`
-  const defaultDescription = lang.subtitle1 ? `${lang.subtitle1} ${lang.subtitle2}` : "WD Group Company (WD Jaya Group) adalah creative media company yang menyediakan jasa multimedia, event organizer, photo video production, dan solusi bisnis profesional."
+  const defaultDescription = lang.subtitle1 ? `${lang.subtitle1} ${lang.subtitle2}` : "WD Group Company (WD Jaya Group) adalah penyedia jasa multimedia, event organizer, photo video production, dan solusi bisnis."
   
   const finalTitle = title ? `${title} | WD Group Company` : defaultTitle
   const finalDescription = description || defaultDescription
