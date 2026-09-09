@@ -23,7 +23,8 @@ export default function InquiryModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
     name: "",
     company: "",
-    contact: "",
+    phone: "",
+    email: "",
     divisions: ["event"],
     date: "",
     budget: t.budgetOptions?.[0] || "Fleksibel / Belum Ditentukan",
@@ -47,8 +48,8 @@ export default function InquiryModal({ isOpen, onClose }) {
   }
 
   const validate = () => {
-    if (!formData.name.trim() || !formData.contact.trim() || !formData.notes.trim()) {
-      setError(t.validationError || "Harap lengkapi Nama, Kontak, dan Deskripsi kebutuhan.")
+    if (!formData.name.trim() || (!formData.phone.trim() && !formData.email.trim()) || !formData.notes.trim()) {
+      setError(t.validationError || "Harap lengkapi Nama, WhatsApp/Email, dan Deskripsi kebutuhan.")
       return false
     }
     setError("")
@@ -77,7 +78,8 @@ I would like to submit a project brief and consultation request with the followi
 👤 *1. CLIENT INFORMATION*
 • *Full Name:* ${formData.name.trim()}
 • *Company / Brand / Couple:* ${formData.company.trim() || "-"}
-• *Contact (WA/Email):* ${formData.contact.trim()}
+• *WhatsApp Number:* ${formData.phone.trim() || "-"}
+• *Email Address:* ${formData.email.trim() || "-"}
 
 🎯 *2. SERVICE & SCOPE*
 • *Division / Services:* ${selectedDivisionsLabel}
@@ -101,7 +103,8 @@ Halo, saya ingin mengajukan brief rencana proyek dan permohonan konsultasi denga
 👤 *1. DATA KLIEN*
 • *Nama Lengkap:* ${formData.name.trim()}
 • *Instansi / Brand / Pasangan:* ${formData.company.trim() || "-"}
-• *Kontak (WA/Email):* ${formData.contact.trim()}
+• *Nomor WhatsApp:* ${formData.phone.trim() || "-"}
+• *Alamat Email:* ${formData.email.trim() || "-"}
 
 🎯 *2. LAYANAN YANG DIBUTUHKAN*
 • *Divisi / Layanan:* ${selectedDivisionsLabel}
@@ -140,7 +143,8 @@ I. CLIENT & COMPANY INFORMATION
 =======================================================
 • Full Name           : ${formData.name.trim()}
 • Company / Brand     : ${formData.company.trim() || "-"}
-• Contact (WA / Email): ${formData.contact.trim()}
+• WhatsApp Number     : ${formData.phone.trim() || "-"}
+• Email Address       : ${formData.email.trim() || "-"}
 
 =======================================================
 II. PROJECT SCOPE & SERVICE REQUIREMENTS
@@ -177,7 +181,8 @@ I. DATA KLIEN & INSTANSI
 =======================================================
 • Nama Lengkap          : ${formData.name.trim()}
 • Perusahaan / Brand    : ${formData.company.trim() || "-"}
-• Kontak (WhatsApp/Tel) : ${formData.contact.trim()}
+• Nomor WhatsApp        : ${formData.phone.trim() || "-"}
+• Alamat Email          : ${formData.email.trim() || "-"}
 
 =======================================================
 II. SPESIFIKASI KEBUTUHAN & LAYANAN
@@ -203,10 +208,11 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
 
   const saveToDatabase = async (channel) => {
     try {
+      const contactInfo = [formData.phone.trim(), formData.email.trim()].filter(Boolean).join(" | ")
       const record = {
         name: formData.name.trim(),
         company: formData.company.trim() || null,
-        contact: formData.contact.trim(),
+        contact: contactInfo || formData.phone.trim() || formData.email.trim(),
         divisions: formData.divisions,
         target_date: formData.date.trim() || null,
         budget: formData.budget,
@@ -221,7 +227,7 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
       // 2. Catat ke tabel activities admin
       await supabase.from("activities").insert([
         {
-          admin_email: formData.contact.trim(),
+          admin_email: formData.email.trim() || formData.phone.trim() || "guest",
           action_name: `Brief Inquired (${channel.toUpperCase()})`,
           target_name: `${formData.name.trim()} - ${formData.divisions.join(", ")}`,
         },
@@ -310,6 +316,7 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
               </div>
             )}
 
+            {/* Row 1: Name & Company */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
@@ -341,22 +348,39 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
               </div>
             </div>
 
+            {/* Row 2: WhatsApp & Email */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
                   <MessageCircle size={13} className="text-emerald-400" />
-                  {t.contactLabel || "WhatsApp / Email *"}
+                  {t.phoneLabel || "Nomor WhatsApp *"}
                 </label>
                 <input
-                  type="text"
-                  required
-                  value={formData.contact}
-                  onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                  placeholder={t.contactPlaceholder || "08123456789 atau email@domain.com"}
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  placeholder={t.phonePlaceholder || "Misal: 08123456789"}
                   className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
                 />
               </div>
 
+              <div>
+                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
+                  <Mail size={13} className="text-blue-400" />
+                  {t.emailLabel || "Alamat Email *"}
+                </label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder={t.emailPlaceholder || "Misal: nama@email.com"}
+                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
+                />
+              </div>
+            </div>
+
+            {/* Row 3: Target Date & Budget */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
                   <Calendar size={13} className="text-amber-400" />
@@ -369,6 +393,31 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                   placeholder="Misal: Oktober 2026 / Q4 2026"
                   className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
                 />
+              </div>
+
+              <div>
+                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
+                  <DollarSign size={13} className="text-green-400" />
+                  {t.budgetLabel || "Estimasi Budget"}
+                </label>
+                <select
+                  value={formData.budget}
+                  onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                  className="w-full cursor-pointer rounded-xl border border-white/12 bg-[#18181b] px-3.5 py-2.5 text-sm text-white focus:border-white/40 focus:outline-none"
+                >
+                  {(t.budgetOptions || [
+                    "Fleksibel / Belum Ditentukan",
+                    "< Rp 10 Juta",
+                    "Rp 10 - 25 Juta",
+                    "Rp 25 - 50 Juta",
+                    "Rp 50 - 100 Juta",
+                    "> Rp 100 Juta",
+                  ]).map((opt) => (
+                    <option key={opt} value={opt} className="bg-[#18181b] text-white">
+                      {opt}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
@@ -396,32 +445,6 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                   )
                 })}
               </div>
-            </div>
-
-            {/* Budget Range */}
-            <div>
-              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
-                <DollarSign size={13} className="text-green-400" />
-                {t.budgetLabel || "Estimasi Budget"}
-              </label>
-              <select
-                value={formData.budget}
-                onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                className="w-full cursor-pointer rounded-xl border border-white/12 bg-[#18181b] px-3.5 py-2.5 text-sm text-white focus:border-white/40 focus:outline-none"
-              >
-                {(t.budgetOptions || [
-                  "Fleksibel / Belum Ditentukan",
-                  "< Rp 10 Juta",
-                  "Rp 10 - 25 Juta",
-                  "Rp 25 - 50 Juta",
-                  "Rp 50 - 100 Juta",
-                  "> Rp 100 Juta",
-                ]).map((opt) => (
-                  <option key={opt} value={opt} className="bg-[#18181b] text-white">
-                    {opt}
-                  </option>
-                ))}
-              </select>
             </div>
 
             {/* Project Notes */}
