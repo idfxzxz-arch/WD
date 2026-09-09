@@ -1,11 +1,30 @@
 import { useState, useContext } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Send, Mail, MessageCircle, Calendar, DollarSign, Building2, User, FileText, CheckCircle2, Loader2 } from "lucide-react"
+import { X, Send, Mail, MessageCircle, Calendar, DollarSign, Building2, User, FileText, CheckCircle2, Loader2, ShieldCheck, RotateCw } from "lucide-react"
 import { LanguageContext } from "../context/LanguageContext"
 import { supabase } from "../lib/supabase"
 
 const WA_ADMIN = "6285707909415"
 const EMAIL_ADMIN = "groupcompanywd@gmail.com"
+
+// Sanitasi teks: bersihkan tag HTML, script, iframe, dan potensi injeksi karakter berbahaya
+const sanitizeText = (input) => {
+  if (typeof input !== "string") return ""
+  return input
+    .replace(/<[^>]*>?/gm, "") // Hapus tag HTML & Script
+    .replace(/javascript:/gi, "") // Hapus URI scheme berbahaya
+    .replace(/vbscript:/gi, "")
+    .replace(/on\w+="[^"]*"/gi, "") // Hapus inline event handlers
+    .replace(/on\w+='[^']*'/gi, "")
+    .trim()
+}
+
+// Generator tantangan matematika acak sederhana (verifikasi manusia murni & aman dari script injection)
+const generateChallenge = () => {
+  const n1 = Math.floor(Math.random() * 8) + 2 // 2 sampai 9
+  const n2 = Math.floor(Math.random() * 8) + 1 // 1 sampai 8
+  return { num1: n1, num2: n2, answer: n1 + n2 }
+}
 
 export default function InquiryModal({ isOpen, onClose }) {
   const { lang } = useContext(LanguageContext)
@@ -31,6 +50,8 @@ export default function InquiryModal({ isOpen, onClose }) {
     notes: "",
   })
 
+  const [challenge, setChallenge] = useState(() => generateChallenge())
+  const [userAnswer, setUserAnswer] = useState("")
   const [error, setError] = useState("")
   const [submitting, setSubmitting] = useState(false)
 
@@ -48,10 +69,46 @@ export default function InquiryModal({ isOpen, onClose }) {
   }
 
   const validate = () => {
-    if (!formData.name.trim() || (!formData.phone.trim() && !formData.email.trim()) || !formData.notes.trim()) {
-      setError(t.validationError || "Harap lengkapi Nama, WhatsApp/Email, dan Deskripsi kebutuhan.")
+    const cleanName = sanitizeText(formData.name)
+    const cleanPhone = formData.phone.trim().replace(/[^\d+-\s]/g, "")
+    const cleanEmail = formData.email.trim()
+    const cleanDate = sanitizeText(formData.date)
+    const cleanNotes = sanitizeText(formData.notes)
+
+    // 1. Validasi Kolom Wajib
+    if (!cleanName || !cleanPhone || !cleanEmail || !cleanDate || !cleanNotes) {
+      setError(t.validationError || "Harap lengkapi semua kolom wajib (Nama, WhatsApp, Email, Jadwal, dan Deskripsi).")
       return false
     }
+
+    // 2. Validasi Format WhatsApp
+    const phoneDigits = cleanPhone.replace(/\D/g, "")
+    if (phoneDigits.length < 8 || phoneDigits.length > 16) {
+      setError(t.phoneInvalidError || "Nomor WhatsApp tidak valid (minimal 8-15 digit angka).")
+      return false
+    }
+
+    // 3. Validasi Format Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(cleanEmail)) {
+      setError(t.emailInvalidError || "Format email tidak valid (contoh: nama@domain.com).")
+      return false
+    }
+
+    // 4. Validasi Divisi
+    if (!formData.divisions || formData.divisions.length === 0) {
+      setError("Harap pilih minimal satu divisi/layanan.")
+      return false
+    }
+
+    // 5. Validasi Human Security Challenge
+    if (!userAnswer.trim() || parseInt(userAnswer.trim(), 10) !== challenge.answer) {
+      setError(t.verificationError || "Jawaban verifikasi keamanan salah. Silakan hitung kembali.")
+      setChallenge(generateChallenge())
+      setUserAnswer("")
+      return false
+    }
+
     setError("")
     return true
   }
@@ -66,6 +123,12 @@ export default function InquiryModal({ isOpen, onClose }) {
 
   const buildWaSummaryText = () => {
     const selectedDivisionsLabel = getSelectedDivisionsLabel()
+    const cleanName = sanitizeText(formData.name)
+    const cleanCompany = sanitizeText(formData.company)
+    const cleanPhone = formData.phone.trim()
+    const cleanEmail = formData.email.trim()
+    const cleanDate = sanitizeText(formData.date)
+    const cleanNotes = sanitizeText(formData.notes)
 
     if (isEn) {
       return `*BRIEF & CONSULTATION REQUEST*
@@ -76,18 +139,18 @@ export default function InquiryModal({ isOpen, onClose }) {
 I would like to submit a project brief and consultation request with the following details:
 
 👤 *1. CLIENT INFORMATION*
-• *Full Name:* ${formData.name.trim()}
-• *Company / Brand / Couple:* ${formData.company.trim() || "-"}
-• *WhatsApp Number:* ${formData.phone.trim() || "-"}
-• *Email Address:* ${formData.email.trim() || "-"}
+• *Full Name:* ${cleanName}
+• *Company / Brand / Couple:* ${cleanCompany || "-"}
+• *WhatsApp Number:* ${cleanPhone || "-"}
+• *Email Address:* ${cleanEmail || "-"}
 
 🎯 *2. SERVICE & SCOPE*
 • *Division / Services:* ${selectedDivisionsLabel}
-• *Target Timeline / Date:* ${formData.date.trim() || "-"}
+• *Target Timeline / Date:* ${cleanDate || "-"}
 • *Budget Estimation:* ${formData.budget}
 
 📋 *3. BRIEF DESCRIPTION & NOTES*
-"${formData.notes.trim()}"
+"${cleanNotes}"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 Please kindly review and let us know your availability and initial proposal. Thank you!`
@@ -101,18 +164,18 @@ Please kindly review and let us know your availability and initial proposal. Tha
 Halo, saya ingin mengajukan brief rencana proyek dan permohonan konsultasi dengan rincian berikut:
 
 👤 *1. DATA KLIEN*
-• *Nama Lengkap:* ${formData.name.trim()}
-• *Instansi / Brand / Pasangan:* ${formData.company.trim() || "-"}
-• *Nomor WhatsApp:* ${formData.phone.trim() || "-"}
-• *Alamat Email:* ${formData.email.trim() || "-"}
+• *Nama Lengkap:* ${cleanName}
+• *Instansi / Brand / Pasangan:* ${cleanCompany || "-"}
+• *Nomor WhatsApp:* ${cleanPhone || "-"}
+• *Alamat Email:* ${cleanEmail || "-"}
 
 🎯 *2. LAYANAN YANG DIBUTUHKAN*
 • *Divisi / Layanan:* ${selectedDivisionsLabel}
-• *Rencana Tanggal / Jadwal:* ${formData.date.trim() || "-"}
+• *Rencana Tanggal / Jadwal:* ${cleanDate || "-"}
 • *Estimasi Anggaran:* ${formData.budget}
 
 📋 *3. RINGKASAN BRIEF & KEBUTUHAN PROYEK*
-"${formData.notes.trim()}"
+"${cleanNotes}"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 Mohon info ketersediaan jadwal serta penawaran solusi / estimasinya. Terima kasih.`
@@ -120,14 +183,21 @@ Mohon info ketersediaan jadwal serta penawaran solusi / estimasinya. Terima kasi
 
   const buildEmailSubject = () => {
     const selectedDivisionsLabel = getSelectedDivisionsLabel()
+    const cleanName = sanitizeText(formData.name)
     if (isEn) {
-      return `[Project Brief] ${formData.name.trim()} - ${selectedDivisionsLabel} | WD Group`
+      return `[Project Brief] ${cleanName} - ${selectedDivisionsLabel} | WD Group`
     }
-    return `[Pengajuan Brief Proyek] ${formData.name.trim()} - ${selectedDivisionsLabel} | WD Group`
+    return `[Pengajuan Brief Proyek] ${cleanName} - ${selectedDivisionsLabel} | WD Group`
   }
 
   const buildEmailSummaryText = () => {
     const selectedDivisionsLabel = getSelectedDivisionsLabel()
+    const cleanName = sanitizeText(formData.name)
+    const cleanCompany = sanitizeText(formData.company)
+    const cleanPhone = formData.phone.trim()
+    const cleanEmail = formData.email.trim()
+    const cleanDate = sanitizeText(formData.date)
+    const cleanNotes = sanitizeText(formData.notes)
 
     if (isEn) {
       return `Kepada Yth.
@@ -141,22 +211,22 @@ In regards to our upcoming project plan, we would like to submit our project bri
 =======================================================
 I. CLIENT & COMPANY INFORMATION
 =======================================================
-• Full Name           : ${formData.name.trim()}
-• Company / Brand     : ${formData.company.trim() || "-"}
-• WhatsApp Number     : ${formData.phone.trim() || "-"}
-• Email Address       : ${formData.email.trim() || "-"}
+• Full Name           : ${cleanName}
+• Company / Brand     : ${cleanCompany || "-"}
+• WhatsApp Number     : ${cleanPhone || "-"}
+• Email Address       : ${cleanEmail || "-"}
 
 =======================================================
 II. PROJECT SCOPE & SERVICE REQUIREMENTS
 =======================================================
 • Services / Division : ${selectedDivisionsLabel}
-• Target Timeline     : ${formData.date.trim() || "-"}
+• Target Timeline     : ${cleanDate || "-"}
 • Estimated Budget    : ${formData.budget}
 
 =======================================================
 III. BRIEF DESCRIPTION & PROJECT NOTES
 =======================================================
-${formData.notes.trim()}
+${cleanNotes}
 
 =======================================================
 
@@ -165,7 +235,7 @@ We look forward to receiving your initial review, quotation, or proposal. Please
 Thank you for your attention and collaboration.
 
 Sincerely,
-${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}` : ""}`
+${cleanName}${cleanCompany ? `\n${cleanCompany}` : ""}`
     }
 
     return `Kepada Yth.
@@ -179,22 +249,22 @@ Sehubungan dengan rencana pelaksanaan proyek/acara kami, bersama pesan ini kami 
 =======================================================
 I. DATA KLIEN & INSTANSI
 =======================================================
-• Nama Lengkap          : ${formData.name.trim()}
-• Perusahaan / Brand    : ${formData.company.trim() || "-"}
-• Nomor WhatsApp        : ${formData.phone.trim() || "-"}
-• Alamat Email          : ${formData.email.trim() || "-"}
+• Nama Lengkap          : ${cleanName}
+• Perusahaan / Brand    : ${cleanCompany || "-"}
+• Nomor WhatsApp        : ${cleanPhone || "-"}
+• Alamat Email          : ${cleanEmail || "-"}
 
 =======================================================
 II. SPESIFIKASI KEBUTUHAN & LAYANAN
 =======================================================
 • Divisi / Layanan      : ${selectedDivisionsLabel}
-• Rencana Pelaksanaan   : ${formData.date.trim() || "-"}
+• Rencana Pelaksanaan   : ${cleanDate || "-"}
 • Estimasi Anggaran     : ${formData.budget}
 
 =======================================================
 III. DESKRIPSI BRIEF & CATATAN PROYEK
 =======================================================
-${formData.notes.trim()}
+${cleanNotes}
 
 =======================================================
 
@@ -203,20 +273,27 @@ Besar harapan kami brief ini dapat dipelajari oleh tim WD Group guna penyusunan 
 Atas perhatian dan kerja samanya, kami ucapkan terima kasih.
 
 Hormat kami,
-${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}` : ""}`
+${cleanName}${cleanCompany ? `\n${cleanCompany}` : ""}`
   }
 
   const saveToDatabase = async (channel) => {
     try {
-      const contactInfo = [formData.phone.trim(), formData.email.trim()].filter(Boolean).join(" | ")
+      const cleanName = sanitizeText(formData.name)
+      const cleanCompany = sanitizeText(formData.company)
+      const cleanPhone = formData.phone.trim().replace(/[^\d+-\s]/g, "")
+      const cleanEmail = formData.email.trim()
+      const cleanDate = sanitizeText(formData.date)
+      const cleanNotes = sanitizeText(formData.notes)
+      const contactInfo = [cleanPhone, cleanEmail].filter(Boolean).join(" | ")
+
       const record = {
-        name: formData.name.trim(),
-        company: formData.company.trim() || null,
-        contact: contactInfo || formData.phone.trim() || formData.email.trim(),
+        name: cleanName,
+        company: cleanCompany || null,
+        contact: contactInfo || cleanPhone || cleanEmail,
         divisions: formData.divisions,
-        target_date: formData.date.trim() || null,
+        target_date: cleanDate || null,
         budget: formData.budget,
-        notes: formData.notes.trim(),
+        notes: cleanNotes,
         channel: channel,
         status: "new",
       }
@@ -227,9 +304,9 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
       // 2. Catat ke tabel activities admin
       await supabase.from("activities").insert([
         {
-          admin_email: formData.email.trim() || formData.phone.trim() || "guest",
+          admin_email: cleanEmail || cleanPhone || "guest",
           action_name: `Brief Inquired (${channel.toUpperCase()})`,
-          target_name: `${formData.name.trim()} - ${formData.divisions.join(", ")}`,
+          target_name: `${cleanName} - ${formData.divisions.join(", ")}`,
         },
       ])
     } catch (dbErr) {
@@ -317,8 +394,9 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
           {/* Form Content */}
           <form className="mt-3 space-y-2.5 overflow-y-auto sm:overflow-visible pr-0.5 max-h-[72vh] sm:max-h-none">
             {error && (
-              <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs text-red-300">
-                {error}
+              <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs text-red-300 flex items-center gap-2">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-400 animate-pulse"></span>
+                <span>{error}</span>
               </div>
             )}
 
@@ -363,6 +441,7 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                 </label>
                 <input
                   type="tel"
+                  required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder={t.phonePlaceholder || "Misal: 08123456789"}
@@ -377,6 +456,7 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                 </label>
                 <input
                   type="email"
+                  required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder={t.emailPlaceholder || "Misal: nama@email.com"}
@@ -390,13 +470,14 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
               <div>
                 <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold text-white/70">
                   <Calendar size={12} className="text-amber-400" />
-                  {t.dateLabel || "Target Tanggal / Jadwal"}
+                  {t.dateLabel || "Target Tanggal / Jadwal *"}
                 </label>
                 <input
                   type="text"
+                  required
                   value={formData.date}
                   onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                  placeholder="Misal: Oktober 2026 / Q4 2026"
+                  placeholder={t.datePlaceholder || "Misal: Oktober 2026 / Q4 2026"}
                   className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3 py-2 text-xs sm:text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
                 />
               </div>
@@ -467,6 +548,44 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                 placeholder={t.notesPlaceholder || "Jelaskan konsep, target output, lokasi, atau kebutuhan khusus..."}
                 className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3 py-1.5 text-xs sm:text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
               />
+            </div>
+
+            {/* Security Verification & Anti-Injection Test */}
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-blue-500/20 bg-blue-500/[0.04] px-3 py-1.5">
+              <div className="flex items-center gap-2">
+                <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 border border-blue-400/20">
+                  <ShieldCheck size={13} />
+                </div>
+                <div>
+                  <span className="block text-[11px] font-semibold text-white/80 leading-tight">
+                    {t.verificationLabel || "Verifikasi Keamanan *"}
+                  </span>
+                  <span className="text-[10px] text-white/45 leading-tight">
+                    Hitung: <strong className="text-blue-300 font-bold tracking-wider">{challenge.num1} + {challenge.num2} = ?</strong>
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 ml-auto">
+                <input
+                  type="number"
+                  required
+                  value={userAnswer}
+                  onChange={(e) => setUserAnswer(e.target.value)}
+                  placeholder={t.verificationPlaceholder || "Jawaban"}
+                  className="w-20 cursor-text rounded-lg border border-white/15 bg-white/10 px-2 py-1 text-center text-xs font-bold text-white placeholder:text-white/30 focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setChallenge(generateChallenge())
+                    setUserAnswer("")
+                  }}
+                  title={t.verificationRefresh || "Acak Ulang Soal"}
+                  className="cursor-pointer rounded-lg border border-white/10 bg-white/5 p-1 text-white/60 hover:bg-white/15 hover:text-white transition"
+                >
+                  <RotateCw size={12} />
+                </button>
+              </div>
             </div>
 
             {/* Destination Notice */}
