@@ -267,7 +267,7 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
 
   return (
     <AnimatePresence>
-      <div className="custom-cursor-show fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-6 overflow-y-auto cursor-auto">
+      <div className="custom-cursor-show fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-4 overflow-y-auto cursor-auto">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -279,48 +279,54 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
 
         {/* Modal Window */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="custom-cursor-show relative z-10 w-full max-w-2xl overflow-hidden rounded-3xl border border-white/15 bg-[#0f0f11] p-6 text-white shadow-2xl sm:p-8 my-auto cursor-auto"
+          exit={{ opacity: 0, scale: 0.95, y: 15 }}
+          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="custom-cursor-show relative z-10 w-full max-w-2xl rounded-2xl sm:rounded-3xl border border-white/15 bg-[#0e0e11] p-4 sm:p-5 text-white shadow-2xl my-auto cursor-auto max-h-[95vh] flex flex-col justify-between"
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-5">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-3 py-1 text-[11px] font-semibold text-blue-300">
-                <CheckCircle2 size={13} />
-                {t.badge || "Project Inquiry Form"}
+          <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                <CheckCircle2 size={16} />
               </div>
-              <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-                {t.title || "Ajukan Brief Proyek"}
-              </h2>
-              <p className="mt-1 text-xs sm:text-sm text-white/55">
-                {t.subtitle || "Ceritakan rencana proyek atau kebutuhan bisnis Anda."}
-              </p>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-base sm:text-lg font-bold tracking-tight text-white">
+                    {t.title || "Ajukan Brief Proyek"}
+                  </h2>
+                  <span className="hidden sm:inline-flex items-center rounded-full border border-blue-400/30 bg-blue-500/10 px-2 py-0.5 text-[10px] font-semibold text-blue-300">
+                    {t.badge || "Konsultasi"}
+                  </span>
+                </div>
+                <p className="text-[11px] sm:text-xs text-white/50 leading-tight">
+                  {t.subtitle || "Ceritakan rencana proyek Anda. Tim WD Group siap membantu."}
+                </p>
+              </div>
             </div>
             <button
               onClick={onClose}
-              className="cursor-pointer rounded-full border border-white/10 bg-white/5 p-2 text-white/60 transition hover:bg-white/15 hover:text-white"
+              className="cursor-pointer rounded-full border border-white/10 bg-white/5 p-1.5 text-white/60 transition hover:bg-white/15 hover:text-white"
               aria-label={t.close || "Tutup"}
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           </div>
 
           {/* Form Content */}
-          <form className="mt-6 space-y-4 max-h-[65vh] overflow-y-auto pr-1">
+          <form className="mt-3 space-y-2.5 overflow-y-auto sm:overflow-visible pr-0.5 max-h-[72vh] sm:max-h-none">
             {error && (
-              <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+              <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs text-red-300">
                 {error}
               </div>
             )}
 
             {/* Row 1: Name & Company */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
-                  <User size={13} className="text-blue-400" />
+                <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold text-white/70">
+                  <User size={12} className="text-blue-400" />
                   {t.nameLabel || "Nama Lengkap *"}
                 </label>
                 <input
@@ -329,13 +335,13 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder={t.namePlaceholder || "Nama Anda"}
-                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
+                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3 py-2 text-xs sm:text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
                 />
               </div>
 
               <div>
-                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
-                  <Building2 size={13} className="text-blue-400" />
+                <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold text-white/70">
+                  <Building2 size={12} className="text-blue-400" />
                   {t.companyLabel || "Instansi / Perusahaan"}
                 </label>
                 <input
@@ -343,16 +349,16 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                   placeholder={t.companyPlaceholder || "PT Maju Bersama / Personal"}
-                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
+                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3 py-2 text-xs sm:text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
                 />
               </div>
             </div>
 
             {/* Row 2: WhatsApp & Email */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
-                  <MessageCircle size={13} className="text-emerald-400" />
+                <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold text-white/70">
+                  <MessageCircle size={12} className="text-emerald-400" />
                   {t.phoneLabel || "Nomor WhatsApp *"}
                 </label>
                 <input
@@ -360,13 +366,13 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder={t.phonePlaceholder || "Misal: 08123456789"}
-                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
+                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3 py-2 text-xs sm:text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
                 />
               </div>
 
               <div>
-                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
-                  <Mail size={13} className="text-blue-400" />
+                <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold text-white/70">
+                  <Mail size={12} className="text-blue-400" />
                   {t.emailLabel || "Alamat Email *"}
                 </label>
                 <input
@@ -374,16 +380,16 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder={t.emailPlaceholder || "Misal: nama@email.com"}
-                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
+                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3 py-2 text-xs sm:text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
                 />
               </div>
             </div>
 
             {/* Row 3: Target Date & Budget */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
-                  <Calendar size={13} className="text-amber-400" />
+                <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold text-white/70">
+                  <Calendar size={12} className="text-amber-400" />
                   {t.dateLabel || "Target Tanggal / Jadwal"}
                 </label>
                 <input
@@ -391,19 +397,19 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                   value={formData.date}
                   onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                   placeholder="Misal: Oktober 2026 / Q4 2026"
-                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
+                  className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3 py-2 text-xs sm:text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
                 />
               </div>
 
               <div>
-                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
-                  <DollarSign size={13} className="text-green-400" />
+                <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold text-white/70">
+                  <DollarSign size={12} className="text-green-400" />
                   {t.budgetLabel || "Estimasi Budget"}
                 </label>
                 <select
                   value={formData.budget}
                   onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                  className="w-full cursor-pointer rounded-xl border border-white/12 bg-[#18181b] px-3.5 py-2.5 text-sm text-white focus:border-white/40 focus:outline-none"
+                  className="w-full cursor-pointer rounded-xl border border-white/12 bg-[#18181b] px-3 py-2 text-xs sm:text-sm text-white focus:border-white/40 focus:outline-none"
                 >
                   {(t.budgetOptions || [
                     "Fleksibel / Belum Ditentukan",
@@ -423,10 +429,10 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
 
             {/* Division Multi-Select */}
             <div>
-              <label className="mb-2 block text-xs font-semibold text-white/70">
+              <label className="mb-1.5 block text-[11px] font-semibold text-white/70">
                 {t.divisionLabel || "Pilih Divisi / Layanan yang Dibutuhkan *"}
               </label>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {availableDivisions.map((div) => {
                   const isSelected = formData.divisions.includes(div.id)
                   return (
@@ -434,9 +440,9 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
                       type="button"
                       key={div.id}
                       onClick={() => toggleDivision(div.id)}
-                      className={`cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition ${
+                      className={`cursor-pointer rounded-full px-2.5 py-1 text-[11px] font-medium transition ${
                         isSelected
-                          ? "border border-white/40 bg-white text-black font-semibold shadow-md"
+                          ? "border border-white/40 bg-white text-black font-semibold shadow-sm"
                           : "border border-white/10 bg-white/5 text-white/65 hover:bg-white/10 hover:text-white"
                       }`}
                     >
@@ -449,40 +455,40 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
 
             {/* Project Notes */}
             <div>
-              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/70">
-                <FileText size={13} className="text-blue-400" />
+              <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold text-white/70">
+                <FileText size={12} className="text-blue-400" />
                 {t.notesLabel || "Deskripsi Brief & Kebutuhan Proyek *"}
               </label>
               <textarea
                 required
-                rows={3}
+                rows={2}
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                 placeholder={t.notesPlaceholder || "Jelaskan konsep, target output, lokasi, atau kebutuhan khusus..."}
-                className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
+                className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3 py-1.5 text-xs sm:text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
               />
             </div>
 
             {/* Destination Notice */}
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-[11px] text-white/55">
+            <div className="flex flex-wrap items-center justify-between gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10.5px] text-white/55">
               <span className="flex items-center gap-1.5">
-                <MessageCircle size={13} className="text-emerald-400 shrink-0" />
+                <MessageCircle size={12} className="text-emerald-400 shrink-0" />
                 <span>WA Admin: <strong className="text-white/85 font-medium">+62 857-0790-9415</strong></span>
               </span>
               <span className="flex items-center gap-1.5">
-                <Mail size={13} className="text-blue-400 shrink-0" />
+                <Mail size={12} className="text-blue-400 shrink-0" />
                 <span>Email: <strong className="text-white/85 font-medium">groupcompanywd@gmail.com</strong></span>
               </span>
             </div>
           </form>
 
           {/* Action Buttons */}
-          <div className="mt-6 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-white/10 pt-5">
+          <div className="mt-3 flex flex-col-reverse sm:flex-row items-center justify-end gap-2.5 border-t border-white/10 pt-3">
             <button
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="w-full sm:w-auto cursor-pointer px-4 py-2.5 text-xs font-semibold text-white/60 hover:text-white transition disabled:opacity-50"
+              className="w-full sm:w-auto cursor-pointer px-3.5 py-2 text-xs font-semibold text-white/60 hover:text-white transition disabled:opacity-50"
             >
               {t.close || "Batal"}
             </button>
@@ -490,18 +496,18 @@ ${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}
               type="button"
               disabled={submitting}
               onClick={handleSendEmail}
-              className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-xs font-bold text-white hover:bg-white/20 transition disabled:opacity-50"
+              className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-1.5 rounded-xl border border-white/20 bg-white/10 px-3.5 py-2 text-xs font-bold text-white hover:bg-white/20 transition disabled:opacity-50"
             >
-              {submitting ? <Loader2 size={15} className="animate-spin" /> : <Mail size={15} className="text-blue-400" />}
+              {submitting ? <Loader2 size={14} className="animate-spin" /> : <Mail size={14} className="text-blue-400" />}
               {t.submitEmail || "Kirim Email"}
             </button>
             <button
               type="button"
               disabled={submitting}
               onClick={handleSendWa}
-              className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 text-xs font-bold text-black hover:bg-zinc-200 transition shadow-lg disabled:opacity-50"
+              className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-1.5 rounded-xl bg-white px-4 py-2 text-xs font-bold text-black hover:bg-zinc-200 transition shadow-md disabled:opacity-50"
             >
-              {submitting ? <Loader2 size={15} className="animate-spin" /> : <Send size={15} className="text-black" />}
+              {submitting ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} className="text-black" />}
               {t.submitWa || "Kirim via WhatsApp"}
             </button>
           </div>
