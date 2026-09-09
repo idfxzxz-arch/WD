@@ -5,7 +5,7 @@ import { LanguageContext } from "../context/LanguageContext"
 import { supabase } from "../lib/supabase"
 
 const WA_ADMIN = "6285707909415"
-const EMAIL_ADMIN = "wdgroupcompany@gmail.com"
+const EMAIL_ADMIN = "groupcompanywd@gmail.com"
 
 export default function InquiryModal({ isOpen, onClose }) {
   const { lang } = useContext(LanguageContext)
@@ -55,22 +55,54 @@ export default function InquiryModal({ isOpen, onClose }) {
     return true
   }
 
-  const buildSummaryText = () => {
-    const selectedDivisionsLabel = formData.divisions
+  const getSelectedDivisionsLabel = () => {
+    return formData.divisions
       .map((d) => availableDivisions.find((item) => item.id === d)?.label || d)
       .join(", ")
+  }
 
-    return `*BRIEF & KONSULTASI PROYEK WD GROUP*
-----------------------------------------
-*Nama Klien:* ${formData.name.trim()}
-*Instansi/Brand:* ${formData.company.trim() || "-"}
-*Kontak:* ${formData.contact.trim()}
-*Layanan/Divisi:* ${selectedDivisionsLabel}
-*Jadwal/Tanggal:* ${formData.date.trim() || "-"}
-*Estimasi Budget:* ${formData.budget}
-----------------------------------------
-*Catatan & Kebutuhan Proyek:*
-${formData.notes.trim()}`
+  const buildWaSummaryText = () => {
+    const selectedDivisionsLabel = getSelectedDivisionsLabel()
+
+    return `*BRIEF PROYEK & KONSULTASI - WD GROUP*
+━━━━━━━━━━━━━━━━━━━━
+👤 *Nama Lengkap:* ${formData.name.trim()}
+🏢 *Instansi / Brand / Pasangan:* ${formData.company.trim() || "-"}
+📱 *Kontak (WA/Email):* ${formData.contact.trim()}
+🎯 *Divisi / Layanan:* ${selectedDivisionsLabel}
+📅 *Perkiraan Jadwal:* ${formData.date.trim() || "-"}
+💰 *Estimasi Budget:* ${formData.budget}
+━━━━━━━━━━━━━━━━━━━━
+📝 *Deskripsi & Kebutuhan Proyek:*
+${formData.notes.trim()}
+━━━━━━━━━━━━━━━━━━━━
+_Pesan dikirim melalui formulir konsultasi website WD Group Company._`
+  }
+
+  const buildEmailSummaryText = () => {
+    const selectedDivisionsLabel = getSelectedDivisionsLabel()
+
+    return `Halo Tim WD Group Company,
+
+Berikut adalah data formulir brief & konsultasi proyek yang dikirimkan melalui website resmi:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DATA KLIEN & RINCIAN PROYEK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Nama Lengkap: ${formData.name.trim()}
+• Instansi / Brand / Pasangan: ${formData.company.trim() || "-"}
+• Kontak (WhatsApp / Email): ${formData.contact.trim()}
+• Divisi / Layanan yang Dipilih: ${selectedDivisionsLabel}
+• Target Tanggal / Pelaksanaan: ${formData.date.trim() || "-"}
+• Estimasi Anggaran: ${formData.budget}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DESKRIPSI BRIEF & KEBUTUHAN:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${formData.notes.trim()}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Email ini dikirim otomatis dari Formulir Konsultasi Proyek WD Group Company.`
   }
 
   const saveToDatabase = async (channel) => {
@@ -104,13 +136,13 @@ ${formData.notes.trim()}`
   }
 
   const handleSendWa = async (e) => {
-    e.preventDefault()
+    if (e) e.preventDefault()
     if (!validate()) return
 
     setSubmitting(true)
     await saveToDatabase("whatsapp")
 
-    const summary = buildSummaryText()
+    const summary = buildWaSummaryText()
     const encoded = encodeURIComponent(summary)
     window.open(`https://wa.me/${WA_ADMIN}?text=${encoded}`, "_blank", "noopener,noreferrer")
     setSubmitting(false)
@@ -118,14 +150,15 @@ ${formData.notes.trim()}`
   }
 
   const handleSendEmail = async (e) => {
-    e.preventDefault()
+    if (e) e.preventDefault()
     if (!validate()) return
 
     setSubmitting(true)
     await saveToDatabase("email")
 
-    const summary = buildSummaryText()
-    const subject = encodeURIComponent(`[Project Brief] ${formData.name.trim()} - WD Group Inquiry`)
+    const selectedDivisionsLabel = getSelectedDivisionsLabel()
+    const summary = buildEmailSummaryText()
+    const subject = encodeURIComponent(`[Brief Proyek] ${formData.name.trim()} - ${selectedDivisionsLabel}`)
     const body = encodeURIComponent(summary)
     window.open(`mailto:${EMAIL_ADMIN}?subject=${subject}&body=${body}`, "_blank", "noopener,noreferrer")
     setSubmitting(false)
@@ -312,6 +345,18 @@ ${formData.notes.trim()}`
                 className="w-full cursor-text rounded-xl border border-white/12 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/40"
               />
             </div>
+
+            {/* Destination Notice */}
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-[11px] text-white/55">
+              <span className="flex items-center gap-1.5">
+                <MessageCircle size={13} className="text-emerald-400 shrink-0" />
+                <span>WA Admin: <strong className="text-white/85 font-medium">+62 857-0790-9415</strong></span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Mail size={13} className="text-blue-400 shrink-0" />
+                <span>Email: <strong className="text-white/85 font-medium">groupcompanywd@gmail.com</strong></span>
+              </span>
+            </div>
           </form>
 
           {/* Action Buttons */}
@@ -330,7 +375,7 @@ ${formData.notes.trim()}`
               onClick={handleSendEmail}
               className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-xs font-bold text-white hover:bg-white/20 transition disabled:opacity-50"
             >
-              {submitting ? <Loader2 size={15} className="animate-spin" /> : <Mail size={15} />}
+              {submitting ? <Loader2 size={15} className="animate-spin" /> : <Mail size={15} className="text-blue-400" />}
               {t.submitEmail || "Kirim Email"}
             </button>
             <button
@@ -339,7 +384,7 @@ ${formData.notes.trim()}`
               onClick={handleSendWa}
               className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 text-xs font-bold text-black hover:bg-zinc-200 transition shadow-lg disabled:opacity-50"
             >
-              {submitting ? <Loader2 size={15} className="animate-spin" /> : <Send size={15} />}
+              {submitting ? <Loader2 size={15} className="animate-spin" /> : <Send size={15} className="text-black" />}
               {t.submitWa || "Kirim via WhatsApp"}
             </button>
           </div>

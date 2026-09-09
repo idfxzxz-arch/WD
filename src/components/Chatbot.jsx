@@ -6,7 +6,7 @@ import { LanguageContext } from "../context/LanguageContext"
 
 const WA_LINK = "https://wa.me/6285707909415?text=Halo%20WD%20Group%2C%20saya%20ingin%20konsultasi%20layanan."
 const IG_LINK = "https://instagram.com/wdgroupcompany"
-const EMAIL_LINK = "mailto:wdgroupcompany@gmail.com"
+const EMAIL_LINK = "mailto:groupcompanywd@gmail.com"
 
 export const chatbotServices = [
   {

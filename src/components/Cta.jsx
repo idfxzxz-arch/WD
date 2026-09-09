@@ -39,7 +39,7 @@ export default function Cta() {
   }
 
   const normalizeEmail = (value) => {
-    if (!value) return "mailto:wdgroupcompany@gmail.com"
+    if (!value) return "mailto:groupcompanywd@gmail.com"
     return value.startsWith("mailto:") ? value : `mailto:${value}`
   }
 
