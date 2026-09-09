@@ -1,20 +1,55 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
+import { LanguageContext } from "../context/LanguageContext";
 import SEO from "./SEO";
 import "./DivisionLayout.css";
 
-
 export default function DivisionLayout({ config }) {
   const itemsPerPage = 9;
+  const navigate = useNavigate();
+  const { lang } = useContext(LanguageContext);
+
+  // Localization overrides
+  const divisionLang = lang?.divisions?.[config.category] || {};
+  const ui = lang?.divisionUi || {
+    back: "Back",
+    viewPortfolio: "View Portfolio",
+    bookingNow: "Booking Now",
+    curatedItems: "curated items",
+    slide: "Slide",
+    previous: "Previous",
+    next: "Next",
+    emptyCategory: "No portfolio items found in this category.",
+    saveToSelection: "Save to Selection",
+    removeFromSelection: "Remove from Selection",
+    savedToast: "Saved to selection",
+    removedToast: "Removed from selection",
+  };
+
+  const brand = divisionLang.brand || config.brand;
+  const badge = divisionLang.badge || config.badge;
+  const kicker = divisionLang.kicker || config.kicker;
+  const title = divisionLang.title || config.title;
+  const titleAccent = divisionLang.titleAccent || config.titleAccent;
+  const description = divisionLang.description || config.description;
+  const primaryCta = divisionLang.primaryCta || config.primaryCta;
+  const galleryTitle = divisionLang.galleryTitle || config.galleryTitle;
+  const tabs = divisionLang.tabs || config.tabs;
+  const stats = divisionLang.stats || config.stats;
+
   const [works, setWorks] = useState([]);
-  const [activeTab, setActiveTab] = useState(config.tabs[0]);
+  const [activeTab, setActiveTab] = useState(tabs[0]);
   const [galleryPage, setGalleryPage] = useState(0);
   const [saved, setSaved] = useState([]);
   const [toast, setToast] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const navigate = useNavigate();
+
+  // Sync activeTab when language changes tabs
+  useEffect(() => {
+    setActiveTab(tabs[0]);
+  }, [lang?.code, tabs]);
 
   const getFallbackWorks = (category) => {
     const defaultImage = {
@@ -28,10 +63,10 @@ export default function DivisionLayout({ config }) {
     return Array.from({ length: 6 }).map((_, i) => ({
       id: `fallback-${category}-${i}`,
       category: category,
-      title: `Sample ${config.brand} Project ${i + 1}`,
-      subcategory: config.tabs[ (i % (config.tabs.length - 1)) + 1 ] || config.tabs[0],
+      title: `Sample ${brand} Project ${i + 1}`,
+      subcategory: tabs[(i % (tabs.length - 1)) + 1] || tabs[0],
       image: defaultImage,
-      meta: "This is a sample portfolio item.",
+      meta: "This is a curated portfolio item from WD Group.",
     }));
   };
 
@@ -46,7 +81,7 @@ export default function DivisionLayout({ config }) {
           .eq("category", config.category)
           .order("order_index");
 
-        const timeoutPromise = new Promise((_, reject) => 
+        const timeoutPromise = new Promise((_, reject) =>
           setTimeout(() => reject(new Error("Timeout")), 15000)
         );
 
@@ -71,19 +106,22 @@ export default function DivisionLayout({ config }) {
 
     fetchWorks();
     return () => { mounted = false; };
-  }, [config.category]);
+  }, [config.category, brand]);
 
   const showToast = (message) => {
     setToast(message);
     setTimeout(() => setToast(""), 2200);
   };
 
-  const filtered = works.filter((item) => {
-    if (activeTab === config.tabs[0]) return true;
-    const subcategory = (item.subcategory || "").toLowerCase().trim();
+  const filtered = useMemo(() => {
+    if (activeTab === tabs[0]) return works;
     const tabMatches = config.tabAliases?.[activeTab] || [activeTab];
-    return tabMatches.some((tab) => subcategory === tab.toLowerCase().trim());
-  });
+    return works.filter((item) => {
+      const subcategory = (item.subcategory || "").toLowerCase().trim();
+      return tabMatches.some((tab) => subcategory === tab.toLowerCase().trim());
+    });
+  }, [works, activeTab, tabs, config.tabAliases]);
+
   const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const safePage = Math.min(galleryPage, totalPages - 1);
   const pageStart = safePage * itemsPerPage;
@@ -102,7 +140,6 @@ export default function DivisionLayout({ config }) {
   }, [galleryPage, totalPages]);
 
   useEffect(() => {
-    // Reset selectedIndex jika visibleWorks berubah (pagination/filter)
     if (selectedIndex !== null && (selectedIndex < 0 || selectedIndex >= visibleWorks.length)) {
       setSelectedIndex(null);
     }
@@ -112,10 +149,10 @@ export default function DivisionLayout({ config }) {
     const exists = saved.some((savedItem) => savedItem.id === item.id);
     if (exists) {
       setSaved(saved.filter((savedItem) => savedItem.id !== item.id));
-      showToast("Removed from selection");
+      showToast(ui.removedToast);
     } else {
       setSaved([...saved, { id: item.id }]);
-      showToast(config.savedMessage);
+      showToast(ui.savedToast);
     }
   };
 
@@ -137,7 +174,7 @@ export default function DivisionLayout({ config }) {
 
   return (
     <>
-      <SEO title={config.title} description={config.description} />
+      <SEO title={`${title} ${titleAccent} – ${brand}`} description={description} />
       <div
         className={`dp-root dp-${config.category}`}
         style={{
@@ -164,13 +201,13 @@ export default function DivisionLayout({ config }) {
 
         <nav className="dp-nav">
           <button className="dp-back" onClick={() => navigate("/")}>
-            &larr; Back
+            &larr; {ui.back}
           </button>
           <div className="dp-logo">
             {config.logoText} <span>{config.logoAccent}</span>
             {config.logoSuffix ? ` ${config.logoSuffix}` : ""}
           </div>
-          <div className="dp-badge">{config.badge}</div>
+          <div className="dp-badge">{badge}</div>
         </nav>
 
         <main className="dp-hero">
@@ -180,11 +217,11 @@ export default function DivisionLayout({ config }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="dp-kicker">{config.kicker}</div>
+            <div className="dp-kicker">{kicker}</div>
             <h1 className="dp-title">
-              {config.title} <em>{config.titleAccent}</em>
+              {title} <em>{titleAccent}</em>
             </h1>
-            <p className="dp-desc">{config.description}</p>
+            <p className="dp-desc">{description}</p>
 
             <div className="dp-actions">
               <button
@@ -194,21 +231,21 @@ export default function DivisionLayout({ config }) {
                     window.open(config.primaryHref, "_blank", "noopener,noreferrer");
                     return;
                   }
-                  showToast(config.primaryToast);
+                  showToast(config.primaryToast || ui.bookingNow);
                 }}
               >
-                {config.primaryCta}
+                {primaryCta}
               </button>
               <button
                 className="dp-secondary"
                 onClick={() => document.querySelector(".dp-showcase")?.scrollIntoView({ behavior: "smooth" })}
               >
-                View Portfolio
+                {ui.viewPortfolio}
               </button>
             </div>
 
             <div className="dp-stats">
-              {config.stats.map((stat) => (
+              {stats.map((stat) => (
                 <div className="dp-stat" key={stat.label}>
                   <strong>{stat.value}</strong>
                   <span>{stat.label}</span>
@@ -231,12 +268,12 @@ export default function DivisionLayout({ config }) {
 
               <section className="dp-main">
                 <div className="dp-main-top">
-                  <h2 className="dp-main-title">{config.galleryTitle}</h2>
-                  <span className="dp-main-meta">{filtered.length} curated items</span>
+                  <h2 className="dp-main-title">{galleryTitle}</h2>
+                  <span className="dp-main-meta">{filtered.length} {ui.curatedItems}</span>
                 </div>
 
                 <div className="dp-tabs">
-                  {config.tabs.map((tab) => (
+                  {tabs.map((tab) => (
                     <button
                       className={`dp-tab ${activeTab === tab ? "active" : ""}`}
                       key={tab}
@@ -258,13 +295,13 @@ export default function DivisionLayout({ config }) {
                           className={`dp-card ${isSaved ? "saved" : ""}`}
                           onClick={() => openLightbox(index)}
                         >
-                          <img src={item.image} alt={item.title || `${config.brand} portfolio`} loading="lazy" />
+                          <img src={item.image} alt={item.title || `${brand} portfolio`} loading="lazy" />
                         </button>
                       );
                     })
                   ) : (
                     <div className="dp-empty">
-                      Belum ada portfolio untuk kategori "{activeTab}".
+                      {ui.emptyCategory}
                     </div>
                   )}
                 </div>
@@ -272,7 +309,7 @@ export default function DivisionLayout({ config }) {
                 {filtered.length > itemsPerPage && (
                   <div className="dp-gallery-footer">
                     <div className="dp-gallery-page">
-                      Slide {safePage + 1} / {totalPages} · {filtered.length} items
+                      {ui.slide} {safePage + 1} / {totalPages} · {filtered.length} {ui.curatedItems}
                     </div>
                     <div className="dp-gallery-actions">
                       <button
@@ -284,7 +321,7 @@ export default function DivisionLayout({ config }) {
                           setGalleryPage((page) => Math.max(0, page - 1));
                         }}
                       >
-                        Previous
+                        {ui.previous}
                       </button>
                       <button
                         type="button"
@@ -295,7 +332,7 @@ export default function DivisionLayout({ config }) {
                           setGalleryPage((page) => Math.min(totalPages - 1, page + 1));
                         }}
                       >
-                        Next
+                        {ui.next}
                       </button>
                     </div>
                   </div>
@@ -336,24 +373,24 @@ export default function DivisionLayout({ config }) {
                 onClick={(event) => event.stopPropagation()}
               >
                 <div className="dp-lightbox-media">
-                  <img src={selectedWork.image} alt={selectedWork.title || `${config.brand} portfolio`} />
+                  <img src={selectedWork.image} alt={selectedWork.title || `${brand} portfolio`} />
                 </div>
                 <div className="dp-lightbox-info">
                   <div className="dp-lightbox-kicker">
-                    {selectedWork.subcategory || config.badge}
+                    {selectedWork.subcategory || badge}
                   </div>
                   <h2 className="dp-lightbox-title">
-                    {selectedWork.title || `${config.brand} Portfolio`}
+                    {selectedWork.title || `${brand} Portfolio`}
                   </h2>
                   <p className="dp-lightbox-meta">
-                    {selectedWork.meta || `A curated portfolio item from ${config.brand}.`}
+                    {selectedWork.meta || `A curated portfolio item from ${brand}.`}
                   </p>
                   <div className="dp-lightbox-actions">
                     <button className="dp-lightbox-btn" onClick={() => toggleSaved(selectedWork)}>
-                      {saved.some((item) => item.id === selectedWork.id) ? "Remove from selection" : "Save to selection"}
+                      {saved.some((item) => item.id === selectedWork.id) ? ui.removeFromSelection : ui.saveToSelection}
                     </button>
                     <button className="dp-lightbox-btn" onClick={closeLightbox}>
-                      Back to gallery
+                      {ui.back}
                     </button>
                   </div>
                 </div>

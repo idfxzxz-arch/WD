@@ -17,8 +17,35 @@ body,
 
 @media (hover: hover) and (pointer: fine) {
   html.custom-cursor-active,
-  html.custom-cursor-active * {
+  html.custom-cursor-active *:not(input, textarea, select, button, a, [role="button"], label, .custom-cursor-show, .custom-cursor-show *) {
     cursor: none !important;
+  }
+
+  html.custom-cursor-active input,
+  html.custom-cursor-active textarea {
+    cursor: text !important;
+  }
+
+  html.custom-cursor-active select,
+  html.custom-cursor-active button,
+  html.custom-cursor-active a,
+  html.custom-cursor-active [role="button"],
+  html.custom-cursor-active label {
+    cursor: pointer !important;
+  }
+
+  .custom-cursor-show,
+  .custom-cursor-show * {
+    cursor: auto !important;
+  }
+  .custom-cursor-show input,
+  .custom-cursor-show textarea {
+    cursor: text !important;
+  }
+  .custom-cursor-show button,
+  .custom-cursor-show select,
+  .custom-cursor-show a {
+    cursor: pointer !important;
   }
 }
 
