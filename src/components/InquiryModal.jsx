@@ -55,6 +55,8 @@ export default function InquiryModal({ isOpen, onClose }) {
     return true
   }
 
+  const isEn = lang?.code === "en"
+
   const getSelectedDivisionsLabel = () => {
     return formData.divisions
       .map((d) => availableDivisions.find((item) => item.id === d)?.label || d)
@@ -64,45 +66,139 @@ export default function InquiryModal({ isOpen, onClose }) {
   const buildWaSummaryText = () => {
     const selectedDivisionsLabel = getSelectedDivisionsLabel()
 
-    return `*BRIEF PROYEK & KONSULTASI - WD GROUP*
-━━━━━━━━━━━━━━━━━━━━
-👤 *Nama Lengkap:* ${formData.name.trim()}
-🏢 *Instansi / Brand / Pasangan:* ${formData.company.trim() || "-"}
-📱 *Kontak (WA/Email):* ${formData.contact.trim()}
-🎯 *Divisi / Layanan:* ${selectedDivisionsLabel}
-📅 *Perkiraan Jadwal:* ${formData.date.trim() || "-"}
-💰 *Estimasi Budget:* ${formData.budget}
-━━━━━━━━━━━━━━━━━━━━
-📝 *Deskripsi & Kebutuhan Proyek:*
-${formData.notes.trim()}
-━━━━━━━━━━━━━━━━━━━━
-_Pesan dikirim melalui formulir konsultasi website WD Group Company._`
+    if (isEn) {
+      return `*BRIEF & CONSULTATION REQUEST*
+*WD GROUP COMPANY*
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+*Dear WD Group Team,*
+I would like to submit a project brief and consultation request with the following details:
+
+👤 *1. CLIENT INFORMATION*
+• *Full Name:* ${formData.name.trim()}
+• *Company / Brand / Couple:* ${formData.company.trim() || "-"}
+• *Contact (WA/Email):* ${formData.contact.trim()}
+
+🎯 *2. SERVICE & SCOPE*
+• *Division / Services:* ${selectedDivisionsLabel}
+• *Target Timeline / Date:* ${formData.date.trim() || "-"}
+• *Budget Estimation:* ${formData.budget}
+
+📋 *3. BRIEF DESCRIPTION & NOTES*
+"${formData.notes.trim()}"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+Please kindly review and let us know your availability and initial proposal. Thank you!`
+    }
+
+    return `*BRIEF & PERMOHONAN KONSULTASI PROYEK*
+*WD GROUP COMPANY*
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+*Yth. Tim Konsultan & Admin WD Group,*
+Halo, saya ingin mengajukan brief rencana proyek dan permohonan konsultasi dengan rincian berikut:
+
+👤 *1. DATA KLIEN*
+• *Nama Lengkap:* ${formData.name.trim()}
+• *Instansi / Brand / Pasangan:* ${formData.company.trim() || "-"}
+• *Kontak (WA/Email):* ${formData.contact.trim()}
+
+🎯 *2. LAYANAN YANG DIBUTUHKAN*
+• *Divisi / Layanan:* ${selectedDivisionsLabel}
+• *Rencana Tanggal / Jadwal:* ${formData.date.trim() || "-"}
+• *Estimasi Anggaran:* ${formData.budget}
+
+📋 *3. RINGKASAN BRIEF & KEBUTUHAN PROYEK*
+"${formData.notes.trim()}"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+Mohon info ketersediaan jadwal serta penawaran solusi / estimasinya. Terima kasih.`
+  }
+
+  const buildEmailSubject = () => {
+    const selectedDivisionsLabel = getSelectedDivisionsLabel()
+    if (isEn) {
+      return `[Project Brief] ${formData.name.trim()} - ${selectedDivisionsLabel} | WD Group`
+    }
+    return `[Pengajuan Brief Proyek] ${formData.name.trim()} - ${selectedDivisionsLabel} | WD Group`
   }
 
   const buildEmailSummaryText = () => {
     const selectedDivisionsLabel = getSelectedDivisionsLabel()
 
-    return `Halo Tim WD Group Company,
+    if (isEn) {
+      return `Kepada Yth.
+Tim Manajemen & Konsultan Proyek WD Group Company
+(groupcompanywd@gmail.com)
 
-Berikut adalah data formulir brief & konsultasi proyek yang dikirimkan melalui website resmi:
+Dear WD Group Team,
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-DATA KLIEN & RINCIAN PROYEK
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• Nama Lengkap: ${formData.name.trim()}
-• Instansi / Brand / Pasangan: ${formData.company.trim() || "-"}
-• Kontak (WhatsApp / Email): ${formData.contact.trim()}
-• Divisi / Layanan yang Dipilih: ${selectedDivisionsLabel}
-• Target Tanggal / Pelaksanaan: ${formData.date.trim() || "-"}
-• Estimasi Anggaran: ${formData.budget}
+In regards to our upcoming project plan, we would like to submit our project brief and inquiry details as outlined below:
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-DESKRIPSI BRIEF & KEBUTUHAN:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+=======================================================
+I. CLIENT & COMPANY INFORMATION
+=======================================================
+• Full Name           : ${formData.name.trim()}
+• Company / Brand     : ${formData.company.trim() || "-"}
+• Contact (WA / Email): ${formData.contact.trim()}
+
+=======================================================
+II. PROJECT SCOPE & SERVICE REQUIREMENTS
+=======================================================
+• Services / Division : ${selectedDivisionsLabel}
+• Target Timeline     : ${formData.date.trim() || "-"}
+• Estimated Budget    : ${formData.budget}
+
+=======================================================
+III. BRIEF DESCRIPTION & PROJECT NOTES
+=======================================================
 ${formData.notes.trim()}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Email ini dikirim otomatis dari Formulir Konsultasi Proyek WD Group Company.`
+=======================================================
+
+We look forward to receiving your initial review, quotation, or proposal. Please feel free to reach out to us via the contact provided above for further discussions.
+
+Thank you for your attention and collaboration.
+
+Sincerely,
+${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}` : ""}`
+    }
+
+    return `Kepada Yth.
+Tim Manajemen & Konsultan Proyek WD Group Company
+(groupcompanywd@gmail.com)
+
+Dengan hormat,
+
+Sehubungan dengan rencana pelaksanaan proyek/acara kami, bersama pesan ini kami bermaksud mengajukan formulir brief proyek dan permohonan konsultasi dengan rincian sebagai berikut:
+
+=======================================================
+I. DATA KLIEN & INSTANSI
+=======================================================
+• Nama Lengkap          : ${formData.name.trim()}
+• Perusahaan / Brand    : ${formData.company.trim() || "-"}
+• Kontak (WhatsApp/Tel) : ${formData.contact.trim()}
+
+=======================================================
+II. SPESIFIKASI KEBUTUHAN & LAYANAN
+=======================================================
+• Divisi / Layanan      : ${selectedDivisionsLabel}
+• Rencana Pelaksanaan   : ${formData.date.trim() || "-"}
+• Estimasi Anggaran     : ${formData.budget}
+
+=======================================================
+III. DESKRIPSI BRIEF & CATATAN PROYEK
+=======================================================
+${formData.notes.trim()}
+
+=======================================================
+
+Besar harapan kami brief ini dapat dipelajari oleh tim WD Group guna penyusunan konsep serta penawaran terbaik. Kami siap untuk mendiskusikan kebutuhan ini lebih lanjut.
+
+Atas perhatian dan kerja samanya, kami ucapkan terima kasih.
+
+Hormat kami,
+${formData.name.trim()}${formData.company.trim() ? `\n${formData.company.trim()}` : ""}`
   }
 
   const saveToDatabase = async (channel) => {
@@ -156,10 +252,8 @@ Email ini dikirim otomatis dari Formulir Konsultasi Proyek WD Group Company.`
     setSubmitting(true)
     await saveToDatabase("email")
 
-    const selectedDivisionsLabel = getSelectedDivisionsLabel()
-    const summary = buildEmailSummaryText()
-    const subject = encodeURIComponent(`[Brief Proyek] ${formData.name.trim()} - ${selectedDivisionsLabel}`)
-    const body = encodeURIComponent(summary)
+    const subject = encodeURIComponent(buildEmailSubject())
+    const body = encodeURIComponent(buildEmailSummaryText())
     window.open(`mailto:${EMAIL_ADMIN}?subject=${subject}&body=${body}`, "_blank", "noopener,noreferrer")
     setSubmitting(false)
     onClose()
