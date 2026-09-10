@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
+  AlertCircle,
+  CheckCircle2,
   CheckSquare,
   Copy,
   Download,
@@ -39,13 +42,21 @@ export default function MediaLibrary() {
   const [uploading, setUploading] = useState(false);
   const [deletingBulk, setDeletingBulk] = useState(false);
   const [query, setQuery] = useState("");
-  const [toast, setToast] = useState("");
+  const [toast, setToast] = useState({ message: "", type: "success" });
   const [role, setRole] = useState("admin");
+  const [deleteModal, setDeleteModal] = useState({
+    isOpen: false,
+    type: "bulk", // "single" | "bulk"
+    file: null,
+    count: 0,
+    paths: [],
+  });
+
   const isSuperAdmin = role === "superadmin";
 
-  const showToast = (message) => {
-    setToast(message);
-    setTimeout(() => setToast(""), 2500);
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
+    setTimeout(() => setToast({ message: "", type: "success" }), 3000);
   };
 
   const fetchFiles = async () => {
@@ -59,7 +70,7 @@ export default function MediaLibrary() {
       });
 
     if (error) {
-      alert("Gagal memuat media: " + error.message);
+      showToast("Gagal memuat media: " + error.message, "error");
       setLoading(false);
       return;
     }
@@ -116,12 +127,10 @@ export default function MediaLibrary() {
 
   const toggleSelectAll = () => {
     if (allFilteredSelected) {
-      // Unselect all currently filtered
       setSelectedPaths((prev) =>
         prev.filter((path) => !filteredFiles.some((f) => f.path === path))
       );
     } else {
-      // Select all currently filtered
       const pathsToAdd = filteredFiles.map((file) => file.path);
       setSelectedPaths((prev) => Array.from(new Set([...prev, ...pathsToAdd])));
     }
@@ -152,9 +161,9 @@ export default function MediaLibrary() {
       }
 
       await fetchFiles();
-      showToast("✓ Media berhasil diunggah");
+      showToast("✓ Media berhasil diunggah", "success");
     } catch (error) {
-      alert("Gagal upload media: " + error.message);
+      showToast("Gagal upload media: " + error.message, "error");
     } finally {
       event.target.value = "";
       setUploading(false);
@@ -163,42 +172,45 @@ export default function MediaLibrary() {
 
   const copyUrl = async (url) => {
     await navigator.clipboard.writeText(url);
-    showToast("✓ URL media disalin ke clipboard");
+    showToast("✓ URL media disalin ke clipboard", "success");
   };
 
-  const deleteFile = async (file) => {
-    const confirmed = window.confirm(`Hapus media "${file.name}"?`);
-    if (!confirmed) return;
-
-    const { error } = await supabase.storage.from(BUCKET).remove([file.path]);
-    if (error) {
-      alert("Gagal menghapus media: " + error.message);
-      return;
-    }
-
-    setFiles((current) => current.filter((item) => item.path !== file.path));
-    setSelectedPaths((current) => current.filter((p) => p !== file.path));
-    showToast("✓ Media berhasil dihapus");
+  const openSingleDeleteModal = (file) => {
+    setDeleteModal({
+      isOpen: true,
+      type: "single",
+      file,
+      count: 1,
+      paths: [file.path],
+    });
   };
 
-  const deleteSelectedFiles = async () => {
+  const openBulkDeleteModal = () => {
     if (!selectedPaths.length) return;
+    setDeleteModal({
+      isOpen: true,
+      type: "bulk",
+      file: null,
+      count: selectedPaths.length,
+      paths: [...selectedPaths],
+    });
+  };
 
-    const count = selectedPaths.length;
-    const confirmed = window.confirm(
-      `Apakah Anda yakin ingin menghapus ${count} media terpilih sekaligus dari storage? Tindakan ini permanen.`
-    );
-    if (!confirmed) return;
+  const handleConfirmDelete = async () => {
+    if (!deleteModal.paths.length) return;
 
     setDeletingBulk(true);
     try {
-      const { error } = await supabase.storage.from(BUCKET).remove(selectedPaths);
+      const pathsToDelete = deleteModal.paths;
+      const count = pathsToDelete.length;
+
+      const { error } = await supabase.storage.from(BUCKET).remove(pathsToDelete);
       if (error) throw error;
 
       // Hapus juga referensi di tabel works jika ada
       try {
         const deletedUrls = files
-          .filter((f) => selectedPaths.includes(f.path))
+          .filter((f) => pathsToDelete.includes(f.path))
           .map((f) => f.publicUrl);
 
         if (deletedUrls.length > 0) {
@@ -208,11 +220,18 @@ export default function MediaLibrary() {
         console.warn("Works sync warning:", dbErr);
       }
 
-      setFiles((current) => current.filter((item) => !selectedPaths.includes(item.path)));
-      setSelectedPaths([]);
-      showToast(`✓ Berhasil menghapus ${count} media`);
+      setFiles((current) => current.filter((item) => !pathsToDelete.includes(item.path)));
+      setSelectedPaths((current) => current.filter((p) => !pathsToDelete.includes(p)));
+      setDeleteModal({ isOpen: false, type: "bulk", file: null, count: 0, paths: [] });
+
+      showToast(
+        count === 1
+          ? "✓ Media berhasil dihapus secara permanen"
+          : `✓ Berhasil menghapus ${count} media secara permanen`,
+        "success"
+      );
     } catch (error) {
-      alert("Gagal menghapus media: " + error.message);
+      showToast("Gagal menghapus media: " + error.message, "error");
     } finally {
       setDeletingBulk(false);
     }
@@ -220,11 +239,168 @@ export default function MediaLibrary() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      {toast && (
-        <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-white font-medium text-sm px-5 py-3 rounded-2xl shadow-xl animate-fade-in">
-          {toast}
-        </div>
-      )}
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast.message && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className={`fixed top-6 right-6 z-50 flex items-center gap-2.5 font-medium text-sm px-5 py-3 rounded-2xl shadow-2xl backdrop-blur-xl border ${
+              toast.type === "error"
+                ? "bg-red-950/90 text-red-200 border-red-500/30 shadow-red-950/50"
+                : "bg-emerald-950/90 text-emerald-200 border-emerald-500/30 shadow-emerald-950/50"
+            }`}
+          >
+            {toast.type === "error" ? (
+              <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+            ) : (
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            )}
+            <span>{toast.message}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Modern Confirmation Modal */}
+      <AnimatePresence>
+        {deleteModal.isOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md"
+              onClick={() => !deletingBulk && setDeleteModal((prev) => ({ ...prev, isOpen: false }))}
+            />
+
+            {/* Modal Dialog Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ type: "spring", duration: 0.35, bounce: 0.15 }}
+              className="relative z-10 w-full max-w-md bg-[#121214] border border-white/10 rounded-3xl p-6 sm:p-7 shadow-2xl shadow-black/90 overflow-hidden text-left"
+            >
+              {/* Ambient Red Glow */}
+              <div className="absolute -top-24 -left-20 w-56 h-56 bg-red-600/15 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-24 -right-20 w-56 h-56 bg-orange-600/10 rounded-full blur-3xl pointer-events-none" />
+
+              {/* Close Button */}
+              <button
+                type="button"
+                disabled={deletingBulk}
+                onClick={() => setDeleteModal((prev) => ({ ...prev, isOpen: false }))}
+                className="absolute top-5 right-5 p-2 rounded-xl text-zinc-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/5 transition disabled:opacity-50 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              {/* Icon & Title Header */}
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 flex items-center justify-center shrink-0 shadow-lg shadow-red-500/10">
+                  <Trash2 className="w-6 h-6 animate-pulse" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white tracking-tight">
+                    {deleteModal.type === "bulk"
+                      ? `Hapus ${deleteModal.count} Foto Terpilih?`
+                      : "Hapus Foto Media?"}
+                  </h3>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-red-400 bg-red-500/10 px-2 py-0.5 rounded-md mt-1 border border-red-500/20">
+                    Tindakan Permanen
+                  </span>
+                </div>
+              </div>
+
+              {/* Body Description & Details */}
+              <div className="space-y-3.5 my-4">
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  {deleteModal.type === "bulk" ? (
+                    <>
+                      Apakah Anda yakin ingin menghapus{" "}
+                      <span className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded">
+                        {deleteModal.count} media
+                      </span>{" "}
+                      sekaligus dari storage Supabase?
+                    </>
+                  ) : (
+                    <>
+                      Apakah Anda yakin ingin menghapus file media ini dari storage Supabase?
+                    </>
+                  )}
+                </p>
+
+                {/* Details Card for single item */}
+                {deleteModal.type === "single" && deleteModal.file && (
+                  <div className="flex items-center gap-3 bg-white/5 border border-white/5 rounded-2xl p-3">
+                    <img
+                      src={deleteModal.file.publicUrl}
+                      alt={deleteModal.file.name}
+                      className="w-12 h-12 rounded-xl object-cover border border-white/10 shrink-0"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-semibold text-white truncate">
+                        {deleteModal.file.name}
+                      </p>
+                      <p className="text-[11px] text-zinc-500 mt-0.5">
+                        {formatSize(deleteModal.file.metadata?.size)} · {formatDate(deleteModal.file.created_at)}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Warning note for bulk deletion */}
+                {deleteModal.type === "bulk" && (
+                  <div className="bg-red-950/20 border border-red-500/20 rounded-2xl p-3.5 space-y-1.5">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-red-300">
+                      <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+                      <span>Peringatan Penghapusan Massal</span>
+                    </div>
+                    <p className="text-xs text-zinc-400 leading-normal pl-6">
+                      Seluruh file foto yang dipilih akan dihapus secara permanen dari server dan referensi di portofolio web akan otomatis dibersihkan.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3 mt-6 pt-2">
+                <button
+                  type="button"
+                  disabled={deletingBulk}
+                  onClick={() => setDeleteModal((prev) => ({ ...prev, isOpen: false }))}
+                  className="flex-1 py-2.5 px-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-zinc-300 font-medium text-sm transition cursor-pointer disabled:opacity-50 text-center"
+                >
+                  Batal
+                </button>
+                <button
+                  type="button"
+                  disabled={deletingBulk}
+                  onClick={handleConfirmDelete}
+                  className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 hover:from-red-500 hover:to-rose-500 text-white font-semibold text-sm transition shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                >
+                  {deletingBulk ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Menghapus...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Trash2 className="w-4 h-4" />
+                      <span>
+                        {deleteModal.type === "bulk" ? `Hapus (${deleteModal.count})` : "Hapus Foto"}
+                      </span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-6">
@@ -294,7 +470,7 @@ export default function MediaLibrary() {
           {selectedPaths.length > 0 && (
             <button
               type="button"
-              onClick={deleteSelectedFiles}
+              onClick={openBulkDeleteModal}
               disabled={deletingBulk}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 cursor-pointer disabled:opacity-50"
             >
@@ -309,7 +485,7 @@ export default function MediaLibrary() {
         </div>
       </div>
 
-      {/* Floating Selection Banner on mobile/desktop when items selected */}
+      {/* Floating Selection Banner when items selected */}
       {selectedPaths.length > 0 && (
         <div className="bg-indigo-950/60 border border-indigo-500/30 rounded-2xl px-4 py-3 mb-6 flex items-center justify-between gap-3 text-sm">
           <div className="flex items-center gap-2 text-indigo-200 font-medium">
@@ -323,15 +499,15 @@ export default function MediaLibrary() {
             <button
               type="button"
               onClick={() => setSelectedPaths([])}
-              className="text-xs text-zinc-400 hover:text-white px-2 py-1 rounded-lg transition"
+              className="text-xs text-zinc-400 hover:text-white px-2 py-1 rounded-lg transition cursor-pointer"
             >
               Batal
             </button>
             <button
               type="button"
-              onClick={deleteSelectedFiles}
+              onClick={openBulkDeleteModal}
               disabled={deletingBulk}
-              className="inline-flex items-center gap-1.5 bg-red-600 hover:bg-red-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow-md shadow-red-600/20"
+              className="inline-flex items-center gap-1.5 bg-red-600 hover:bg-red-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow-md shadow-red-600/20 cursor-pointer"
             >
               {deletingBulk ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
               Hapus Sekaligus
@@ -420,7 +596,7 @@ export default function MediaLibrary() {
                       Open
                     </a>
                     <button
-                      onClick={() => deleteFile(file)}
+                      onClick={() => openSingleDeleteModal(file)}
                       className="flex items-center justify-center gap-1.5 bg-red-500/10 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-lg px-2 py-2 text-xs text-red-400 transition cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
