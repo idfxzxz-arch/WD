@@ -51,25 +51,6 @@ export default function DivisionLayout({ config }) {
     setActiveTab(tabs[0]);
   }, [lang?.code, tabs]);
 
-  const getFallbackWorks = (category) => {
-    const defaultImage = {
-      wedding: "/resources/Wedding/wedding.webp",
-      production: "/resources/Production/Production.webp",
-      event: "/resources/Event_Organizer/Event.webp",
-      workshop: "/resources/Workshop/Workshop.webp",
-      music: "/resources/Music_ENT/Music_ENT.webp",
-    }[category] || "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=800&q=80";
-
-    return Array.from({ length: 6 }).map((_, i) => ({
-      id: `fallback-${category}-${i}`,
-      category: category,
-      title: `Sample ${brand} Project ${i + 1}`,
-      subcategory: tabs[(i % (tabs.length - 1)) + 1] || tabs[0],
-      image: defaultImage,
-      meta: "This is a curated portfolio item from WD Group.",
-    }));
-  };
-
   useEffect(() => {
     let mounted = true;
 
@@ -90,16 +71,16 @@ export default function DivisionLayout({ config }) {
         if (error) throw error;
 
         if (mounted) {
-          const finalData = data && data.length > 0 ? data : getFallbackWorks(config.category);
+          const finalData = data || [];
           setWorks(finalData);
           if (finalData?.[0]) setSaved([{ id: finalData[0].id }]);
+          else setSaved([]);
         }
       } catch (err) {
         console.error(`Error loading ${config.category} works:`, err);
         if (mounted) {
-          const finalData = getFallbackWorks(config.category);
-          setWorks(finalData);
-          if (finalData?.[0]) setSaved([{ id: finalData[0].id }]);
+          setWorks([]);
+          setSaved([]);
         }
       }
     };
