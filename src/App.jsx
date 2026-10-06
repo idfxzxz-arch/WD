@@ -216,13 +216,13 @@ export default function App() {
                 <Route path="/" element={<PublicPage chatbotDelayMs={2700}><Home /></PublicPage>} />
                 <Route path="/works" element={<PublicPage><Works /></PublicPage>} />
                 
-                <Route path="/wedding" element={<PublicPage><Wedding /></PublicPage>} />
+                <Route path="/wedding" element={<PublicPage showChatbot={false}><Wedding /></PublicPage>} />
                 
-                <Route path="/workshop" element={<PublicPage><Workshop /></PublicPage>} />
-                <Route path="/music" element={<PublicPage><Music /></PublicPage>} />
-                <Route path="/event" element={<PublicPage><Event /></PublicPage>} />
-                <Route path="/production" element={<PublicPage><Production /></PublicPage>} />
-                <Route path="/it" element={<PublicPage><ITPage /></PublicPage>} />
+                <Route path="/workshop" element={<PublicPage showChatbot={false}><Workshop /></PublicPage>} />
+                <Route path="/music" element={<PublicPage showChatbot={false}><Music /></PublicPage>} />
+                <Route path="/event" element={<PublicPage showChatbot={false}><Event /></PublicPage>} />
+                <Route path="/production" element={<PublicPage showChatbot={false}><Production /></PublicPage>} />
+                <Route path="/it" element={<PublicPage showChatbot={false}><ITPage /></PublicPage>} />
                 <Route path="/assistant" element={<PublicPage showChatbot={false}><AssistantPage /></PublicPage>} />
 
                 <Route path={privateLoginPath} element={<Login />} />

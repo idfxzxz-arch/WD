@@ -71,7 +71,22 @@ export default function DivisionLayout({ config }) {
         if (error) throw error;
 
         if (mounted) {
-          const finalData = data || [];
+          let finalData = data || [];
+          
+          if (config.category === "wedding") {
+            const staticWorks = [
+              ...Array.from({length: 7}, (_, i) => ({
+                id: `static_akad_${i}`, title: `Akad Nikah ${i+1}`, category: 'wedding', subcategory: 'akad', image: `/portfolio/akad/akad-${i+1}.jpg`, meta: 'Portfolio', link: ''
+              })),
+              ...Array.from({length: 13}, (_, i) => ({
+                id: `static_res_${i}`, title: `Resepsi ${i+1}`, category: 'wedding', subcategory: 'resepsi', image: `/portfolio/resepsi/resepsi-${i+1}.jpg`, meta: 'Portfolio', link: ''
+              }))
+            ];
+            const existingTitles = new Set(finalData.map(d => d.title));
+            const newWorks = staticWorks.filter(sw => !existingTitles.has(sw.title));
+            finalData = [...finalData, ...newWorks];
+          }
+
           setWorks(finalData);
           if (finalData?.[0]) setSaved([{ id: finalData[0].id }]);
           else setSaved([]);
