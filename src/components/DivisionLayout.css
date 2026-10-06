@@ -774,6 +774,9 @@
     height: auto;
     max-height: none;
     min-height: 0;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
     border-radius: 22px;
     padding: 6px;
     background: linear-gradient(145deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .06));
@@ -784,6 +787,9 @@
     grid-template-columns: 1fr;
     border-radius: 18px;
     background: #f7f7f8;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .dp-side {
@@ -793,21 +799,29 @@
   .dp-main {
     height: auto;
     min-height: 0;
+    min-width: 0;
+    max-width: 100vw;
     padding: 14px;
+    box-sizing: border-box;
   }
 
   .dp-main-top {
     margin-bottom: 12px;
     padding-bottom: 10px;
     border-bottom: 1px solid #e7e8ec;
+    flex-wrap: wrap;
+    min-width: 0;
   }
 
   .dp-main-title {
     font-size: 17px;
+    max-width: 100%;
+    word-wrap: break-word;
   }
 
   .dp-main-meta {
     font-size: 11px;
+    flex-shrink: 0;
   }
 
   .dp-tabs {
@@ -816,16 +830,17 @@
 
   .dp-grid {
     flex: 1 1 auto;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 12px;
     padding-bottom: 4px;
     min-height: min-content;
+    overflow: visible;
   }
 
   .dp-card {
     aspect-ratio: 4 / 5;
     border-radius: 14px;
-    min-height: 120px;
+    height: auto;
   }
 
   .dp-gallery-footer {
