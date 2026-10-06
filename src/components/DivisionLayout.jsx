@@ -170,7 +170,11 @@ export default function DivisionLayout({ config }) {
 
   return (
     <>
-      <SEO title={`${title} ${titleAccent} – ${brand}`} description={description} />
+      <SEO 
+        title={config.seoTitle || `${title} ${titleAccent} – ${brand}`} 
+        description={config.seoDescription || description} 
+        keywords={config.keywords} 
+      />
       <div
         className={`dp-root dp-${config.category}`}
         style={{

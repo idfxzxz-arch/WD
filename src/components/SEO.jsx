@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async"
 import { useContext } from "react"
 import { LanguageContext } from "../context/LanguageContext"
 
-export default function SEO({ title, description, url = "https://www.wdgroupcompany.biz.id/" }) {
+export default function SEO({ title, description, keywords, url = "https://www.wdgroupcompany.biz.id/" }) {
   const { lang } = useContext(LanguageContext)
   const defaultTitle = `${lang.company} – WD Group Company | Creative Media & Event Organizer`
   const defaultDescription = lang.subtitle1 ? `${lang.subtitle1} ${lang.subtitle2}` : "WD Group Company (WD Jaya Group) adalah penyedia jasa multimedia, event organizer, photo video production, dan solusi bisnis."
@@ -14,6 +14,7 @@ export default function SEO({ title, description, url = "https://www.wdgroupcomp
     <Helmet>
       <title>{finalTitle}</title>
       <meta name="description" content={finalDescription} />
+      {keywords && <meta name="keywords" content={keywords} />}
       
       {/* Open Graph */}
       <meta property="og:title" content={finalTitle} />
