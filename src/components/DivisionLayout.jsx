@@ -76,10 +76,10 @@ export default function DivisionLayout({ config }) {
           if (config.category === "wedding") {
             const staticWorks = [
               ...Array.from({length: 7}, (_, i) => ({
-                id: `static_akad_${i}`, title: `Akad Nikah ${i+1}`, category: 'wedding', subcategory: 'akad', image: `/portfolio/akad/akad-${i+1}.jpg`, meta: 'Portfolio', link: ''
+                id: `static_akad_${i}`, title: `Akad Nikah ${i+1}`, category: 'wedding', subcategory: 'akad', image: `/portfolio/akad/akad-${i+1}.jpg?v=2`, meta: 'Portfolio', link: ''
               })),
               ...Array.from({length: 13}, (_, i) => ({
-                id: `static_res_${i}`, title: `Resepsi ${i+1}`, category: 'wedding', subcategory: 'resepsi', image: `/portfolio/resepsi/resepsi-${i+1}.jpg`, meta: 'Portfolio', link: ''
+                id: `static_res_${i}`, title: `Resepsi ${i+1}`, category: 'wedding', subcategory: 'resepsi', image: `/portfolio/resepsi/resepsi-${i+1}.jpg?v=2`, meta: 'Portfolio', link: ''
               }))
             ];
             const existingTitles = new Set(finalData.map(d => d.title));
