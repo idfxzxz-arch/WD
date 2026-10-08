@@ -183,14 +183,13 @@ export default function Scope() {
             WD Group menghubungkan event, wedding, produksi visual, musik, workshop, dan solusi digital dalam satu sistem kerja yang rapi.
           </p>
 
-          <button
-            type="button"
-            onClick={() => goTo(active.link)}
+          <a
+            href={active.link}
             className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-white/86"
           >
             View {active.brand}
             <ArrowRight size={16} />
-          </button>
+          </a>
         </div>
 
         <div
@@ -324,6 +323,15 @@ export default function Scope() {
                         })}
                       </div>
                     </div>
+
+                    <div className="mt-4 border-t border-white/10 pt-3">
+                      <a
+                        href={item.link}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:underline"
+                      >
+                        Buka Halaman {item.brand} <ArrowRight size={12} />
+                      </a>
+                    </div>
                   </MotionDiv>
                 )}
               </div>
@@ -335,11 +343,10 @@ export default function Scope() {
           {services.map((item) => {
             const Icon = item.icon
             return (
-              <button
-                type="button"
+              <a
                 key={item.id}
-                onClick={() => goTo(item.link)}
-                className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-4 text-left"
+                href={item.link}
+                className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-4 text-left transition hover:bg-white/10"
               >
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full" style={{ background: item.accent, color: "#050505" }}>
                   <Icon size={18} />
@@ -349,7 +356,7 @@ export default function Scope() {
                   <span className="mt-1 block text-xs leading-5 text-white/48">{item.desc}</span>
                 </span>
                 <ArrowRight size={17} className="text-white/45" />
-              </button>
+              </a>
             )
           })}
         </div>

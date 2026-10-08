@@ -4,10 +4,10 @@ import { LanguageContext } from "../context/LanguageContext"
 
 export default function SEO({ title, description, keywords, url = "https://www.wdgroupcompany.biz.id/" }) {
   const { lang } = useContext(LanguageContext)
-  const defaultTitle = `${lang.company} – WD Group Company | Creative Media & Event Organizer`
-  const defaultDescription = lang.subtitle1 ? `${lang.subtitle1} ${lang.subtitle2}` : "WD Group Company (WD Jaya Group) adalah penyedia jasa multimedia, event organizer, photo video production, dan solusi bisnis."
+  const defaultTitle = `${lang?.company || "WD Group Company"} – Creative Media & Event Organizer`
+  const defaultDescription = lang?.subtitle1 ? `${lang.subtitle1} ${lang.subtitle2}` : "WD Group Company (WD Jaya Group) adalah penyedia jasa multimedia, event organizer, photo video production, dan solusi bisnis."
   
-  const finalTitle = title ? `${title} | WD Group Company` : defaultTitle
+  const finalTitle = title ? (title.includes("WD") ? title : `${title} | WD Group Company`) : defaultTitle
   const finalDescription = description || defaultDescription
 
   return (
@@ -15,6 +15,7 @@ export default function SEO({ title, description, keywords, url = "https://www.w
       <title>{finalTitle}</title>
       <meta name="description" content={finalDescription} />
       {keywords && <meta name="keywords" content={keywords} />}
+      <link rel="canonical" href={url} />
       
       {/* Open Graph */}
       <meta property="og:title" content={finalTitle} />

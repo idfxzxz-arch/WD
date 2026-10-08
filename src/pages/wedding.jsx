@@ -24,6 +24,12 @@ const weddingConfig = {
   galleryTitle: "Wedding Portfolio",
   mark: "SKY",
   tabs: ["All Projects", "Akad", "Resepsi", "Pricelist"],
+  tabAliases: {
+    Akad: ["akad"],
+    Resepsi: ["resepsi"],
+    Reception: ["resepsi"],
+    Pricelist: ["pricelist"],
+  },
   stats: [
     { value: "End-to-end", label: "Planning" },
     { value: "Vendor", label: "Coordination" },

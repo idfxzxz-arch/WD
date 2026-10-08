@@ -420,12 +420,21 @@
   box-shadow: 0 0 0 2px var(--accent);
 }
 
+.dp-grid.dp-grid-doc .dp-card {
+  aspect-ratio: 3 / 4;
+}
+
 .dp-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
+}
+
+.dp-card.dp-card-doc img {
+  object-fit: cover;
+  object-position: top center;
 }
 
 .dp-card::after {
@@ -619,6 +628,10 @@
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .dp-lightbox-btn:hover {

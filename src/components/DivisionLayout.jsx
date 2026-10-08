@@ -6,6 +6,36 @@ import { LanguageContext } from "../context/LanguageContext";
 import SEO from "./SEO";
 import "./DivisionLayout.css";
 
+const getWeddingStaticWorks = () => [
+  ...Array.from({length: 7}, (_, i) => ({
+    id: `static_akad_${i}`,
+    title: `Akad Nikah ${i+1}`,
+    category: 'wedding',
+    subcategory: 'akad',
+    image: `/portfolio/akad/akad-${i+1}.jpg?v=2`,
+    meta: 'Portfolio Akad Nikah',
+    link: ''
+  })),
+  ...Array.from({length: 13}, (_, i) => ({
+    id: `static_res_${i}`,
+    title: `Resepsi ${i+1}`,
+    category: 'wedding',
+    subcategory: 'resepsi',
+    image: `/portfolio/resepsi/resepsi-${i+1}.jpg?v=2`,
+    meta: 'Portfolio Resepsi',
+    link: ''
+  })),
+  ...Array.from({length: 3}, (_, i) => ({
+    id: `static_price_${i}`,
+    title: `Pricelist Paket Wedding - Halaman ${i+1}`,
+    category: 'wedding',
+    subcategory: 'pricelist',
+    image: `/portfolio/pricelist/Pricelist_WD_Group_Page_${i+1}.png`,
+    meta: 'Pricelist Resmi WD Sky Wedding Organizer',
+    link: `/portfolio/pricelist/Pricelist_WD_Group_Page_${i+1}.png`
+  }))
+];
+
 export default function DivisionLayout({ config }) {
   const itemsPerPage = 9;
   const navigate = useNavigate();
@@ -26,6 +56,7 @@ export default function DivisionLayout({ config }) {
     removeFromSelection: "Remove from Selection",
     savedToast: "Saved to selection",
     removedToast: "Removed from selection",
+    viewFull: "View Full Image",
   };
 
   const brand = divisionLang.brand || config.brand;
@@ -74,14 +105,7 @@ export default function DivisionLayout({ config }) {
           let finalData = data || [];
           
           if (config.category === "wedding") {
-            const staticWorks = [
-              ...Array.from({length: 7}, (_, i) => ({
-                id: `static_akad_${i}`, title: `Akad Nikah ${i+1}`, category: 'wedding', subcategory: 'akad', image: `/portfolio/akad/akad-${i+1}.jpg?v=2`, meta: 'Portfolio', link: ''
-              })),
-              ...Array.from({length: 13}, (_, i) => ({
-                id: `static_res_${i}`, title: `Resepsi ${i+1}`, category: 'wedding', subcategory: 'resepsi', image: `/portfolio/resepsi/resepsi-${i+1}.jpg?v=2`, meta: 'Portfolio', link: ''
-              }))
-            ];
+            const staticWorks = getWeddingStaticWorks();
             const existingTitles = new Set(finalData.map(d => d.title));
             const newWorks = staticWorks.filter(sw => !existingTitles.has(sw.title));
             finalData = [...finalData, ...newWorks];
@@ -94,8 +118,14 @@ export default function DivisionLayout({ config }) {
       } catch (err) {
         console.error(`Error loading ${config.category} works:`, err);
         if (mounted) {
-          setWorks([]);
-          setSaved([]);
+          if (config.category === "wedding") {
+            const staticWorks = getWeddingStaticWorks();
+            setWorks(staticWorks);
+            setSaved([{ id: staticWorks[0].id }]);
+          } else {
+            setWorks([]);
+            setSaved([]);
+          }
         }
       }
     };
@@ -174,6 +204,7 @@ export default function DivisionLayout({ config }) {
         title={config.seoTitle || `${title} ${titleAccent} – ${brand}`} 
         description={config.seoDescription || description} 
         keywords={config.keywords} 
+        url={`https://www.wdgroupcompany.biz.id/${config.category}`}
       />
       <div
         className={`dp-root dp-${config.category}`}
@@ -284,15 +315,16 @@ export default function DivisionLayout({ config }) {
                   ))}
                 </div>
 
-                <div className="dp-grid">
+                <div className={`dp-grid ${(activeTab || "").toLowerCase().trim() === "pricelist" ? "dp-grid-doc" : ""}`}>
                   {filtered.length > 0 ? (
                     visibleWorks.map((item, index) => {
                       const isSaved = saved.some((savedItem) => savedItem.id === item.id);
+                      const isDoc = (item.subcategory || "").toLowerCase().trim() === "pricelist";
                       return (
                         <button
                           type="button"
                           key={item.id}
-                          className={`dp-card ${isSaved ? "saved" : ""}`}
+                          className={`dp-card ${isSaved ? "saved" : ""} ${isDoc ? "dp-card-doc" : ""}`}
                           onClick={() => openLightbox(index)}
                         >
                           <img src={item.image} alt={item.title || `${brand} portfolio`} loading="lazy" />
@@ -389,6 +421,15 @@ export default function DivisionLayout({ config }) {
                     <button className="dp-lightbox-btn" onClick={() => toggleSaved(selectedWork)}>
                       {saved.some((item) => item.id === selectedWork.id) ? ui.removeFromSelection : ui.saveToSelection}
                     </button>
+                    <a
+                      className="dp-lightbox-btn"
+                      href={selectedWork.link || selectedWork.image}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ textAlign: "center", textDecoration: "none" }}
+                    >
+                      {ui.viewFull || "Buka Gambar Penuh"}
+                    </a>
                     <button className="dp-lightbox-btn" onClick={closeLightbox}>
                       {ui.back}
                     </button>

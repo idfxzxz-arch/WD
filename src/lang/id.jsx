@@ -30,6 +30,7 @@ export const id = {
     clearSaved: "Hapus Semua",
     savedToast: "Portofolio disimpan ke pilihan",
     removedToast: "Dihapus dari pilihan",
+    viewFull: "Buka Gambar Penuh",
   },
 
   // Divisions Data

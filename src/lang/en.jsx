@@ -30,6 +30,7 @@ export const en = {
     clearSaved: "Clear All",
     savedToast: "Added to your selection",
     removedToast: "Removed from selection",
+    viewFull: "View Full Image",
   },
 
   // Divisions Data
