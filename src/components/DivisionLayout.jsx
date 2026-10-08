@@ -6,6 +6,8 @@ import { LanguageContext } from "../context/LanguageContext";
 import SEO from "./SEO";
 import "./DivisionLayout.css";
 
+const MotionDiv = motion.div;
+
 const getWeddingStaticWorks = () => [
   ...Array.from({length: 7}, (_, i) => ({
     id: `static_akad_${i}`,
@@ -219,14 +221,14 @@ export default function DivisionLayout({ config }) {
       >
         <AnimatePresence>
           {toast && (
-            <motion.div
+            <MotionDiv
               className="dp-toast"
               initial={{ opacity: 0, y: -18, scale: 0.94 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -18, scale: 0.94 }}
             >
               {toast}
-            </motion.div>
+            </MotionDiv>
           )}
         </AnimatePresence>
 
@@ -242,7 +244,7 @@ export default function DivisionLayout({ config }) {
         </nav>
 
         <main className="dp-hero">
-          <motion.div
+          <MotionDiv
             className="dp-copy"
             initial={{ opacity: 0, y: 26 }}
             animate={{ opacity: 1, y: 0 }}
@@ -283,9 +285,9 @@ export default function DivisionLayout({ config }) {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </MotionDiv>
 
-          <motion.div
+          <MotionDiv
             className="dp-showcase"
             initial={{ opacity: 0, y: 28, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -371,12 +373,12 @@ export default function DivisionLayout({ config }) {
                 )}
               </section>
             </div>
-          </motion.div>
+          </MotionDiv>
         </main>
 
         <AnimatePresence>
           {selectedWork && (
-            <motion.div
+            <MotionDiv
               className="dp-lightbox"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -396,7 +398,7 @@ export default function DivisionLayout({ config }) {
                   </button>
                 </>
               )}
-              <motion.div
+              <MotionDiv
                 className="dp-lightbox-panel"
                 initial={{ scale: 0.96, y: 18 }}
                 animate={{ scale: 1, y: 0 }}
@@ -435,8 +437,8 @@ export default function DivisionLayout({ config }) {
                     </button>
                   </div>
                 </div>
-              </motion.div>
-            </motion.div>
+              </MotionDiv>
+            </MotionDiv>
           )}
         </AnimatePresence>
       </div>
