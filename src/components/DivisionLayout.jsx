@@ -30,9 +30,9 @@ const getWeddingStaticWorks = () => [
     title: `Pricelist Paket Wedding - Halaman ${i+1}`,
     category: 'wedding',
     subcategory: 'pricelist',
-    image: `/portfolio/pricelist/Pricelist_WD_Group_Page_${i+1}.png`,
+    image: `/portfolio/pricelist/Pricelist_WD_Group_Page_${i+1}.webp`,
     meta: 'Pricelist Resmi WD Sky Wedding Organizer',
-    link: `/portfolio/pricelist/Pricelist_WD_Group_Page_${i+1}.png`
+    link: `/portfolio/pricelist/Pricelist_WD_Group_Page_${i+1}.webp`
   }))
 ];
 
