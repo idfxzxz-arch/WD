@@ -6,6 +6,12 @@ html {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body,
@@ -13,6 +19,10 @@ body,
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+}
+
+body {
+  -ms-overflow-style: none;
 }
 
 @media (hover: hover) and (pointer: fine) {

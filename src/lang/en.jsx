@@ -44,7 +44,7 @@ export const en = {
       description: "WD Sky Wedding Organizer helps couples design a calm, orderly, and memorable wedding day. From the event flow and vendor coordination to aesthetic details, every moment is carefully directed without losing the authentic, personal touch of your love story.",
       primaryCta: "Booking Now",
       galleryTitle: "Wedding Portfolio",
-      tabs: ["All Projects", "Akad", "Reception", "Pricelist"],
+      tabs: ["All Projects", "Akad", "Reception", "Pricelist WO", "Pricelist Venue"],
       stats: [
         { value: "End-to-end", label: "Planning" },
         { value: "Vendor", label: "Coordination" },

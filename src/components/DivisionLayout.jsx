@@ -3,6 +3,7 @@ import { useEffect, useState, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { LanguageContext } from "../context/LanguageContext";
+import { FileText, ArrowUpRight, Building2 } from "lucide-react";
 import SEO from "./SEO";
 import "./DivisionLayout.css";
 
@@ -35,11 +36,164 @@ const getWeddingStaticWorks = () => [
     image: `/portfolio/pricelist/Pricelist_WD_Group_Page_${i+1}.webp`,
     meta: 'Pricelist Resmi WD Sky Wedding Organizer',
     link: `/portfolio/pricelist/Pricelist_WD_Group_Page_${i+1}.webp`
-  }))
+  })),
+  {
+    id: 'static_venue_alila',
+    title: 'Hotel Alila Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/13__fRe3H7ZRPUWJGl-s9arFA2_T1RSAI/view?usp=drive_link',
+    meta: 'Alila X Masjid Sheikh Zayed · Wedding & Ballroom Package',
+    badge: 'Pricelist Venue',
+    tag: 'Hotel & Ballroom'
+  },
+  {
+    id: 'static_venue_anasera',
+    title: 'Anasera Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1ZVBEaU3qfoTGGLlfd_OKCcpAC_vy0kZz/view?usp=drive_link',
+    meta: 'Anasera X PT WD Group · Romantic & Intimate Wedding Package',
+    badge: 'Pricelist Venue',
+    tag: 'Outdoor & Garden'
+  },
+  {
+    id: 'static_venue_arja',
+    title: 'Arja Cafe Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1RPVqD1saEBm8p2oV5gtqHbxua1ScVrR6/view?usp=drive_link',
+    meta: 'Arja Cafe X PT WD Group · Modern Intimate Wedding Package',
+    badge: 'Pricelist Venue',
+    tag: 'Cafe & Intimate'
+  },
+  {
+    id: 'static_venue_beams',
+    title: 'Beams Cafe Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1XLmj68_v5xu5R5f684i8dzRxczEPBs5n/view?usp=drive_link',
+    meta: 'Beams Cafe X PT WD Group · Aesthetic Wedding & Event Package',
+    badge: 'Pricelist Venue',
+    tag: 'Aesthetic Space'
+  },
+  {
+    id: 'static_venue_tbjt',
+    title: 'TBJT Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1HfnoZ8TDWA775eJJbYRQYpTWctLVdZu0/view?usp=drive_link',
+    meta: 'Taman Budaya Jawa Tengah · Cultural & Ballroom Wedding Package',
+    badge: 'Pricelist Venue',
+    tag: 'Heritage & Hall'
+  },
+  {
+    id: 'static_venue_mang_engking',
+    title: 'Mang Engking Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1EQc0ysyDBvAZh2YjKNa_4oT6uoAXNQ2v/view?usp=drive_link',
+    meta: 'Gubug Makan Mang Engking · Nuansa Alam & Outdoor Wedding',
+    badge: 'Pricelist Venue',
+    tag: 'Outdoor & Resto'
+  },
+  {
+    id: 'static_venue_zayed',
+    title: 'Sheikh Zayed Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1G7zU6L4sqs-yimxgKawecRYMYcrF_GL-/view?usp=drive_link',
+    meta: 'Masjid Raya Sheikh Zayed · Islamic & Grand Ballroom Package',
+    badge: 'Pricelist Venue',
+    tag: 'Convention & Ballroom'
+  },
+  {
+    id: 'static_venue_hotel_uns',
+    title: 'Hotel UNS Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1Dnt7ib34PybSxYlgaXhQEdddcS0-bob0/view?usp=drive_link',
+    meta: 'UNS Hotel & Convention · Modern Ballroom & Wedding Package',
+    badge: 'Pricelist Venue',
+    tag: 'Hotel & Convention'
+  },
+  {
+    id: 'static_venue_wisma_batari',
+    title: 'Wisma Batari Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1FONWxtb0TwZt6yXJsmXMEZ0wLXQqpF9p/view?usp=drive_link',
+    meta: 'Gedung Wisma Batari · Gedung Pernikahan Klasik & Elegan',
+    badge: 'Pricelist Venue',
+    tag: 'Historic & Ballroom'
+  },
+  {
+    id: 'static_venue_wastra_bumbu',
+    title: 'Wastra Bumbu Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1ol5_2yMwtaSnXUPILkPYAtRtE68-1tk1/view?usp=drive_link',
+    meta: 'Wastra Bumbu Solo · Intimate Wedding & Fine Dining Package',
+    badge: 'Pricelist Venue',
+    tag: 'Restaurant & Intimate'
+  },
+  {
+    id: 'static_venue_hall_tirtonadi',
+    title: 'Convention Hall Tirtonadi',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1_7IwZcI0Ryy-FQOc15wQOKqzP3j6ca-4/view?usp=drive_link',
+    meta: 'Convention Hall Tirtonadi · Modern Grand Ballroom & Space',
+    badge: 'Pricelist Venue',
+    tag: 'Grand Ballroom'
+  },
+  {
+    id: 'static_venue_hotel_alana',
+    title: 'The Alana Hotel Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1uiBbCc3yKZQBqWfBGBtM73FgvRPnVFSy/view?usp=drive_link',
+    meta: 'The Alana Hotel & Convention · 4-Star Luxury Wedding Package',
+    badge: 'Pricelist Venue',
+    tag: 'Luxury Hotel & Ballroom'
+  },
+  {
+    id: 'static_venue_grandis',
+    title: 'Grandis Barn Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1P216V_fGx86hud5Gs_1VRTkRsYKNe9Yg/view?usp=drive_link',
+    meta: 'Grandis Barn Solo · Rustic & Aesthetic Garden Wedding Venue',
+    badge: 'Pricelist Venue',
+    tag: 'Barn & Rustic Garden'
+  },
+  {
+    id: 'static_venue_happy_tuty',
+    title: 'Happy Tuty Solo',
+    category: 'wedding',
+    subcategory: 'venue',
+    isExternalLink: true,
+    link: 'https://drive.google.com/file/d/1ikDV4uzJXYlxxsdyWX1NryO7n5KXTzV1/view?usp=drive_link',
+    meta: 'Happy Tuty Solo · Unique Heritage & Intimate Wedding Venue',
+    badge: 'Pricelist Venue',
+    tag: 'Heritage & Garden'
+  }
 ];
 
 export default function DivisionLayout({ config }) {
-  const itemsPerPage = 9;
   const navigate = useNavigate();
   const { lang } = useContext(LanguageContext);
 
@@ -150,6 +304,8 @@ export default function DivisionLayout({ config }) {
     });
   }, [works, activeTab, tabs, config.tabAliases]);
 
+  const isVenueTab = (activeTab || "").toLowerCase().trim().includes("venue");
+  const itemsPerPage = isVenueTab ? 4 : 9;
   const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const safePage = Math.min(galleryPage, totalPages - 1);
   const pageStart = safePage * itemsPerPage;
@@ -317,11 +473,54 @@ export default function DivisionLayout({ config }) {
                   ))}
                 </div>
 
-                <div className={`dp-grid ${(activeTab || "").toLowerCase().trim() === "pricelist" ? "dp-grid-doc" : ""}`}>
+                <div className={`dp-grid ${(activeTab || "").toLowerCase().trim().includes("pricelist wo") ? "dp-grid-doc" : ""} ${isVenueTab ? "dp-grid-venue" : ""}`}>
                   {filtered.length > 0 ? (
                     visibleWorks.map((item, index) => {
                       const isSaved = saved.some((savedItem) => savedItem.id === item.id);
                       const isDoc = (item.subcategory || "").toLowerCase().trim() === "pricelist";
+                      const isVenueLink = item.isExternalLink || (item.link && !item.image);
+
+                      if (isVenueLink) {
+                        return (
+                          <a
+                            key={item.id}
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="dp-card dp-card-venue-link"
+                            title={`${item.title} - Buka di Google Drive`}
+                          >
+                            <div className="dp-venue-card-inner">
+                              <div className="dp-venue-top">
+                                <span className="dp-venue-badge">
+                                  <FileText size={11} />
+                                  <span>PDF</span>
+                                </span>
+                                <span className="dp-venue-external-icon">
+                                  <ArrowUpRight size={13} />
+                                </span>
+                              </div>
+
+                              <div className="dp-venue-body">
+                                <div className="dp-venue-kicker">
+                                  <Building2 size={10} />
+                                  <span>{item.tag || "VENUE"}</span>
+                                </div>
+                                <h3 className="dp-venue-title">{item.title}</h3>
+                                <p className="dp-venue-meta">{item.meta || "Pricelist & Wedding Package"}</p>
+                              </div>
+
+                              <div className="dp-venue-footer">
+                                <span className="dp-venue-cta-btn">
+                                  <span>Buka Google Drive</span>
+                                  <ArrowUpRight size={12} />
+                                </span>
+                              </div>
+                            </div>
+                          </a>
+                        );
+                      }
+
                       return (
                         <button
                           type="button"
@@ -407,7 +606,25 @@ export default function DivisionLayout({ config }) {
                 onClick={(event) => event.stopPropagation()}
               >
                 <div className="dp-lightbox-media">
-                  <img src={selectedWork.image} alt={selectedWork.title || `${brand} portfolio`} />
+                  {selectedWork.isExternalLink || !selectedWork.image ? (
+                    <div className="dp-lightbox-doc-view" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", padding: 32, textAlign: "center", background: "#111217", color: "#fff" }}>
+                      <FileText size={56} style={{ color: "var(--accent, #c89f67)", marginBottom: 16 }} />
+                      <h3 style={{ fontSize: 22, fontWeight: 700, margin: "0 0 8px" }}>{selectedWork.title}</h3>
+                      <p style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", maxWidth: 360, margin: "0 0 20px" }}>{selectedWork.meta}</p>
+                      <a
+                        href={selectedWork.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="dp-lightbox-btn"
+                        style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}
+                      >
+                        <span>Buka di Google Drive</span>
+                        <ArrowUpRight size={16} />
+                      </a>
+                    </div>
+                  ) : (
+                    <img src={selectedWork.image} alt={selectedWork.title || `${brand} portfolio`} />
+                  )}
                 </div>
                 <div className="dp-lightbox-info">
                   <div className="dp-lightbox-kicker">
@@ -430,7 +647,7 @@ export default function DivisionLayout({ config }) {
                       rel="noopener noreferrer"
                       style={{ textAlign: "center", textDecoration: "none" }}
                     >
-                      {ui.viewFull || "Buka Gambar Penuh"}
+                      {selectedWork.isExternalLink ? "Buka di Google Drive" : (ui.viewFull || "Buka Gambar Penuh")}
                     </a>
                     <button className="dp-lightbox-btn" onClick={closeLightbox}>
                       {ui.back}

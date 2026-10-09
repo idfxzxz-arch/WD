@@ -23,12 +23,15 @@ const weddingConfig = {
   savedMessage: "Wedding reference saved",
   galleryTitle: "Wedding Portfolio",
   mark: "SKY",
-  tabs: ["All Projects", "Akad", "Resepsi", "Pricelist"],
+  tabs: ["All Projects", "Akad", "Resepsi", "Pricelist WO", "Pricelist Venue"],
   tabAliases: {
     Akad: ["akad"],
     Resepsi: ["resepsi"],
     Reception: ["resepsi"],
+    "Pricelist WO": ["pricelist"],
     Pricelist: ["pricelist"],
+    "Pricelist Venue": ["venue", "pricelist_venue", "hotel"],
+    "Venue Pricelist": ["venue", "pricelist_venue", "hotel"],
   },
   stats: [
     { value: "End-to-end", label: "Planning" },

@@ -204,10 +204,53 @@ function Home() {
   )
 }
 
+function MouseDragScroll() {
+  useEffect(() => {
+    let dragging = false
+    let lastY = 0
+
+    const isInteractive = (target) => target.closest(
+      "input, textarea, select, button, a, [role='button'], [contenteditable='true']"
+    )
+
+    const onPointerDown = (event) => {
+      if (event.pointerType !== "mouse" || event.button !== 0 || isInteractive(event.target)) return
+      dragging = true
+      lastY = event.clientY
+    }
+
+    const onPointerMove = (event) => {
+      if (!dragging) return
+      event.preventDefault()
+      window.scrollBy({ top: lastY - event.clientY, behavior: "auto" })
+      lastY = event.clientY
+    }
+
+    const stopDragging = () => {
+      dragging = false
+    }
+
+    window.addEventListener("pointerdown", onPointerDown)
+    window.addEventListener("pointermove", onPointerMove, { passive: false })
+    window.addEventListener("pointerup", stopDragging)
+    window.addEventListener("pointercancel", stopDragging)
+
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown)
+      window.removeEventListener("pointermove", onPointerMove)
+      window.removeEventListener("pointerup", stopDragging)
+      window.removeEventListener("pointercancel", stopDragging)
+    }
+  }, [])
+
+  return null
+}
+
 export default function App() {
   return (
     <HelmetProvider>
       <LanguageProvider>
+        <MouseDragScroll />
         <style>{appStyles}</style>
         <BrowserRouter>
           <PageTransitionProvider>
