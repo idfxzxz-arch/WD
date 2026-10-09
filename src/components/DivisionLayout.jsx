@@ -44,7 +44,7 @@ const getWeddingStaticWorks = () => [
     subcategory: 'venue',
     isExternalLink: true,
     link: 'https://drive.google.com/file/d/13__fRe3H7ZRPUWJGl-s9arFA2_T1RSAI/view?usp=drive_link',
-    meta: 'Alila X Masjid Sheikh Zayed · Wedding & Ballroom Package',
+    meta: 'Alila X Masjid Zayed · Wedding & Ballroom Package',
     badge: 'Pricelist Venue',
     tag: 'Hotel & Ballroom'
   },
@@ -105,12 +105,12 @@ const getWeddingStaticWorks = () => [
   },
   {
     id: 'static_venue_zayed',
-    title: 'Sheikh Zayed Solo',
+    title: 'Zayed Solo',
     category: 'wedding',
     subcategory: 'venue',
     isExternalLink: true,
     link: 'https://drive.google.com/file/d/1G7zU6L4sqs-yimxgKawecRYMYcrF_GL-/view?usp=drive_link',
-    meta: 'Masjid Raya Sheikh Zayed · Islamic & Grand Ballroom Package',
+    meta: 'Masjid Raya Zayed · Islamic & Grand Ballroom Package',
     badge: 'Pricelist Venue',
     tag: 'Convention & Ballroom'
   },
