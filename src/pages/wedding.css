@@ -1,0 +1,812 @@
+/* ==========================================================================
+   WD SKY WEDDING ORGANIZER - RICH CONTENT & SEO STYLES
+   ========================================================================== */
+
+.w-rich-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px clamp(20px, 4.5vw, 64px) 100px;
+  color: #f1ede8;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.7;
+}
+
+/* SECTION COMMONS */
+.w-section {
+  margin-top: clamp(60px, 8vw, 110px);
+  position: relative;
+}
+
+.w-section-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto clamp(36px, 5vw, 60px);
+}
+
+.w-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(200, 159, 103, 0.12);
+  border: 1px solid rgba(200, 159, 103, 0.35);
+  color: #d8af75;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 14px;
+}
+
+.w-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4.2vw, 48px);
+  line-height: 1.2;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 16px;
+  letter-spacing: -0.01em;
+}
+
+.w-title em {
+  font-style: italic;
+  color: #c89f67;
+  font-weight: 400;
+}
+
+.w-subtitle {
+  font-size: clamp(14px, 1.15vw, 17px);
+  color: #bfb5aa;
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* 1. INTRO EDITORIAL SECTION */
+.w-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(200, 159, 103, 0.18);
+  border-radius: 24px;
+  padding: clamp(24px, 4vw, 48px);
+  backdrop-filter: blur(12px);
+}
+
+@media (min-width: 900px) {
+  .w-intro-grid {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 48px;
+  }
+}
+
+.w-intro-text p {
+  font-size: clamp(14.5px, 1.1vw, 16px);
+  color: #d6cdc4;
+  margin-bottom: 18px;
+}
+
+.w-intro-text strong {
+  color: #ffffff;
+}
+
+.w-intro-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+
+.w-highlight-box {
+  background: rgba(200, 159, 103, 0.06);
+  border: 1px solid rgba(200, 159, 103, 0.22);
+  border-radius: 16px;
+  padding: 18px 22px;
+}
+
+.w-highlight-box h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e5c38c;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.w-highlight-box p {
+  font-size: 13.5px;
+  color: #b3a79b;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 2. PACKAGES SECTION */
+.w-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  align-items: stretch;
+}
+
+.w-package-card {
+  background: linear-gradient(180deg, rgba(28, 22, 17, 0.85) 0%, rgba(17, 13, 10, 0.95) 100%);
+  border: 1px solid rgba(200, 159, 103, 0.24);
+  border-radius: 22px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.w-package-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(200, 159, 103, 0.6);
+  box-shadow: 0 20px 45px rgba(200, 159, 103, 0.12);
+}
+
+.w-package-featured {
+  border-color: #c89f67;
+  background: linear-gradient(180deg, rgba(38, 30, 22, 0.92) 0%, rgba(20, 15, 11, 0.98) 100%);
+  box-shadow: 0 16px 40px rgba(200, 159, 103, 0.16);
+}
+
+.w-featured-badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #c89f67;
+  color: #100c09;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 4px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.w-package-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 22px;
+  margin-bottom: 22px;
+}
+
+.w-package-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 8px;
+}
+
+.w-package-desc {
+  font-size: 13.5px;
+  color: #b7a79b;
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+.w-package-price {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.w-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.w-price-original {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ef4444;
+  text-decoration: line-through;
+  opacity: 0.9;
+}
+
+.w-price-val {
+  font-size: 26px;
+  font-weight: 800;
+  color: #e5c38c;
+  letter-spacing: -0.02em;
+}
+
+.w-price-sub {
+  font-size: 11.5px;
+  color: #c4b5a5;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.w-package-scope {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #d8af75;
+  background: rgba(216, 175, 117, 0.12);
+  border: 1px solid rgba(216, 175, 117, 0.28);
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.w-package-crew-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #100c09;
+  background: linear-gradient(135deg, #d8af75, #f5d8a8);
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(216, 175, 117, 0.25);
+}
+
+.w-package-subgroup {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #e5c38c;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-bottom: 4px;
+}
+
+.w-price-tag {
+  font-size: 24px;
+  font-weight: 800;
+  color: #d8af75;
+  letter-spacing: -0.02em;
+}
+
+.w-price-placeholder {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e5c38c;
+  background: rgba(200, 159, 103, 0.14);
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1px dashed rgba(200, 159, 103, 0.4);
+}
+
+.w-package-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  flex: 1;
+}
+
+.w-package-features li {
+  font-size: 13.5px;
+  color: #ded5cc;
+  padding: 7px 0 7px 26px;
+  position: relative;
+  line-height: 1.55;
+}
+
+.w-package-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  color: #c89f67;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.w-package-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  background: #c89f67;
+  color: #100c09;
+  transition: all 0.25s ease;
+  border: 1px solid #c89f67;
+}
+
+.w-package-btn:hover {
+  background: #deb57d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(200, 159, 103, 0.3);
+}
+
+.w-package-btn-outline {
+  background: transparent;
+  color: #d8af75;
+  border: 1px solid rgba(200, 159, 103, 0.4);
+}
+
+.w-package-btn-outline:hover {
+  background: rgba(200, 159, 103, 0.15);
+  border-color: #c89f67;
+  color: #ffffff;
+}
+
+.w-payment-note {
+  margin-top: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px 22px;
+  text-align: center;
+  font-size: 13px;
+  color: #b7a79b;
+}
+
+/* 3. WORKFLOW TIMELINE */
+.w-workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.w-step-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(200, 159, 103, 0.2);
+  border-radius: 18px;
+  padding: 28px 22px;
+  position: relative;
+  transition: transform 0.25s ease;
+}
+
+.w-step-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200, 159, 103, 0.45);
+}
+
+.w-step-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #c89f67;
+  opacity: 0.85;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.w-step-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px;
+}
+
+.w-step-desc {
+  font-size: 13.5px;
+  color: #b8aba0;
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* 4. TRUST FACTORS */
+.w-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.w-trust-card {
+  background: rgba(200, 159, 103, 0.04);
+  border: 1px solid rgba(200, 159, 103, 0.18);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.w-trust-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #e5c38c;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.w-trust-card p {
+  font-size: 13.5px;
+  color: #bcb1a6;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 5. REVIEWS & TESTIMONIALS SECTION */
+.w-review-box {
+  background: linear-gradient(180deg, rgba(30, 24, 18, 0.8) 0%, rgba(16, 12, 9, 0.95) 100%);
+  border: 1px solid rgba(200, 159, 103, 0.35);
+  border-radius: 24px;
+  padding: clamp(32px, 5vw, 56px) clamp(20px, 4vw, 48px);
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.w-review-stars {
+  color: #f59e0b;
+  font-size: 24px;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+}
+
+.w-review-text {
+  font-size: clamp(15px, 1.2vw, 17px);
+  color: #ded6cd;
+  max-width: 680px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+}
+
+.w-review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.w-btn-google {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.w-btn-google:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
+.w-btn-review-write {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 12px;
+  background: transparent;
+  color: #d8af75;
+  border: 1px solid rgba(200, 159, 103, 0.5);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.w-btn-review-write:hover {
+  background: rgba(200, 159, 103, 0.15);
+  border-color: #c89f67;
+  color: #ffffff;
+}
+
+/* 6. FAQ SECTION */
+.w-faq-list {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.w-faq-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(200, 159, 103, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.w-faq-item[open] {
+  border-color: rgba(200, 159, 103, 0.5);
+  background: rgba(200, 159, 103, 0.04);
+}
+
+.w-faq-summary {
+  padding: 20px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  user-select: none;
+}
+
+.w-faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+.w-faq-summary::after {
+  content: '+';
+  font-size: 22px;
+  font-weight: 400;
+  color: #c89f67;
+  transition: transform 0.25s ease;
+  margin-left: 12px;
+}
+
+.w-faq-item[open] .w-faq-summary::after {
+  content: '−';
+}
+
+.w-faq-answer {
+  padding: 0 24px 22px;
+  font-size: 14.5px;
+  color: #b7a99d;
+  line-height: 1.7;
+}
+
+/* 7. REGIONAL SUPPORT HUBS (SOLO RAYA SUB-PAGES) */
+.w-region-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.w-region-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  padding: 22px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+}
+
+.w-region-card:hover {
+  border-color: #c89f67;
+  background: rgba(200, 159, 103, 0.06);
+  transform: translateY(-3px);
+}
+
+.w-region-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.w-region-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: #c89f67;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.w-region-desc {
+  font-size: 13px;
+  color: #9f9488;
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* 8. CONTACT & EMBED GOOGLE MAPS */
+.w-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  background: rgba(20, 16, 12, 0.9);
+  border: 1px solid rgba(200, 159, 103, 0.25);
+  border-radius: 24px;
+  padding: clamp(24px, 4vw, 44px);
+  overflow: hidden;
+}
+
+@media (min-width: 960px) {
+  .w-contact-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+}
+
+.w-contact-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.5vw, 30px);
+  color: #ffffff;
+  margin: 0 0 16px;
+}
+
+.w-contact-info p {
+  font-size: 14.5px;
+  color: #bfb2a6;
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+.w-nap-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.w-nap-icon {
+  color: #c89f67;
+  font-size: 18px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.w-nap-text strong {
+  display: block;
+  font-size: 13px;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.w-nap-text span, .w-nap-text a {
+  font-size: 14px;
+  color: #cfc5bb;
+  text-decoration: none;
+}
+
+.w-nap-text a:hover {
+  color: #c89f67;
+}
+
+.w-map-wrapper {
+  width: 100%;
+  height: 340px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(200, 159, 103, 0.3);
+  position: relative;
+}
+
+.w-map-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* FLOATING WA BUTTON ON MOBILE */
+.w-floating-wa {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #25d366;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+  transition: transform 0.25s ease;
+}
+
+.w-floating-wa:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 640px) {
+  .w-floating-wa span {
+    display: none;
+  }
+  .w-floating-wa {
+    padding: 14px;
+    border-radius: 50%;
+  }
+}
+
+/* 4B. 14 VENUE REKANAN RESMI GRID */
+.w-venues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.w-venue-card {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(200, 159, 103, 0.2);
+  border-radius: 18px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.w-venue-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200, 159, 103, 0.5);
+  background: rgba(200, 159, 103, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.w-venue-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #d8af75;
+  background: rgba(200, 159, 103, 0.12);
+  border: 1px solid rgba(200, 159, 103, 0.25);
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  align-self: flex-start;
+}
+
+.w-venue-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 8px;
+  line-height: 1.35;
+}
+
+.w-venue-desc {
+  font-size: 13px;
+  color: #bfb2a6;
+  line-height: 1.55;
+  margin: 0 0 18px;
+  flex: 1;
+}
+
+.w-venue-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #d8af75;
+}
+
+.w-venue-footer span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+

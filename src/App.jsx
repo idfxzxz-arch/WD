@@ -18,6 +18,7 @@ import { HelmetProvider } from "react-helmet-async"
 import SEO from "./components/SEO"
 
 const Wedding = lazy(() => import("./pages/wedding"))
+const WeddingRegion = lazy(() => import("./pages/WeddingRegion"))
 const Workshop = lazy(() => import("./pages/workshop"))
 const Music = lazy(() => import("./pages/music"))
 const Event = lazy(() => import("./pages/event"))
@@ -260,6 +261,7 @@ export default function App() {
                 <Route path="/works" element={<PublicPage><SEO title="Portfolio & Showcase Karya" description="Portofolio lengkap karya dan layanan dari WD Group Company: Wedding Organizer, Event, Visual Production, Musik, Workshop, dan Solusi Digital." url="https://www.wdgroupcompany.biz.id/works" /><Works /></PublicPage>} />
                 
                 <Route path="/wedding" element={<PublicPage showChatbot={false}><Wedding /></PublicPage>} />
+                <Route path="/wedding/:regionSlug" element={<PublicPage showChatbot={false}><WeddingRegion /></PublicPage>} />
                 
                 <Route path="/workshop" element={<PublicPage showChatbot={false}><Workshop /></PublicPage>} />
                 <Route path="/music" element={<PublicPage showChatbot={false}><Music /></PublicPage>} />

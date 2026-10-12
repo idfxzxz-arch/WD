@@ -151,6 +151,59 @@ export default function Cta() {
                   </a>
                 )
               })}
+              <a
+                href="https://search.google.com/local/writereview?placeid=ChIJ5R9lUwAXei4Rrtb0jIuw3wU"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 text-amber-400/80 transition hover:text-amber-300"
+              >
+                <span>★ Tulis Ulasan Google</span>
+                <ArrowUpRight size={13} className="transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+              </a>
+            </div>
+
+            {/* NAP & INTERNAL DIVISION LINKS FOOTER FOR SEO */}
+            <div className="mt-12 border-t border-white/10 pt-8 text-xs text-white/40">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div>
+                  <p className="font-semibold text-white/70 uppercase tracking-wider text-[11px]">Kantor Pusat WD Group</p>
+                  <p className="mt-2 text-white/50 leading-relaxed">
+                    Griya Edelweis No.12a, Dusun V, Joho, Kec. Mojolaban, Kabupaten Sukoharjo, Jawa Tengah 57554
+                  </p>
+                  <p className="mt-2 text-white/50">
+                    WhatsApp: <a href="https://wa.me/6285707909415" className="text-white/80 hover:underline">0857-0790-9415</a>
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-semibold text-white/70 uppercase tracking-wider text-[11px]">Ekosistem 6 Divisi</p>
+                  <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1.5 text-white/55">
+                    <a href="/wedding" className="hover:text-amber-400 transition">WD Sky Wedding</a>
+                    <a href="/event" className="hover:text-indigo-400 transition">WD Event</a>
+                    <a href="/production" className="hover:text-amber-500 transition">WD Production</a>
+                    <a href="/music" className="hover:text-purple-400 transition">WD Music</a>
+                    <a href="/workshop" className="hover:text-green-400 transition">WD Workshop</a>
+                    <a href="/it" className="hover:text-sky-400 transition">WD IT Solution</a>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="font-semibold text-white/70 uppercase tracking-wider text-[11px]">Wedding Solo Raya</p>
+                  <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1.5 text-[11px] text-white/45">
+                    <a href="/wedding/sukoharjo" className="hover:text-white transition">Sukoharjo</a>
+                    <span>·</span>
+                    <a href="/wedding/karanganyar" className="hover:text-white transition">Karanganyar</a>
+                    <span>·</span>
+                    <a href="/wedding/klaten" className="hover:text-white transition">Klaten</a>
+                    <span>·</span>
+                    <a href="/wedding/boyolali" className="hover:text-white transition">Boyolali</a>
+                    <span>·</span>
+                    <a href="/wedding/sragen" className="hover:text-white transition">Sragen</a>
+                    <span>·</span>
+                    <a href="/wedding/wonogiri" className="hover:text-white transition">Wonogiri</a>
+                  </div>
+                </div>
+              </div>
             </div>
           </Motion.div>
         </div>

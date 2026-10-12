@@ -10,190 +10,322 @@ import "./DivisionLayout.css";
 const MotionDiv = motion.div;
 
 const getWeddingStaticWorks = () => [
-  ...Array.from({length: 7}, (_, i) => ({
-    id: `static_akad_${i}`,
-    title: `Akad Nikah ${i+1}`,
+  {
+    id: 'static_akad_0',
+    title: 'Dekorasi Meja Ijab Qobul Akad Nikah Solo',
     category: 'wedding',
     subcategory: 'akad',
-    image: `/portfolio/akad/akad-${i+1}.jpg?v=2`,
-    meta: 'Portfolio Akad Nikah',
+    image: '/portfolio/akad/akad-1.jpg?v=2',
+    meta: 'Meja akad nikah khidmat dengan rangkaian melati segar adat Jawa di Solo',
     link: ''
-  })),
-  ...Array.from({length: 13}, (_, i) => ({
-    id: `static_res_${i}`,
-    title: `Resepsi ${i+1}`,
+  },
+  {
+    id: 'static_akad_1',
+    title: 'Prosesi Sungkeman Khidmat Akad Nikah Solo Raya',
+    category: 'wedding',
+    subcategory: 'akad',
+    image: '/portfolio/akad/akad-2.jpg?v=2',
+    meta: 'Momen sakral pengantin memohon restu orang tua prosesi pernikahan Solo',
+    link: ''
+  },
+  {
+    id: 'static_akad_2',
+    title: 'Pelaminan Akad Nikah Minimalis Modern Solo',
+    category: 'wedding',
+    subcategory: 'akad',
+    image: '/portfolio/akad/akad-3.jpg?v=2',
+    meta: 'Backdrop pelaminan akad nikah elegan bernuansa floral pastel di Solo',
+    link: ''
+  },
+  {
+    id: 'static_akad_3',
+    title: 'Busana Pengantin Tradisional Akad Nikah Solo',
+    category: 'wedding',
+    subcategory: 'akad',
+    image: '/portfolio/akad/akad-4.jpg?v=2',
+    meta: 'Tata rias paes ageng dan busana kebaya adat Jawa pengantin Solo',
+    link: ''
+  },
+  {
+    id: 'static_akad_4',
+    title: 'Lorong Masuk & Welcoming Gate Akad Solo Raya',
+    category: 'wedding',
+    subcategory: 'akad',
+    image: '/portfolio/akad/akad-5.jpg?v=2',
+    meta: 'Aisle decor dan welcoming sign intimate wedding venue Solo Raya',
+    link: ''
+  },
+  {
+    id: 'static_akad_5',
+    title: 'Prosesi Ijab Qobul Khidmat di Gedung Solo',
+    category: 'wedding',
+    subcategory: 'akad',
+    image: '/portfolio/akad/akad-6.jpg?v=2',
+    meta: 'Momen sakral ijab qobul pengantin bersama penghulu di gedung Solo',
+    link: ''
+  },
+  {
+    id: 'static_akad_6',
+    title: 'Detail Ronce Melati & Mahar Akad Nikah Solo',
+    category: 'wedding',
+    subcategory: 'akad',
+    image: '/portfolio/akad/akad-7.jpg?v=2',
+    meta: 'Detail kotak mahar pernikahan dan ronce melati harum akad nikah Solo Raya',
+    link: ''
+  },
+  {
+    id: 'static_res_0',
+    title: 'Dekorasi Pelaminan Resepsi Ballroom Hotel Solo',
     category: 'wedding',
     subcategory: 'resepsi',
-    image: `/portfolio/resepsi/resepsi-${i+1}.jpg?v=2`,
-    meta: 'Portfolio Resepsi',
+    image: '/portfolio/resepsi/resepsi-1.jpg?v=2',
+    meta: 'Panggung pelaminan megah dengan instalasi lampu kristal di ballroom Solo',
     link: ''
-  })),
-  ...Array.from({length: 3}, (_, i) => ({
-    id: `static_price_${i}`,
-    title: `Pricelist Paket Wedding - Halaman ${i+1}`,
-    category: 'wedding',
-    subcategory: 'pricelist',
-    image: `/portfolio/pricelist/Pricelist_WD_Group_Page_${i+1}.webp`,
-    meta: 'Pricelist Resmi WD Sky Wedding Organizer',
-    link: `/portfolio/pricelist/Pricelist_WD_Group_Page_${i+1}.webp`
-  })),
-  {
-    id: 'static_venue_alila',
-    title: 'Hotel Alila Solo',
-    category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/13__fRe3H7ZRPUWJGl-s9arFA2_T1RSAI/view?usp=drive_link',
-    meta: 'Alila X Masjid Zayed · Wedding & Ballroom Package',
-    badge: 'Pricelist Venue',
-    tag: 'Hotel & Ballroom'
   },
   {
-    id: 'static_venue_anasera',
-    title: 'Anasera Solo',
+    id: 'static_res_1',
+    title: 'Lighting & Ambience Resepsi Malam Solo Raya',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1ZVBEaU3qfoTGGLlfd_OKCcpAC_vy0kZz/view?usp=drive_link',
-    meta: 'Anasera X PT WD Group · Romantic & Intimate Wedding Package',
-    badge: 'Pricelist Venue',
-    tag: 'Outdoor & Garden'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-2.jpg?v=2',
+    meta: 'Tata pencahayaan dramatis dan panggung pelaminan mewah di Solo Raya',
+    link: ''
   },
   {
-    id: 'static_venue_arja',
-    title: 'Arja Cafe Solo',
+    id: 'static_res_2',
+    title: 'Gaun Pengantin Resepsi Internasional Modern Solo',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1RPVqD1saEBm8p2oV5gtqHbxua1ScVrR6/view?usp=drive_link',
-    meta: 'Arja Cafe X PT WD Group · Modern Intimate Wedding Package',
-    badge: 'Pricelist Venue',
-    tag: 'Cafe & Intimate'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-3.jpg?v=2',
+    meta: 'Gaun resepsi modern konsep internasional karya wedding planner Solo',
+    link: ''
   },
   {
-    id: 'static_venue_beams',
-    title: 'Beams Cafe Solo',
+    id: 'static_res_3',
+    title: 'Tata Meja VIP & Ruang Resepsi Gedung Solo',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1XLmj68_v5xu5R5f684i8dzRxczEPBs5n/view?usp=drive_link',
-    meta: 'Beams Cafe X PT WD Group · Aesthetic Wedding & Event Package',
-    badge: 'Pricelist Venue',
-    tag: 'Aesthetic Space'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-4.jpg?v=2',
+    meta: 'Penataan meja VIP keluarga dan lorong masuk resepsi pernikahan Solo',
+    link: ''
   },
   {
-    id: 'static_venue_tbjt',
-    title: 'TBJT Solo',
+    id: 'static_res_4',
+    title: 'Grand Entrance Pengantin Resepsi Solo Raya',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1HfnoZ8TDWA775eJJbYRQYpTWctLVdZu0/view?usp=drive_link',
-    meta: 'Taman Budaya Jawa Tengah · Cultural & Ballroom Wedding Package',
-    badge: 'Pricelist Venue',
-    tag: 'Heritage & Hall'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-5.jpg?v=2',
+    meta: 'Iring-iringan kirab pengantin dan orang tua memasuki area resepsi Solo',
+    link: ''
   },
   {
-    id: 'static_venue_mang_engking',
-    title: 'Mang Engking Solo',
+    id: 'static_res_5',
+    title: 'Pelaminan Adat Jawa Gebyok Ukir Klasik Solo',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1EQc0ysyDBvAZh2YjKNa_4oT6uoAXNQ2v/view?usp=drive_link',
-    meta: 'Gubug Makan Mang Engking · Nuansa Alam & Outdoor Wedding',
-    badge: 'Pricelist Venue',
-    tag: 'Outdoor & Resto'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-6.jpg?v=2',
+    meta: 'Pelaminan gebyok jati khas keraton Solo berpadu bunga segar',
+    link: ''
   },
   {
-    id: 'static_venue_zayed',
-    title: 'Zayed Solo',
+    id: 'static_res_6',
+    title: 'Wedding Gate Lorong Bunga Resepsi Solo',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1G7zU6L4sqs-yimxgKawecRYMYcrF_GL-/view?usp=drive_link',
-    meta: 'Masjid Raya Zayed · Islamic & Grand Ballroom Package',
-    badge: 'Pricelist Venue',
-    tag: 'Convention & Ballroom'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-7.jpg?v=2',
+    meta: 'Gerbang floral menyambut tamu undangan resepsi pernikahan Solo Raya',
+    link: ''
   },
   {
-    id: 'static_venue_hotel_uns',
-    title: 'Hotel UNS Solo',
+    id: 'static_res_7',
+    title: 'Panggung Pelaminan Mewah dengan Chandelier Solo',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1Dnt7ib34PybSxYlgaXhQEdddcS0-bob0/view?usp=drive_link',
-    meta: 'UNS Hotel & Convention · Modern Ballroom & Wedding Package',
-    badge: 'Pricelist Venue',
-    tag: 'Hotel & Convention'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-8.jpg?v=2',
+    meta: 'Tata panggung resepsi pernikahan megah dengan lampu kristal di Solo',
+    link: ''
   },
   {
-    id: 'static_venue_wisma_batari',
-    title: 'Wisma Batari Solo',
+    id: 'static_res_8',
+    title: 'Pengantin Busana Solo Basahan Tradisional',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1FONWxtb0TwZt6yXJsmXMEZ0wLXQqpF9p/view?usp=drive_link',
-    meta: 'Gedung Wisma Batari · Gedung Pernikahan Klasik & Elegan',
-    badge: 'Pricelist Venue',
-    tag: 'Historic & Ballroom'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-9.jpg?v=2',
+    meta: 'Keanggunan busana pengantin tradisional Solo basahan di pelaminan',
+    link: ''
   },
   {
-    id: 'static_venue_wastra_bumbu',
-    title: 'Wastra Bumbu Solo',
+    id: 'static_res_9',
+    title: 'Suasana Ruang Resepsi Convention Hall Solo',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1ol5_2yMwtaSnXUPILkPYAtRtE68-1tk1/view?usp=drive_link',
-    meta: 'Wastra Bumbu Solo · Intimate Wedding & Fine Dining Package',
-    badge: 'Pricelist Venue',
-    tag: 'Restaurant & Intimate'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-10.jpg?v=2',
+    meta: 'Pemandangan pesta resepsi luas kapasitas ribuan tamu convention hall Solo',
+    link: ''
   },
   {
-    id: 'static_venue_hall_tirtonadi',
-    title: 'Convention Hall Tirtonadi',
+    id: 'static_res_10',
+    title: 'Live Music Acoustic Resepsi Wedding Solo',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1_7IwZcI0Ryy-FQOc15wQOKqzP3j6ca-4/view?usp=drive_link',
-    meta: 'Convention Hall Tirtonadi · Modern Grand Ballroom & Space',
-    badge: 'Pricelist Venue',
-    tag: 'Grand Ballroom'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-11.jpg?v=2',
+    meta: 'Harmoni live band akustik mengiringi momen ramah tamah resepsi Solo',
+    link: ''
   },
   {
-    id: 'static_venue_hotel_alana',
-    title: 'The Alana Hotel Solo',
+    id: 'static_res_11',
+    title: 'Photobooth Rustic Modern Resepsi Pernikahan Solo',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1uiBbCc3yKZQBqWfBGBtM73FgvRPnVFSy/view?usp=drive_link',
-    meta: 'The Alana Hotel & Convention · 4-Star Luxury Wedding Package',
-    badge: 'Pricelist Venue',
-    tag: 'Luxury Hotel & Ballroom'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-12.jpg?v=2',
+    meta: 'Spot foto photobooth estetik untuk tamu resepsi pernikahan Solo Raya',
+    link: ''
   },
   {
-    id: 'static_venue_grandis',
-    title: 'Grandis Barn Solo',
+    id: 'static_res_12',
+    title: 'Kru WD Sky Wedding Bertugas di Resepsi Solo',
     category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1P216V_fGx86hud5Gs_1VRTkRsYKNe9Yg/view?usp=drive_link',
-    meta: 'Grandis Barn Solo · Rustic & Aesthetic Garden Wedding Venue',
-    badge: 'Pricelist Venue',
-    tag: 'Barn & Rustic Garden'
-  },
-  {
-    id: 'static_venue_happy_tuty',
-    title: 'Happy Tuty Solo',
-    category: 'wedding',
-    subcategory: 'venue',
-    isExternalLink: true,
-    link: 'https://drive.google.com/file/d/1ikDV4uzJXYlxxsdyWX1NryO7n5KXTzV1/view?usp=drive_link',
-    meta: 'Happy Tuty Solo · Unique Heritage & Intimate Wedding Venue',
-    badge: 'Pricelist Venue',
-    tag: 'Heritage & Garden'
+    subcategory: 'resepsi',
+    image: '/portfolio/resepsi/resepsi-13.jpg?v=2',
+    meta: 'Koordinasi tim WO profesional menjaga kelancaran pesta resepsi Solo',
+    link: ''
   }
 ];
 
-export default function DivisionLayout({ config }) {
+const getDivisionStaticWorks = (category) => {
+  if (category === "wedding") return getWeddingStaticWorks();
+  if (category === "event") {
+    return [
+      {
+        id: "static_event_0",
+        title: "Panggung & Tata Suara Konser Musik Solo Raya",
+        category: "event",
+        subcategory: "concert",
+        image: "/resources/Event_Organizer/Event.webp",
+        meta: "Konsep panggung outdoor megah dan kontrol akustik prima konser Solo",
+        link: ""
+      },
+      {
+        id: "static_event_1",
+        title: "Corporate Gathering & Gala Dinner Solo",
+        category: "event",
+        subcategory: "corporate",
+        image: "/resources/Event_Organizer/Event1.webp",
+        meta: "Manajemen acara perusahaan dan jamuan makan malam elegan convention hall Solo",
+        link: ""
+      },
+      {
+        id: "static_event_2",
+        title: "Exhibition & Festival Lighting Solo Raya",
+        category: "event",
+        subcategory: "exhibition",
+        image: "/resources/Event_Organizer/Event2.webp",
+        meta: "Instalasi tata pencahayaan panggung dan tata sirkulasi pameran Solo",
+        link: ""
+      }
+    ];
+  }
+  if (category === "production") {
+    return [
+      {
+        id: "static_prod_0",
+        title: "Dokumentasi Video Sinematik & Drone Solo Raya",
+        category: "production",
+        subcategory: "video",
+        image: "/resources/Production/Production.webp",
+        meta: "Produksi video dokumentasi sinematik dengan gear kamera profesional Solo",
+        link: ""
+      },
+      {
+        id: "static_prod_1",
+        title: "Fotografi Komersial & Visual Branding Solo",
+        category: "production",
+        subcategory: "photo",
+        image: "/resources/Production/Production1.webp",
+        meta: "Pemotretan produk komersial dan materi publikasi visual brand Solo",
+        link: ""
+      },
+      {
+        id: "static_prod_2",
+        title: "Dokumentasi Multi-Kamera Acara Akbar Solo",
+        category: "production",
+        subcategory: "video",
+        image: "/resources/Production/Production2.webp",
+        meta: "Liputan video multi-kamera dan video highlight perhelatan akbar Solo Raya",
+        link: ""
+      }
+    ];
+  }
+  if (category === "music") {
+    return [
+      {
+        id: "static_music_0",
+        title: "Live Music Band Pengiring Wedding & Event Solo",
+        category: "music",
+        subcategory: "music",
+        image: "/resources/Music_ENT/Music_ENT.webp",
+        meta: "Penampilan panggung live band profesional pengisi acara pernikahan Solo",
+        link: ""
+      },
+      ...Array.from({ length: 10 }, (_, i) => ({
+        id: `static_music_${i + 1}`,
+        title: `Talent Music & Studio Session Solo - ${i + 1}`,
+        category: "music",
+        subcategory: i % 2 === 0 ? "music" : "music class",
+        image: `/resources/Music_ENT/wm${i + 1}.webp`,
+        meta: `Dokumentasi talent panggung dan kelas edukasi musik WD Music Solo`,
+        link: ""
+      }))
+    ];
+  }
+  if (category === "workshop") {
+    return [
+      {
+        id: "static_ws_0",
+        title: "Suasana Kelas Pelatihan Keterampilan Praktis Solo",
+        category: "workshop",
+        subcategory: "workshop",
+        image: "/resources/Workshop/Workshop.webp",
+        meta: "Sesi pelatihan intensif dengan bimbingan mentor praktisi berpengalaman di Solo",
+        link: ""
+      },
+      {
+        id: "static_ws_1",
+        title: "Diskusi Interaktif & Mentoring Peserta Bootcamp Solo",
+        category: "workshop",
+        subcategory: "workshop",
+        image: "/resources/Workshop/workshop1.webp",
+        meta: "Bimbingan kelompok kecil dan simulasi pemecahan studi kasus nyata",
+        link: ""
+      },
+      {
+        id: "static_ws_2",
+        title: "Presentasi Hasil Proyek Pelatihan Vokasi Solo Raya",
+        category: "workshop",
+        subcategory: "workshop",
+        image: "/resources/Workshop/workshop2.webp",
+        meta: "Evaluasi karya langsung dan pemberian sertifikat kelulusan program workshop",
+        link: ""
+      }
+    ];
+  }
+  if (category === "it") {
+    return [
+      {
+        id: "static_it_0",
+        title: "Pengembangan Website E-Commerce & Toko Online Solo",
+        category: "it",
+        subcategory: "website",
+        image: "/resources/Store/Store.webp",
+        meta: "Arsitektur toko online responsif dan sistem manajemen inventaris modern di Solo",
+        link: ""
+      }
+    ];
+  }
+  return [];
+};
+
+export default function DivisionLayout({ config, children }) {
   const navigate = useNavigate();
   const { lang } = useContext(LanguageContext);
 
@@ -223,11 +355,18 @@ export default function DivisionLayout({ config }) {
   const description = divisionLang.description || config.description;
   const primaryCta = divisionLang.primaryCta || config.primaryCta;
   const galleryTitle = divisionLang.galleryTitle || config.galleryTitle;
-  const tabs = divisionLang.tabs || config.tabs;
+  const tabsString = (divisionLang.tabs || config.tabs || []).join("|");
+  const tabs = useMemo(() => {
+    const rawTabs = divisionLang.tabs || config.tabs || [];
+    return rawTabs.filter((tab) => {
+      const t = (tab || "").toLowerCase().trim();
+      return t !== "pricelist venue" && t !== "venue pricelist" && t !== "pricelist wo" && t !== "pricelist";
+    });
+  }, [tabsString]);
   const stats = divisionLang.stats || config.stats;
 
   const [works, setWorks] = useState([]);
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [activeTab, setActiveTab] = useState(tabs[0] || "All Projects");
   const [galleryPage, setGalleryPage] = useState(0);
   const [saved, setSaved] = useState([]);
   const [toast, setToast] = useState("");
@@ -235,8 +374,10 @@ export default function DivisionLayout({ config }) {
 
   // Sync activeTab when language changes tabs
   useEffect(() => {
-    setActiveTab(tabs[0]);
-  }, [lang?.code, tabs]);
+    if (tabs && tabs[0]) {
+      setActiveTab((prev) => (tabs.includes(prev) ? prev : tabs[0]));
+    }
+  }, [lang?.code, tabsString]);
 
   useEffect(() => {
     let mounted = true;
@@ -260,12 +401,10 @@ export default function DivisionLayout({ config }) {
         if (mounted) {
           let finalData = data || [];
           
-          if (config.category === "wedding") {
-            const staticWorks = getWeddingStaticWorks();
-            const existingTitles = new Set(finalData.map(d => d.title));
-            const newWorks = staticWorks.filter(sw => !existingTitles.has(sw.title));
-            finalData = [...finalData, ...newWorks];
-          }
+          const staticWorks = getDivisionStaticWorks(config.category);
+          const existingTitles = new Set(finalData.map(d => d.title));
+          const newWorks = staticWorks.filter(sw => !existingTitles.has(sw.title));
+          finalData = [...finalData, ...newWorks];
 
           setWorks(finalData);
           if (finalData?.[0]) setSaved([{ id: finalData[0].id }]);
@@ -274,14 +413,10 @@ export default function DivisionLayout({ config }) {
       } catch (err) {
         console.error(`Error loading ${config.category} works:`, err);
         if (mounted) {
-          if (config.category === "wedding") {
-            const staticWorks = getWeddingStaticWorks();
-            setWorks(staticWorks);
-            setSaved([{ id: staticWorks[0].id }]);
-          } else {
-            setWorks([]);
-            setSaved([]);
-          }
+          const staticWorks = getDivisionStaticWorks(config.category);
+          setWorks(staticWorks);
+          if (staticWorks?.[0]) setSaved([{ id: staticWorks[0].id }]);
+          else setSaved([]);
         }
       }
     };
@@ -296,9 +431,13 @@ export default function DivisionLayout({ config }) {
   };
 
   const filtered = useMemo(() => {
-    if (activeTab === tabs[0]) return works;
+    const baseWorks = works.filter((item) => {
+      const sub = (item.subcategory || "").toLowerCase().trim();
+      return sub !== "pricelist" && sub !== "venue";
+    });
+    if (activeTab === tabs[0]) return baseWorks;
     const tabMatches = config.tabAliases?.[activeTab] || [activeTab];
-    return works.filter((item) => {
+    return baseWorks.filter((item) => {
       const subcategory = (item.subcategory || "").toLowerCase().trim();
       return tabMatches.some((tab) => subcategory === tab.toLowerCase().trim());
     });
@@ -362,7 +501,10 @@ export default function DivisionLayout({ config }) {
         title={config.seoTitle || `${title} ${titleAccent} – ${brand}`} 
         description={config.seoDescription || description} 
         keywords={config.keywords} 
-        url={`https://www.wdgroupcompany.biz.id/${config.category}`}
+        url={config.seoUrl || `https://www.wdgroupcompany.biz.id/${config.category}`}
+        image={config.seoImage || "https://www.wdgroupcompany.biz.id/wd-group-logo.webp"}
+        imageAlt={config.seoImageAlt || `${brand} - WD Group Company`}
+        jsonLd={config.seoJsonLd}
       />
       <div
         className={`dp-root dp-${config.category}`}
@@ -473,7 +615,7 @@ export default function DivisionLayout({ config }) {
                   ))}
                 </div>
 
-                <div className={`dp-grid ${(activeTab || "").toLowerCase().trim().includes("pricelist wo") ? "dp-grid-doc" : ""} ${isVenueTab ? "dp-grid-venue" : ""}`}>
+                <div className={`dp-grid ${isVenueTab ? "dp-grid-venue" : ""}`}>
                   {filtered.length > 0 ? (
                     visibleWorks.map((item, index) => {
                       const isSaved = saved.some((savedItem) => savedItem.id === item.id);
@@ -574,6 +716,7 @@ export default function DivisionLayout({ config }) {
             </div>
           </MotionDiv>
         </main>
+        {children}
 
         <AnimatePresence>
           {selectedWork && (

@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /wd-ops/
 
 Sitemap: https://www.wdgroupcompany.biz.id/sitemap.xml

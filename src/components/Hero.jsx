@@ -185,6 +185,7 @@ export default function Hero() {
           className="text-[31vw] sm:text-[18vw] font-serif leading-none cursor-pointer tracking-[-0.08em] sm:tracking-normal"
         >
           WD
+          <span className="sr-only"> Group Company – Creative Media, Event Organizer & Wedding Organizer Solo Raya</span>
         </motion.h1>
       </div>
 

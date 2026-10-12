@@ -43,8 +43,8 @@ export const id = {
       titleAccent: "beautifully directed.",
       description: "WD Sky Wedding Organizer membantu pasangan merancang hari pernikahan yang tenang, rapi, dan berkesan. Dari alur acara, koordinasi vendor, hingga detail visual, setiap momen diarahkan agar berjalan teratur tanpa menghilangkan rasa personal dari cerita cinta Anda.",
       primaryCta: "Booking Now",
-      galleryTitle: "Wedding Portfolio",
-      tabs: ["All Projects", "Akad", "Resepsi", "Pricelist WO", "Pricelist Venue"],
+      galleryTitle: "Galeri Portofolio Dokumentasi",
+      tabs: ["All Projects", "Akad", "Resepsi"],
       stats: [
         { value: "End-to-end", label: "Perencanaan" },
         { value: "Vendor", label: "Koordinasi" },

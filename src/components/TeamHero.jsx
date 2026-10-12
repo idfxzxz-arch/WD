@@ -35,14 +35,14 @@ export default function TeamHero() {
 
       {/* GIANT TEXT MASK */}
       <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-5">
-        <h1
+        <h2
           className="w-full max-w-[calc(100vw-2rem)] whitespace-nowrap bg-cover bg-center text-center text-[2.85rem] font-black leading-none tracking-normal text-transparent bg-clip-text opacity-95 drop-shadow-[0_24px_90px_rgba(255,255,255,0.16)] min-[360px]:text-[3.15rem] min-[390px]:text-[3.45rem] min-[430px]:text-[3.85rem] sm:text-[5.5rem] md:text-[7rem] lg:text-[8.75rem] xl:text-[11rem] 2xl:text-[13rem]"
           style={{
             backgroundImage: "linear-gradient(rgba(255,255,255,0.22),rgba(255,255,255,0.22)), url('/resources/hero.webp')",
           }}
         >
           WD Group
-        </h1>
+        </h2>
       </div>
 
       <div className="absolute inset-x-0 bottom-0 z-20 hidden px-5 pb-8 sm:block sm:px-10 sm:pb-14">
