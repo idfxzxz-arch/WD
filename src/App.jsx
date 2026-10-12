@@ -62,11 +62,11 @@ function MaintenancePage() {
         <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-white/45">
           WD Group Company
         </p>
-        <h1 className="mt-3 text-xl font-semibold tracking-tight text-white">
+        <h2 className="mt-3 text-xl font-semibold tracking-tight text-white">
           Preparing Experience
-        </h1>
+        </h2>
         <p className="mt-3 text-xs leading-6 text-white/40">
-          Kami sedang menyiapkan pengalaman terbaik untuk Anda.
+          Kami sedang memuat halaman untuk Anda.
         </p>
         <div className="mt-7 h-px w-full max-w-56 overflow-hidden bg-white/10">
           <div className="h-full w-1/2 bg-white animate-[wdPreparingBar_1.35s_ease-in-out_infinite]" />

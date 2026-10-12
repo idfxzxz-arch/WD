@@ -500,9 +500,8 @@ export default function DivisionLayout({ config, children }) {
       <SEO 
         title={config.seoTitle || `${title} ${titleAccent} – ${brand}`} 
         description={config.seoDescription || description} 
-        keywords={config.keywords} 
         url={config.seoUrl || `https://www.wdgroupcompany.biz.id/${config.category}`}
-        image={config.seoImage || "https://www.wdgroupcompany.biz.id/wd-group-logo.webp"}
+        image={config.seoImage || "https://www.wdgroupcompany.biz.id/resources/Event_Organizer/Event.webp"}
         imageAlt={config.seoImageAlt || `${brand} - WD Group Company`}
         jsonLd={config.seoJsonLd}
       />

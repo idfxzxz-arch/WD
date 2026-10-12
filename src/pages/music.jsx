@@ -217,10 +217,10 @@ export default function MusicLayout() {
                 Musik adalah jiwa dari setiap perhelatan. Musik yang tepat mampu mengubah jamuan santap biasa menjadi momen makan malam yang syahdu, serta mengiringi langkah kirab pengantin dengan rasa haru yang mendalam. <strong>WD Music Entertainment and Music Class</strong>, divisi seni pertunjukan dari <strong>WD Group Company</strong>, menghadirkan layanan <strong>wedding band Solo, live music event Solo, studio musik Solo, dan kursus musik Solo</strong> yang berkelas dan profesional.
               </p>
               <p>
-                Para musisi dan vokalis kami memiliki jam terbang panggung yang tinggi di berbagai hotel bintang lima, ballroom convention hall, hingga intimate cafe di wilayah Surakarta. Kami menguasai aneka genre musik populer: pop romantic, jazz acoustic, bossa nova, lagu kenangan tematik (evergreen/oldies), hingga lagu-lagu tradisional kontemporer yang selaras dengan tema acara Anda.
+                Para musisi dan vokalis kami memiliki jam terbang panggung yang tinggi di berbagai hotel berbintang, ballroom convention hall, hingga intimate cafe di wilayah Surakarta. Kami menguasai aneka genre musik populer: pop romantic, jazz acoustic, bossa nova, lagu kenangan tematik (evergreen/oldies), hingga lagu-lagu tradisional kontemporer yang selaras dengan tema acara Anda.
               </p>
               <p>
-                Selain pertunjukan panggung live, WD Music juga mengoperasikan <strong>studio musik & recording</strong> serta <strong>kelas musik edukatif</strong> untuk mengasah bakat generasi muda di Solo Raya. Bersama ekosistem [WD Sky Wedding](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/wedding.jsx) dan [WD Event](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/event.jsx), kami menghadirkan kolaborasi panggung yang selaras tanpa hambatan teknis koordinasi sound system.
+                Selain pertunjukan panggung live, WD Music juga mengoperasikan <strong>studio musik &amp; recording</strong> serta <strong>kelas musik edukatif</strong> untuk mengasah bakat generasi muda di Solo Raya. Bersama ekosistem <Link to="/wedding">WD Sky Wedding</Link> dan <Link to="/event">WD Event</Link>, kami menghadirkan kolaborasi panggung yang selaras tanpa hambatan teknis koordinasi sound system.
               </p>
             </div>
 
@@ -387,7 +387,7 @@ export default function MusicLayout() {
               Komitmen Profesional <em>WD Music</em>
             </h2>
             <p className="div-subtitle">
-              Memberikan pengalaman musikal terbaik untuk momen sakral maupun panggung hiburan Anda di Solo Raya.
+              Menghadirkan harmonisasi musikal berkualitas untuk momen sakral maupun panggung hiburan Anda di Solo Raya.
             </p>
           </div>
 
@@ -398,7 +398,7 @@ export default function MusicLayout() {
                 <span>Informasi Studio & Jadwal Kelas</span>
               </h4>
               <p>
-                [ISI: studio/kelas ada di mana, harga sewa studio dan kursus, jadwal kelas, misal Berlokasi di koridor Sukoharjo-Solo dengan jadwal fleksibel].
+                Fasilitas studio latihan rekaman dan kelas kursus musik berlokasi di area operasional Mojolaban Sukoharjo-Solo dengan jadwal sesi yang fleksibel. Hubungi kami untuk jadwal dan reservasi.
               </p>
             </div>
 
@@ -551,7 +551,7 @@ export default function MusicLayout() {
               Konsultasikan <em>Kebutuhan Musik Anda</em>
             </h2>
             <p className="div-subtitle">
-              Kirimkan brief acara atau kebutuhan kelas musik Anda. Tim WD Music siap memberikan rekomendasi format terbaik.
+              Kirimkan brief acara atau kebutuhan kelas musik Anda. Tim WD Music siap memberikan rekomendasi susunan format yang sesuai.
             </p>
           </div>
 

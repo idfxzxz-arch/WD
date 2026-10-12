@@ -394,7 +394,7 @@ export default function ProductionOrganizer() {
                 <span>Paket Dokumentasi & Klien Nyata</span>
               </h4>
               <p>
-                [ISI: paket dokumentasi (nama, harga), contoh klien yang boleh disebut, misal Paket Sinematik Event & Klien Korporat terkemuka di Solo].
+                Menyediakan paket dokumentasi video sinematik, foto liputan acara, dan video profil perusahaan yang disesuaikan dengan kebutuhan Anda. Hubungi kami untuk penawaran proposal detail.
               </p>
             </div>
 
@@ -547,7 +547,7 @@ export default function ProductionOrganizer() {
               Diskusikan <em>Proyek Visual Anda</em>
             </h2>
             <p className="div-subtitle">
-              Sampaikan kebutuhan dokumentasi atau konsep visual yang Anda rencanakan. Tim WD Production siap memberikan proposal penawaran terbaik.
+              Sampaikan kebutuhan dokumentasi atau konsep visual yang Anda rencanakan. Tim WD Production siap memberikan proposal penawaran yang transparan.
             </p>
           </div>
 

@@ -394,13 +394,13 @@ export default function WorkshopLayout() {
           </div>
 
           <div className="div-trust-grid">
-            <div className="div-trust-card placeholder-highlight">
+            <div className="div-trust-card">
               <h4>
                 <FileCheck size={17} />
                 <span>Rincian Program & Jadwal Terbuka</span>
               </h4>
               <p>
-                [ISI: nama program pelatihan yang sedang dibuka, jadwal tanggal sesi, harga biaya investasi kelas, dan target profil peserta].
+                Program bootcamp vokasi, seminar praktis, dan in-house corporate training diselenggarakan secara berkala dengan silabus aplikatif. Hubungi kami untuk jadwal sesi aktif dan proposal in-house.
               </p>
             </div>
 

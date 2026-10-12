@@ -7,31 +7,32 @@ export const weddingRegions = {
     kicker: "Wedding Organizer Sukoharjo",
     h1: "Jasa Wedding Organizer di Sukoharjo & Solo Raya",
     introLead: "Sebagai pusat kantor operasional WD Group Company di Mojolaban Sukoharjo, kami memiliki kedekatan geografis dan jaringan vendor terluas di Kabupaten Sukoharjo, mulai dari kawasan modern Solo Baru hingga pesta syukuran hangat di kediaman keluarga.",
+    image: "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-4.jpg",
     overviewParagraphs: [
-      "Kabupaten Sukoharjo merupakan salah satu episentrum perhelatan pernikahan paling dinamis di kawasan Solo Raya. Dengan keberadaan kawasan metropolitan Solo Baru yang dipenuhi hotel bintang lima dan convention hall megah, berpadu dengan wilayah suburban yang asri seperti Mojolaban, Kartasura, Baki, dan Sukoharjo Kota, pilihan konsep pernikahan di wilayah ini sangat beragam.",
+      "Kabupaten Sukoharjo merupakan salah satu episentrum perhelatan pernikahan paling dinamis di kawasan Solo Raya. Dengan keberadaan kawasan metropolitan Solo Baru yang dipenuhi hotel berbintang dan convention hall megah, berpadu dengan wilayah suburban yang asri seperti Mojolaban, Kartasura, Baki, dan Sukoharjo Kota, pilihan konsep pernikahan di wilayah ini sangat beragam.",
       "WD Sky Wedding Organizer siap mendampingi calon pengantin di Sukoharjo dalam mengorkestrasi setiap babak acara. Kami mengerti bahwa pernikahan di Sukoharjo kerap mempertemukan tamu lintas kalangan: eksekutif modern di area Solo Baru dan keluarga besar berakar tradisi Jawa yang mendalam. Oleh karena itu, pendekatan kami mengutamakan koordinasi waktu yang presisi, alur kirab yang terhormat, dan pelayanan tamu yang ramah serta teratur.",
       "Keunggulan utama memilih WD Sky Wedding untuk wilayah Sukoharjo adalah kecepatan koordinasi dan ketiadaan biaya akomodasi jarak jauh. Tim kami dapat bergerak cepat melakukan survei lokasi (technical inspection) ke gedung maupun rumah calon pengantin di seluruh kecamatan se-Kabupaten Sukoharjo."
     ],
     popularVenues: [
       {
         name: "Anasera Solo",
-        desc: "Venue outdoor & garden wedding romantis yang berkolaborasi resmi dengan PT WD Group Company untuk paket intimate wedding terpadu."
+        desc: "Venue outdoor & garden wedding romantis yang siap dikoordinasikan bersama tim WD Sky Wedding untuk paket intimate wedding terpadu."
       },
       {
         name: "Hotel Alila Solo (Koridor Solo-Sukoharjo)",
-        desc: "Ballroom hotel bintang lima termegah dengan kapasitas besar rekanan resmi WD Group untuk perhelatan pernikahan grand ballroom berstandar internasional."
+        desc: "Grand Ballroom hotel berbintang pilihan di Solo Raya untuk perhelatan pernikahan berstandar internasional."
       },
       {
         name: "The Alana Hotel & Convention Solo",
-        desc: "Hotel berbintang 4 luxury ballroom rekanan resmi WD Group dengan fasilitas akomodasi dan paket pernikahan lengkap."
+        desc: "Hotel berbintang 4 luxury ballroom pilihan dengan fasilitas akomodasi dan paket pernikahan lengkap."
       },
       {
         name: "Convention Hall Tirtonadi",
-        desc: "Grand Ballroom modern berkapasitas besar rekanan resmi WD Group dengan tata ruang luas dan area parkir representatif."
+        desc: "Grand Ballroom modern berkapasitas besar dengan tata ruang luas dan area parkir representatif."
       },
       {
         name: "Gedung Wisma Batari Solo",
-        desc: "Gedung pernikahan heritage klasik dan elegan rekanan resmi WD Group yang menjadi primadona perhelatan adat Jawa tradisional."
+        desc: "Gedung pernikahan heritage klasik dan elegan yang menjadi primadona perhelatan adat Jawa tradisional."
       }
     ],
     localTraditions: "Di Sukoharjo, tradisi pernikahan adat Jawa gaya Surakarta sangat dijaga kelestariannya. Prosesi seperti pasang tarub dan siraman di kediaman mempelai kerap dilaksanakan sehari sebelum akad nikah. Pada hari-H, upacara panggih (temu pengantin) dilengkapi dengan balangan gantal, wiji dadi (menginjak telur), kacar-kucur (lambang nafkah lahir batin), dulangan, dan sungkeman yang khidmat. Di sisi lain, bagi pasangan muda di Solo Baru, tren resepsi intimate bernuansa modern minimalis dan rustic wedding di cafe/resto semi-outdoor kini semakin digemari.",
@@ -63,6 +64,7 @@ export const weddingRegions = {
     kicker: "Wedding Organizer Karanganyar",
     h1: "Jasa Wedding Organizer di Karanganyar & Solo Raya",
     introLead: "Kabupaten Karanganyar menawarkan lanskap pernikahan terindah di Solo Raya, mulai dari nuansa megah pabrik gula heritage di Colomadu hingga pesta intim berhawa sejuk di lereng Gunung Lawu Tawangmangu.",
+    image: "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-5.jpg",
     overviewParagraphs: [
       "Bagi pasangan yang memimpikan pesta pernikahan berkonsep alam (nature outdoor) atau atmosfer kolonial bersejarah (vintage heritage), Kabupaten Karanganyar adalah destinasi utama di Solo Raya. Kawasan lereng Gunung Lawu menyuguhkan panorama perkebunan teh, udara pegunungan yang segar, dan jajaran villa/resort eksklusif yang sangat ideal untuk intimate wedding.",
       "Sementara di wilayah barat seperti Colomadu dan Jaten, akses yang terhubung langsung dengan Kota Solo menghadirkan kemudahan mobilitas menuju gedung-gedung pernikahan prestisius seperti De Tjolomadoe. WD Sky Wedding Organizer memiliki jam terbang tinggi dalam menangani karakteristik khusus perhelatan di Karanganyar, terutama dalam mengantisipasi dinamika cuaca pegunungan dan tata teknis venue outdoor.",
@@ -71,23 +73,23 @@ export const weddingRegions = {
     popularVenues: [
       {
         name: "The Alana Hotel & Convention Solo (Colomadu, Karanganyar)",
-        desc: "Hotel berbintang 4 rekanan resmi WD Group di Colomadu Karanganyar dengan ballroom mewah berstandar internasional untuk resepsi megah."
+        desc: "Hotel berbintang 4 di Colomadu Karanganyar dengan ballroom mewah berstandar internasional untuk resepsi megah."
       },
       {
         name: "Grandis Barn Solo (Colomadu, Karanganyar)",
-        desc: "Venue pernikahan rustic & aesthetic garden wedding berkonsep barn kayu rekanan resmi WD Group yang sangat digemari pasangan muda."
+        desc: "Venue pernikahan rustic & aesthetic garden wedding berkonsep barn kayu yang sangat digemari pasangan muda."
       },
       {
         name: "Gubug Makan Mang Engking Solo (Colomadu, Karanganyar)",
-        desc: "Venue resto bernuansa alam asri dan danau outdoor rekanan resmi WD Group untuk konsep intimate wedding keluarga yang hangat."
+        desc: "Venue resto bernuansa alam asri dan danau outdoor untuk konsep intimate wedding keluarga yang hangat."
       },
       {
         name: "Anasera Solo",
-        desc: "Venue outdoor & garden wedding romantis rekanan resmi PT WD Group dengan paket bundling wedding organizer dan dokumentasi."
+        desc: "Venue outdoor & garden wedding romantis pilihan dengan paket terpadu wedding organizer dan dokumentasi."
       },
       {
         name: "TBJT Solo (Taman Budaya Jawa Tengah)",
-        desc: "Ballroom bernuansa seni budaya Jawa dan heritage megah rekanan resmi WD Group dengan aksesibilitas langsung dari koridor Karanganyar."
+        desc: "Ballroom bernuansa seni budaya Jawa dan heritage megah dengan aksesibilitas langsung dari koridor Karanganyar."
       }
     ],
     localTraditions: "Pernikahan di Karanganyar memadukan tradisi keraton Surakarta dengan kesegaran tradisi pedesaan lereng Lawu. Penggunaan air tujuh sumber alami untuk prosesi siraman pengantin sering menjadi simbol penyucian batin yang sakral. Di Tawangmangu, pesta resepsi sering kali mengusung jamuan hangat dengan sajian kuliner khas pegunungan serta iringan musik akustik intim (WD Music) yang menemani para tamu hingga malam hari.",
@@ -119,6 +121,7 @@ export const weddingRegions = {
     kicker: "Wedding Organizer Klaten",
     h1: "Jasa Wedding Organizer di Klaten & Solo Raya",
     introLead: "Kabupaten Klaten adalah simpul kebudayaan yang menghubungkan Solo dan Yogyakarta, terkenal dengan kekayaan tradisi jamuan piring terbang yang tertib serta kemegahan gedung pernikahan modern.",
+    image: "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-10.jpg",
     overviewParagraphs: [
       "Merancang perhelatan pernikahan di Kabupaten Klaten menuntut keahlian khusus dalam memadukan tradisi jamuan khas dengan standar manajemen waktu modern. Klaten dikenal luas dengan budaya jamuan 'piring terbang'—sebuah tradisi penyajian hidangan yang disajikan berurutan oleh pramusaji cekatan langsung ke tempat duduk para tamu, mulai dari unjukan (minuman selamat datang), snack, sup, hidangan utama, hingga es penutup.",
       "Sebagai wedding organizer berpengalaman di Solo Raya, WD Sky Wedding menguasai alur kerja sistem piring terbang tradisional maupun transisi menuju sistem prasmanan (buffet) modern di gedung-gedung pertemuan Klaten. Kami menyelaraskan ketukan waktu kirab pengantin, sambutan perwakilan keluarga, sesi foto kehormatan, dan alur piring terbang agar acara berlangsung tertib tanpa jeda yang menjemukan.",
@@ -131,19 +134,19 @@ export const weddingRegions = {
       },
       {
         name: "Hotel Alila Solo & Masjid Raya Zayed Solo",
-        desc: "Pilihan venue rekanan resmi WD Group untuk pasangan Klaten yang menginginkan akad nikah megah berpadu resepsi grand ballroom bintang lima."
+        desc: "Pilihan venue bagi pasangan Klaten yang menginginkan akad nikah megah berpadu resepsi grand ballroom hotel berbintang."
       },
       {
         name: "Convention Hall Tirtonadi Solo",
-        desc: "Grand Ballroom modern rekanan resmi WD Group berkapasitas ribuan tamu, berjarak tempuh dekat via KRL / jalan raya Klaten-Solo."
+        desc: "Grand Ballroom modern berkapasitas ribuan tamu, berjarak tempuh dekat via KRL / jalan raya Klaten-Solo."
       },
       {
         name: "The Alana Hotel & Convention Solo",
-        desc: "Ballroom hotel mewah bintang 4 rekanan resmi WD Group dengan fasilitas lengkap dan paket terpadu wedding planner."
+        desc: "Ballroom hotel mewah bintang 4 dengan fasilitas lengkap dan paket terpadu wedding planner."
       },
       {
         name: "Gedung Wisma Batari Solo",
-        desc: "Venue pernikahan klasik Jawa legendaris rekanan resmi WD Group untuk perhelatan sakral berwibawa."
+        desc: "Venue pernikahan klasik Jawa legendaris untuk perhelatan sakral berwibawa."
       }
     ],
     localTraditions: "Nuansa pernikahan di Klaten sangat dipengaruhi oleh perpaduan halus adat Jawa Surakarta dan Yogyakarta. Upacara panggih pengantin dilakukan dengan penuh khidmat di hadapan sesepuh keluarga. Menariknya, sistem piring terbang di Klaten menuntut ketepatan rundown yang tinggi: MC, pemusik pengiring, dan koordinator piring terbang harus memiliki kontak komunikasi yang sinkron agar tamu merasa dilayani bagaikan raja sepanjang acara.",
@@ -175,6 +178,7 @@ export const weddingRegions = {
     kicker: "Wedding Organizer Boyolali",
     h1: "Jasa Wedding Organizer di Boyolali & Solo Raya",
     introLead: "Kabupaten Boyolali menyajikan atmosfer pernikahan yang sejuk, lapang, dan sarat nilai gotong royong, didukung oleh fasilitas modern Boyolali Convention Center serta venue alam nan asri.",
+    image: "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-11.jpg",
     overviewParagraphs: [
       "Kabupaten Boyolali yang berjuluk Kota Susu menawarkan pesona perhelatan pernikahan yang unik dan mengesankan di kawasan Solo Raya. Dikelilingi panorama megah Gunung Merapi dan Merbabu, Boyolali memiliki iklim yang sejuk, tanah yang subur, dan masyarakat yang menjunjung tinggi kekeluargaan yang guyub rukun.",
       "Perkembangan infrastruktur modern di Boyolali kini menghadirkan gedung-gedung pernikahan megah bertaraf internasional, seperti Boyolali Convention Center (BCC), yang mampu menampung ribuan undangan dalam suasana ber-AC yang nyaman dan representatif. Di sisi lain, tradisi hajatan pernikahan di halaman kediaman pribadi (pesta tenda) tetap hidup subur di berbagai pelosok kecamatan seperti Selo, Ampel, Cepogo, Banyudono, Mojosongo, Musuk, dan Simo.",
@@ -188,19 +192,19 @@ export const weddingRegions = {
       },
       {
         name: "The Alana Hotel & Convention Solo",
-        desc: "Hanya 15 menit dari exit tol Colomadu/Boyolali, hotel berbintang 4 rekanan resmi WD Group dengan grand ballroom mewah."
+        desc: "Hanya 15 menit dari exit tol Colomadu/Boyolali, hotel berbintang 4 dengan grand ballroom mewah."
       },
       {
         name: "Grandis Barn Solo (Koridor Colomadu-Boyolali)",
-        desc: "Venue barn rustic & garden wedding estetik rekanan resmi WD Group yang menjadi pilihan favorit pasangan modern Boyolali."
+        desc: "Venue barn rustic & garden wedding estetik yang menjadi pilihan favorit pasangan modern Boyolali."
       },
       {
         name: "Gubug Makan Mang Engking Solo",
-        desc: "Venue bernuansa alam asri dan danau outdoor rekanan resmi WD Group untuk pernikahan keluarga hangat dan bersahaja."
+        desc: "Venue bernuansa alam asri dan danau outdoor untuk pernikahan keluarga hangat dan bersahaja."
       },
       {
         name: "Convention Hall Tirtonadi Solo",
-        desc: "Grand Ballroom modern berkapasitas besar rekanan resmi WD Group dengan fasilitas AC sentral dan tata akustik prima."
+        desc: "Grand Ballroom modern berkapasitas besar dengan fasilitas AC sentral dan tata akustik prima."
       }
     ],
     localTraditions: "Di Boyolali, tradisi 'sambatan' atau gotong royong tetangga dalam menyiapkan tempat hajatan masih sangat terasa kental. Prosesi siraman di beberapa wilayah bahkan memanfaatkan kesegaran air alami dari umbul-umbul lereng Merapi. Dalam resepsi, tamu disuguhi aneka kuliner khas Boyolali yang lezat, diiringi tembang-tembang macapat atau gending Jawa yang menenangkan jiwa sebelum kirab pengantin dimulai.",
@@ -232,6 +236,7 @@ export const weddingRegions = {
     kicker: "Wedding Organizer Sragen",
     h1: "Jasa Wedding Organizer di Sragen & Solo Raya",
     introLead: "Bumi Sukowati Sragen dikenal dengan perhelatan pernikahan yang meriah, hangat, dan penuh rasa hormat antar keluarga, didukung akses tol yang menghubungkan cepat dengan pusat Solo Raya.",
+    image: "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-12.jpg",
     overviewParagraphs: [
       "Kabupaten Sragen, yang kaya akan warisan sejarah purba dan kebudayaan agraris yang subur, memiliki antusiasme masyarakat yang sangat tinggi dalam merayakan pesta pernikahan. Pernikahan di Sragen identik dengan kehangatan silaturahmi yang luas, di mana sanak saudara dan kerabat dari berbagai penjuru hadir memberikan doa restu.",
       "Gedung Sasana Manggala Sukowati (SMS) dan Gedung Kartini merupakan pusat perhelatan akbar di Sragen yang rutin menjadi saksi janji suci pasangan pengantin. Keberadaan jalan tol Solo-Ngawi dengan gerbang tol di Sragen dan Pungkruk membuat aksesibilitas tim vendor dari Solo menuju Sragen kini hanya membutuhkan waktu tempuh kurang dari 30 menit.",
@@ -245,19 +250,19 @@ export const weddingRegions = {
       },
       {
         name: "Convention Hall Tirtonadi Solo",
-        desc: "Grand Ballroom modern rekanan resmi WD Group, berjarak tempuh hanya 20 menit dari Sragen via akses jalan tol Trans Jawa."
+        desc: "Grand Ballroom modern, berjarak tempuh hanya 20 menit dari Sragen via akses jalan tol Trans Jawa."
       },
       {
         name: "Hotel UNS Solo (UNS Hotel & Convention)",
-        desc: "Venue ballroom modern di koridor timur Solo rekanan resmi WD Group dengan akses jalan utama yang sangat mudah bagi keluarga besar Sragen."
+        desc: "Venue ballroom modern di koridor timur Solo dengan akses jalan utama yang sangat mudah bagi keluarga besar Sragen."
       },
       {
         name: "TBJT Solo (Taman Budaya Jawa Tengah)",
-        desc: "Heritage hall megah bernuansa seni budaya Jawa rekanan resmi WD Group untuk prosesi adat sakral dan perhelatan akbar."
+        desc: "Heritage hall megah bernuansa seni budaya Jawa untuk prosesi adat sakral dan perhelatan akbar."
       },
       {
         name: "Hotel Alila Solo & Masjid Raya Zayed",
-        desc: "Pilihan ballroom bintang lima dan masjid agung rekanan resmi WD Group untuk konsep perhelatan pernikahan megah di pusat Solo Raya."
+        desc: "Pilihan ballroom hotel berbintang dan masjid agung untuk konsep perhelatan pernikahan di pusat Solo Raya."
       }
     ],
     localTraditions: "Masyarakat Sragen menjunjung tinggi pakem adat Surakarta, seperti prosesi pasang bleketepe, tarub, siraman, dan midodareni pada malam sebelum ijab qobul. Pada saat resepsi, tata krama menyambut besan (keluarga mempelai pria) dilakukan dengan prosesi pasrah tinampi yang agung. Hiburan musik tradisional campursari atau live acoustic band sering menjadi pengiring yang menghidupkan suasana sepanjang jamuan makan.",
@@ -276,7 +281,7 @@ export const weddingRegions = {
       },
       {
         q: "Apakah bisa dibantu rekomendasi vendor katering dan MUA di Sragen?",
-        a: "Bisa. Kami memiliki daftar rekanan katering dan perias pengantin terpercaya di Sragen dan Solo yang telah teruji mutu rasa dan ketepatan waktunya."
+        a: "Bisa. Kami memiliki daftar rekanan katering dan perias pengantin rekomendasi di Sragen dan Solo yang telah teruji mutu rasa dan ketepatan waktunya."
       }
     ]
   },
@@ -289,9 +294,10 @@ export const weddingRegions = {
     kicker: "Wedding Organizer Wonogiri",
     h1: "Jasa Wedding Organizer di Wonogiri & Solo Raya",
     introLead: "Di Kabupaten Wonogiri, pernikahan adalah momen kepulangan dan berkumpulnya keluarga perantau (kaum boro) yang dirayakan dengan kebahagiaan mendalam, khidmat, dan tertata rapi.",
+    image: "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-13.jpg",
     overviewParagraphs: [
       "Kabupaten Wonogiri memiliki keunikan sosiologis tersendiri dalam peta pernikahan Solo Raya. Terkenal dengan tradisi merantau (kaum boro) yang sukses di berbagai kota besar Indonesia, kepulangan untuk melangsungkan pernikahan di kampung halaman adalah peristiwa yang sangat dinanti dan dirayakan dengan penuh kehormatan oleh keluarga besar.",
-      "Oleh karena itu, persiapan pernikahan di Wonogiri kerap dilakukan dari jarak jauh oleh calon pengantin yang berdomisili di luar kota. WD Sky Wedding Organizer menjadi jembatan solusi paling andal bagi para perantau: kami mengurus koordinasi teknis dengan gedung pertemuan, perias adat, dekorasi, hingga katering lokal di Wonogiri secara transparan melalui laporan berkala dan pertemuan daring.",
+      "Oleh karena itu, persiapan pernikahan di Wonogiri kerap dilakukan dari jarak jauh oleh calon pengantin yang berdomisili di luar kota. WD Sky Wedding Organizer menjadi jembatan solusi andal bagi para perantau: kami mengurus koordinasi teknis dengan gedung pertemuan, perias adat, dekorasi, hingga katering lokal di Wonogiri secara transparan melalui laporan berkala dan pertemuan daring.",
       "Dari pusat kota Wonogiri (Gedung Giri Cahaya, Giri Wahana) hingga kawasan asri di tepian Waduk Gajah Mungkur, tim kami siap hadir memastikan perhelatan pernikahan Anda berjalan lancar, berwibawa, dan membanggakan di mata para sesepuh keluarga.",
       "Kami memastikan seluruh keluarga perantau tidak perlu dibebani kepanikan teknis saat tiba di Wonogiri. Mulai dari gladi bersih, pengawalan seserahan, penyambutan rombongan besan, hingga penataan panggung pelaminan, semua kami eksekusi dengan ketelitian penuh."
     ],
@@ -302,19 +308,19 @@ export const weddingRegions = {
       },
       {
         name: "Hotel Alila Solo & The Alana Hotel Solo",
-        desc: "Pilihan venue hotel bintang 4 & 5 rekanan resmi WD Group bagi keluarga perantau Wonogiri yang menghendaki resepsi representatif berstandar mewah di Solo."
+        desc: "Pilihan venue hotel berbintang bagi keluarga perantau Wonogiri yang menghendaki resepsi representatif di Solo."
       },
       {
         name: "Convention Hall Tirtonadi Solo",
-        desc: "Grand Ballroom modern berkapasitas ribuan tamu rekanan resmi WD Group untuk menyambut tamu kehormatan dari berbagai kota."
+        desc: "Grand Ballroom modern berkapasitas ribuan tamu untuk menyambut tamu kehormatan dari berbagai kota."
       },
       {
         name: "Gedung Wisma Batari Solo",
-        desc: "Gedung pernikahan klasik heritage rekanan resmi WD Group yang memancarkan keagungan adat Jawa gaya Surakarta."
+        desc: "Gedung pernikahan klasik heritage yang memancarkan keagungan adat Jawa gaya Surakarta."
       },
       {
         name: "Anasera Solo & Grandis Barn Solo",
-        desc: "Pilihan venue outdoor garden dan rustic barn estetik rekanan resmi WD Group untuk konsep intimate wedding yang berkesan mendalam."
+        desc: "Pilihan venue outdoor garden dan rustic barn estetik untuk konsep intimate wedding yang berkesan mendalam."
       }
     ],
     localTraditions: "Pernikahan di Wonogiri sangat kental dengan nilai kekeluargaan dan penghormatan kepada orang tua. Upacara sungkeman sering menjadi puncak haru yang menggetarkan hati. Musim pernikahan di Wonogiri kerap mencapai puncaknya pada bulan Syawal (saat mudik Idul Fitri) dan bulan Rayagung (Dzulhijjah), di mana sanak saudara dari perantauan berkumpul lengkap untuk memberikan restu suci.",
@@ -332,7 +338,7 @@ export const weddingRegions = {
         a: "Ya, kami melayani seluruh kecamatan se-Kabupaten Wonogiri: Selogiri, Wonogiri Kota, Ngadirojo, Sidoharjo, Jatisrono, Baturetno, Pracimantoro, Wuryantoro, Purwantoro, hingga Eromoko."
       },
       {
-        q: "Kapan waktu terbaik mengamankan tanggal wedding organizer untuk musim mudik di Wonogiri?",
+        q: "Kapan waktu yang disarankan mengamankan tanggal wedding organizer untuk musim mudik di Wonogiri?",
         a: "Sangat disarankan melakukan booking minimal 6 bulan sebelum hari-H, karena tanggal pernikahan di bulan Syawal dan bulan Rayagung sangat cepat terisi oleh pasangan perantau."
       }
     ]

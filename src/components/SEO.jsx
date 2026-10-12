@@ -5,10 +5,9 @@ import { LanguageContext } from "../context/LanguageContext"
 export default function SEO({
   title,
   description,
-  keywords,
   url = "https://www.wdgroupcompany.biz.id/",
-  image = "https://www.wdgroupcompany.biz.id/wd-group-logo.webp",
-  imageAlt = "WD Group Company",
+  image = "https://www.wdgroupcompany.biz.id/resources/Event_Organizer/Event.webp",
+  imageAlt = "WD Group Company - Ekosistem Kreatif Solo Raya",
   siteName = "WD Group Company",
   type = "website",
   jsonLd,
@@ -17,7 +16,7 @@ export default function SEO({
   const defaultTitle = `${lang?.company || "WD Group Company"} – Creative Media & Event Organizer`
   const defaultDescription = lang?.subtitle1
     ? `${lang.subtitle1} ${lang.subtitle2}`
-    : "WD Group Company (WD Jaya Group) adalah penyedia jasa multimedia, event organizer, photo video production, dan solusi bisnis."
+    : "WD Group Company (WD Jaya Group) adalah penyedia jasa multimedia, event organizer, photo video production, dan solusi bisnis di Solo Raya."
 
   const finalTitle = title ? (title.includes("WD") ? title : `${title} | WD Group Company`) : defaultTitle
   const finalDescription = description || defaultDescription
@@ -27,7 +26,6 @@ export default function SEO({
     <Helmet>
       <title>{finalTitle}</title>
       <meta name="description" content={finalDescription} />
-      {keywords && <meta name="keywords" content={keywords} />}
       <link rel="canonical" href={url} />
 
       {/* Open Graph */}

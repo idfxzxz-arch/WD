@@ -268,7 +268,7 @@ ${cleanNotes}
 
 =======================================================
 
-Besar harapan kami brief ini dapat dipelajari oleh tim WD Group guna penyusunan konsep serta penawaran terbaik. Kami siap untuk mendiskusikan kebutuhan ini lebih lanjut.
+Besar harapan kami brief ini dapat dipelajari oleh tim WD Group guna penyusunan konsep serta penawaran yang sesuai. Kami siap untuk mendiskusikan kebutuhan ini lebih lanjut.
 
 Atas perhatian dan kerja samanya, kami ucapkan terima kasih.
 

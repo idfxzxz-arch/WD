@@ -1,0 +1,314 @@
+/**
+ * KONFIGURASI TERPUSAT DATA BISNIS WD GROUP COMPANY
+ * Berkas ini mengonsolidasikan seluruh data operasional, kontak, harga, paket, dan mitra venue.
+ * 
+ * Setiap entri dilengkapi flag status:
+ * - "confirmed"          : Data sudah diverifikasi dan valid (misal: alamat fisik & pin GBP).
+ * - "needs_confirmation" : Data terpasang yang membutuhkan persetujuan/verifikasi pemilik.
+ * - "placeholder"        : Data penampung sementara; TIDAK boleh ditampilkan sebagai klaim pasti.
+ */
+
+export const businessData = {
+  identity: {
+    legalName: "PT WD Group Company",
+    brandName: "WD Group Company",
+    shortName: "WD Group",
+    tagline: "Creative Media, Event Organizer & Digital Solution",
+    headOfficeRegion: "Solo Raya, Jawa Tengah",
+    status: "confirmed",
+  },
+
+  contact: {
+    phoneDisplay: "0857-0790-9415",
+    phoneE164: "+6285707909415",
+    whatsappLink: "https://wa.me/6285707909415",
+    email: "groupcompanywd@gmail.com",
+    address: {
+      street: "Griya Edelweis No.12a, Dusun V, Joho",
+      subDistrict: "Joho",
+      district: "Mojolaban",
+      city: "Kabupaten Sukoharjo",
+      province: "Jawa Tengah",
+      postalCode: "57554",
+      country: "ID",
+      formatted: "Griya Edelweis No.12a, Dusun V, Joho, Kec. Mojolaban, Kabupaten Sukoharjo, Jawa Tengah 57554",
+    },
+    geo: {
+      latitude: -7.593558,
+      longitude: 110.883616,
+    },
+    googleMaps: {
+      cid: "423251003407914670",
+      placeId: "ChIJ5R9lUwAXei4Rrtb0jIuw3wU",
+      url: "https://maps.google.com/?cid=423251003407914670",
+      reviewUrl: "https://search.google.com/local/writereview?placeid=ChIJ5R9lUwAXei4Rrtb0jIuw3wU",
+    },
+    socialMedia: {
+      instagram: "https://instagram.com/wdgroupcompany",
+      instagramHandle: "@wdgroupcompany",
+    },
+    status: "confirmed",
+  },
+
+  operatingHours: {
+    displayText: "Senin – Sabtu: 09.00 – 17.00 WIB (Konsultasi via WhatsApp responsif setiap hari)",
+    officeHours: "Senin – Sabtu: 09.00 – 17.00 WIB",
+    onlineConsultation: "Setiap hari (melalui WhatsApp)",
+    is24HoursClaim: false,
+    status: "needs_confirmation",
+    note: "Perlu konfirmasi jam buka fisik kantor dan ketersediaan temu janji tatap muka.",
+    safePublicFallback: "Senin – Sabtu (Hubungi kami untuk konfirmasi jadwal konsultasi)",
+  },
+
+  weddingPackages: [
+    {
+      id: "pkg-1",
+      name: "Package 1 (Wedding Organizer Day-Of Coordination)",
+      scope: "Akad + Temu Manten + Resepsi dalam 1 Acara",
+      publishedPromoPrice: 5500000,
+      publishedNormalPrice: 6300000,
+      alternativePricesEncountered: [3500000, 4500000],
+      crewCount: "8-10 orang",
+      maxGuests: 300,
+      vendorReadinessRequirement: "85%",
+      meetings: "2 kali (1x Konsep & Budget + 1x Final Meeting H-3/H-1)",
+      status: "needs_confirmation",
+      note: "Perlu konfirmasi pemilik apakah harga resmi Rp 5.500.000 (promo) atau ada skema Rp 3.500.000 untuk paket akad saja.",
+    },
+    {
+      id: "pkg-2",
+      name: "Package 2 (Wedding Planner & WO)",
+      scope: "Akad + Temu Manten + Resepsi",
+      publishedPromoPrice: 6300000,
+      publishedNormalPrice: 7300000,
+      crewCount: "12 orang (Lengkap HT)",
+      meetings: "4 kali (Konsep, Budget, Kurasi Vendor, Buku Panduan & Final Meeting)",
+      status: "needs_confirmation",
+      note: "Perlu konfirmasi rincian final kru dan daftar vendor rekanan terikat.",
+    },
+    {
+      id: "pkg-3",
+      name: "Package 3 (Planner & WO VIP)",
+      scope: "Akad + Temu Manten + Resepsi (VIP Full Team)",
+      publishedPromoPrice: 7300000,
+      publishedNormalPrice: 8300000,
+      alternativePricesEncountered: [11000000, 13000000],
+      crewCount: "14 orang (VIP Full Team)",
+      meetings: "Unlimited technical meeting & family coordination",
+      status: "needs_confirmation",
+      note: "Perlu konfirmasi apakah harga resmi Rp 7.300.000 atau versi paket VIP skala besar Rp 11.000.000.",
+    },
+  ],
+
+  promotions: {
+    earlyBird: {
+      name: "Promo Spesial Periode 2026",
+      discountAmount: 1000000,
+      description: "Potongan harga langsung untuk reservasi tanggal pernikahan periode tahun 2026",
+      quota: "Kuota terbatas per bulan",
+      status: "needs_confirmation",
+      note: "Pemilik perlu mengonfirmasi tanggal kadaluarsa promo, kuota per bulan, dan mekanisme klaim.",
+    },
+  },
+
+  partnerVenues: [
+    {
+      id: "alila",
+      name: "Hotel Alila Solo",
+      category: "Hotel & Ballroom",
+      driveUrl: "https://drive.google.com/file/d/13__fRe3H7ZRPUWJGl-s9arFA2_T1RSAI/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Rekanan rekomendasi & koordinasi acara",
+    },
+    {
+      id: "alana",
+      name: "The Alana Hotel Solo",
+      category: "Luxury Hotel & Ballroom",
+      driveUrl: "https://drive.google.com/file/d/1uiBbCc3yKZQBqWfBGBtM73FgvRPnVFSy/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Rekanan rekomendasi & koordinasi acara",
+    },
+    {
+      id: "zayed",
+      name: "Masjid Raya Zayed Solo",
+      category: "Convention & Ballroom",
+      driveUrl: "https://drive.google.com/file/d/1G7zU6L4sqs-yimxgKawecRYMYcrF_GL-/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Venue rekomendasi prosesi akad nikah",
+    },
+    {
+      id: "tirtonadi",
+      name: "Convention Hall Tirtonadi",
+      category: "Grand Ballroom",
+      driveUrl: "https://drive.google.com/file/d/1_7IwZcI0Ryy-FQOc15wQOKqzP3j6ca-4/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Rekanan rekomendasi grand ballroom",
+    },
+    {
+      id: "wisma-batari",
+      name: "Wisma Batari Solo",
+      category: "Historic & Ballroom",
+      driveUrl: "https://drive.google.com/file/d/1FONWxtb0TwZt6yXJsmXMEZ0wLXQqpF9p/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Venue rekomendasi pernikahan adat Jawa",
+    },
+    {
+      id: "hotel-uns",
+      name: "Hotel UNS Solo",
+      category: "Hotel & Convention",
+      driveUrl: "https://drive.google.com/file/d/1Dnt7ib34PybSxYlgaXhQEdddcS0-bob0/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Rekanan rekomendasi koridor Solo Timur",
+    },
+    {
+      id: "tbjt",
+      name: "TBJT Solo (Taman Budaya)",
+      category: "Heritage & Hall",
+      driveUrl: "https://drive.google.com/file/d/1HfnoZ8TDWA775eJJbYRQYpTWctLVdZu0/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Venue rekomendasi seni budaya Jawa",
+    },
+    {
+      id: "grandis-barn",
+      name: "Grandis Barn Solo",
+      category: "Barn & Rustic Garden",
+      driveUrl: "https://drive.google.com/file/d/1P216V_fGx86hud5Gs_1VRTkRsYKNe9Yg/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Venue rekomendasi rustic garden",
+    },
+    {
+      id: "anasera",
+      name: "Anasera Solo",
+      category: "Outdoor & Garden",
+      driveUrl: "https://drive.google.com/file/d/1ZVBEaU3qfoTGGLlfd_OKCcpAC_vy0kZz/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Kolaborasi paket intimate wedding",
+    },
+    {
+      id: "mang-engking",
+      name: "Mang Engking Solo",
+      category: "Outdoor & Resto",
+      driveUrl: "https://drive.google.com/file/d/1EQc0ysyDBvAZh2YjKNa_4oT6uoAXNQ2v/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Venue rekomendasi nuansa alam",
+    },
+    {
+      id: "happy-tuty",
+      name: "Happy Tuty Solo",
+      category: "Heritage & Garden",
+      driveUrl: "https://drive.google.com/file/d/1ikDV4uzJXYlxxsdyWX1NryO7n5KXTzV1/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Venue rekomendasi intimate heritage",
+    },
+    {
+      id: "beams-cafe",
+      name: "Beams Cafe Solo",
+      category: "Aesthetic Space",
+      driveUrl: "https://drive.google.com/file/d/1XLmj68_v5xu5R5f684i8dzRxczEPBs5n/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Kolaborasi intimate wedding space",
+    },
+    {
+      id: "arja-cafe",
+      name: "Arja Cafe Solo",
+      category: "Cafe & Intimate",
+      driveUrl: "https://drive.google.com/file/d/1RPVqD1saEBm8p2oV5gtqHbxua1ScVrR6/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Kolaborasi intimate cafe space",
+    },
+    {
+      id: "wastra-bumbu",
+      name: "Wastra Bumbu Solo",
+      category: "Restaurant & Intimate",
+      driveUrl: "https://drive.google.com/file/d/1ol5_2yMwtaSnXUPILkPYAtRtE68-1tk1/view?usp=drive_link",
+      status: "needs_confirmation",
+      relationship: "Venue rekomendasi intimate dining",
+    },
+  ],
+
+  divisions: [
+    {
+      key: "wedding",
+      name: "WD Sky Wedding Organizer",
+      path: "/wedding",
+      tagline: "Layanan Paket Pernikahan Elegan di Solo & Solo Raya",
+      status: "confirmed",
+    },
+    {
+      key: "event",
+      name: "WD Event Organizer",
+      path: "/event",
+      tagline: "Corporate Gathering, Pameran, Konser & Konferensi",
+      status: "confirmed",
+    },
+    {
+      key: "production",
+      name: "WD Production",
+      path: "/production",
+      tagline: "Video Shooting Sinematik, Dokumentasi & Commercial Branding",
+      status: "confirmed",
+    },
+    {
+      key: "music",
+      name: "WD Music Entertainment",
+      path: "/music",
+      tagline: "Wedding Band, Live Music Panggung, Studio Rekaman & Kelas Musik",
+      status: "confirmed",
+    },
+    {
+      key: "workshop",
+      name: "WD Jaya Workshop",
+      path: "/workshop",
+      tagline: "Pelatihan Keterampilan Praktis, Bootcamp Vokasi & In-House Training",
+      status: "confirmed",
+    },
+    {
+      key: "it",
+      name: "WD IT & Digital Solution",
+      path: "/it",
+      tagline: "Website Company Profile, Aplikasi Web & Solusi Digital Bisnis",
+      status: "confirmed",
+    },
+  ],
+
+  // Checklist item konfirmasi pemilik
+  confirmationChecklist: [
+    {
+      id: "chk-01",
+      field: "Jam Operasional Kantor Fisik & Chat WA",
+      currentValue: "Senin – Sabtu 09.00 – 17.00 WIB (WhatsApp responsif)",
+      status: "needs_confirmation",
+      action: "Pemilik menentukan jam buka kantor sebenarnya dan ketersediaan layanan chat di luar jam kerja.",
+    },
+    {
+      id: "chk-02",
+      field: "Harga & Struktur Paket Wedding Organizer",
+      currentValue: "Pkg 1: Rp 5,5 Jt (normal 6,3 Jt); Pkg 2: Rp 6,3 Jt (normal 7,3 Jt); Pkg 3: Rp 7,3 Jt (normal 8,3 Jt)",
+      status: "needs_confirmation",
+      action: "Pemilik memvalidasi apakah angka promo ini berlaku tetap, atau ada varian harga lain (misal Rp 3,5 Jt / Rp 11 Jt).",
+    },
+    {
+      id: "chk-03",
+      field: "Masa Berlaku & Kuota Promo 2026",
+      currentValue: "Potongan Rp 1.000.000 dengan kuota terbatas per bulan",
+      status: "needs_confirmation",
+      action: "Pemilik menentukan tanggal batas akhir promo (misal 31 Desember 2026) dan kuota pasti per bulan.",
+    },
+    {
+      id: "chk-04",
+      field: "Status Hukum & Perjanjian Rekanan 14 Venue",
+      currentValue: "14 Venue dengan tautan PDF pricelist Google Drive",
+      status: "needs_confirmation",
+      action: "Pemilik mengonfirmasi apakah seluruh venue memiliki ikatan kontrak PKS resmi atau merupakan venue rekomendasi reguler.",
+    },
+    {
+      id: "chk-05",
+      field: "Tahun Berdiri & Riwayat Jumlah Proyek",
+      currentValue: "Belum mencantumkan angka tahun spesifik (menggunakan frase kualitatif 'berpengalaman')",
+      status: "needs_confirmation",
+      action: "Pemilik memberikan tahun resmi pendirian (misal 2021) dan perkiraan jumlah acara yang sukses ditangani jika ingin dicantumkan.",
+    },
+  ],
+};
+
+export default businessData;

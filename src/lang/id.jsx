@@ -137,7 +137,7 @@ export const id = {
   inquiry: {
     badge: "Formulir Konsultasi Proyek",
     title: "Ajukan Brief Proyek",
-    subtitle: "Ceritakan rencana proyek atau kebutuhan bisnis Anda. Tim WD Group siap membantu menyusun estimasi dan solusi terbaik.",
+    subtitle: "Ceritakan rencana proyek atau kebutuhan bisnis Anda. Tim WD Group siap membantu menyusun estimasi dan penawaran yang tepat.",
     nameLabel: "Nama Lengkap *",
     namePlaceholder: "Misal: Budi Santoso",
     companyLabel: "Nama Perusahaan / Brand / Pasangan",

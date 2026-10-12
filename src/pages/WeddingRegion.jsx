@@ -35,11 +35,11 @@ export default function WeddingRegion({ regionKey: propKey }) {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": ["EventPlanner", "LocalBusiness"],
+        "@type": "LocalBusiness",
         "@id": `https://www.wdgroupcompany.biz.id/wedding/${region.key}#business`,
         "name": `WD Sky Wedding Organizer ${region.name} - Solo Raya`,
         "url": `https://www.wdgroupcompany.biz.id/wedding/${region.key}`,
-        "image": "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-8.jpg",
+        "image": region.image || "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-8.jpg",
         "telephone": "+6285707909415",
         "email": "groupcompanywd@gmail.com",
         "description": region.seoDescription,
@@ -113,7 +113,7 @@ export default function WeddingRegion({ regionKey: propKey }) {
         title={region.title}
         description={region.seoDescription}
         url={`https://www.wdgroupcompany.biz.id/wedding/${region.key}`}
-        image="https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-8.jpg"
+        image={region.image || "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-8.jpg"}
         imageAlt={`Dekorasi pernikahan wedding organizer di ${region.name} Solo Raya - WD Sky Wedding`}
         jsonLd={regionJsonLd}
       />

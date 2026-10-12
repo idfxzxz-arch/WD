@@ -27,7 +27,7 @@ const eventJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": ["EventPlanner", "LocalBusiness"],
+      "@type": "LocalBusiness",
       "@id": "https://www.wdgroupcompany.biz.id/event#business",
       "name": "WD Event Organizer Solo Raya",
       "alternateName": ["WD Event", "WD EO Solo", "WD Group Company Event"],
@@ -410,7 +410,7 @@ export default function EventOrganizer() {
                 <span>Pengalaman Proyek & Lapangan</span>
               </h4>
               <p>
-                [ISI: jenis acara yang sering ditangani, jumlah proyek, contoh Telah menangani puluhan gathering perusahaan, konser musik kampus, dan expo di Solo Raya].
+                Berpengalaman mengoordinasikan gathering perusahaan, seminar, pameran produk, dan panggung hiburan di Solo Raya. Hubungi tim kami untuk mendiskusikan format acara Anda.
               </p>
             </div>
 
@@ -563,7 +563,7 @@ export default function EventOrganizer() {
               Konsultasikan <em>Event Anda Sekarang</em>
             </h2>
             <p className="div-subtitle">
-              Kirimkan brief singkat acara Anda. Tim WD Event Organizer akan segera menghubungi Anda dengan estimasi solusi terbaik.
+              Kirimkan brief singkat acara Anda. Tim WD Event Organizer akan segera menghubungi Anda dengan estimasi rancangan yang sesuai.
             </p>
           </div>
 

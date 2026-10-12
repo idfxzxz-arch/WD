@@ -273,7 +273,7 @@ export default function ITPage() {
               </div>
               <h3 className="div-service-title">Website Profil Perusahaan (Company Profile)</h3>
               <p className="div-service-desc">
-                Membangun reputasi terpercaya bagi korporasi, UMKM, konsultan, klinik, maupun kantor jasa di Solo Raya. Dilengkapi profil bisnis, katalog layanan, portofolio, dan integrasi tombol kontak langsung.
+                Membangun reputasi profesional bagi korporasi, UMKM, konsultan, klinik, maupun kantor jasa di Solo Raya. Dilengkapi profil bisnis, katalog layanan, portofolio, dan integrasi tombol kontak langsung.
               </p>
               <ul className="div-service-bullets">
                 <li>Desain eksklusif mencerminkan identitas brand</li>
@@ -399,13 +399,13 @@ export default function ITPage() {
           </div>
 
           <div className="div-trust-grid">
-            <div className="div-trust-card placeholder-highlight">
+            <div className="div-trust-card">
               <h4>
                 <Database size={17} />
                 <span>Transparansi Portofolio & Paket</span>
               </h4>
               <p>
-                [ISI: contoh proyek (website/klien yang boleh disebut), paket dan harga, misal paket profil bisnis mulai dari Rp 1.xxx.xxx].
+                Layanan pembuatan website company profile, landing page bisnis, dan aplikasi web dirancang responsif dan SEO-friendly. Hubungi kami untuk demonstrasi portofolio live dan konsultasi teknis.
               </p>
             </div>
 

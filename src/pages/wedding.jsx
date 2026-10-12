@@ -31,7 +31,7 @@ const partnerVenues = [
   {
     name: "Hotel Alila Solo",
     tag: "Hotel & Ballroom",
-    desc: "Alila X Masjid Zayed · Paket pernikahan Grand Ballroom bintang lima berstandar internasional.",
+    desc: "Alila X Masjid Zayed · Paket pernikahan Grand Ballroom hotel berbintang standar internasional.",
     link: "https://drive.google.com/file/d/13__fRe3H7ZRPUWJGl-s9arFA2_T1RSAI/view?usp=drive_link"
   },
   {
@@ -79,7 +79,7 @@ const partnerVenues = [
   {
     name: "Anasera Solo",
     tag: "Outdoor & Garden",
-    desc: "Anasera X PT WD Group · Konsep romantic intimate garden wedding dengan nuansa alam terbuka.",
+    desc: "Anasera Solo · Konsep romantic intimate garden wedding dengan nuansa alam terbuka.",
     link: "https://drive.google.com/file/d/1ZVBEaU3qfoTGGLlfd_OKCcpAC_vy0kZz/view?usp=drive_link"
   },
   {
@@ -97,13 +97,13 @@ const partnerVenues = [
   {
     name: "Beams Cafe Solo",
     tag: "Aesthetic Space",
-    desc: "Beams Cafe X PT WD Group · Ruang estetik kontemporer untuk pesta pernikahan modern & kasual.",
+    desc: "Beams Cafe Solo · Ruang estetik kontemporer untuk pesta pernikahan modern & kasual.",
     link: "https://drive.google.com/file/d/1XLmj68_v5xu5R5f684i8dzRxczEPBs5n/view?usp=drive_link"
   },
   {
     name: "Arja Cafe Solo",
     tag: "Cafe & Intimate",
-    desc: "Arja Cafe X PT WD Group · Venue intimate cafe yang hangat dan personal bagi keluarga terdekat.",
+    desc: "Arja Cafe Solo · Venue intimate cafe yang hangat dan personal bagi keluarga terdekat.",
     link: "https://drive.google.com/file/d/1RPVqD1saEBm8p2oV5gtqHbxua1ScVrR6/view?usp=drive_link"
   },
   {
@@ -118,10 +118,10 @@ const weddingJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": ["EventPlanner", "LocalBusiness"],
+      "@type": "LocalBusiness",
       "@id": "https://www.wdgroupcompany.biz.id/wedding#business",
       "name": "WD Sky Wedding Organizer Solo Raya",
-      "alternateName": ["WD Sky Wedding", "WD GROUP SOLO Wedding", "WD Group Company"],
+      "alternateName": ["WD Sky Wedding", "WO Solo", "Wedding Organizer Solo", "Paket WO Murah Solo", "WD GROUP SOLO Wedding", "WD Group Company"],
       "url": "https://www.wdgroupcompany.biz.id/wedding",
       "logo": "https://www.wdgroupcompany.biz.id/wd-group-logo.webp",
       "image": "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-8.jpg",
@@ -274,10 +274,10 @@ const weddingJsonLd = {
         },
         {
           "@type": "Question",
-          "name": "Venue mana saja di Solo Raya yang sudah menjadi rekanan resmi WD Sky Wedding?",
+          "name": "Venue mana saja di Solo Raya yang siap dikoordinasikan oleh WD Sky Wedding?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "WD Group Company memiliki kerja sama resmi dengan 14 venue favorit di Solo Raya: Hotel Alila Solo, The Alana Hotel Solo, Masjid Raya Sheikh Zayed, Convention Hall Tirtonadi, Wisma Batari Solo, Hotel UNS Solo, TBJT (Taman Budaya Jawa Tengah), Grandis Barn Solo, Anasera Solo, Gubug Makan Mang Engking, Happy Tuty Solo, Beams Cafe Solo, Arja Cafe Solo, dan Wastra Bumbu Solo. Masing-masing memiliki proposal pricelist resmi yang dapat diakses langsung."
+            "text": "WD Sky Wedding siap mendampingi dan mengoordinasikan perhelatan di 14 venue populer di Solo Raya: Hotel Alila Solo, The Alana Hotel Solo, Masjid Raya Sheikh Zayed, Convention Hall Tirtonadi, Wisma Batari Solo, Hotel UNS Solo, TBJT (Taman Budaya Jawa Tengah), Grandis Barn Solo, Anasera Solo, Gubug Makan Mang Engking, Happy Tuty Solo, Beams Cafe Solo, Arja Cafe Solo, dan Wastra Bumbu Solo. Brosur dan pricelist masing-masing venue dapat diakses langsung melalui situs kami."
           }
         }
       ]
@@ -314,7 +314,7 @@ const weddingConfig = {
   title: "Wedding Organizer",
   titleAccent: "Solo & Solo Raya.",
   description:
-    "WD Sky Wedding Organizer menghadirkan layanan paket pernikahan terjangkau dengan kualitas elegan di Solo dan Solo Raya. Kami merancang alur akad dan resepsi yang rapi, menenangkan pengantin, dan menghadirkan kenangan sakral yang berkesan bagi keluarga besar.",
+    "Paket wedding yang disesuaikan dengan kebutuhan dan budget Anda, dengan konsep yang elegan di Solo dan Solo Raya. Kami merancang alur akad dan resepsi yang rapi, menenangkan pengantin, dan menghadirkan kenangan sakral yang berkesan bagi keluarga besar.",
   seoTitle: "Wedding Organizer Solo & Solo Raya | WD Sky Wedding",
   seoDescription:
     "Jasa wedding organizer Solo dan Solo Raya dari WD Sky Wedding. Layanan paket pernikahan elegan, terjangkau, koordinasi akad hingga resepsi gedung dan rumah.",
@@ -370,10 +370,10 @@ export default function Wedding() {
           <div className="w-intro-grid">
             <div className="w-intro-text">
               <p>
-                Merencanakan sebuah pernikahan di <strong>Solo dan Solo Raya</strong> adalah perpaduan antara merawat nilai-nilai tradisi yang luhur dan menyelaraskan preferensi modern yang dinamis. <strong>WD Sky Wedding Organizer</strong>, bagian integral dari ekosistem kreatif <strong>WD Group Company</strong>, hadir sebagai mitra terpercaya bagi setiap pasangan yang mendambakan perhelatan pernikahan yang tertata rapi, berkelas, dan memiliki alokasi anggaran yang transparan.
+                Merencanakan sebuah pernikahan di <strong>Solo dan Solo Raya</strong> adalah perpaduan antara merawat nilai-nilai tradisi yang luhur dan menyelaraskan preferensi modern yang dinamis. <strong>WD Sky Wedding Organizer</strong> (layanan WO Solo dari <strong>WD Group Company</strong>) hadir sebagai mitra pendamping bagi setiap pasangan yang mendambakan perhelatan pernikahan yang tertata rapi, berkelas, dan memiliki alokasi anggaran yang transparan.
               </p>
               <p>
-                Bagi kami, pernikahan bukan sekadar pesta kemeriahan sesaat, melainkan sebuah peristiwa sakral ketika dua keluarga besar bersatu. Oleh karena itu, pendekatan kerja kami bertumpu pada <em>posisi terjangkau dengan standar kualitas elegan</em>. Kami tidak menjual ilusi kemewahan semu ataupun menyuguhkan penawaran murah yang mengorbankan ketertiban acara. Setiap rincian teknis—mulai dari prosesi ijab qobul akad nikah, upacara adat Jawa, koordinasi katering, hingga pengaturan panggung hiburan—dikelola dengan disiplin waktu dan kepekaan rasa yang tinggi.
+                Bagi kami, pernikahan bukan sekadar pesta kemeriahan sesaat, melainkan sebuah peristiwa sakral ketika dua keluarga besar bersatu. Oleh karena itu, pendekatan kerja kami bertumpu pada <em>paket wedding yang disesuaikan dengan kebutuhan dan budget Anda, dengan konsep yang elegan di Solo dan Solo Raya</em>. Setiap rincian teknis—mulai dari prosesi ijab qobul akad nikah, upacara adat Jawa, koordinasi katering, hingga pengaturan panggung hiburan—dikelola dengan disiplin waktu dan kepekaan rasa yang tinggi.
               </p>
               <p>
                 Wilayah layanan kami menjangkau seluruh kawasan <strong>Solo Raya</strong>, meliputi <strong>Kota Surakarta (Solo), Kabupaten Sukoharjo, Karanganyar, Klaten, Boyolali, Sragen, hingga Wonogiri</strong>. Baik Anda merencanakan jamuan megah di ballroom hotel berbintang, syukuran hangat di convention hall, maupun pesta asri di halaman kediaman pribadi, tim profesional WD Sky Wedding Organizer siap mengawal setiap detik hari bahagia Anda dengan tenang dan terencana.
@@ -502,7 +502,7 @@ export default function Wedding() {
                 </li>
                 <li>Unlimited Consultation &amp; koordinasi dilayani setiap hari</li>
                 <li>Meeting 4 kali (konsep acara, budget, kurasi vendor, buku panduan &amp; final meeting)</li>
-                <li>Wedding Planning Assistance &amp; rekomendasi vendor terpercaya Solo Raya</li>
+                <li>Wedding Planning Assistance &amp; kurasi dan rekomendasi vendor pilihan Solo Raya</li>
                 <li>Vendor Comparison, Budget Review &amp; pendampingan meeting vendor</li>
                 <li>Venue Survey 2 kali &amp; perancangan seating layout detail</li>
                 <li>Guest Flow Planning &amp; VIP Flow Planning terstruktur</li>
@@ -572,6 +572,9 @@ export default function Wedding() {
 
           <div className="w-payment-note" style={{ marginTop: '24px' }}>
             <p style={{ marginBottom: '8px', color: '#f6e6cb', fontWeight: 600 }}>
+              <strong>Syarat &amp; Ketentuan Promo 2026:</strong> Potongan harga khusus (promo hemat Rp 800.000 s/d Rp 1.000.000) berlaku untuk pemesanan paket pernikahan periode tahun 2026 selama kuota bulanan masih tersedia. Hubungi admin WhatsApp kami untuk konfirmasi ketersediaan tanggal dan slot promo.
+            </p>
+            <p style={{ marginBottom: '8px' }}>
               <strong>NB (Request Tambahan Properti):</strong> Tambahan barang properti atau barang perlengkapan acara yang tidak ada di dalam paket, dapat dilakukan request oleh pemangku hajat sesuai dengan keinginan konsep acara, dengan penambahan biaya sesuai dengan harga properti yang diminta.
             </p>
             <p>
@@ -652,7 +655,7 @@ export default function Wedding() {
                 <span>Pengalaman & Portofolio Nyata</span>
               </h4>
               <p>
-                Telah berpengalaman mendampingi calon pengantin di berbagai venue terkemuka Solo Raya. [ISI: tahun berdiri / pengalaman, misal Melayani sejak 2021 dengan puluhan acara terselenggara sukses].
+                Telah berpengalaman mendampingi calon pengantin di berbagai venue terkemuka Solo Raya. Hubungi kami untuk melihat dokumentasi portofolio lengkap dan konsultasi konsep acara Anda.
               </p>
             </div>
 
@@ -679,27 +682,27 @@ export default function Wedding() {
             <div className="w-trust-card">
               <h4>
                 <CheckCircle2 size={17} />
-                <span>Jaringan Rekanan Vendor Luas</span>
+                <span>Jaringan Vendor Pilihan Luas</span>
               </h4>
               <p>
-                Terkoneksi langsung dengan 14+ partner gedung dan hotel ternama di Solo, vendor tata boga katering terpercaya, hingga perias paes pengantin bersertifikat di Solo Raya.
+                Siap berkoordinasi langsung dengan 14+ venue gedung dan hotel ternama di Solo, vendor tata boga katering berpengalaman, hingga perias paes pengantin bersertifikat di Solo Raya.
               </p>
             </div>
           </div>
         </section>
 
-        {/* SECTION 4B: 14 VENUE REKANAN RESMI WD GROUP */}
+        {/* SECTION 4B: 14 VENUE PILIHAN DI SOLO RAYA */}
         <section className="w-section" id="venue-rekanan">
           <div className="w-section-header">
             <span className="w-kicker">
               <Building2 size={13} />
-              <span>Jaringan Venue Resmi</span>
+              <span>Panduan &amp; Rekomendasi Venue</span>
             </span>
             <h2 className="w-title">
-              14 Venue Rekanan Resmi <em>WD Sky Wedding di Solo Raya</em>
+              14 Venue Pilihan di Solo Raya <em>Siap Kami Koordinasikan</em>
             </h2>
             <p className="w-subtitle">
-              WD Group Company telah menjalin kerja sama resmi dengan hotel berbintang, grand ballroom, heritage hall, dan aesthetic intimate space terbaik di Solo Raya. Buka brosur PDF pricelist resmi masing-masing venue di bawah ini:
+              Berikut adalah 14 venue populer di Solo Raya yang siap dikoordinasikan oleh tim WD Sky Wedding. Buka brosur PDF atau pricelist masing-masing venue di bawah ini:
             </p>
           </div>
 
@@ -711,7 +714,7 @@ export default function Wedding() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-venue-card"
-                title={`Lihat Pricelist Resmi ${v.name} & WD Group`}
+                title={`Lihat Brosur / Pricelist ${v.name}`}
               >
                 <div>
                   <span className="w-venue-tag">{v.tag}</span>
@@ -719,7 +722,7 @@ export default function Wedding() {
                   <p className="w-venue-desc">{v.desc}</p>
                 </div>
                 <div className="w-venue-footer">
-                  <span>Buka Detail Venue Rekanan</span>
+                  <span>Lihat Brosur / Pricelist Venue</span>
                   <ArrowUpRight size={14} />
                 </div>
               </a>
@@ -782,7 +785,7 @@ export default function Wedding() {
                 Berapa biaya jasa wedding organizer WD Sky Wedding di Solo dan Solo Raya?
               </summary>
               <div className="w-faq-answer">
-                Kami menyediakan 3 pilihan paket resmi dengan harga transparan dan terjangkau di Solo Raya:
+                Bagi calon pengantin yang mencari layanan wedding organizer terjangkau (paket WO murah di Solo Raya) dengan standar eksekusi yang tertib dan elegan, kami menyediakan 3 pilihan paket resmi dengan harga transparan:
                 <ul style={{ marginTop: '8px', paddingLeft: '20px', lineHeight: '1.7' }}>
                   <li><strong>Package 1 (Wedding Organizer):</strong> Promo <strong>Rp 5.500.000</strong> (harga normal Rp 6.300.000) untuk Akad Nikah, Temu Manten, dan Resepsi dalam satu acara (maksimal 300 tamu undangan, vendor 85%).</li>
                   <li><strong>Package 2 (Wedding Planner &amp; WO):</strong> Promo <strong>Rp 6.300.000</strong> (harga normal Rp 7.300.000) dengan <strong>12 orang kru bertugas</strong>, unlimited consultation, dan meeting 4 kali.</li>
@@ -865,17 +868,17 @@ export default function Wedding() {
 
             <details className="w-faq-item">
               <summary className="w-faq-summary">
-                Venue mana saja di Solo Raya yang sudah bekerja sama resmi dengan WD Sky Wedding?
+                Venue mana saja di Solo Raya yang siap dikoordinasikan oleh WD Sky Wedding?
               </summary>
               <div className="w-faq-answer">
-                Kami telah menjalin kemitraan resmi dengan <strong>14 venue unggulan di Solo Raya</strong> yang memiliki pricelist paket kolaborasi:
+                Kami siap mendampingi dan mengoordinasikan acara Anda di <strong>14 venue favorit di Solo Raya</strong>:
                 <ul style={{ marginTop: '8px', paddingLeft: '20px', lineHeight: '1.7' }}>
                   <li><strong>Hotel &amp; Ballroom Mewah:</strong> Hotel Alila Solo, The Alana Hotel Solo, UNS Hotel &amp; Convention.</li>
                   <li><strong>Grand Ballroom &amp; Heritage Hall:</strong> Masjid Raya Sheikh Zayed, Convention Hall Tirtonadi, Gedung Wisma Batari Solo, TBJT (Taman Budaya Jawa Tengah).</li>
                   <li><strong>Outdoor Garden &amp; Rustic Barn:</strong> Grandis Barn Solo (Colomadu), Anasera Solo, Gubug Makan Mang Engking.</li>
                   <li><strong>Heritage &amp; Intimate Space:</strong> Happy Tuty Solo, Beams Cafe Solo, Arja Cafe Solo, Wastra Bumbu Solo.</li>
                 </ul>
-                Brosur PDF kerja sama masing-masing venue dapat Anda buka langsung melalui daftar kartu 14 venue rekanan di atas atau dikonsultasikan bersama tim WD Sky Wedding.
+                Brosur PDF dan estimasi pricelist masing-masing venue dapat Anda buka langsung melalui daftar kartu venue di atas atau dikonsultasikan bersama tim WD Sky Wedding.
               </div>
             </details>
           </div>
@@ -1039,7 +1042,7 @@ export default function Wedding() {
                 <Clock className="w-nap-icon" />
                 <div className="w-nap-text">
                   <strong>Jam Pelayanan Konsultasi:</strong>
-                  <span>[ISI: jam buka sebenarnya, contoh Setiap Hari 08.00 - 20.00 WIB / Dengan Perjanjian Temu]</span>
+                  <span>Senin – Sabtu: 09.00 – 17.00 WIB (Konsultasi via WhatsApp responsif setiap hari)</span>
                 </div>
               </div>
 
