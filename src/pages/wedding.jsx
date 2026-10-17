@@ -32,85 +32,103 @@ const partnerVenues = [
     name: "Hotel Alila Solo",
     tag: "Hotel & Ballroom",
     desc: "Alila X Masjid Zayed · Paket pernikahan Grand Ballroom hotel berbintang standar internasional.",
-    link: "https://drive.google.com/file/d/13__fRe3H7ZRPUWJGl-s9arFA2_T1RSAI/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/13__fRe3H7ZRPUWJGl-s9arFA2_T1RSAI/view?usp=drive_link",
+    image: "/resources/Wedding/venues/alila-solo.jpg",
+    position: "center 20%"
   },
   {
     name: "The Alana Hotel Solo",
     tag: "Luxury Hotel & Ballroom",
     desc: "The Alana Hotel & Convention · Fasilitas ballroom mewah berbintang 4 dan paket lengkap.",
-    link: "https://drive.google.com/file/d/1uiBbCc3yKZQBqWfBGBtM73FgvRPnVFSy/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1uiBbCc3yKZQBqWfBGBtM73FgvRPnVFSy/view?usp=drive_link",
+    image: "/resources/Wedding/venues/alana-solo.jpg",
+    position: "center 40%"
   },
   {
     name: "Masjid Raya Zayed Solo",
     tag: "Convention & Ballroom",
     desc: "Masjid Raya Sheikh Zayed · Konsep akad nikah agung & convention ballroom berwibawa.",
-    link: "https://drive.google.com/file/d/1G7zU6L4sqs-yimxgKawecRYMYcrF_GL-/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1G7zU6L4sqs-yimxgKawecRYMYcrF_GL-/view?usp=drive_link",
+    image: "/resources/Wedding/venues/masjid-zayed-solo.jpg",
+    position: "center 30%"
   },
   {
     name: "Convention Hall Tirtonadi",
     tag: "Grand Ballroom",
     desc: "Convention Hall Tirtonadi · Grand ballroom modern berkapasitas ribuan tamu & parkir luas.",
-    link: "https://drive.google.com/file/d/1_7IwZcI0Ryy-FQOc15wQOKqzP3j6ca-4/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1_7IwZcI0Ryy-FQOc15wQOKqzP3j6ca-4/view?usp=drive_link",
+    image: "/resources/Wedding/venues/convention-hall-tirtonadi.jpg"
   },
   {
     name: "Wisma Batari Solo",
     tag: "Historic & Ballroom",
     desc: "Gedung Wisma Batari · Gedung pernikahan heritage klasik & primadona tradisi adat Jawa.",
-    link: "https://drive.google.com/file/d/1FONWxtb0TwZt6yXJsmXMEZ0wLXQqpF9p/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1FONWxtb0TwZt6yXJsmXMEZ0wLXQqpF9p/view?usp=drive_link",
+    image: "/resources/Wedding/venues/wisma-batari-solo.jpg"
   },
   {
     name: "Hotel UNS Solo",
     tag: "Hotel & Convention",
     desc: "UNS Hotel & Convention · Ballroom modern dengan akses strategis di kawasan Solo Timur.",
-    link: "https://drive.google.com/file/d/1Dnt7ib34PybSxYlgaXhQEdddcS0-bob0/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1Dnt7ib34PybSxYlgaXhQEdddcS0-bob0/view?usp=drive_link",
+    image: "/resources/Wedding/venues/hotel-uns-solo.png",
+    position: "center 35%"
   },
   {
     name: "TBJT Solo (Taman Budaya)",
     tag: "Heritage & Hall",
     desc: "Taman Budaya Jawa Tengah · Pendopo & ballroom seni budaya Jawa untuk perhelatan sakral.",
-    link: "https://drive.google.com/file/d/1HfnoZ8TDWA775eJJbYRQYpTWctLVdZu0/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1HfnoZ8TDWA775eJJbYRQYpTWctLVdZu0/view?usp=drive_link",
+    image: "/resources/Wedding/venues/tbjt-solo.jpg"
   },
   {
     name: "Grandis Barn Solo",
     tag: "Barn & Rustic Garden",
     desc: "Grandis Barn Colomadu · Nuansa lumbung kayu rustic & aesthetic garden wedding instagramable.",
-    link: "https://drive.google.com/file/d/1P216V_fGx86hud5Gs_1VRTkRsYKNe9Yg/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1P216V_fGx86hud5Gs_1VRTkRsYKNe9Yg/view?usp=drive_link",
+    image: "/resources/Wedding/venues/grandis-barn-solo.jpg"
   },
   {
     name: "Anasera Solo",
     tag: "Outdoor & Garden",
     desc: "Anasera Solo · Konsep romantic intimate garden wedding dengan nuansa alam terbuka.",
-    link: "https://drive.google.com/file/d/1ZVBEaU3qfoTGGLlfd_OKCcpAC_vy0kZz/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1ZVBEaU3qfoTGGLlfd_OKCcpAC_vy0kZz/view?usp=drive_link",
+    image: "/resources/Wedding/venues/anasera-solo.jpg"
   },
   {
     name: "Mang Engking Solo",
     tag: "Outdoor & Resto",
     desc: "Gubug Makan Mang Engking · Suasana alam asri dan danau pedesaan untuk pesta keluarga hangat.",
-    link: "https://drive.google.com/file/d/1EQc0ysyDBvAZh2YjKNa_4oT6uoAXNQ2v/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1EQc0ysyDBvAZh2YjKNa_4oT6uoAXNQ2v/view?usp=drive_link",
+    image: "/resources/Wedding/venues/mang-engking-solo.jpg"
   },
   {
     name: "Happy Tuty Solo",
     tag: "Heritage & Garden",
     desc: "Happy Tuty Solo · Venue berarsitektur klasik heritage untuk perhelatan intimate berkesan.",
-    link: "https://drive.google.com/file/d/1ikDV4uzJXYlxxsdyWX1NryO7n5KXTzV1/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1ikDV4uzJXYlxxsdyWX1NryO7n5KXTzV1/view?usp=drive_link",
+    image: "/resources/Wedding/venues/happy-tuty-solo.jpg"
   },
   {
     name: "Beams Cafe Solo",
     tag: "Aesthetic Space",
     desc: "Beams Cafe Solo · Ruang estetik kontemporer untuk pesta pernikahan modern & kasual.",
-    link: "https://drive.google.com/file/d/1XLmj68_v5xu5R5f684i8dzRxczEPBs5n/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1XLmj68_v5xu5R5f684i8dzRxczEPBs5n/view?usp=drive_link",
+    image: "/resources/Wedding/venues/beams-cafe-solo.jpg"
   },
   {
     name: "Arja Cafe Solo",
     tag: "Cafe & Intimate",
     desc: "Arja Cafe Solo · Venue intimate cafe yang hangat dan personal bagi keluarga terdekat.",
-    link: "https://drive.google.com/file/d/1RPVqD1saEBm8p2oV5gtqHbxua1ScVrR6/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1RPVqD1saEBm8p2oV5gtqHbxua1ScVrR6/view?usp=drive_link",
+    image: "/resources/Wedding/venues/arja-cafe-solo.jpg"
   },
   {
     name: "Wastra Bumbu Solo",
     tag: "Restaurant & Intimate",
     desc: "Wastra Bumbu Solo · Paduan kuliner lezat & intimate dining space elegan untuk hari bahagia.",
-    link: "https://drive.google.com/file/d/1ol5_2yMwtaSnXUPILkPYAtRtE68-1tk1/view?usp=drive_link"
+    link: "https://drive.google.com/file/d/1ol5_2yMwtaSnXUPILkPYAtRtE68-1tk1/view?usp=drive_link",
+    image: "/resources/Wedding/venues/wastra-bumbu-solo.jpg"
   }
 ];
 
@@ -716,8 +734,21 @@ export default function Wedding() {
                 className="w-venue-card"
                 title={`Lihat Brosur / Pricelist ${v.name}`}
               >
-                <div>
-                  <span className="w-venue-tag">{v.tag}</span>
+                <div className="w-venue-thumb">
+                  <img
+                    src={v.image}
+                    alt={`Foto venue pernikahan ${v.name}`}
+                    className="w-venue-img"
+                    style={v.position ? { objectPosition: v.position } : undefined}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = "/portfolio/resepsi/resepsi-1.jpg";
+                    }}
+                  />
+                  <span className="w-venue-tag-badge">{v.tag}</span>
+                </div>
+                <div className="w-venue-body">
                   <h3 className="w-venue-name">{v.name}</h3>
                   <p className="w-venue-desc">{v.desc}</p>
                 </div>
