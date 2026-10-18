@@ -238,6 +238,15 @@ export const businessData = {
       status: "needs_confirmation",
       relationship: "Venue rekomendasi intimate dining",
     },
+    {
+      id: "hotel-nirwana-sarangan",
+      name: "Hotel Nirwana Sarangan",
+      category: "Resort & Mountain View",
+      image: "/venues/hotel-nirwana-sarangan.webp",
+      driveUrl: "https://wa.me/6285707909415?text=Halo%20WD%20Sky%20Wedding%2C%20saya%20ingin%20konsultasi%20paket%20wedding%20di%20Hotel%20Nirwana%20Sarangan.",
+      status: "needs_confirmation",
+      relationship: "Venue rekomendasi resort & mountain view",
+    },
   ],
 
   divisions: [
@@ -310,8 +319,8 @@ export const businessData = {
     },
     {
       id: "chk-04",
-      field: "Status Hukum & Perjanjian Rekanan 14 Venue",
-      currentValue: "14 Venue dengan tautan PDF pricelist Google Drive",
+      field: "Status Hukum & Perjanjian Rekanan 15 Venue",
+      currentValue: "15 Venue dengan tautan PDF pricelist Google Drive / WhatsApp",
       status: "needs_confirmation",
       action: "Pemilik mengonfirmasi apakah seluruh venue memiliki ikatan kontrak PKS resmi atau merupakan venue rekomendasi reguler.",
     },

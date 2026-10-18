@@ -125,6 +125,13 @@ const partnerVenues = [
     image: "/venues/wastra-bumbu.webp",
     desc: "Wastra Bumbu Solo · Paduan kuliner lezat & intimate dining space elegan untuk hari bahagia.",
     link: "https://drive.google.com/file/d/1ol5_2yMwtaSnXUPILkPYAtRtE68-1tk1/view?usp=drive_link"
+  },
+  {
+    name: "Hotel Nirwana Sarangan",
+    tag: "Resort & Mountain View",
+    image: "/venues/hotel-nirwana-sarangan.webp",
+    desc: "Hotel Nirwana Sarangan · Suasana sejuk lereng Gunung Lawu & Telaga Sarangan untuk perhelatan intimate berkesan.",
+    link: "https://wa.me/6285707909415?text=Halo%20WD%20Sky%20Wedding%2C%20saya%20ingin%20konsultasi%20paket%20wedding%20di%20Hotel%20Nirwana%20Sarangan."
   }
 ];
 
@@ -291,7 +298,7 @@ const weddingJsonLd = {
           "name": "Venue mana saja di Solo Raya yang siap dikoordinasikan oleh WD Sky Wedding?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "WD Sky Wedding siap mendampingi dan mengoordinasikan perhelatan di 14 venue populer di Solo Raya: Hotel Alila Solo, The Alana Hotel Solo, Masjid Raya Sheikh Zayed, Convention Hall Tirtonadi, Wisma Batari Solo, Hotel UNS Solo, TBJT (Taman Budaya Jawa Tengah), Grandis Barn Solo, Anasera Solo, Gubug Makan Mang Engking, Happy Tuty Solo, Beams Cafe Solo, Arja Cafe Solo, dan Wastra Bumbu Solo. Brosur dan pricelist masing-masing venue dapat diakses langsung melalui situs kami."
+            "text": "WD Sky Wedding siap mendampingi dan mengoordinasikan perhelatan di 15 venue populer di Solo Raya & sekitarnya: Hotel Alila Solo, The Alana Hotel Solo, Masjid Raya Sheikh Zayed, Convention Hall Tirtonadi, Wisma Batari Solo, Hotel UNS Solo, TBJT (Taman Budaya Jawa Tengah), Grandis Barn Solo, Anasera Solo, Gubug Makan Mang Engking, Happy Tuty Solo, Beams Cafe Solo, Arja Cafe Solo, Wastra Bumbu Solo, dan Hotel Nirwana Sarangan. Brosur dan pricelist masing-masing venue dapat diakses langsung melalui situs kami."
           }
         }
       ]
@@ -699,13 +706,13 @@ export default function Wedding() {
                 <span>Jaringan Vendor Pilihan Luas</span>
               </h4>
               <p>
-                Siap berkoordinasi langsung dengan 14+ venue gedung dan hotel ternama di Solo, vendor tata boga katering berpengalaman, hingga perias paes pengantin bersertifikat di Solo Raya.
+                Siap berkoordinasi langsung dengan 15+ venue gedung dan hotel ternama di Solo Raya &amp; sekitarnya, vendor tata boga katering berpengalaman, hingga perias paes pengantin bersertifikat di Solo Raya.
               </p>
             </div>
           </div>
         </section>
 
-        {/* SECTION 4B: 14 VENUE PILIHAN DI SOLO RAYA */}
+        {/* SECTION 4B: 15 VENUE PILIHAN DI SOLO RAYA & SEKITARNYA */}
         <section className="w-section" id="venue-rekanan">
           <div className="w-section-header">
             <span className="w-kicker">
@@ -713,10 +720,10 @@ export default function Wedding() {
               <span>Panduan &amp; Rekomendasi Venue</span>
             </span>
             <h2 className="w-title">
-              14 Venue Pilihan di Solo Raya <em>Siap Kami Koordinasikan</em>
+              15 Venue Pilihan di Solo Raya &amp; Sekitarnya <em>Siap Kami Koordinasikan</em>
             </h2>
             <p className="w-subtitle">
-              Berikut adalah 14 venue populer di Solo Raya yang siap dikoordinasikan oleh tim WD Sky Wedding. Buka brosur PDF atau pricelist masing-masing venue di bawah ini:
+              Berikut adalah 15 venue populer di Solo Raya dan sekitarnya yang siap dikoordinasikan oleh tim WD Sky Wedding. Buka brosur PDF atau pricelist masing-masing venue di bawah ini:
             </p>
           </div>
 
@@ -900,12 +907,12 @@ export default function Wedding() {
                 Venue mana saja di Solo Raya yang siap dikoordinasikan oleh WD Sky Wedding?
               </summary>
               <div className="w-faq-answer">
-                Kami siap mendampingi dan mengoordinasikan acara Anda di <strong>14 venue favorit di Solo Raya</strong>:
+                Kami siap mendampingi dan mengoordinasikan acara Anda di <strong>15 venue favorit di Solo Raya &amp; sekitarnya</strong>:
                 <ul style={{ marginTop: '8px', paddingLeft: '20px', lineHeight: '1.7' }}>
                   <li><strong>Hotel &amp; Ballroom Mewah:</strong> Hotel Alila Solo, The Alana Hotel Solo, UNS Hotel &amp; Convention.</li>
                   <li><strong>Grand Ballroom &amp; Heritage Hall:</strong> Masjid Raya Sheikh Zayed, Convention Hall Tirtonadi, Gedung Wisma Batari Solo, TBJT (Taman Budaya Jawa Tengah).</li>
                   <li><strong>Outdoor Garden &amp; Rustic Barn:</strong> Grandis Barn Solo (Colomadu), Anasera Solo, Gubug Makan Mang Engking.</li>
-                  <li><strong>Heritage &amp; Intimate Space:</strong> Happy Tuty Solo, Beams Cafe Solo, Arja Cafe Solo, Wastra Bumbu Solo.</li>
+                  <li><strong>Heritage, Intimate &amp; Resort Space:</strong> Happy Tuty Solo, Beams Cafe Solo, Arja Cafe Solo, Wastra Bumbu Solo, Hotel Nirwana Sarangan.</li>
                 </ul>
                 Brosur PDF dan estimasi pricelist masing-masing venue dapat Anda buka langsung melalui daftar kartu venue di atas atau dikonsultasikan bersama tim WD Sky Wedding.
               </div>
@@ -1098,6 +1105,11 @@ export default function Wedding() {
             </div>
           </div>
         </section>
+
+        {/* 12. FOOTER COPYRIGHT */}
+        <footer className="w-footer-copyright">
+          <p>@2026 PT WD GROUP SOLO</p>
+        </footer>
 
       </div>
 

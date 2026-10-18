@@ -204,6 +204,10 @@ export default function Cta() {
                   </div>
                 </div>
               </div>
+
+              <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-white/45">
+                <p>@2026 PT WD GROUP SOLO</p>
+              </div>
             </div>
           </Motion.div>
         </div>

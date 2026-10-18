@@ -345,6 +345,11 @@ export default function WeddingRegion({ regionKey: propKey }) {
             </div>
           </section>
 
+          {/* FOOTER COPYRIGHT */}
+          <footer className="w-footer-copyright">
+            <p>@2026 PT WD GROUP SOLO</p>
+          </footer>
+
         </main>
 
         {/* FLOATING WA BUTTON */}

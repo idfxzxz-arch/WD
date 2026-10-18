@@ -733,7 +733,7 @@
   }
 }
 
-/* 4B. 14 VENUE REKANAN RESMI GRID */
+/* 4B. 15 VENUE PILIHAN GRID */
 .w-venues-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -861,5 +861,24 @@
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+/* 12. FOOTER COPYRIGHT */
+.w-footer-copyright {
+  width: 100%;
+  border-top: 1px solid rgba(200, 159, 103, 0.2);
+  margin-top: 50px;
+  padding: 32px 20px 56px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.w-footer-copyright p {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: #a89a8e;
+  font-weight: 500;
 }
 

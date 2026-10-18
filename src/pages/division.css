@@ -552,3 +552,23 @@
     border-radius: 50%;
   }
 }
+
+/* DIVISION FOOTER COPYRIGHT */
+.div-footer-copyright {
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 50px;
+  padding: 32px 20px 56px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.div-footer-copyright p {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 500;
+}
+

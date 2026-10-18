@@ -10,7 +10,7 @@ const distDir = path.resolve(rootDir, "dist")
 
 const SITE_URL = "https://www.wdgroupcompany.biz.id"
 
-// 14 Venue Rekomendasi WD Sky Wedding
+// 15 Venue Rekomendasi WD Sky Wedding
 const partnerVenues = [
   {
     name: "Hotel Alila Solo",
@@ -109,6 +109,13 @@ const partnerVenues = [
     image: "/venues/wastra-bumbu.webp",
     desc: "Wastra Bumbu Solo · Paduan kuliner lezat & intimate dining space elegan untuk hari bahagia.",
     link: "https://drive.google.com/file/d/1ol5_2yMwtaSnXUPILkPYAtRtE68-1tk1/view?usp=drive_link"
+  },
+  {
+    name: "Hotel Nirwana Sarangan",
+    tag: "Resort & Mountain View",
+    image: "/venues/hotel-nirwana-sarangan.webp",
+    desc: "Hotel Nirwana Sarangan · Suasana sejuk lereng Gunung Lawu & Telaga Sarangan untuk perhelatan intimate berkesan.",
+    link: "https://wa.me/6285707909415?text=Halo%20WD%20Sky%20Wedding%2C%20saya%20ingin%20konsultasi%20paket%20wedding%20di%20Hotel%20Nirwana%20Sarangan."
   }
 ];
 
@@ -152,7 +159,7 @@ const weddingFaqs = [
   },
   {
     q: "Venue mana saja di Solo Raya yang sudah pernah ditangani oleh WD Sky Wedding?",
-    a: "WD Group Company memiliki pengalaman menangani acara di berbagai venue favorit di Solo Raya: Hotel Alila Solo, The Alana Hotel Solo, Masjid Raya Zayed Solo, Convention Hall Tirtonadi, Wisma Batari Solo, Hotel UNS Solo, TBJT (Taman Budaya Jawa Tengah), Grandis Barn Solo, Anasera Solo, Gubug Makan Mang Engking, Happy Tuty Solo, Beams Cafe Solo, Arja Cafe Solo, dan Wastra Bumbu Solo."
+    a: "WD Group Company memiliki pengalaman menangani acara di berbagai venue favorit di Solo Raya: Hotel Alila Solo, The Alana Hotel Solo, Masjid Raya Zayed Solo, Convention Hall Tirtonadi, Wisma Batari Solo, Hotel UNS Solo, TBJT (Taman Budaya Jawa Tengah), Grandis Barn Solo, Anasera Solo, Gubug Makan Mang Engking, Happy Tuty Solo, Beams Cafe Solo, Arja Cafe Solo, Wastra Bumbu Solo, dan Hotel Nirwana Sarangan."
   }
 ]
 
@@ -246,8 +253,8 @@ function buildWeddingHtml() {
       </section>
 
       <section id="venue-rekanan">
-        <h2>14 Venue Pilihan di Solo Raya Siap Kami Koordinasikan</h2>
-        <p>Berikut adalah 14 venue populer di kawasan Solo Raya yang siap dikoordinasikan oleh tim WD Sky Wedding Organizer, lengkap dengan katalog pricelist:</p>
+        <h2>15 Venue Pilihan di Solo Raya &amp; Sekitarnya Siap Kami Koordinasikan</h2>
+        <p>Berikut adalah 15 venue populer di kawasan Solo Raya dan sekitarnya yang siap dikoordinasikan oleh tim WD Sky Wedding Organizer, lengkap dengan katalog pricelist:</p>
         <div class="venue-grid">
           ${venuesHtml}
         </div>
@@ -280,6 +287,9 @@ function buildWeddingHtml() {
         <p>WhatsApp: <a href="https://wa.me/6285707909415?text=Halo%20WD%20Sky%20Wedding%2C%20saya%20ingin%20konsultasi%20paket%20wedding%20organizer%20di%20Solo%20Raya.">0857-0790-9415</a></p>
         <p>Email: groupcompanywd@gmail.com</p>
       </section>
+      <footer>
+        <p>@2026 PT WD GROUP SOLO</p>
+      </footer>
     </article>
   `
 }
@@ -365,6 +375,9 @@ function buildRegionHtml(reg) {
         <p>Alamat Kantor: Griya Edelweis No.12a, Dusun V, Joho, Kec. Mojolaban, Kabupaten Sukoharjo, Jawa Tengah 57554</p>
         <p>WhatsApp: <a href="https://wa.me/6285707909415?text=Halo%20WD%20Sky%20Wedding%2C%20saya%20ingin%20konsultasi%20layanan%20wedding%20organizer%20untuk%20wilayah%20${encodeURIComponent(reg.name)}.">0857-0790-9415</a></p>
       </section>
+      <footer>
+        <p>@2026 PT WD GROUP SOLO</p>
+      </footer>
     </article>
   `
 }

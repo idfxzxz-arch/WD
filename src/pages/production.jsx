@@ -624,6 +624,11 @@ export default function ProductionOrganizer() {
           </div>
         </section>
 
+        {/* FOOTER COPYRIGHT */}
+        <footer className="div-footer-copyright">
+          <p>@2026 PT WD GROUP SOLO</p>
+        </footer>
+
       </div>
 
       {/* FLOATING WA BUTTON */}
