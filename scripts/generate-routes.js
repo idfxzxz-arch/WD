@@ -122,8 +122,8 @@ const partnerVenues = [
 // 10 FAQ Wedding
 const weddingFaqs = [
   {
-    q: "Berapa biaya jasa wedding organizer WD Sky Wedding di Solo dan Solo Raya?",
-    a: "Bagi Anda yang mencari layanan wedding organizer terjangkau (paket WO murah di Solo Raya) dengan standar mutu elegan, kami menyediakan 3 pilihan paket resmi dengan harga transparan mulai dari promo Rp 5.500.000. Alokasi anggaran efisien tanpa mengurangi kekhidmatan acara. Hubungi kami untuk rincian paket dan proposal resmi."
+    q: "Berapa biaya / harga paket wedding organizer (WO murah Solo) di Solo dan Solo Raya?",
+    a: "Bagi Anda yang mencari paket WO murah di Solo dan Solo Raya dengan standar mutu eksekusi elegan dan rapi, kami menyediakan 3 pilihan paket resmi dengan harga transparan mulai dari promo Rp 5.500.000 (di bawah 10 juta). Alokasi anggaran efisien tanpa mengurangi kekhidmatan acara pernikahan. Hubungi kami untuk rincian paket dan proposal resmi."
   },
   {
     q: "Kapan waktu paling ideal untuk memesan (booking) layanan wedding organizer?",
@@ -134,8 +134,8 @@ const weddingFaqs = [
     a: "Pada hari-H, tim WD Sky Wedding mengelola seluruh operasional acara: memandu timeline persiapan rias pengantin, mengawal kesiapan vendor, memimpin prosesi akad dan temu pengantin, mengatur alur kirab, mengoordinasikan tamu kehormatan dan prasmanan, hingga mengamankan mahar dan kotak amplop."
   },
   {
-    q: "Apakah WD Sky Wedding melayani acara pernikahan di rumah selain di gedung?",
-    a: "Ya, kami terbiasa menangani pesta pernikahan baik di gedung pertemuan, ballroom hotel, maupun halaman rumah pribadi di wilayah Solo dan Solo Raya. Pernikahan di rumah memiliki dinamika alur tamu dan ruang tersendiri, dan kru kami siap mengatur tata sirkulasi agar tetap tertib dan nyaman."
+    q: "Apakah WD Sky Wedding melayani acara pernikahan hajatan di rumah selain di gedung?",
+    a: "Ya, kami terbiasa menangani pesta pernikahan baik di gedung pertemuan, ballroom hotel, maupun halaman rumah pribadi (hajatan tenda) di wilayah Solo dan Solo Raya. Pernikahan di rumah memiliki dinamika alur tamu dan ruang tersendiri, dan kru kami siap mengatur tata sirkulasi agar tetap tertib dan nyaman."
   },
   {
     q: "Bagaimana sistem pembayaran dan ketentuan uang muka (DP)?",
@@ -147,7 +147,7 @@ const weddingFaqs = [
   },
   {
     q: "Wilayah mana saja di Solo Raya yang dilayani oleh WD Sky Wedding?",
-    a: "Kami melayani seluruh 7 wilayah Solo Raya: Kota Surakarta (Solo), Kabupaten Sukoharjo, Karanganyar, Klaten, Boyolali, Sragen, dan Wonogiri, dengan basis kantor operasional di pusat konektivitas Solo Raya."
+    a: "Kami melayani seluruh 7 wilayah Solo Raya: Kota Surakarta (Solo), kawasan Solo Baru, Kabupaten Sukoharjo, Karanganyar, Klaten, Boyolali, Sragen, dan Wonogiri, dengan basis kantor operasional di pusat konektivitas Solo Raya."
   },
   {
     q: "Apakah klien diperbolehkan membawa vendor rekanan sendiri?",
@@ -188,20 +188,20 @@ function buildWeddingHtml() {
       </nav>
 
       <header>
-        <h1>WD Sky Wedding Organizer – Wedding Organizer Solo & Solo Raya</h1>
-        <p>Layanan jasa wedding organizer dan wedding planner profesional (WO Solo) di Solo dan Solo Raya (Surakarta, Sukoharjo, Karanganyar, Klaten, Boyolali, Sragen, Wonogiri). Kami mengusung konsep pernikahan yang rapi, tertib, dan elegan, disesuaikan dengan kebutuhan dan budget Anda.</p>
+        <h1>WD Sky Wedding – Jasa Wedding Organizer Solo, WO Murah &amp; Elegan di Solo Raya</h1>
+        <p>Layanan jasa wedding organizer dan wedding planner profesional (WO Solo &amp; WO murah Solo) di Solo dan Solo Raya (Surakarta, Solo Baru, Sukoharjo, Karanganyar, Klaten, Boyolali, Sragen, Wonogiri). Kami mengusung konsep pernikahan yang rapi, tertib, dan elegan, disesuaikan dengan kebutuhan dan budget Anda mulai promo Rp 5.500.000 untuk resepsi gedung maupun hajatan rumah.</p>
       </header>
 
       <section>
-        <h2>Solusi Pernikahan Solo Raya dengan Kualitas Elegan</h2>
-        <p>Merencanakan sebuah pernikahan di Solo dan Solo Raya adalah perpaduan antara merawat nilai-nilai tradisi yang luhur dan menyelaraskan preferensi modern yang dinamis. WD Sky Wedding Organizer (layanan WO Solo dari ekosistem kreatif WD Group Company) hadir mendampingi setiap pasangan yang mendambakan perhelatan pernikahan yang tertata rapi, berkelas, dan memiliki alokasi anggaran yang jelas.</p>
-        <p>Bagi kami, pernikahan adalah peristiwa sakral ketika dua keluarga besar bersatu. Oleh karena itu, pendekatan kerja kami bertumpu pada paket wedding yang disesuaikan dengan kebutuhan dan budget Anda, dengan konsep yang elegan. Setiap rincian teknis—mulai dari prosesi ijab qobul akad nikah, upacara adat Jawa, koordinasi katering, hingga pengaturan panggung hiburan—dikelola dengan disiplin waktu dan kepekaan rasa yang tinggi.</p>
-        <p>Wilayah layanan kami menjangkau seluruh kawasan Solo Raya: Kota Surakarta (Solo), Kabupaten Sukoharjo, Karanganyar, Klaten, Boyolali, Sragen, hingga Wonogiri. Baik di gedung pertemuan, ballroom hotel, maupun halaman rumah pribadi, tim profesional WD Sky Wedding Organizer siap mengawal hari bahagia Anda.</p>
+        <h2>Solusi Paket Wedding Organizer Solo Murah &amp; Kualitas Elegan</h2>
+        <p>Merencanakan sebuah pernikahan di Solo dan Solo Raya adalah perpaduan antara merawat nilai-nilai tradisi yang luhur dan menyelaraskan preferensi modern yang dinamis. WD Sky Wedding Organizer (layanan WO Solo dari ekosistem kreatif WD Group Company) hadir mendampingi setiap pasangan yang mendambakan perhelatan pernikahan yang tertata rapi, berkelas, dan memiliki alokasi anggaran yang jelas melalui paket wedding organizer Solo murah dan terjangkau.</p>
+        <p>Bagi kami, pernikahan adalah peristiwa sakral ketika dua keluarga besar bersatu. Oleh karena itu, pendekatan kerja kami bertumpu pada paket wedding planner yang disesuaikan dengan kebutuhan dan budget Anda, dengan konsep yang elegan. Setiap rincian teknis—mulai dari prosesi ijab qobul akad nikah, upacara adat Jawa Surakarta (panggih, balangan gantal, kacar-kucur), koordinasi katering, hingga pengaturan panggung hiburan—dikelola dengan disiplin waktu dan kepekaan rasa yang tinggi.</p>
+        <p>Wilayah layanan kami menjangkau seluruh kawasan Solo Raya: Kota Surakarta (Solo), Solo Baru, Kabupaten Sukoharjo, Karanganyar, Klaten, Boyolali, Sragen, hingga Wonogiri. Baik di gedung pertemuan, ballroom hotel (seperti Alila dan The Alana), intimate outdoor garden (Grandis Barn Colomadu dan Anasera), gedung heritage (Wisma Batari dan Convention Hall Tirtonadi), maupun hajatan rumah pribadi, tim profesional WD Sky Wedding Organizer siap mengawal hari bahagia Anda.</p>
       </section>
 
       <section id="paket-pernikahan">
-        <h2>Pilihan Paket Wedding Organizer Solo Raya</h2>
-        <p>Berikut adalah pilihan paket wedding organizer yang tersedia untuk kebutuhan prosesi akad nikah dan resepsi pernikahan Anda:</p>
+        <h2>Pilihan Paket Wedding Organizer Solo Murah &amp; Elegan (Mulai Rp 5,5 Juta)</h2>
+        <p>Berikut adalah pilihan paket wedding organizer yang tersedia untuk kebutuhan prosesi akad nikah, resepsi gedung, dan hajatan rumah Anda:</p>
         
         <div class="package-grid">
           <div class="card package-card">
@@ -696,10 +696,10 @@ const routes = [
   {
     path: "wedding",
     canonical: `${SITE_URL}/wedding`,
-    title: "Wedding Organizer Solo & Solo Raya | WD Sky Wedding",
-    description: "Jasa wedding organizer Solo dan Solo Raya dari WD Sky Wedding. Layanan paket pernikahan elegan, terjangkau, koordinasi akad hingga resepsi gedung dan rumah.",
-    ogTitle: "Wedding Organizer Solo & Solo Raya – WD Sky Wedding",
-    ogDescription: "Paket wedding yang disesuaikan dengan kebutuhan dan budget Anda, dengan konsep yang elegan di Solo dan Solo Raya.",
+    title: "Wedding Organizer Solo Murah & Elegan | WD Sky Wedding",
+    description: "Jasa wedding organizer Solo & wedding planner terjangkau di Solo Raya. Paket WO murah mulai promo Rp 5,5 jt, resepsi gedung, hajatan rumah & adat Jawa.",
+    ogTitle: "Wedding Organizer Solo Murah & Elegan | WD Sky Wedding",
+    ogDescription: "Jasa wedding organizer Solo & wedding planner terjangkau di Solo Raya. Paket WO murah mulai promo Rp 5,5 jt, resepsi gedung, hajatan rumah & adat Jawa.",
     image: `${SITE_URL}/portfolio/resepsi/resepsi-8.jpg`,
     imageAlt: "Dekorasi pelaminan resepsi pernikahan elegan Solo Raya oleh WD Sky Wedding",
     schema: {
@@ -707,6 +707,36 @@ const routes = [
       "@type": "LocalBusiness",
       "@id": `${SITE_URL}/wedding#business`,
       "name": "WD Sky Wedding Organizer Solo Raya",
+      "alternateName": [
+        "WD Sky Wedding",
+        "WO Solo",
+        "Wedding Organizer Solo",
+        "WO Murah Solo",
+        "Wedding Organizer Solo Murah",
+        "Paket Wedding Organizer Solo Murah",
+        "Paket Pernikahan Murah Solo",
+        "Jasa Wedding Organizer Solo",
+        "Wedding Planner Solo",
+        "WO Solo Baru",
+        "WO Sukoharjo",
+        "WO Karanganyar",
+        "Wedding Organizer Hajatan Rumah Solo",
+        "Wedding Organizer Adat Jawa Solo",
+        "Day of Coordinator Solo",
+        "WD GROUP SOLO Wedding",
+        "WD Group Company"
+      ],
+      "knowsAbout": [
+        "Wedding Organizer Solo",
+        "WO Murah Solo",
+        "Paket Pernikahan Murah Solo",
+        "Wedding Planner Solo",
+        "Pernikahan Adat Jawa Surakarta",
+        "Intimate Wedding Solo",
+        "Pernikahan Gedung dan Rumah di Solo Raya",
+        "Day of Coordinator Solo",
+        "Venue Wedding Solo"
+      ],
       "image": `${SITE_URL}/portfolio/resepsi/resepsi-8.jpg`,
       "url": `${SITE_URL}/wedding`,
       "telephone": "+6285707909415",
@@ -731,7 +761,7 @@ const routes = [
         "https://instagram.com/wdgroupcompany",
         "https://maps.google.com/?cid=423251003407914670"
       ],
-      "description": "Layanan jasa wedding organizer dan wedding planner dengan konsep elegan di Solo dan Solo Raya.",
+      "description": "Layanan jasa wedding organizer profesional dan wedding planner murah elegan di Solo dan Solo Raya. Paket WO murah mulai promo Rp 5,5 jt untuk resepsi gedung, hajatan rumah, intimate wedding, dan adat Jawa Surakarta.",
       "parentOrganization": {
         "@type": "Organization",
         "name": "WD Group Company",

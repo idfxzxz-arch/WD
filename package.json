@@ -7,6 +7,9 @@
   "author": "idk",
   "type": "module",
   "main": "eslint.config.js",
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/generate-routes.js",

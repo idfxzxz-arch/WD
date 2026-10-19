@@ -2,10 +2,10 @@ export const weddingRegions = {
   sukoharjo: {
     key: "sukoharjo",
     name: "Sukoharjo",
-    title: "Wedding Organizer Sukoharjo & Solo Raya | WD Sky Wedding",
-    seoDescription: "Jasa wedding organizer Sukoharjo dan Solo Raya dari WD Sky Wedding. Layanan paket pernikahan elegan dan terjangkau di Solo Baru, Kartasura, dan Mojolaban.",
-    kicker: "Wedding Organizer Sukoharjo",
-    h1: "Jasa Wedding Organizer di Sukoharjo & Solo Raya",
+    title: "Wedding Organizer Sukoharjo & Solo Baru | WD Sky Wedding",
+    seoDescription: "Jasa wedding organizer Sukoharjo & WO Solo Baru dari WD Sky Wedding. Paket pernikahan murah elegan di Solo Baru, Kartasura, Mojolaban, dan Solo Raya.",
+    kicker: "Wedding Organizer Sukoharjo & Solo Baru",
+    h1: "Jasa Wedding Organizer di Sukoharjo & Solo Baru",
     introLead: "Sebagai pusat kantor operasional WD Group Company di Mojolaban Sukoharjo, kami memiliki kedekatan geografis dan jaringan vendor terluas di Kabupaten Sukoharjo, mulai dari kawasan modern Solo Baru hingga pesta syukuran hangat di kediaman keluarga.",
     image: "https://www.wdgroupcompany.biz.id/portfolio/resepsi/resepsi-4.jpg",
     overviewParagraphs: [
@@ -60,7 +60,7 @@ export const weddingRegions = {
     key: "karanganyar",
     name: "Karanganyar",
     title: "Wedding Organizer Karanganyar & Solo Raya | WD Sky Wedding",
-    seoDescription: "Jasa wedding organizer Karanganyar dan Solo Raya dari WD Sky Wedding. Paket pernikahan outdoor Tawangmangu, Colomadu, dan heritage Karanganyar.",
+    seoDescription: "Jasa wedding organizer Karanganyar & WO Solo Raya dari WD Sky Wedding. Paket pernikahan murah outdoor Tawangmangu, Colomadu, dan heritage Karanganyar.",
     kicker: "Wedding Organizer Karanganyar",
     h1: "Jasa Wedding Organizer di Karanganyar & Solo Raya",
     introLead: "Kabupaten Karanganyar menawarkan lanskap pernikahan terindah di Solo Raya, mulai dari nuansa megah pabrik gula heritage di Colomadu hingga pesta intim berhawa sejuk di lereng Gunung Lawu Tawangmangu.",
