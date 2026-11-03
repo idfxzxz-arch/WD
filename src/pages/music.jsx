@@ -157,6 +157,7 @@ const musicConfig = {
   savedMessage: "Referensi music disimpan",
   galleryTitle: "Portofolio Musisi & Sesi Musik",
   mark: "MU",
+  itemsPerPage: 4,
   tabs: ["All Projects", "Music", "Music Class"],
   tabAliases: {
     Music: ["music", "performance", "recording", "concert", "behind the scene"],
