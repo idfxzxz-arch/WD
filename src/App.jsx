@@ -294,7 +294,7 @@ export default function App() {
           <PageTransitionProvider>
             <Suspense fallback={<div className="flex min-h-[100dvh] items-center justify-center bg-black"><div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white" /></div>}>
               <Routes>
-                <Route path="/" element={<PublicPage chatbotDelayMs={2700}><Home /></PublicPage>} />
+                <Route path="/" element={<PublicPage showChatbot={false}><Home /></PublicPage>} />
                 <Route path="/works" element={<PublicPage><SEO title="Portfolio & Showcase Karya" description="Portofolio lengkap karya dan layanan dari WD Group Company: Wedding Organizer, Event, Visual Production, Musik, Workshop, dan Solusi Digital." url="https://www.wdgroupcompany.biz.id/works" /><Works /></PublicPage>} />
                 
                 <Route path="/wedding" element={<PublicPage showChatbot={false}><Wedding /></PublicPage>} />

@@ -454,13 +454,14 @@
 .dp-grid.dp-grid-4 {
   grid-template-columns: repeat(2, 1fr);
   gap: clamp(10px, 1.4vw, 16px);
-  row-gap: clamp(12px, 1.6vh, 18px);
+  row-gap: clamp(10px, 1.4vh, 16px);
   align-content: start;
 }
 
 .dp-grid.dp-grid-4 .dp-card {
-  aspect-ratio: 3 / 2;
-  max-height: clamp(105px, 17vh, 155px);
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  height: auto;
 }
 
 .dp-card img {

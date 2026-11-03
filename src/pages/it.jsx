@@ -158,6 +158,7 @@ const itConfig = {
   savedMessage: "Referensi IT disimpan",
   galleryTitle: "Portofolio Proyek Digital & Website",
   mark: "IT",
+  itemsPerPage: 4,
   tabs: ["All Projects", "Website", "App", "System", "Support"],
   tabAliases: {
     Website: ["website", "landing page", "company profile", "undangan digital"],
