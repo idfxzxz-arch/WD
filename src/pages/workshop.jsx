@@ -15,7 +15,8 @@ import {
   Award,
   Send,
   Target,
-  FileCheck
+  FileCheck,
+  ShieldCheck
 } from "lucide-react";
 import "./division.css";
 
