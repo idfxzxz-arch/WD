@@ -263,7 +263,7 @@
   width: 100%;
   max-width: 740px;
   height: auto;
-  max-height: calc(100vh - 85px);
+  max-height: max(520px, calc(100vh - 85px));
   min-height: 0;
   padding: 12px;
   border-radius: 28px;
