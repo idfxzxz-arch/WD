@@ -158,6 +158,7 @@ const eventConfig = {
   savedMessage: "Referensi event disimpan",
   galleryTitle: "Portofolio Event & Produksi Panggung",
   mark: "EO",
+  itemsPerPage: 4,
   tabs: ["All Projects", "Corporate", "Concert", "Exhibition", "Private"],
   stats: [
     { value: "Concept", label: "Perencanaan" },
