@@ -570,7 +570,7 @@ export default function DivisionLayout({ config, children }) {
   }, [works, activeTab, tabs, config.tabAliases]);
 
   const isVenueTab = (activeTab || "").toLowerCase().trim().includes("venue");
-  const itemsPerPage = isVenueTab ? 4 : (config.itemsPerPage || 4);
+  const itemsPerPage = isVenueTab ? 4 : (config.itemsPerPage || 9);
   const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const safePage = Math.min(galleryPage, totalPages - 1);
   const pageStart = safePage * itemsPerPage;
@@ -740,7 +740,7 @@ export default function DivisionLayout({ config, children }) {
                   ))}
                 </div>
 
-                <div className={`dp-grid ${isVenueTab ? "dp-grid-venue" : ""} ${itemsPerPage === 4 ? "dp-grid-4" : ""}`}>
+                <div className={`dp-grid ${isVenueTab ? "dp-grid-venue" : ""} ${itemsPerPage === 4 && !isVenueTab ? "dp-grid-4" : ""}`}>
                   {filtered.length > 0 ? (
                     visibleWorks.map((item, index) => {
                       const isSaved = saved.some((savedItem) => savedItem.id === item.id);

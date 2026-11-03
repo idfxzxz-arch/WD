@@ -135,6 +135,7 @@ const workshopConfig = {
   savedMessage: "Referensi produk disimpan",
   galleryTitle: "Katalog & Portofolio Kompor Oli Bekas WD Jaya",
   mark: "WS",
+  itemsPerPage: 4,
   tabs: ["Semua Produk", "Kompor"],
   tabAliases: {
     "Kompor": ["kompor", "stove", "burner"],

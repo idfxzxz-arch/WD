@@ -400,6 +400,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(8px, 1.2vh, 14px);
+  row-gap: clamp(10px, 1.4vh, 16px);
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
@@ -426,11 +427,13 @@
 .dp-card:hover {
   transform: scale(.985);
   box-shadow: 0 12px 28px rgba(0, 0, 0, .16);
+  z-index: 2;
 }
 
 .dp-card.saved {
   border-color: var(--accent);
   box-shadow: 0 0 0 2px var(--accent);
+  z-index: 1;
 }
 
 .dp-grid.dp-grid-doc .dp-card {
@@ -450,9 +453,15 @@
 
 .dp-grid.dp-grid-4 {
   grid-template-columns: repeat(2, 1fr);
-  gap: clamp(10px, 1.4vh, 16px);
+  gap: clamp(10px, 1.4vw, 16px);
+  row-gap: clamp(12px, 1.6vh, 18px);
+  align-content: start;
 }
 
+.dp-grid.dp-grid-4 .dp-card {
+  aspect-ratio: 3 / 2;
+  max-height: clamp(105px, 17vh, 155px);
+}
 
 .dp-card img {
   width: 100%;
@@ -1062,6 +1071,17 @@
     height: auto;
   }
 
+  .dp-grid.dp-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .dp-grid.dp-grid-4 .dp-card {
+    aspect-ratio: 4 / 3;
+    max-height: none;
+    height: auto;
+  }
+
   .dp-gallery-footer {
     padding-top: 10px;
     margin-top: 10px;
@@ -1161,7 +1181,8 @@
     font-size: 7.5px;
   }
 
-  .dp-grid {
+  .dp-grid,
+  .dp-grid.dp-grid-4 {
     grid-template-columns: 1fr;
     gap: 8px;
   }
