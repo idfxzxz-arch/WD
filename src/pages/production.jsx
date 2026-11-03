@@ -157,6 +157,7 @@ const productionConfig = {
   savedMessage: "Referensi production disimpan",
   galleryTitle: "Portofolio Karya Foto & Video",
   mark: "PR",
+  itemsPerPage: 4,
   tabs: ["All Projects", "Photo", "Video"],
   stats: [
     { value: "Concept", label: "Arahan Visual" },
@@ -213,7 +214,7 @@ export default function ProductionOrganizer() {
                 Di era digital yang serba cepat, kekuatan visual adalah faktor pembeda utama antara pesan yang berlalu begitu saja dan karya yang melekat dalam ingatan pemirsa. <strong>WD Production</strong>, divisi multimedia dan visual production dari <strong>WD Group Company</strong>, menghadirkan layanan <strong>jasa foto video Solo, video sinematik Solo, fotografer Solo, dan dokumentasi event Solo Raya</strong> dengan standar estetika sinematik modern dan penceritaan yang kuat.
               </p>
               <p>
-                Kami melayani berbagai spektrum kebutuhan visual: mulai dari <strong>dokumentasi video sinematik pernikahan</strong> ([WD Sky Wedding](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/wedding.jsx)), liputan panggung acara akbar ([WD Event](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/event.jsx)), pembuatan video profil korporasi (company profile), video komersial iklan, hingga fotografi produk e-commerce berkategori premium.
+                Kami melayani berbagai spektrum kebutuhan visual: mulai dari <strong>dokumentasi video sinematik pernikahan</strong> (<Link to="/wedding">WD Sky Wedding</Link>), liputan panggung acara akbar (<Link to="/event">WD Event</Link>), pembuatan video profil korporasi (company profile), video komersial iklan, hingga fotografi produk e-commerce berkategori premium.
               </p>
               <p>
                 Wilayah operasional kami menjangkau seluruh <strong>Solo Raya</strong> (Surakarta, Sukoharjo, Karanganyar, Klaten, Boyolali, Sragen, Wonogiri). Dengan kru kamera terlatih, pengarah gaya visual (visual director), dan editor profesional yang menguasai teknik color grading standar industri, kami menjamin setiap aset visual yang Anda terima memiliki nilai jual dan daya pikat yang tinggi.
@@ -614,7 +615,7 @@ export default function ProductionOrganizer() {
             <div className="div-bundle-text">
               <h3>Ingin Paket Wedding Termasuk Dokumentasi Sinematik?</h3>
               <p>
-                Dapatkan efisiensi biaya maksimal melalui <strong>Paket Wedding Lengkap</strong> WD Group Company. Menggabungkan jasa Wedding Organizer ([WD Sky Wedding](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/wedding.jsx)), dokumentasi video sinematik ([WD Production](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/production.jsx)), dan live band pengiring ([WD Music](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/music.jsx)) dalam satu penawaran istimewa.
+                Dapatkan efisiensi biaya maksimal melalui <strong>Paket Wedding Lengkap</strong> WD Group Company. Menggabungkan jasa Wedding Organizer (<Link to="/wedding">WD Sky Wedding</Link>), dokumentasi video sinematik (<Link to="/production">WD Production</Link>), dan live band pengiring (<Link to="/music">WD Music</Link>) dalam satu penawaran istimewa.
               </p>
             </div>
             <Link to="/wedding" className="div-btn-google" style={{ whiteSpace: "nowrap" }}>

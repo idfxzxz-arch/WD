@@ -217,7 +217,7 @@ export default function EventOrganizer() {
                 Kami percaya bahwa kesuksesan sebuah perhelatan—baik berupa <strong>corporate event, konser musik, pameran expo, seminar bisnis, maupun private gathering</strong>—ditentukan oleh ketelitian dalam mengelola detail terkecil. Dengan koordinasi komunikasi radio yang solid, setiap menit rundown dikawal secara ketat agar tidak terjadi kekosongan panggung atau kepanikan teknis.
               </p>
               <p>
-                Cakupan layanan kami menjangkau seluruh 7 wilayah <strong>Solo Raya</strong>: <strong>Kota Surakarta (Solo), Kabupaten Sukoharjo, Karanganyar, Klaten, Boyolali, Sragen, dan Wonogiri</strong>. Didukung kekuatan ekosistem internal WD Group, kami menyelaraskan tata panggung dengan dokumentasi multi-kamera ([WD Production](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/production.jsx)) dan pengisi acara musik berkualitas ([WD Music](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/music.jsx)).
+                Cakupan layanan kami menjangkau seluruh 7 wilayah <strong>Solo Raya</strong>: <strong>Kota Surakarta (Solo), Kabupaten Sukoharjo, Karanganyar, Klaten, Boyolali, Sragen, dan Wonogiri</strong>. Didukung kekuatan ekosistem internal WD Group, kami menyelaraskan tata panggung dengan dokumentasi multi-kamera (<Link to="/production">WD Production</Link>) dan pengisi acara musik berkualitas (<Link to="/music">WD Music</Link>).
               </p>
             </div>
 
@@ -630,7 +630,7 @@ export default function EventOrganizer() {
             <div className="div-bundle-text">
               <h3>Merencanakan Acara Pernikahan Sekaligus?</h3>
               <p>
-                WD Group Company menyediakan <strong>Paket Wedding Lengkap</strong> yang memadukan keahlian Wedding Organizer ([WD Sky Wedding](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/wedding.jsx)), dokumentasi sinematik ([WD Production](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/production.jsx)), dan live band hiburan panggung ([WD Music](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/music.jsx)) dalam satu paket terpadu yang lebih hemat dan praktis.
+                WD Group Company menyediakan <strong>Paket Wedding Lengkap</strong> yang memadukan keahlian Wedding Organizer (<Link to="/wedding">WD Sky Wedding</Link>), dokumentasi sinematik (<Link to="/production">WD Production</Link>), dan live band hiburan panggung (<Link to="/music">WD Music</Link>) dalam satu paket terpadu yang lebih hemat dan praktis.
               </p>
             </div>
             <Link to="/wedding" className="div-btn-google" style={{ whiteSpace: "nowrap" }}>

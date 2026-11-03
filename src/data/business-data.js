@@ -282,7 +282,7 @@ export const businessData = {
       key: "workshop",
       name: "WD Jaya Workshop",
       path: "/workshop",
-      tagline: "Pelatihan Keterampilan Praktis, Bootcamp Vokasi & In-House Training",
+      tagline: "Bengkel Las, Fabrikasi Pagar, Kanopi, Railing, Fasilitas Publik & Kusen Aluminium",
       status: "confirmed",
     },
     {

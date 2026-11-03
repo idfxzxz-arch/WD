@@ -539,46 +539,46 @@ function buildWorkshopHtml() {
   return `
     <article>
       <nav aria-label="Breadcrumb">
-        <p><a href="/">&larr; Beranda</a> / <strong>Workshop & Pelatihan Solo</strong></p>
+        <p><a href="/">&larr; Beranda</a> / <strong>Bengkel Fabrikasi Alat Kopi, Dinamo & Kompor</strong></p>
       </nav>
 
       <header>
-        <h1>WD Jaya Workshop – Pelatihan Keterampilan & Bootcamp Solo</h1>
-        <p>WD Jaya Workshop merancang kelas pelatihan praktis, bootcamp vokasi, seminar keterampilan, dan program in-house corporate training di Solo dan Solo Raya.</p>
+        <h1>WD Jaya Workshop – Bengkel Fabrikasi Alat Kopi, Dinamo & Kompor Solo - Magetan</h1>
+        <p>WD Jaya Workshop melayani pembuatan mesin roasting kopi komersial, servis & gulung dinamo motor listrik industri, serta produksi kompor oli bekas WD Jaya hemat gas hingga 85% di Solo Raya dan Magetan.</p>
       </header>
 
       <section>
-        <h2>Pusat Pengembangan Keterampilan Praktis di Solo Raya</h2>
-        <p>Menghadapi tuntutan industri yang dinamis, WD Jaya Workshop hadir memfasilitasi program pelatihan dengan kurikulum aplikatif yang berorientasi pada praktik nyata dan pembentukan portofolio kerja.</p>
-        <p>Kami bekerja sama dengan praktisi berpengalaman untuk memberikan bimbingan intensif bagi individu, mahasiswa, maupun staf korporasi yang ingin meningkatkan kompetensi di bidang multimedia, digital skill, dan manajemen acara.</p>
+        <h2>Bengkel Fabrikasi & Servis Mesin Presisi</h2>
+        <p>WD Jaya Workshop, unit manufaktur dan rekayasa mekanikal dari WD Group Company, melayani pembuatan baru, modifikasi, dan servis berkala mesin roasting kopi, dinamo motor listrik, serta inovasi kompor oli bekas dengan standar kualitas tinggi, material bermutu, serta pengerjaan rapi dan bergaransi.</p>
+        <p>Tiga pilar layanan kami: Presisi Tinggi, Harga Terjangkau, serta Jaminan Garansi Resmi atas mutu hasil pengerjaan mesin.</p>
       </section>
 
       <section>
-        <h2>Program Pelatihan Utama</h2>
+        <h2>Produk & Layanan Unggulan Workshop</h2>
         <ul>
-          <li><strong>Bootcamp Multimedia & Kreatif:</strong> Pelatihan pengoperasian kamera, teknik sinematografi dasar hingga lanjutan, tata pencahayaan, dan editing video.</li>
-          <li><strong>Workshop Digital Marketing:</strong> Pengelolaan konten media sosial, strategi branding UMKM, dan perancangan kampanye promosi digital.</li>
-          <li><strong>Pelatihan Manajemen Acara (Event & Wedding):</strong> Tata kelola kepanitiaan, penyusunan rundown, manajemen risiko panggung, dan koordinasi vendor lapangan.</li>
-          <li><strong>In-House Corporate Training:</strong> Program pelatihan khusus yang disesuaikan dengan kebutuhan internal perusahaan atau instansi pemerintah di Solo Raya.</li>
+          <li><strong>Alat Kopi & Mesin Roasting:</strong> Pembuatan dan modifikasi mesin roasting kopi kapasitas 1-10kg, cooling bin agitator pendingin, drum roaster stainless steel, dan suku cadang roastery.</li>
+          <li><strong>Dinamo & Motor Listrik Industri:</strong> Servis berkala, penggantian bearing, balancing rotor, dan gulung ulang (rewinding) kawat tembaga dinamo motor listrik 1 phase & 3 phase.</li>
+          <li><strong>Kompor Oli Bekas WD Jaya:</strong> Inovasi kompor hemat BBM berbahan bakar oli bekas, bakar tanpa boros, lebih irit dari gas hingga 85%, api stabil dan konstruksi rangka besi tebal kokoh untuk kebutuhan usaha harian.</li>
+          <li><strong>Fabrikasi & Bubut Mesin Custom:</strong> Bubut as poros presisi, las argon stainless steel food grade, dan perakitan rangka mekanikal custom sesuai kebutuhan industri Anda.</li>
         </ul>
       </section>
 
       <section>
-        <h2>Pertanyaan yang Sering Diajukan (FAQ) – Workshop Solo</h2>
+        <h2>Pertanyaan yang Sering Diajukan (FAQ) – Bengkel Workshop</h2>
         <div class="card faq-item">
-          <h3>Apakah peserta bootcamp mendapatkan sertifikat dan bimbingan portofolio?</h3>
-          <p>Ya, seluruh peserta yang menyelesaikan kurikulum dan tugas proyek akhir mendapatkan sertifikat resmi serta modul portofolio yang siap digunakan untuk melamar pekerjaan atau membuka jasa mandiri.</p>
+          <h3>Apakah melayani konsultasi desain dan spesifikasi teknis custom?</h3>
+          <p>Ya, tim kami siap berdiskusi seputar kebutuhan kapasitas sangrai kopi, spesifikasi kompor oli bekas, atau daya dinamo motor listrik untuk seluruh wilayah Solo Raya, Magetan, dan sekitarnya.</p>
         </div>
         <div class="card faq-item">
-          <h3>Apakah pelatihan melayani kelas privat atau rombongan instansi?</h3>
-          <p>Kami melayani kelas publik reguler, kelas privat satu lawan satu, maupun in-house training kelompok untuk instansi sekolah, kampus, dan perusahaan.</p>
+          <h3>Berapa lama estimasi pengerjaan servis dinamo atau fabrikasi mesin kopi?</h3>
+          <p>Servis gulung dinamo berkisar 1 hingga 3 hari kerja, sedangkan perakitan unit mesin roasting kopi atau kompor oli bekas berkisar antara 4 hingga 12 hari kerja.</p>
         </div>
       </section>
 
       <section>
-        <h2>Kontak & Alamat Kantor</h2>
-        <p>Alamat: Griya Edelweis No.12a, Dusun V, Joho, Kec. Mojolaban, Kabupaten Sukoharjo, Jawa Tengah 57554</p>
-        <p>WhatsApp: <a href="https://wa.me/6285707909415?text=Halo%20WD%20Jaya%20Workshop%2C%20saya%20ingin%20tanya%20program%20pelatihan.">0857-0790-9415</a></p>
+        <h2>Alamat Workshop & Kontak Pemesanan</h2>
+        <p>Alamat Bengkel: Jalan Irian gang durian, No 3 Tawanganom, Magetan, Jawa Timur</p>
+        <p>WhatsApp: <a href="https://wa.me/628817134774?text=Halo%20WD%20Jaya%20Workshop%2C%20saya%20ingin%20konsultasi%20seputar%20alat%20kopi%2C%20dinamo%2C%20atau%20kompor%20oli%20bekas.">0881-7134-774</a></p>
       </section>
     </article>
   `
@@ -673,7 +673,7 @@ function buildWorksHtml() {
           </li>
           <li>
             <strong><a href="/workshop">WD Jaya Workshop:</a></strong>
-            Dokumentasi pelaksanaan kelas pelatihan multimedia, bootcamp digital marketing, dan program in-house training instansi.
+            Katalog produk fabrikasi bengkel las, pagar minimalis, kanopi alderon, railing tangga, tiang lampu antik, bollard trotoar, dan kusen aluminium.
           </li>
           <li>
             <strong><a href="/it">WD IT & Digital Solution:</a></strong>
@@ -938,35 +938,35 @@ const routes = [
   {
     path: "workshop",
     canonical: `${SITE_URL}/workshop`,
-    title: "Workshop Solo & Pelatihan Keterampilan Solo | WD Jaya Workshop",
-    description: "Jasa workshop Solo, pelatihan keterampilan Solo, dan bootcamp intensif dari WD Jaya Workshop. Kelas praktis, seminar korporat, bimbingan mentor, dan sertifikat resmi.",
-    ogTitle: "Workshop Solo & Pelatihan Keterampilan Solo | WD Jaya Workshop",
-    ogDescription: "Pelatihan keterampilan praktis, bootcamp intensif, in-house corporate training, dan workshop edukatif di Solo Raya.",
-    image: `${SITE_URL}/resources/Workshop/workshop2.webp`,
-    imageAlt: "Suasana pelatihan vokasi dan workshop keterampilan praktis oleh WD Jaya Workshop",
+    title: "Bengkel Fabrikasi Alat Kopi, Dinamo & Kompor Oli Bekas Solo - Magetan | WD Jaya Workshop",
+    description: "Jasa pembuatan mesin sangrai kopi, perbaikan & gulung dinamo motor listrik industri, serta produksi kompor oli bekas WD Jaya hemat 85% di Solo Raya & Magetan. Bergaransi & terpercaya.",
+    ogTitle: "Bengkel Fabrikasi Alat Kopi, Dinamo & Kompor Oli Bekas Solo - Magetan | WD Jaya Workshop",
+    ogDescription: "Jasa pembuatan mesin sangrai kopi, perbaikan & gulung dinamo motor listrik industri, serta produksi kompor oli bekas WD Jaya hemat 85% di Solo Raya & Magetan.",
+    image: `${SITE_URL}/portfolio/workshop/ws-kompor-1.webp`,
+    imageAlt: "Produk kompor oli bekas, mesin roasting kopi, dan dinamo industri oleh WD Jaya Workshop",
     schema: {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "@id": `${SITE_URL}/workshop#business`,
-      "name": "WD Jaya Workshop Solo Raya",
-      "image": `${SITE_URL}/resources/Workshop/workshop2.webp`,
+      "name": "WD Jaya Workshop Solo - Magetan",
+      "image": `${SITE_URL}/portfolio/workshop/ws-kompor-1.webp`,
       "url": `${SITE_URL}/workshop`,
-      "telephone": "+6285707909415",
+      "telephone": "+628817134774",
       "priceRange": "$$",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Griya Edelweis No.12a, Dusun V, Joho",
-        "addressLocality": "Mojolaban",
-        "addressRegion": "Kabupaten Sukoharjo",
-        "postalCode": "57554",
+        "streetAddress": "Jalan Irian gang durian, No 3 Tawanganom",
+        "addressLocality": "Magetan",
+        "addressRegion": "Jawa Timur",
+        "postalCode": "63312",
         "addressCountry": "ID"
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": "-7.593558",
-        "longitude": "110.883616"
+        "latitude": "-7.6538",
+        "longitude": "111.3283"
       },
-      "description": "Lembaga pelatihan keterampilan kerja, bootcamp multimedia, dan in-house training di Solo."
+      "description": "Bengkel las, fabrikasi besi, pembuatan pagar minimalis, kanopi alderon, railing tangga, tiang lampu antik, dan kusen aluminium di Solo Raya dan Magetan."
     },
     fullHtml: buildWorkshopHtml()
   },

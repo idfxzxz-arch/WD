@@ -279,33 +279,115 @@ const getDivisionStaticWorks = (category) => {
     ];
   }
   if (category === "workshop") {
+    const shopeeLink = "https://shopee.co.id/wdjayaworkshop?categoryId=100010&entryPoint=ShopByPDP&itemId=29955406536";
     return [
       {
-        id: "static_ws_0",
-        title: "Suasana Kelas Pelatihan Keterampilan Praktis Solo",
+        id: "static_ws_9",
+        title: "Kompor Oli Bekas WD Jaya - Solusi Hemat Harian Usaha",
         category: "workshop",
-        subcategory: "workshop",
-        image: "/resources/Workshop/Workshop.webp",
-        meta: "Sesi pelatihan intensif dengan bimbingan mentor praktisi berpengalaman di Solo",
-        link: ""
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-1.webp",
+        meta: "Kompor oli bekas inovasi WD Jaya: api stabil merata, konstruksi rangka besi tebal kokoh, mudah digunakan, dan hemat biaya maksimal untuk usaha",
+        link: shopeeLink
       },
       {
-        id: "static_ws_1",
-        title: "Diskusi Interaktif & Mentoring Peserta Bootcamp Solo",
+        id: "static_ws_10",
+        title: "Kompor Oli WD Jaya - Hemat Gas & Budget Hingga 85%",
         category: "workshop",
-        subcategory: "workshop",
-        image: "/resources/Workshop/workshop1.webp",
-        meta: "Bimbingan kelompok kecil dan simulasi pemecahan studi kasus nyata",
-        link: ""
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-2.webp",
+        meta: "Teknologi hemat BBM cerdas: pembakaran efisien tanpa boros, lebih irit dari gas hingga 85%, dan pengeluaran harian operasional jauh lebih ringan",
+        link: shopeeLink
       },
       {
-        id: "static_ws_2",
-        title: "Presentasi Hasil Proyek Pelatihan Vokasi Solo Raya",
+        id: "static_ws_11",
+        title: "Kipas Angin Blower Super & Speed Controller Kompor Oli",
         category: "workshop",
-        subcategory: "workshop",
-        image: "/resources/Workshop/workshop2.webp",
-        meta: "Evaluasi karya langsung dan pemberian sertifikat kelulusan program workshop",
-        link: ""
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-3.webp",
+        meta: "Tingkatkan efisiensi pembakaran dengan Blower Super: dirancang khusus untuk kompor oli, aliran udara lebih kencang & stabil, hemat listrik, tahan lama, dan dilengkapi box pengatur kecepatan",
+        link: shopeeLink
+      },
+      {
+        id: "static_ws_12",
+        title: "Perbandingan Biaya: Oli Bekas vs Gas LPG – Hemat Hingga 85%",
+        category: "workshop",
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-4.webp",
+        meta: "Bahan bakar oli bekas Rp5.000/liter hemat hingga 85% dibanding gas LPG: api stabil merata, konstruksi rangka besi tebal kokoh tahan lama, praktis efisien, dan tersedia opsi COD bayar di tempat",
+        link: shopeeLink
+      },
+      {
+        id: "static_ws_13",
+        title: "Kompor Oli Meja 2 Tungku WD Jaya - Hemat Hingga 85%",
+        category: "workshop",
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-5.webp",
+        meta: "Kompor oli bekas meja 2 tungku WD Jaya: rangka kokoh siap pakai bertahun-tahun, mudah digunakan, proses cepat kirim seluruh Indonesia, dan hemat bahan bakar hingga 85%",
+        link: shopeeLink
+      },
+      {
+        id: "static_ws_14",
+        title: "Teknologi Blue Fire Kompor Oli WD - Api Biru Bersih & Maksimal",
+        category: "workshop",
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-6.webp",
+        meta: "Semburan api biru stabil & terarah: pembakaran maksimal tanpa menggosongkan panci, minim asap, performa maksimal, dan hemat energi untuk dapur usaha kuliner",
+        link: shopeeLink
+      },
+      {
+        id: "static_ws_15",
+        title: "Kompor Oli Bekas Custom WD Jaya - Sudah Include Blower Super",
+        category: "workshop",
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-7.webp",
+        meta: "Kompor oli custom berkualitas tinggi dibuat sesuai kebutuhan usaha: bahan tebal tahan korosi & panas, nyala stabil merata, dan ukuran serta model rangka bisa disesuaikan",
+        link: shopeeLink
+      },
+      {
+        id: "static_ws_16",
+        title: "Pilihan 5 Model Kompor Oli Custom: Standard hingga Big Power",
+        category: "workshop",
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-8.webp",
+        meta: "Tersedia 5 varian model: Standard, Kaki Tinggi, Double 2 Tungku, Compact portable, dan Big Power heavy duty – seluruh unit komplit sudah include blower super",
+        link: shopeeLink
+      },
+      {
+        id: "static_ws_17",
+        title: "Estimasi & Fleksibilitas Harga Custom Kompor Oli WD Jaya",
+        category: "workshop",
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-9.webp",
+        meta: "Pilihan fleksibel sesuai budget: Basic Custom (1 tungku standar), Medium Custom (1-2 tungku custom), hingga Full Custom (2 tungku atau lebih, rangka custom request)",
+        link: shopeeLink
+      },
+      {
+        id: "static_ws_18",
+        title: "Wujudkan Kompor Oli Custom Sesuai Kebutuhan Spesifik Usaha",
+        category: "workshop",
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-10.webp",
+        meta: "Layanan custom kompor oli WD Jaya: bebas pilih ukuran meja, tinggi dudukan, rangka besi tebal kokoh, pengerjaan rapi tenaga ahli, dan konsultasi kebutuhan gratis",
+        link: shopeeLink
+      },
+      {
+        id: "static_ws_19",
+        title: "Paket Kompor Oli Lengkap Bonus Blower & Speed Controller",
+        category: "workshop",
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-11.webp",
+        meta: "Setiap unit kompor oli custom sudah include blower berkualitas: konsumsi listrik rendah, tahan panas, dilengkapi pengatur kecepatan, dan posisi blower bebas diatur",
+        link: shopeeLink
+      },
+      {
+        id: "static_ws_20",
+        title: "Kustomisasi Detail Kompor Oli: Dimensi, Tungku, Blower & Finishing",
+        category: "workshop",
+        subcategory: "kompor",
+        image: "/portfolio/workshop/ws-kompor-12.webp",
+        meta: "Custom spesifikasi detail: panjang lebar tinggi kompor, jumlah tungku, fleksibilitas posisi blower (kiri/kanan/depan/belakang), dan finishing cat tahan panas berkualitas",
+        link: shopeeLink
       }
     ];
   }
@@ -379,6 +461,17 @@ export default function DivisionLayout({ config, children }) {
     }
   }, [lang?.code, tabsString]);
 
+  // Pastikan halaman divisi selalu terbuka dari atas (hero / bagian foto) jika tidak ada anchor hash
+  useEffect(() => {
+    if (!window.location.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      const dpRoot = document.querySelector(".dp-root");
+      if (dpRoot) dpRoot.scrollTop = 0;
+    }
+  }, [config.category]);
+
   useEffect(() => {
     let mounted = true;
 
@@ -399,7 +492,23 @@ export default function DivisionLayout({ config, children }) {
         if (error) throw error;
 
         if (mounted) {
-          let finalData = data || [];
+          let finalData = (data || []).filter((item) => {
+            if (config.category === "workshop") {
+              const img = (item.image || "").toLowerCase();
+              const sub = (item.subcategory || "").toLowerCase();
+              if (
+                img.includes("1779679756332") ||
+                img.includes("ws-kopi") ||
+                img.includes("ws-dinamo") ||
+                sub === "wedding" ||
+                item.title === "WD JAYA WORKSHOP" ||
+                sub !== "kompor"
+              ) {
+                return false;
+              }
+            }
+            return true;
+          });
           
           const staticWorks = getDivisionStaticWorks(config.category);
           const existingTitles = new Set(finalData.map(d => d.title));
@@ -430,6 +539,23 @@ export default function DivisionLayout({ config, children }) {
     setTimeout(() => setToast(""), 2200);
   };
 
+  const availableTabs = useMemo(() => {
+    return tabs.filter((tab, idx) => {
+      if (idx === 0) return true;
+      const tabMatches = config.tabAliases?.[tab] || [tab];
+      return works.some((item) => {
+        const subcategory = (item.subcategory || "").toLowerCase().trim();
+        return tabMatches.some((t) => subcategory === t.toLowerCase().trim());
+      });
+    });
+  }, [tabs, works, config.tabAliases]);
+
+  useEffect(() => {
+    if (availableTabs.length > 0 && !availableTabs.includes(activeTab)) {
+      setActiveTab(availableTabs[0]);
+    }
+  }, [availableTabs, activeTab]);
+
   const filtered = useMemo(() => {
     const baseWorks = works.filter((item) => {
       const sub = (item.subcategory || "").toLowerCase().trim();
@@ -444,7 +570,7 @@ export default function DivisionLayout({ config, children }) {
   }, [works, activeTab, tabs, config.tabAliases]);
 
   const isVenueTab = (activeTab || "").toLowerCase().trim().includes("venue");
-  const itemsPerPage = isVenueTab ? 4 : 9;
+  const itemsPerPage = isVenueTab ? 4 : (config.itemsPerPage || 4);
   const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
   const safePage = Math.min(galleryPage, totalPages - 1);
   const pageStart = safePage * itemsPerPage;
@@ -603,7 +729,7 @@ export default function DivisionLayout({ config, children }) {
                 </div>
 
                 <div className="dp-tabs">
-                  {tabs.map((tab) => (
+                  {availableTabs.map((tab) => (
                     <button
                       className={`dp-tab ${activeTab === tab ? "active" : ""}`}
                       key={tab}
@@ -614,7 +740,7 @@ export default function DivisionLayout({ config, children }) {
                   ))}
                 </div>
 
-                <div className={`dp-grid ${isVenueTab ? "dp-grid-venue" : ""}`}>
+                <div className={`dp-grid ${isVenueTab ? "dp-grid-venue" : ""} ${itemsPerPage === 4 ? "dp-grid-4" : ""}`}>
                   {filtered.length > 0 ? (
                     visibleWorks.map((item, index) => {
                       const isSaved = saved.some((savedItem) => savedItem.id === item.id);
@@ -789,7 +915,7 @@ export default function DivisionLayout({ config, children }) {
                       rel="noopener noreferrer"
                       style={{ textAlign: "center", textDecoration: "none" }}
                     >
-                      {selectedWork.isExternalLink ? "Buka di Google Drive" : (ui.viewFull || "Buka Gambar Penuh")}
+                      {selectedWork.isExternalLink ? "Buka di Google Drive" : (selectedWork.link?.includes("shopee") ? "Beli Produk di Shopee" : (ui.viewFull || "Buka Gambar Penuh"))}
                     </a>
                     <button className="dp-lightbox-btn" onClick={closeLightbox}>
                       {ui.back}

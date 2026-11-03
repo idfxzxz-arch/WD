@@ -1,5 +1,5 @@
 import { useEffect, useState, Suspense, lazy } from "react"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom"
 import { LanguageProvider } from "./context/LanguageContext"
 import Cursor from "./components/Cursor"
 import ProtectedRoute from "./components/ProtectedRoute"
@@ -247,13 +247,50 @@ function MouseDragScroll() {
   return null
 }
 
+function ScrollToTop() {
+  const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      const targetId = hash.replace("#", "")
+      const timer = setTimeout(() => {
+        const el = document.getElementById(targetId)
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" })
+        } else {
+          window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+        }
+      }, 100)
+      return () => clearTimeout(timer)
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+
+    const dpRoot = document.querySelector(".dp-root")
+    if (dpRoot) {
+      dpRoot.scrollTop = 0
+    }
+  }, [pathname, hash])
+
+  return null
+}
+
 export default function App() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual"
+    }
+  }, [])
+
   return (
     <HelmetProvider>
       <LanguageProvider>
         <MouseDragScroll />
         <style>{appStyles}</style>
         <BrowserRouter>
+          <ScrollToTop />
           <PageTransitionProvider>
             <Suspense fallback={<div className="flex min-h-[100dvh] items-center justify-center bg-black"><div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white" /></div>}>
               <Routes>

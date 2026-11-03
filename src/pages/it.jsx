@@ -223,7 +223,7 @@ export default function ITPage() {
                 Kami memahami bahwa setiap bisnis memiliki keunikan model operasional. Oleh karena itu, kami tidak sekadar memasang template generik yang lambat. Tim web developer kami membangun struktur halaman yang rapi (clean architecture), optimal di layar ponsel (mobile-first design), serta dilengkapi optimasi SEO on-page yang matang agar domain website Anda cepat bersaing di halaman pencarian Google.
               </p>
               <p>
-                Layanan kami mencakup pembuatan website profil perusahaan, toko online e-commerce dengan integrasi WhatsApp checkout, aplikasi manajemen internal, hingga website undangan digital bagi calon pengantin yang menggunakan layanan [WD Sky Wedding](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/wedding.jsx). Kami juga berkolaborasi erat dengan tim multimedia [WD Production](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/production.jsx) guna menghasilkan aset foto dan video beresolusi tajam tanpa membebani kecepatan loading situs Anda.
+                Layanan kami mencakup pembuatan website profil perusahaan, toko online e-commerce dengan integrasi WhatsApp checkout, aplikasi manajemen internal, hingga website undangan digital bagi calon pengantin yang menggunakan layanan <Link to="/wedding">WD Sky Wedding</Link>. Kami juga berkolaborasi erat dengan tim multimedia <Link to="/production">WD Production</Link> guna menghasilkan aset foto dan video beresolusi tajam tanpa membebani kecepatan loading situs Anda.
               </p>
             </div>
 
@@ -425,7 +425,7 @@ export default function ITPage() {
                 <span>Terintegrasi Ekosistem WD Group</span>
               </h4>
               <p>
-                Kebutuhan konten foto & video produk disuplai langsung oleh [WD Production](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/production.jsx), menghemat waktu koordinasi vendor terpisah.
+                Kebutuhan konten foto & video produk disuplai langsung oleh <Link to="/production">WD Production</Link>, menghemat waktu koordinasi vendor terpisah.
               </p>
             </div>
 
@@ -625,7 +625,7 @@ export default function ITPage() {
             <div className="div-bundle-text">
               <h3>Butuh Undangan Digital Sekaligus Wedding Organizer?</h3>
               <p>
-                Rencanakan pernikahan impian Anda bersama [WD Sky Wedding](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/wedding.jsx) dan dokumentasi video sinematik [WD Production](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/production.jsx). Undangan digital eksklusif dapat dipaketkan langsung dalam <strong>Paket Wedding Lengkap</strong> kami.
+                Rencanakan pernikahan impian Anda bersama <Link to="/wedding">WD Sky Wedding</Link> dan dokumentasi video sinematik <Link to="/production">WD Production</Link>. Undangan digital eksklusif dapat dipaketkan langsung dalam <strong>Paket Wedding Lengkap</strong> kami.
               </p>
             </div>
             <Link to="/wedding" className="div-btn-google" style={{ whiteSpace: "nowrap" }}>

@@ -428,7 +428,7 @@ export default function MusicLayout() {
                 <span>Konektivitas Audio Langsung</span>
               </h4>
               <p>
-                Dapat terhubung mulus dengan tim dokumentasi video ([WD Production](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/production.jsx)) untuk merekam audio musik langsung (direct line) tanpa bising lingkungan.
+                Dapat terhubung mulus dengan tim dokumentasi video (<Link to="/production">WD Production</Link>) untuk merekam audio musik langsung (direct line) tanpa bising lingkungan.
               </p>
             </div>
           </div>
@@ -618,7 +618,7 @@ export default function MusicLayout() {
             <div className="div-bundle-text">
               <h3>Ingin Paket Wedding Termasuk Live Band Romantis?</h3>
               <p>
-                Hemat waktu dan biaya dengan memilih <strong>Paket Wedding Lengkap</strong> WD Group Company. Menggabungkan Wedding Organizer ([WD Sky Wedding](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/wedding.jsx)), live music band romantis ([WD Music](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/music.jsx)), dan dokumentasi video sinematik ([WD Production](file:///c:/Users/WD%20Group/Documents/idk/Project%20WD/WD-Company%20web%20utama/src/pages/production.jsx)) dalam satu kontrak terpadu.
+                Hemat waktu dan biaya dengan memilih <strong>Paket Wedding Lengkap</strong> WD Group Company. Menggabungkan Wedding Organizer (<Link to="/wedding">WD Sky Wedding</Link>), live music band romantis (<Link to="/music">WD Music</Link>), dan dokumentasi video sinematik (<Link to="/production">WD Production</Link>) dalam satu kontrak terpadu.
               </p>
             </div>
             <Link to="/wedding" className="div-btn-google" style={{ whiteSpace: "nowrap" }}>

@@ -71,7 +71,7 @@ const SUBCATEGORIES = {
   wedding:    ["akad", "resepsi", "pricelist"],
   music:      ["music", "music class"],
   production: ["photo", "video"],
-  workshop:   ["workshop"],
+  workshop:   ["alat_kopi", "dinamo", "kompor"],
   event:      ["corporate", "concert", "exhibition", "private"],
   it:         ["website", "app", "system", "support"],
 }

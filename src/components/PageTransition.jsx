@@ -21,6 +21,15 @@ export function PageTransitionProvider({ children }) {
     setTimeout(() => {
       navigate(to)
       
+      // Reset scroll saat overlay sedang menutupi layar (sebelum slide-out)
+      if (typeof to === "string" && !to.includes("#")) {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+        const dpRoot = document.querySelector(".dp-root")
+        if (dpRoot) dpRoot.scrollTop = 0
+      }
+
       // Tunggu DOM update sejenak lalu slide-out
       setTimeout(() => {
         setIsTransitioning(false)
