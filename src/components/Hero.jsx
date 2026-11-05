@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Check, Languages, MessageCircle } from "lucide-react"
+import { Check, Languages } from "lucide-react"
 import { LanguageContext } from "../context/LanguageContext"
 import { supabase } from "../lib/supabase"
 import { GooeyText } from "./ui/GooeyText"
@@ -238,26 +238,6 @@ export default function Hero() {
         ))}
       </AnimatePresence>
 
-      {/* 7th CLICK TEASER / BANNER ON CLICK 6 */}
-      <AnimatePresence>
-        {clickCount === 6 && (
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0, y: -10 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            className="absolute top-[28%] sm:top-[26%] z-30 pointer-events-none"
-          >
-            <div className="flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-600 px-5 py-2.5 text-center text-white shadow-[0_16px_40px_rgba(5,150,105,0.45)] animate-bounce">
-              <span className="text-base sm:text-lg">🎉</span>
-              <span className="text-xs sm:text-sm font-extrabold tracking-wide flex items-center gap-1.5">
-                <MessageCircle size={15} /> 1 KLIK LAGI KE WHATSAPP!
-              </span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* WD */}
       <div className="relative mt-[clamp(5.5rem,14svh,8rem)] sm:mt-32 flex justify-center select-none">
         <motion.h1
@@ -269,24 +249,6 @@ export default function Hero() {
           <span className="sr-only"> Group Company – Creative Media, Event Organizer & Wedding Organizer Solo Raya</span>
         </motion.h1>
       </div>
-
-      {/* CLICK HINT */}
-      <AnimatePresence>
-        {clickCount > 0 && clickCount < 7 && (
-          <motion.div
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="flex items-center gap-1.5 text-xs text-black/50 mt-2 font-medium bg-black/5 px-3 py-1 rounded-full border border-black/5"
-          >
-            <span className="font-mono text-black font-bold">{clickCount}/6</span>
-            <span>divisi</span>
-            <span className="text-[10px] text-black/40 font-mono">
-              ({7 - clickCount}x klik ke WA)
-            </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <div className="pointer-events-none relative z-0 mt-[clamp(1.5rem,5svh,3rem)] hidden h-14 w-full px-4 sm:absolute sm:left-1/2 sm:top-[57%] sm:mt-0 sm:flex sm:h-24 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:px-6">
         <GooeyText
