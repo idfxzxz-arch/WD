@@ -21,7 +21,7 @@ export default function Section() {
   }, [lang.code])
 
   return (
-    <section className="bg-white py-14 sm:py-20 lg:py-24">
+    <section className="bg-white py-10 sm:py-20 lg:py-24">
       <div className="max-w-5xl mx-auto px-5 sm:px-6">
         <p className="text-xs sm:text-sm uppercase tracking-[0.22em] sm:tracking-widest mb-4 sm:mb-6">
           {lang.sectionLabel}
