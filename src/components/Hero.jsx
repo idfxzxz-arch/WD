@@ -11,68 +11,68 @@ const divisionCards = [
   {
     id: 1,
     title: "WD Sky Wedding",
-    badge: "Wedding Organizer",
-    desc: "Perencanaan & eksekusi pernikahan elegan",
+    shortTitle: "Wedding",
+    icon: "💍",
     image: "/resources/Wedding/wedding.webp",
     link: "/wedding",
     accent: "#b88446",
     rotate: -6,
-    position: "top-[16%] left-[4%] sm:top-[18%] sm:left-[12%]",
+    position: "top-[16%] left-[6%] sm:top-[18%] sm:left-[14%]",
   },
   {
     id: 2,
     title: "WD Event",
-    badge: "Event Organizer",
-    desc: "Konsep konser, festival & corporate gathering",
+    shortTitle: "Event",
+    icon: "🎪",
     image: "/resources/Event_Organizer/Event.webp",
     link: "/event",
     accent: "#6366f1",
     rotate: 5,
-    position: "top-[14%] right-[4%] sm:top-[16%] sm:right-[12%]",
+    position: "top-[14%] right-[6%] sm:top-[16%] sm:right-[14%]",
   },
   {
     id: 3,
     title: "WD Production",
-    badge: "Creative Production",
-    desc: "Sinematografi video, foto & commercial visual",
+    shortTitle: "Production",
+    icon: "🎥",
     image: "/resources/Production/Production.webp",
     link: "/production",
     accent: "#f59e0b",
     rotate: 4,
-    position: "top-[44%] left-[2%] sm:top-[44%] sm:left-[8%]",
+    position: "top-[44%] left-[3%] sm:top-[44%] sm:left-[9%]",
   },
   {
     id: 4,
     title: "WD Music",
-    badge: "Music Entertainment",
-    desc: "Live band pengiring, session & talent panggung",
+    shortTitle: "Music",
+    icon: "🎵",
     image: "/resources/Music_ENT/Music_ENT.webp",
     link: "/music",
     accent: "#a855f7",
     rotate: -4,
-    position: "top-[42%] right-[2%] sm:top-[42%] sm:right-[9%]",
+    position: "top-[42%] right-[3%] sm:top-[42%] sm:right-[11%]",
   },
   {
     id: 5,
     title: "WD Jaya Workshop",
-    badge: "Workshop Program",
-    desc: "Inovasi kompor oli bekas hemat bahan bakar 85%",
+    shortTitle: "Workshop",
+    icon: "⚙️",
     image: "/resources/Workshop/Workshop.webp",
     link: "/workshop",
     accent: "#22c55e",
     rotate: -3,
-    position: "top-[68%] left-[6%] sm:top-[66%] sm:left-[14%]",
+    position: "top-[68%] left-[8%] sm:top-[66%] sm:left-[18%]",
   },
   {
     id: 6,
     title: "WD IT",
-    badge: "Digital Solution",
-    desc: "Jasa website, web app & toko online e-commerce",
+    shortTitle: "WD IT",
+    icon: "💻",
     image: "/resources/Store/Store.webp",
     link: "/it",
     accent: "#0ea5e9",
     rotate: 6,
-    position: "top-[66%] right-[6%] sm:top-[64%] sm:right-[14%]",
+    position: "top-[66%] right-[8%] sm:top-[64%] sm:right-[18%]",
   },
 ]
 
@@ -192,7 +192,7 @@ export default function Hero() {
         <span className="truncate text-xs sm:text-sm font-semibold">{lang.company}</span>
       </div>
 
-      {/* FLOATING DIVISION PORTFOLIO CARDS (1 to 6 CLICKS) */}
+      {/* FLOATING ROUND DIVISION BUBBLES (1 to 6 CLICKS) */}
       <AnimatePresence>
         {divisionCards.slice(0, clickCount).map((card) => (
           <motion.div
@@ -200,35 +200,39 @@ export default function Hero() {
             initial={{ scale: 0, opacity: 0, y: 30, rotate: card.rotate * 2 }}
             animate={{ scale: 1, opacity: 1, y: 0, rotate: card.rotate }}
             exit={{ scale: 0, opacity: 0, transition: { duration: 0.2 } }}
-            transition={{ type: "spring", stiffness: 320, damping: 22 }}
+            transition={{ type: "spring", stiffness: 350, damping: 20 }}
             className={`absolute z-20 pointer-events-auto cursor-pointer ${card.position}`}
             onClick={(e) => {
               e.stopPropagation()
               window.location.href = card.link
             }}
           >
-            <div className="group flex max-w-[15rem] sm:max-w-[17rem] items-center gap-2.5 rounded-2xl border border-black/10 bg-white/95 p-2 sm:p-2.5 shadow-[0_16px_36px_-12px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 hover:scale-108 hover:shadow-[0_24px_50px_-12px_rgba(0,0,0,0.32)] active:scale-95">
-              <div className="relative h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-xl bg-neutral-100 border border-black/5">
+            <div className="group relative flex flex-col items-center transition-all duration-300 hover:scale-115 active:scale-95">
+              {/* CIRCULAR PHOTO ORB */}
+              <div
+                className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full overflow-hidden border-[3px] border-white shadow-[0_12px_28px_rgba(0,0,0,0.25)] ring-2"
+                style={{ ringColor: card.accent }}
+              >
                 <img
                   src={card.image}
                   alt={card.title}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               </div>
-              <div className="min-w-0 pr-1 text-left">
-                <span
-                  className="inline-block rounded-full px-2 py-0.5 text-[8.5px] sm:text-[9px] font-bold uppercase tracking-wider text-white"
-                  style={{ backgroundColor: card.accent }}
-                >
-                  {card.badge}
-                </span>
-                <p className="mt-0.5 truncate text-xs sm:text-[13px] font-bold text-neutral-900 leading-tight">
-                  {card.title}
-                </p>
-                <p className="mt-0.5 line-clamp-1 text-[10px] text-neutral-500 leading-tight">
-                  {card.desc}
-                </p>
-              </div>
+
+              {/* MINI ICON BADGE */}
+              <span
+                className="absolute -top-1.5 -right-1.5 flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full border-2 border-white text-xs sm:text-sm shadow-md"
+                style={{ backgroundColor: card.accent }}
+              >
+                {card.icon}
+              </span>
+
+              {/* ROUND LABEL PILL */}
+              <span className="mt-1.5 whitespace-nowrap rounded-full bg-black/85 backdrop-blur-md px-2.5 py-0.5 text-[9px] sm:text-[10px] font-bold text-white shadow-md border border-white/10 group-hover:bg-black transition-colors">
+                {card.shortTitle}
+              </span>
             </div>
           </motion.div>
         ))}
@@ -244,12 +248,10 @@ export default function Hero() {
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             className="absolute top-[28%] sm:top-[26%] z-30 pointer-events-none"
           >
-            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-600 px-4 py-2.5 text-center text-white shadow-[0_16px_40px_rgba(5,150,105,0.4)] animate-bounce">
-              <span className="block text-[10px] font-bold uppercase tracking-widest text-emerald-100">
-                Semua 6 Divisi Terbuka!
-              </span>
-              <span className="block text-xs sm:text-sm font-extrabold mt-0.5 flex items-center justify-center gap-1.5">
-                <MessageCircle size={15} /> 1 KLIK LAGI KE WHATSAPP KAMI!
+            <div className="flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-600 px-5 py-2.5 text-center text-white shadow-[0_16px_40px_rgba(5,150,105,0.45)] animate-bounce">
+              <span className="text-base sm:text-lg">🎉</span>
+              <span className="text-xs sm:text-sm font-extrabold tracking-wide flex items-center gap-1.5">
+                <MessageCircle size={15} /> 1 KLIK LAGI KE WHATSAPP!
               </span>
             </div>
           </motion.div>
@@ -275,12 +277,12 @@ export default function Hero() {
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex items-center gap-1.5 text-xs text-black/50 mt-2 font-medium"
+            className="flex items-center gap-1.5 text-xs text-black/50 mt-2 font-medium bg-black/5 px-3 py-1 rounded-full border border-black/5"
           >
             <span className="font-mono text-black font-bold">{clickCount}/6</span>
-            <span>divisi terbuka</span>
-            <span className="text-[10px] text-black/35 font-mono">
-              ({7 - clickCount}x klik ke WhatsApp)
+            <span>divisi</span>
+            <span className="text-[10px] text-black/40 font-mono">
+              ({7 - clickCount}x klik ke WA)
             </span>
           </motion.div>
         )}
