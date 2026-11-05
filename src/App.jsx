@@ -9,7 +9,6 @@ import Section from "./components/Section"
 import About from "./components/About"
 import Works from "./components/works"
 import Cta from "./components/Cta"
-import TeamHero from "./components/TeamHero"
 import Scope from "./components/scope"
 import Chatbot from "./components/Chatbot"
 import ShaderAnimation from "./components/ui/ShaderAnimation"
@@ -200,7 +199,7 @@ function Home() {
       <Works />
       <Scope />
       <Cta />
-      <TeamHero />
+
     </>
   )
 }

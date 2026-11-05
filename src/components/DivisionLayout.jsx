@@ -192,7 +192,7 @@ const getWeddingStaticWorks = () => [
   }
 ];
 
-const getDivisionStaticWorks = (category) => {
+export const getDivisionStaticWorks = (category) => {
   if (category === "wedding") return getWeddingStaticWorks();
   if (category === "event") {
     return [
