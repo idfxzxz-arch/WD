@@ -19,7 +19,7 @@ const divisionCards = [
     link: "/wedding",
     accent: "#b88446",
     rotate: -6,
-    position: "top-14 left-[10%] sm:top-[18%] sm:left-[10%] lg:sm:left-[12%]",
+    position: "top-12 left-[8%] sm:top-[18%] sm:left-[10%] lg:sm:left-[12%]",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const divisionCards = [
     link: "/event",
     accent: "#6366f1",
     rotate: 5,
-    position: "top-12 right-[10%] sm:top-[16%] sm:right-[10%] lg:sm:right-[12%]",
+    position: "top-10 right-[8%] sm:top-[16%] sm:right-[10%] lg:sm:right-[12%]",
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ const divisionCards = [
     link: "/production",
     accent: "#f59e0b",
     rotate: 4,
-    position: "top-28 left-[6%] sm:top-[44%] sm:left-[6%] lg:sm:left-[8%]",
+    position: "top-36 left-[7%] sm:top-[44%] sm:left-[6%] lg:sm:left-[8%]",
   },
   {
     id: 4,
@@ -58,7 +58,7 @@ const divisionCards = [
     link: "/music",
     accent: "#a855f7",
     rotate: -4,
-    position: "top-28 right-[6%] sm:top-[42%] sm:right-[6%] lg:sm:right-[8%]",
+    position: "top-36 right-[7%] sm:top-[42%] sm:right-[6%] lg:sm:right-[8%]",
   },
   {
     id: 5,
@@ -71,7 +71,7 @@ const divisionCards = [
     link: "/workshop",
     accent: "#22c55e",
     rotate: -3,
-    position: "bottom-3 left-[18%] sm:bottom-auto sm:top-[66%] sm:left-[12%] lg:sm:left-[14%]",
+    position: "top-[20.5rem] left-[18%] sm:top-[66%] sm:left-[12%] lg:sm:left-[14%]",
   },
   {
     id: 6,
@@ -84,7 +84,7 @@ const divisionCards = [
     link: "/it",
     accent: "#0ea5e9",
     rotate: 6,
-    position: "bottom-3 right-[18%] sm:bottom-auto sm:top-[64%] sm:right-[12%] lg:sm:right-[14%]",
+    position: "top-[20.5rem] right-[18%] sm:top-[64%] sm:right-[12%] lg:sm:right-[14%]",
   },
 ]
 
@@ -136,7 +136,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden flex flex-col items-center bg-white px-0 pb-16 sm:pb-0 sm:min-h-[100svh]"
+      className="relative overflow-hidden flex flex-col items-center bg-white px-0 pb-32 sm:pb-0 sm:min-h-[100svh]"
     >
       {/* LANGUAGE */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
