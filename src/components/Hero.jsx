@@ -71,7 +71,7 @@ const divisionCards = [
     link: "/workshop",
     accent: "#22c55e",
     rotate: -3,
-    position: "top-[58%] left-[22%] sm:top-[66%] sm:left-[12%] lg:sm:left-[14%]",
+    position: "top-[54%] left-[22%] sm:top-[66%] sm:left-[12%] lg:sm:left-[14%]",
   },
   {
     id: 6,
@@ -84,7 +84,7 @@ const divisionCards = [
     link: "/it",
     accent: "#0ea5e9",
     rotate: 6,
-    position: "top-[58%] right-[22%] sm:top-[64%] sm:right-[12%] lg:sm:right-[14%]",
+    position: "top-[54%] right-[22%] sm:top-[64%] sm:right-[12%] lg:sm:right-[14%]",
   },
 ]
 
@@ -136,7 +136,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-[100svh] bg-white relative overflow-hidden grid grid-rows-[auto_auto_auto_1fr_auto] justify-items-center px-0 pb-24 sm:flex sm:flex-col sm:items-center sm:pb-0"
+      className="min-h-[100svh] bg-white relative overflow-hidden flex flex-col items-center px-0 pb-24 sm:pb-0"
     >
       {/* LANGUAGE */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
@@ -296,7 +296,7 @@ export default function Hero() {
       </div>
 
       {/* SUBTITLE */}
-      <div className="relative z-10 mt-[clamp(2.5rem,9svh,5rem)] w-full self-end px-5 sm:absolute sm:bottom-24 sm:left-12 sm:mt-0 sm:w-auto sm:px-0">
+      <div className="relative z-10 mt-14 min-[390px]:mt-16 sm:mt-0 w-full px-5 sm:absolute sm:bottom-24 sm:left-12 sm:w-auto sm:px-0">
         <h2 className="max-w-[22rem] text-[1.7rem] min-[390px]:text-3xl sm:max-w-none sm:text-4xl font-normal leading-[1.12] sm:leading-snug">
           {hero.title || lang.subtitle1}
           <br />
