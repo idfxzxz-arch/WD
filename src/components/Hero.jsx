@@ -1,49 +1,78 @@
 import { useState, useContext, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Check, Languages } from "lucide-react"
+import { Check, Languages, MessageCircle } from "lucide-react"
 import { LanguageContext } from "../context/LanguageContext"
 import { supabase } from "../lib/supabase"
 import { GooeyText } from "./ui/GooeyText"
 
 const WA_NUMBER = "6285707909415"
 
-const stickers = [
+const divisionCards = [
   {
     id: 1,
-    content: "🎬",
-    style: "text-6xl",
-    position: "top-[20%] left-[10%]",
+    title: "WD Sky Wedding",
+    badge: "Wedding Organizer",
+    desc: "Perencanaan & eksekusi pernikahan elegan",
+    image: "/resources/Wedding/wedding.webp",
+    link: "/wedding",
+    accent: "#b88446",
+    rotate: -6,
+    position: "top-[16%] left-[4%] sm:top-[18%] sm:left-[12%]",
   },
   {
     id: 2,
-    content: "🎤",
-    style: "text-5xl",
-    position: "top-[30%] right-[12%]",
+    title: "WD Event",
+    badge: "Event Organizer",
+    desc: "Konsep konser, festival & corporate gathering",
+    image: "/resources/Event_Organizer/Event.webp",
+    link: "/event",
+    accent: "#6366f1",
+    rotate: 5,
+    position: "top-[14%] right-[4%] sm:top-[16%] sm:right-[12%]",
   },
   {
     id: 3,
-    content: (
-      <div className="bg-lime-300 rounded-full w-16 h-16 flex items-center justify-center text-3xl shadow-md">
-        📸
-      </div>
-    ),
-    position: "top-[45%] left-[18%]",
+    title: "WD Production",
+    badge: "Creative Production",
+    desc: "Sinematografi video, foto & commercial visual",
+    image: "/resources/Production/Production.webp",
+    link: "/production",
+    accent: "#f59e0b",
+    rotate: 4,
+    position: "top-[44%] left-[2%] sm:top-[44%] sm:left-[8%]",
   },
   {
     id: 4,
-    content: (
-      <div className="bg-white border border-black/10 shadow-lg rounded-xl px-4 py-2 text-center">
-        <span className="block text-[10px] font-bold text-red-500 uppercase tracking-widest">
-          Danger!
-        </span>
-        <span className="block text-sm font-bold leading-tight mt-0.5">
-          ONE MORE CLICK
-          <br />
-          TO CONTACT US!
-        </span>
-      </div>
-    ),
-    position: "top-[25%] right-[8%]",
+    title: "WD Music",
+    badge: "Music Entertainment",
+    desc: "Live band pengiring, session & talent panggung",
+    image: "/resources/Music_ENT/Music_ENT.webp",
+    link: "/music",
+    accent: "#a855f7",
+    rotate: -4,
+    position: "top-[42%] right-[2%] sm:top-[42%] sm:right-[9%]",
+  },
+  {
+    id: 5,
+    title: "WD Jaya Workshop",
+    badge: "Workshop Program",
+    desc: "Inovasi kompor oli bekas hemat bahan bakar 85%",
+    image: "/resources/Workshop/Workshop.webp",
+    link: "/workshop",
+    accent: "#22c55e",
+    rotate: -3,
+    position: "top-[68%] left-[6%] sm:top-[66%] sm:left-[14%]",
+  },
+  {
+    id: 6,
+    title: "WD IT",
+    badge: "Digital Solution",
+    desc: "Jasa website, web app & toko online e-commerce",
+    image: "/resources/Store/Store.webp",
+    link: "/it",
+    accent: "#0ea5e9",
+    rotate: 6,
+    position: "top-[66%] right-[6%] sm:top-[64%] sm:right-[14%]",
   },
 ]
 
@@ -62,7 +91,7 @@ export default function Hero() {
     return () => document.removeEventListener("click", handleClickOutside)
   }, [])
 
-  // ✅ re-fetch kalau bahasa ganti
+  // re-fetch kalau bahasa ganti
   useEffect(() => {
     fetchHero()
   }, [lang.code])
@@ -72,17 +101,20 @@ export default function Hero() {
       .from("content")
       .select("*")
       .eq("section", "hero")
-      .eq("lang", lang.code) // ✅ filter bahasa
+      .eq("lang", lang.code)
     if (error) { console.log(error); return }
     const map = {}
-    data?.forEach(row => { map[row.key] = row.value }) // ✅ ubah array jadi object
+    data?.forEach(row => { map[row.key] = row.value })
     setHero(map)
   }
 
   const handleWDClick = () => {
     const next = clickCount + 1
-    if (next >= 4) {
-      window.open(`https://wa.me/${WA_NUMBER}`, "_blank")
+    if (next >= 7) {
+      window.open(
+        `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Halo WD Group, saya ingin konsultasi layanan.")}`,
+        "_blank"
+      )
       setClickCount(0)
     } else {
       setClickCount(next)
@@ -99,21 +131,20 @@ export default function Hero() {
         <button
           type="button"
           onClick={() => setOpenLang(!openLang)}
-          aria-label="Pilih bahasa"
-          aria-expanded={openLang}
-          className="flex h-10 items-center gap-2 rounded-full border border-black/10 bg-white/90 px-3 text-xs font-bold text-black shadow-sm backdrop-blur-xl transition hover:border-black/20 hover:bg-white"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full border border-black/10 bg-white/80 backdrop-blur shadow hover:bg-black/5 transition"
         >
-          <Languages size={16} strokeWidth={1.8} />
-          <span>{lang.code === "id" ? "ID" : "EN"}</span>
+          <Languages size={14} />
+          <span className="uppercase font-semibold">{lang.code}</span>
         </button>
+
         <AnimatePresence>
           {openLang && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: -10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="absolute right-0 mt-2 w-52 overflow-hidden rounded-lg border border-black/10 bg-white p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.16)]"
+              initial={{ opacity: 0, y: -6, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -6, scale: 0.95 }}
+              transition={{ duration: 0.15 }}
+              className="absolute right-0 top-9 w-44 rounded-xl border border-black/10 bg-white p-1.5 shadow-xl"
             >
               <button
                 type="button"
@@ -123,9 +154,9 @@ export default function Hero() {
                 }`}
               >
                 <span>
-                  <span className="block">Bahasa Indonesia</span>
+                  <span className="block">Indonesia</span>
                   <span className={`mt-0.5 block text-[10px] font-medium uppercase tracking-[0.16em] ${lang.code === "id" ? "text-white/55" : "text-black/35"}`}>
-                    ID · Bahasa utama
+                    ID · Bahasa
                   </span>
                 </span>
                 {lang.code === "id" && <Check size={15} aria-hidden="true" />}
@@ -161,20 +192,68 @@ export default function Hero() {
         <span className="truncate text-xs sm:text-sm font-semibold">{lang.company}</span>
       </div>
 
-      {/* STICKERS */}
+      {/* FLOATING DIVISION PORTFOLIO CARDS (1 to 6 CLICKS) */}
       <AnimatePresence>
-        {stickers.slice(0, clickCount).map((sticker) => (
+        {divisionCards.slice(0, clickCount).map((card) => (
           <motion.div
-            key={sticker.id}
-            initial={{ scale: 0, opacity: 0, rotate: -10 }}
-            animate={{ scale: 1, opacity: 1, rotate: 0 }}
-            exit={{ scale: 0, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className={`absolute z-20 pointer-events-none ${sticker.position} ${sticker.style || ""}`}
+            key={card.id}
+            initial={{ scale: 0, opacity: 0, y: 30, rotate: card.rotate * 2 }}
+            animate={{ scale: 1, opacity: 1, y: 0, rotate: card.rotate }}
+            exit={{ scale: 0, opacity: 0, transition: { duration: 0.2 } }}
+            transition={{ type: "spring", stiffness: 320, damping: 22 }}
+            className={`absolute z-20 pointer-events-auto cursor-pointer ${card.position}`}
+            onClick={(e) => {
+              e.stopPropagation()
+              window.location.href = card.link
+            }}
           >
-            {sticker.content}
+            <div className="group flex max-w-[15rem] sm:max-w-[17rem] items-center gap-2.5 rounded-2xl border border-black/10 bg-white/95 p-2 sm:p-2.5 shadow-[0_16px_36px_-12px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 hover:scale-108 hover:shadow-[0_24px_50px_-12px_rgba(0,0,0,0.32)] active:scale-95">
+              <div className="relative h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-xl bg-neutral-100 border border-black/5">
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="min-w-0 pr-1 text-left">
+                <span
+                  className="inline-block rounded-full px-2 py-0.5 text-[8.5px] sm:text-[9px] font-bold uppercase tracking-wider text-white"
+                  style={{ backgroundColor: card.accent }}
+                >
+                  {card.badge}
+                </span>
+                <p className="mt-0.5 truncate text-xs sm:text-[13px] font-bold text-neutral-900 leading-tight">
+                  {card.title}
+                </p>
+                <p className="mt-0.5 line-clamp-1 text-[10px] text-neutral-500 leading-tight">
+                  {card.desc}
+                </p>
+              </div>
+            </div>
           </motion.div>
         ))}
+      </AnimatePresence>
+
+      {/* 7th CLICK TEASER / BANNER ON CLICK 6 */}
+      <AnimatePresence>
+        {clickCount === 6 && (
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0, y: -10 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="absolute top-[28%] sm:top-[26%] z-30 pointer-events-none"
+          >
+            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-600 px-4 py-2.5 text-center text-white shadow-[0_16px_40px_rgba(5,150,105,0.4)] animate-bounce">
+              <span className="block text-[10px] font-bold uppercase tracking-widest text-emerald-100">
+                Semua 6 Divisi Terbuka!
+              </span>
+              <span className="block text-xs sm:text-sm font-extrabold mt-0.5 flex items-center justify-center gap-1.5">
+                <MessageCircle size={15} /> 1 KLIK LAGI KE WHATSAPP KAMI!
+              </span>
+            </div>
+          </motion.div>
+        )}
       </AnimatePresence>
 
       {/* WD */}
@@ -191,15 +270,19 @@ export default function Hero() {
 
       {/* CLICK HINT */}
       <AnimatePresence>
-        {clickCount > 0 && clickCount < 4 && (
-          <motion.p
+        {clickCount > 0 && clickCount < 7 && (
+          <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="text-xs text-black/30 mt-2"
+            className="flex items-center gap-1.5 text-xs text-black/50 mt-2 font-medium"
           >
-            {4 - clickCount}
-          </motion.p>
+            <span className="font-mono text-black font-bold">{clickCount}/6</span>
+            <span>divisi terbuka</span>
+            <span className="text-[10px] text-black/35 font-mono">
+              ({7 - clickCount}x klik ke WhatsApp)
+            </span>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -218,7 +301,7 @@ export default function Hero() {
         <h2 className="max-w-[22rem] text-[1.7rem] min-[390px]:text-3xl sm:max-w-none sm:text-4xl font-normal leading-[1.12] sm:leading-snug">
           {hero.title || lang.subtitle1}
           <br />
-          {hero.subtitle || lang.subtitle2}  {/* ✅ ganti description → subtitle */}
+          {hero.subtitle || lang.subtitle2}
         </h2>
       </div>
 
