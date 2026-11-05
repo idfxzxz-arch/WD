@@ -194,7 +194,7 @@ export default function Hero() {
       </div>
 
       {/* TOP LOGO */}
-      <div className="absolute top-4 sm:top-6 left-4 sm:left-1/2 sm:-translate-x-1/2 z-20 flex max-w-[calc(100vw-5rem)] items-center gap-2 sm:gap-3 backdrop-blur bg-white/80 px-3 sm:px-4 py-2 rounded-full shadow">
+      <div className="absolute top-4 sm:top-6 left-1/2 -translate-x-1/2 z-20 flex max-w-[calc(100vw-6.5rem)] items-center gap-2 sm:gap-3 backdrop-blur bg-white/80 px-3 sm:px-4 py-2 rounded-full shadow">
         <img
           src="/wd-group-logo.webp"
           alt={lang.company}
