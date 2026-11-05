@@ -19,7 +19,7 @@ const divisionCards = [
     link: "/wedding",
     accent: "#b88446",
     rotate: -6,
-    position: "top-[16%] left-[4%] sm:top-[18%] sm:left-[10%] lg:sm:left-[12%]",
+    position: "top-[12%] left-[14%] sm:top-[18%] sm:left-[10%] lg:sm:left-[12%]",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const divisionCards = [
     link: "/event",
     accent: "#6366f1",
     rotate: 5,
-    position: "top-[14%] right-[4%] sm:top-[16%] sm:right-[10%] lg:sm:right-[12%]",
+    position: "top-[10%] right-[14%] sm:top-[16%] sm:right-[10%] lg:sm:right-[12%]",
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ const divisionCards = [
     link: "/production",
     accent: "#f59e0b",
     rotate: 4,
-    position: "top-[44%] left-[2%] sm:top-[44%] sm:left-[6%] lg:sm:left-[8%]",
+    position: "top-[25%] left-[12%] sm:top-[44%] sm:left-[6%] lg:sm:left-[8%]",
   },
   {
     id: 4,
@@ -58,7 +58,7 @@ const divisionCards = [
     link: "/music",
     accent: "#a855f7",
     rotate: -4,
-    position: "top-[42%] right-[2%] sm:top-[42%] sm:right-[6%] lg:sm:right-[8%]",
+    position: "top-[24%] right-[12%] sm:top-[42%] sm:right-[6%] lg:sm:right-[8%]",
   },
   {
     id: 5,
@@ -71,7 +71,7 @@ const divisionCards = [
     link: "/workshop",
     accent: "#22c55e",
     rotate: -3,
-    position: "top-[68%] left-[6%] sm:top-[66%] sm:left-[12%] lg:sm:left-[14%]",
+    position: "top-[58%] left-[22%] sm:top-[66%] sm:left-[12%] lg:sm:left-[14%]",
   },
   {
     id: 6,
@@ -84,7 +84,7 @@ const divisionCards = [
     link: "/it",
     accent: "#0ea5e9",
     rotate: 6,
-    position: "top-[66%] right-[6%] sm:top-[64%] sm:right-[12%] lg:sm:right-[14%]",
+    position: "top-[58%] right-[22%] sm:top-[64%] sm:right-[12%] lg:sm:right-[14%]",
   },
 ]
 
