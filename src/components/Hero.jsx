@@ -12,67 +12,79 @@ const divisionCards = [
     id: 1,
     title: "WD Sky Wedding",
     shortTitle: "Wedding",
+    badge: "Wedding Organizer",
+    desc: "Perencanaan & eksekusi pernikahan elegan",
     icon: "💍",
     image: "/resources/Wedding/wedding.webp",
     link: "/wedding",
     accent: "#b88446",
     rotate: -6,
-    position: "top-[16%] left-[6%] sm:top-[18%] sm:left-[14%]",
+    position: "top-[16%] left-[4%] sm:top-[18%] sm:left-[10%] lg:sm:left-[12%]",
   },
   {
     id: 2,
     title: "WD Event",
     shortTitle: "Event",
+    badge: "Event Organizer",
+    desc: "Konsep konser, festival & corporate gathering",
     icon: "🎪",
     image: "/resources/Event_Organizer/Event.webp",
     link: "/event",
     accent: "#6366f1",
     rotate: 5,
-    position: "top-[14%] right-[6%] sm:top-[16%] sm:right-[14%]",
+    position: "top-[14%] right-[4%] sm:top-[16%] sm:right-[10%] lg:sm:right-[12%]",
   },
   {
     id: 3,
     title: "WD Production",
     shortTitle: "Production",
+    badge: "Creative Production",
+    desc: "Sinematografi video, foto & commercial visual",
     icon: "🎥",
     image: "/resources/Production/Production.webp",
     link: "/production",
     accent: "#f59e0b",
     rotate: 4,
-    position: "top-[44%] left-[3%] sm:top-[44%] sm:left-[9%]",
+    position: "top-[44%] left-[2%] sm:top-[44%] sm:left-[6%] lg:sm:left-[8%]",
   },
   {
     id: 4,
     title: "WD Music",
     shortTitle: "Music",
+    badge: "Music Entertainment",
+    desc: "Live band pengiring, session & talent panggung",
     icon: "🎵",
     image: "/resources/Music_ENT/Music_ENT.webp",
     link: "/music",
     accent: "#a855f7",
     rotate: -4,
-    position: "top-[42%] right-[3%] sm:top-[42%] sm:right-[11%]",
+    position: "top-[42%] right-[2%] sm:top-[42%] sm:right-[6%] lg:sm:right-[8%]",
   },
   {
     id: 5,
     title: "WD Jaya Workshop",
     shortTitle: "Workshop",
+    badge: "Workshop Program",
+    desc: "Inovasi kompor oli bekas hemat bahan bakar 85%",
     icon: "⚙️",
     image: "/resources/Workshop/Workshop.webp",
     link: "/workshop",
     accent: "#22c55e",
     rotate: -3,
-    position: "top-[68%] left-[8%] sm:top-[66%] sm:left-[18%]",
+    position: "top-[68%] left-[6%] sm:top-[66%] sm:left-[12%] lg:sm:left-[14%]",
   },
   {
     id: 6,
     title: "WD IT",
     shortTitle: "WD IT",
+    badge: "Digital Solution",
+    desc: "Jasa website, web app & toko online e-commerce",
     icon: "💻",
     image: "/resources/Store/Store.webp",
     link: "/it",
     accent: "#0ea5e9",
     rotate: 6,
-    position: "top-[66%] right-[8%] sm:top-[64%] sm:right-[18%]",
+    position: "top-[66%] right-[6%] sm:top-[64%] sm:right-[12%] lg:sm:right-[14%]",
   },
 ]
 
@@ -192,7 +204,7 @@ export default function Hero() {
         <span className="truncate text-xs sm:text-sm font-semibold">{lang.company}</span>
       </div>
 
-      {/* FLOATING ROUND DIVISION BUBBLES (1 to 6 CLICKS) */}
+      {/* FLOATING DIVISION PORTFOLIO (1 to 6 CLICKS) */}
       <AnimatePresence>
         {divisionCards.slice(0, clickCount).map((card) => (
           <motion.div
@@ -207,10 +219,10 @@ export default function Hero() {
               window.location.href = card.link
             }}
           >
-            <div className="group relative flex flex-col items-center transition-all duration-300 hover:scale-115 active:scale-95">
-              {/* CIRCULAR PHOTO ORB */}
+            {/* MOBILE ONLY: BULAT (CIRCULAR BUBBLE) */}
+            <div className="flex sm:hidden flex-col items-center transition-all duration-300 hover:scale-115 active:scale-95">
               <div
-                className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full overflow-hidden border-[3px] border-white shadow-[0_12px_28px_rgba(0,0,0,0.25)] ring-2"
+                className="relative h-16 w-16 rounded-full overflow-hidden border-[3px] border-white shadow-[0_12px_28px_rgba(0,0,0,0.25)] ring-2"
                 style={{ ringColor: card.accent }}
               >
                 <img
@@ -221,18 +233,41 @@ export default function Hero() {
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               </div>
 
-              {/* MINI ICON BADGE */}
               <span
-                className="absolute -top-1.5 -right-1.5 flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full border-2 border-white text-xs sm:text-sm shadow-md"
+                className="absolute -top-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white text-xs shadow-md"
                 style={{ backgroundColor: card.accent }}
               >
                 {card.icon}
               </span>
 
-              {/* ROUND LABEL PILL */}
-              <span className="mt-1.5 whitespace-nowrap rounded-full bg-black/85 backdrop-blur-md px-2.5 py-0.5 text-[9px] sm:text-[10px] font-bold text-white shadow-md border border-white/10 group-hover:bg-black transition-colors">
+              <span className="mt-1.5 whitespace-nowrap rounded-full bg-black/85 backdrop-blur-md px-2.5 py-0.5 text-[9px] font-bold text-white shadow-md border border-white/10">
                 {card.shortTitle}
               </span>
+            </div>
+
+            {/* DESKTOP ONLY: KOTAK (RECTANGULAR CARD) */}
+            <div className="hidden sm:flex group w-64 lg:w-72 items-center gap-3 rounded-2xl border border-black/10 bg-white/95 p-2.5 lg:p-3 shadow-[0_16px_36px_-12px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 hover:scale-108 hover:shadow-[0_24px_50px_-12px_rgba(0,0,0,0.32)] active:scale-95">
+              <div className="relative h-14 w-14 lg:h-16 lg:w-16 shrink-0 overflow-hidden rounded-xl bg-neutral-100 border border-black/5">
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="min-w-0 pr-1 text-left">
+                <span
+                  className="inline-block rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white"
+                  style={{ backgroundColor: card.accent }}
+                >
+                  {card.badge}
+                </span>
+                <p className="mt-0.5 truncate text-[13px] lg:text-sm font-bold text-neutral-900 leading-tight">
+                  {card.title}
+                </p>
+                <p className="mt-0.5 line-clamp-1 text-[11px] text-neutral-500 leading-tight">
+                  {card.desc}
+                </p>
+              </div>
             </div>
           </motion.div>
         ))}
