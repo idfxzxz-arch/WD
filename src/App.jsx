@@ -1,5 +1,6 @@
-import { useEffect, useState, Suspense, lazy } from "react"
+import { useEffect, useState, useRef, useCallback, Suspense, lazy } from "react"
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom"
+import { Volume2, VolumeX, SkipForward } from "lucide-react"
 import { LanguageProvider } from "./context/LanguageContext"
 import Cursor from "./components/Cursor"
 import ProtectedRoute from "./components/ProtectedRoute"
@@ -11,7 +12,6 @@ import Works from "./components/works"
 import Cta from "./components/Cta"
 import Scope from "./components/scope"
 import Chatbot from "./components/Chatbot"
-import ShaderAnimation from "./components/ui/ShaderAnimation"
 import { PageTransitionProvider } from "./components/PageTransition"
 import { HelmetProvider } from "react-helmet-async"
 import SEO from "./components/SEO"
@@ -150,35 +150,92 @@ function PublicPage({ children, showChatbot = true, chatbotDelayMs = 0 }) {
 }
 
 function HomeIntro({ onDone }) {
-  const [showIntro,setShowIntro] = useState(true)
+  const [showIntro, setShowIntro] = useState(true)
+  const [isFadingOut, setIsFadingOut] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
+  const videoRef = useRef(null)
 
-  useEffect(()=>{
-    const timer = setTimeout(()=>{
+  const isMobile = typeof window !== "undefined" ? window.innerWidth <= 768 : false
+  const videoSrc = isMobile
+    ? "/vid/gemini_generated_video_mobile_9_16.mp4"
+    : "/vid/gemini_generated_video_20b2f22c.mp4"
+
+  const handleFinish = useCallback(() => {
+    setIsFadingOut(true)
+    setTimeout(() => {
       setShowIntro(false)
       onDone?.()
-    },2600)
+    }, 1000)
+  }, [onDone])
 
-    return ()=>clearTimeout(timer)
-  },[onDone])
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleFinish()
+    }, 11000)
 
-  if(!showIntro) return null
+    return () => clearTimeout(timer)
+  }, [handleFinish])
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Autoplay policy prevented playback without interaction
+      })
+    }
+  }, [videoSrc])
+
+  const toggleMute = () => {
+    setIsMuted((prev) => {
+      const next = !prev
+      if (videoRef.current) {
+        videoRef.current.muted = next
+      }
+      return next
+    })
+  }
+
+  if (!showIntro) return null
 
   return (
-    <div className="fixed inset-0 z-[9999] flex h-[100dvh] w-screen items-center justify-center overflow-hidden bg-black animate-[loginIntroOut_2.6s_ease_forwards]">
-      <ShaderAnimation />
+    <div
+      className={`fixed inset-0 z-[9999] flex h-[100dvh] w-screen items-center justify-center overflow-hidden bg-[#bcbcbc] transition-opacity duration-1000 ease-in-out ${
+        isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
+    >
+      <video
+        ref={videoRef}
+        src={videoSrc}
+        className="h-full w-full object-cover"
+        autoPlay
+        muted={isMuted}
+        playsInline
+        preload="auto"
+        onEnded={handleFinish}
+        onError={handleFinish}
+      />
 
-      <div className="relative z-10 text-center px-6 animate-[loginIntroText_2.6s_ease_forwards]">
-        <p className="text-blue-300 tracking-[0.55em] uppercase text-xs sm:text-sm mb-5">
-          Welcome To
-        </p>
+      {/* Action buttons: Sound toggle & Skip */}
+      <div className="absolute top-5 right-5 z-20 flex items-center gap-2">
+        <button
+          type="button"
+          onClick={toggleMute}
+          className="flex items-center gap-1.5 rounded-full border border-black/10 bg-black/40 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md transition hover:bg-black/60 cursor-pointer"
+          title={isMuted ? "Aktifkan Suara" : "Bisukan"}
+          aria-label={isMuted ? "Aktifkan Suara" : "Bisukan"}
+        >
+          {isMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
+          <span className="hidden sm:inline">{isMuted ? "Suara" : "Mute"}</span>
+        </button>
 
-        <h2 className="text-white text-5xl sm:text-7xl font-bold tracking-tight">
-          WD GROUP
-        </h2>
-
-        <div className="mx-auto mt-7 h-px w-48 overflow-hidden bg-white/10">
-          <div className="h-full w-full bg-blue-400 animate-[loginIntroLine_1.7s_ease-in-out_forwards]" />
-        </div>
+        <button
+          type="button"
+          onClick={handleFinish}
+          className="flex items-center gap-1.5 rounded-full border border-black/10 bg-black/40 px-3.5 py-1.5 text-xs font-medium text-white backdrop-blur-md transition hover:bg-black/60 cursor-pointer"
+          aria-label="Lewati intro"
+        >
+          <span>Lewati</span>
+          <SkipForward className="h-3.5 w-3.5" />
+        </button>
       </div>
     </div>
   )
