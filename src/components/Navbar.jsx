@@ -45,11 +45,11 @@ export default function Navbar() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="fixed inset-x-0 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-[9999] flex w-full justify-center px-3 sm:bottom-6 pointer-events-none"
+      className="fixed inset-x-0 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-[9999] flex w-full justify-center px-3 sm:bottom-3.5 lg:bottom-6 pointer-events-none"
     >
       <nav
         aria-label="Navigasi Utama"
-        className="pointer-events-auto flex items-center gap-1 sm:gap-1.5 rounded-full border border-white/15 bg-[#101014]/92 p-1.5 sm:p-2 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_25px_rgba(255,255,255,0.06)] backdrop-blur-2xl ring-1 ring-white/5"
+        className="pointer-events-auto flex items-center gap-0.5 sm:gap-1 lg:gap-1.5 rounded-full border border-white/15 bg-[#101014]/92 p-1 sm:p-1.5 lg:p-2 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_25px_rgba(255,255,255,0.06)] backdrop-blur-2xl ring-1 ring-white/5"
       >
         {/* LOGO BADGE (DI KIRI) */}
         <button
@@ -59,7 +59,7 @@ export default function Navbar() {
             scrollTo("home")
           }}
           aria-label="WD Group Home"
-          className="group relative flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-white p-1.5 shadow-md shadow-white/10 ring-2 ring-white/20 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+          className="group relative flex h-8 w-8 sm:h-9 sm:w-9 lg:h-11 lg:w-11 shrink-0 items-center justify-center rounded-full bg-white p-1 sm:p-1.5 shadow-md shadow-white/10 ring-2 ring-white/20 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
         >
           <img
             src="/wd-group-logo.webp"
@@ -72,10 +72,10 @@ export default function Navbar() {
         </button>
 
         {/* DIVIDER */}
-        <div className="h-6 w-px bg-white/15 mx-0.5 shrink-0" />
+        <div className="h-4 sm:h-5 lg:h-6 w-px bg-white/15 mx-0.5 shrink-0" />
 
         {/* NAV ITEMS */}
-        <div className="flex items-center gap-0.5 sm:gap-1">
+        <div className="flex items-center gap-0.5 sm:gap-0.5 lg:gap-1">
           {menus.map((item) => {
             const Icon = item.icon
             const isActive = active === item.value
@@ -87,7 +87,7 @@ export default function Navbar() {
                 onClick={() => handleSelect(item)}
                 aria-label={item.label}
                 aria-current={isActive ? "page" : undefined}
-                className={`relative flex min-w-[46px] sm:min-w-[54px] flex-col items-center justify-center px-2 py-1 sm:px-3 sm:py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                className={`relative flex min-w-[40px] sm:min-w-[46px] lg:min-w-[54px] flex-col items-center justify-center px-1.5 py-0.5 sm:px-2.5 sm:py-1 lg:px-3 lg:py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   isActive ? "text-white" : "text-white/50 hover:text-white/85"
                 }`}
               >
@@ -103,10 +103,9 @@ export default function Navbar() {
                 {/* ICON & DOT */}
                 <div className="relative z-10 flex flex-col items-center">
                   <Icon
-                    size={17}
                     strokeWidth={isActive ? 2.3 : 1.8}
-                    className={`transition-transform duration-300 ${
-                      isActive ? "scale-110 text-white" : "text-white/60"
+                    className={`h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-[17px] lg:w-[17px] transition-transform duration-300 ${
+                      isActive ? "scale-105 lg:scale-110 text-white" : "text-white/60"
                     }`}
                   />
                   {/* ACTIVE GLOWING DOT INDICATOR */}
@@ -119,7 +118,7 @@ export default function Navbar() {
 
                 {/* LABEL */}
                 <span
-                  className={`relative z-10 text-[9px] sm:text-[10px] tracking-wider uppercase transition-colors duration-300 ${
+                  className={`relative z-10 text-[8px] sm:text-[9px] lg:text-[10px] tracking-wider uppercase transition-colors duration-300 ${
                     isActive ? "font-bold text-white" : "font-medium text-white/45"
                   }`}
                 >

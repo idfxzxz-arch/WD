@@ -135,14 +135,14 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden flex flex-col items-center bg-white px-0 pb-32 sm:pb-0 min-h-[100svh]"
+      className="relative overflow-hidden flex flex-col items-center bg-white px-0 pb-[calc(4.5rem+env(safe-area-inset-bottom))] sm:pb-0 min-h-[100svh]"
     >
       {/* LANGUAGE */}
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 lang-menu">
+      <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-5 lg:top-6 lg:right-6 z-30 lang-menu">
         <button
           type="button"
           onClick={() => setOpenLang(!openLang)}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full border border-black/10 bg-white/80 backdrop-blur shadow hover:bg-black/5 transition"
+          className="flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 text-xs rounded-full border border-black/10 bg-white/80 backdrop-blur shadow hover:bg-black/5 transition"
         >
           <Languages size={14} />
           <span className="uppercase font-semibold">{lang.code}</span>
@@ -193,14 +193,14 @@ export default function Hero() {
       </div>
 
       {/* TOP LOGO */}
-      <div className="absolute top-4 sm:top-6 left-1/2 -translate-x-1/2 z-20 flex max-w-[calc(100vw-6.5rem)] items-center gap-2 sm:gap-3 backdrop-blur bg-white/80 px-3 sm:px-4 py-2 rounded-full shadow">
+      <div className="absolute top-3.5 sm:top-4 lg:top-6 left-1/2 -translate-x-1/2 z-20 flex max-w-[calc(100vw-6.5rem)] items-center gap-2 sm:gap-2.5 lg:gap-3 backdrop-blur bg-white/80 px-2.5 py-1 sm:px-3.5 sm:py-1.5 lg:px-4 lg:py-2 rounded-full shadow">
         <img
           src="/wd-group-logo.webp"
           alt={lang.company}
           fetchPriority="high"
-          className="w-6 h-6 object-contain"
+          className="w-5 h-5 sm:w-5 sm:h-5 lg:w-6 lg:h-6 object-contain"
         />
-        <span className="truncate text-xs sm:text-sm font-semibold">{lang.company}</span>
+        <span className="truncate text-xs sm:text-xs lg:text-sm font-semibold">{lang.company}</span>
       </div>
 
       {/* FLOATING DIVISION PORTFOLIO (1 to 6 CLICKS) */}
@@ -276,7 +276,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[56rem] h-[50vw] max-h-[32rem] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(217,163,84,0.08),rgba(30,41,59,0.03),transparent_70%)] blur-2xl z-0" />
 
       {/* UPPER HERO CONTENT: TAGLINE + DIVISION PILLS + INTERACTIVE CTA */}
-      <div className="absolute top-[13.5%] sm:top-[17%] left-1/2 -translate-x-1/2 w-full max-w-xl px-4 flex flex-col items-center text-center z-20 pointer-events-auto">
+      <div className="absolute top-[12%] sm:top-[12vh] lg:top-[15vh] left-1/2 -translate-x-1/2 w-full max-w-xl px-4 flex flex-col items-center text-center z-20 pointer-events-auto">
         {/* TAGLINE / KICKER */}
         <motion.div
           initial={{ opacity: 0, y: -8 }}
@@ -296,7 +296,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 mb-3 max-w-sm sm:max-w-md"
+          className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 mb-2.5 sm:mb-3 max-w-sm sm:max-w-md"
         >
           {divisionCards.map((card, idx) => {
             const isActive = clickCount > idx
@@ -339,7 +339,7 @@ export default function Hero() {
       </div>
 
       {/* WD HERO LOGO - ALIGNED TO OPENING VIDEO */}
-      <div className="absolute left-1/2 top-[53.5%] -translate-x-1/2 -translate-y-1/2 w-[76vw] sm:w-[40vw] lg:w-[43vw] max-w-[36rem] lg:max-w-[40rem] flex justify-center items-center select-none z-10 px-4">
+      <div className="absolute left-1/2 top-[48%] sm:top-[53.5%] -translate-x-1/2 -translate-y-1/2 w-[68vw] max-w-[18rem] sm:w-[min(40vw,46vh)] lg:w-[min(43vw,50vh)] sm:max-w-[36rem] lg:max-w-[40rem] flex justify-center items-center select-none z-10 px-4">
         <motion.div
           onClick={handleWDClick}
           whileTap={{ scale: 0.96 }}
@@ -351,7 +351,7 @@ export default function Hero() {
             src="/wd-hero-logo.webp"
             alt="WD Group Company"
             fetchPriority="high"
-            className="w-full h-auto object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.06)]"
+            className="w-full h-auto max-h-[26vh] sm:max-h-[32vh] lg:max-h-[36vh] object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.06)]"
           />
           <h1 className="sr-only">
             WD Group Company – Creative Media, Event Organizer & Wedding Organizer Solo Raya
@@ -360,8 +360,8 @@ export default function Hero() {
       </div>
 
       {/* SUBTITLE */}
-      <div className="relative z-10 mt-auto mb-6 sm:mb-0 w-full px-5 sm:absolute sm:bottom-6 md:bottom-8 lg:bottom-10 sm:left-8 lg:left-12 sm:w-auto sm:px-0">
-        <h2 className="max-w-[22rem] text-[1.5rem] min-[390px]:text-2xl sm:max-w-none sm:text-3xl lg:text-4xl font-normal leading-[1.15] sm:leading-snug">
+      <div className="relative z-10 mt-auto mb-2 sm:mb-0 w-full px-5 sm:absolute sm:bottom-6 md:bottom-8 lg:bottom-10 sm:left-8 lg:left-12 sm:w-auto sm:px-0">
+        <h2 className="max-w-[20rem] sm:max-w-none text-[1.25rem] min-[390px]:text-[1.4rem] sm:text-3xl lg:text-4xl font-normal leading-[1.2] sm:leading-snug">
           {hero.title || lang.subtitle1}
           <br />
           {hero.subtitle || lang.subtitle2}

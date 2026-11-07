@@ -155,10 +155,33 @@ function HomeIntro({ onDone }) {
   const [isMuted, setIsMuted] = useState(true)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false
+    return window.innerWidth < 640 || (window.matchMedia && window.matchMedia("(max-width: 639px)").matches)
+  })
   const videoRef = useRef(null)
 
-  const videoSrc = "/vid/gemini_generated_video_20b2f22c.mp4"
-  const posterSrc = "/vid/opening_poster_desktop.webp"
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 639px)")
+    const handler = (e) => setIsMobile(e.matches)
+    if (mql.addEventListener) {
+      mql.addEventListener("change", handler)
+      return () => mql.removeEventListener("change", handler)
+    } else if (mql.addListener) {
+      mql.addListener(handler)
+      return () => mql.removeListener(handler)
+    }
+  }, [])
+
+  const videoSrc = isMobile
+    ? "/vid/wd_opening_mobile.mp4"
+    : "/vid/gemini_generated_video_20b2f22c.mp4"
+  const webmSrc = isMobile
+    ? "/vid/wd_opening_mobile.webm"
+    : "/vid/gemini_generated_video_20b2f22c.webm"
+  const posterSrc = isMobile
+    ? "/vid/opening_poster_mobile.webp"
+    : "/vid/opening_poster_desktop.webp"
 
   const handleFinish = useCallback(() => {
     setIsFadingOut(true)
@@ -264,6 +287,7 @@ function HomeIntro({ onDone }) {
     >
       <video
         ref={videoRef}
+        key={isMobile ? "mobile-intro" : "desktop-intro"}
         poster={posterSrc}
         className="h-full w-full object-cover"
         autoPlay
@@ -273,7 +297,7 @@ function HomeIntro({ onDone }) {
         onEnded={handleFinish}
         onError={handleFinish}
       >
-        <source src="/vid/gemini_generated_video_20b2f22c.webm" type="video/webm" />
+        <source src={webmSrc} type="video/webm" />
         <source src={videoSrc} type="video/mp4" />
       </video>
 
