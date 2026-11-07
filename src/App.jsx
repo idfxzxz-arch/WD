@@ -159,6 +159,9 @@ function HomeIntro({ onDone }) {
   const videoSrc = isMobile
     ? "/vid/gemini_generated_video_mobile_9_16.mp4"
     : "/vid/gemini_generated_video_20b2f22c.mp4"
+  const posterSrc = isMobile
+    ? "/vid/opening_poster_mobile.webp"
+    : "/vid/opening_poster_desktop.webp"
 
   const handleFinish = useCallback(() => {
     setIsFadingOut(true)
@@ -178,11 +181,19 @@ function HomeIntro({ onDone }) {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        // Autoplay policy prevented playback without interaction
-      })
+      videoRef.current.muted = isMuted
+      const playPromise = videoRef.current.play()
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Fallback autoplay if browser enforces muted restriction
+          if (videoRef.current) {
+            videoRef.current.muted = true
+            videoRef.current.play().catch(() => {})
+          }
+        })
+      }
     }
-  }, [videoSrc])
+  }, [videoSrc, isMuted])
 
   const toggleMute = () => {
     setIsMuted((prev) => {
@@ -205,9 +216,11 @@ function HomeIntro({ onDone }) {
       <video
         ref={videoRef}
         src={videoSrc}
+        poster={posterSrc}
         className="h-full w-full object-cover"
         autoPlay
         muted={isMuted}
+        defaultMuted
         playsInline
         preload="auto"
         onEnded={handleFinish}
