@@ -157,13 +157,8 @@ function HomeIntro({ onDone }) {
   const [hasError, setHasError] = useState(false)
   const videoRef = useRef(null)
 
-  const isMobile = typeof window !== "undefined" ? window.innerWidth <= 768 : false
-  const videoSrc = isMobile
-    ? "/vid/wd_opening_mobile.mp4?v=20261107"
-    : "/vid/wd_opening_desktop.mp4?v=20261107"
-  const posterSrc = isMobile
-    ? "/vid/opening_poster_mobile.webp?v=20261107"
-    : "/vid/opening_poster_desktop.webp?v=20261107"
+  const videoSrc = "/vid/gemini_generated_video_20b2f22c.mp4"
+  const posterSrc = "/vid/opening_poster_desktop.webp"
 
   const handleFinish = useCallback(() => {
     setIsFadingOut(true)
