@@ -184,6 +184,7 @@ function HomeIntro({ onDone }) {
 
     video.muted = true
     video.playsInline = true
+    video.load()
 
     const onPlayEvent = () => {
       setIsPlaying(true)
@@ -272,6 +273,7 @@ function HomeIntro({ onDone }) {
         onEnded={handleFinish}
         onError={handleFinish}
       >
+        <source src="/vid/gemini_generated_video_20b2f22c.webm" type="video/webm" />
         <source src={videoSrc} type="video/mp4" />
       </video>
 
