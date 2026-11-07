@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback, Suspense, lazy } from "react"
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom"
-import { Volume2, VolumeX, SkipForward } from "lucide-react"
+import { Volume2, VolumeX, SkipForward, Play } from "lucide-react"
 import { LanguageProvider } from "./context/LanguageContext"
 import Cursor from "./components/Cursor"
 import ProtectedRoute from "./components/ProtectedRoute"
@@ -153,6 +153,8 @@ function HomeIntro({ onDone }) {
   const [showIntro, setShowIntro] = useState(true)
   const [isFadingOut, setIsFadingOut] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
   const videoRef = useRef(null)
 
   const videoSrc = "/vid/gemini_generated_video_20b2f22c.mp4"
@@ -166,29 +168,67 @@ function HomeIntro({ onDone }) {
     }, 1000)
   }, [onDone])
 
-  // Fallback timer if video hangs
+  // Fallback timer starts only when video is actively playing
   useEffect(() => {
+    if (!isPlaying) return
     const timer = setTimeout(() => {
       handleFinish()
     }, 11000)
 
     return () => clearTimeout(timer)
-  }, [handleFinish])
+  }, [isPlaying, handleFinish])
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true
-      videoRef.current.playsInline = true
-      const playPromise = videoRef.current.play()
-      if (playPromise !== undefined) {
-        playPromise.catch((err) => {
-          console.warn("Autoplay policy retry muted:", err)
-          if (videoRef.current) {
-            videoRef.current.muted = true
-            videoRef.current.play().catch(() => {})
-          }
+    const video = videoRef.current
+    if (!video) return
+
+    video.muted = true
+    video.playsInline = true
+
+    const onPlayEvent = () => {
+      setIsPlaying(true)
+      setIsPaused(false)
+    }
+    const onPauseEvent = () => {
+      if (!video.ended) {
+        setIsPaused(true)
+      }
+    }
+
+    video.addEventListener("playing", onPlayEvent)
+    video.addEventListener("pause", onPauseEvent)
+
+    const startPlay = () => {
+      const p = video.play()
+      if (p !== undefined) {
+        p.then(() => {
+          setIsPlaying(true)
+          setIsPaused(false)
+        }).catch(() => {
+          // Autoplay blocked by browser policy (e.g. Firefox default)
+          setIsPaused(true)
         })
       }
+    }
+
+    startPlay()
+
+    // Trigger play on first window interaction
+    const onUserInteract = () => {
+      if (video && video.paused) {
+        startPlay()
+      }
+      window.removeEventListener("pointerdown", onUserInteract)
+      window.removeEventListener("keydown", onUserInteract)
+    }
+    window.addEventListener("pointerdown", onUserInteract)
+    window.addEventListener("keydown", onUserInteract)
+
+    return () => {
+      video.removeEventListener("playing", onPlayEvent)
+      video.removeEventListener("pause", onPauseEvent)
+      window.removeEventListener("pointerdown", onUserInteract)
+      window.removeEventListener("keydown", onUserInteract)
     }
   }, [videoSrc])
 
@@ -202,6 +242,16 @@ function HomeIntro({ onDone }) {
     })
   }
 
+  const handleManualPlay = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted
+      videoRef.current.play().then(() => {
+        setIsPlaying(true)
+        setIsPaused(false)
+      }).catch(() => {})
+    }
+  }
+
   if (!showIntro) return null
 
   return (
@@ -209,15 +259,10 @@ function HomeIntro({ onDone }) {
       className={`fixed inset-0 z-[9999] flex h-[100dvh] w-screen items-center justify-center overflow-hidden bg-[#bcbcbc] transition-opacity duration-1000 ease-in-out ${
         isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
-      onClick={() => {
-        if (videoRef.current && videoRef.current.paused) {
-          videoRef.current.play().catch(() => {})
-        }
-      }}
+      onClick={handleManualPlay}
     >
       <video
         ref={videoRef}
-        src={videoSrc}
         poster={posterSrc}
         className="h-full w-full object-cover"
         autoPlay
@@ -226,7 +271,24 @@ function HomeIntro({ onDone }) {
         preload="auto"
         onEnded={handleFinish}
         onError={handleFinish}
-      />
+      >
+        <source src={videoSrc} type="video/mp4" />
+      </video>
+
+      {/* Central Play button shown if autoplay was restricted by browser */}
+      {isPaused && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            handleManualPlay()
+          }}
+          className="absolute z-30 flex items-center gap-3 rounded-full bg-black/80 hover:bg-black/95 text-white px-7 py-3.5 text-sm sm:text-base font-bold tracking-wide backdrop-blur-md shadow-2xl transition transform hover:scale-105 cursor-pointer border border-white/20 animate-pulse"
+        >
+          <Play className="h-5 w-5 fill-white text-white" />
+          <span>Putar Animasi Video</span>
+        </button>
+      )}
 
       {/* Action buttons: Sound toggle & Skip */}
       <div className="absolute top-5 right-5 z-20 flex items-center gap-2">
