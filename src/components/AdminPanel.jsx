@@ -123,7 +123,7 @@ export default function AdminPanel() {
           .eq("id", user.id)
           .maybeSingle()
 
-        setAdminRole(data?.role || "admin")
+        setAdminRole(data?.role || "viewer")
       }
 
       setRoleReady(true)
@@ -158,13 +158,31 @@ export default function AdminPanel() {
   }
 
   // ─── FILE UPLOAD ──────────────────────────────────────────────────────────
+  const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"]
+  const ALLOWED_IMAGE_EXTS = ["jpg", "jpeg", "png", "webp", "gif"]
+  const MAX_FILE_SIZE = 15 * 1024 * 1024 // 15MB
+
   const handleFileUpload = async (event, workId) => {
     try {
       const file = event.target.files?.[0]
       if (!file) return
+
+      if (file.size > MAX_FILE_SIZE) {
+        throw new Error("Ukuran file terlalu besar. Maksimum 15MB.")
+      }
+
+      const fileExt = (file.name.split(".").pop() || "").toLowerCase()
+      if (!ALLOWED_IMAGE_EXTS.includes(fileExt) || !ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        throw new Error("Format file tidak diizinkan. Hanya file gambar (JPG, PNG, WEBP, GIF) yang diperbolehkan.")
+      }
+
       setUploading(workId)
-      const fileExt = file.name.split(".").pop()
-      const uniqueFileName = `${Date.now()}-${Math.floor(Math.random() * 1000)}.${fileExt}`
+      const sanitizedName = file.name
+        .replace(/\.[^/.]+$/, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .slice(0, 40)
+      const uniqueFileName = `${Date.now()}-${sanitizedName || "img"}.${fileExt}`
       const filePath = `works/${uniqueFileName}`
       const { error: uploadError } = await supabase.storage.from("photos").upload(filePath, file)
       if (uploadError) throw uploadError

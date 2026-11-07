@@ -142,6 +142,10 @@ export default function MediaLibrary() {
     );
   };
 
+  const ALLOWED_MEDIA_EXTS = ["jpg", "jpeg", "png", "webp", "gif", "mp4", "webm", "pdf"];
+  const MAX_IMAGE_SIZE = 15 * 1024 * 1024; // 15MB
+  const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB
+
   const uploadFiles = async (event) => {
     const selected = Array.from(event.target.files || []);
     if (!selected.length) return;
@@ -149,11 +153,22 @@ export default function MediaLibrary() {
     setUploading(true);
     try {
       for (const file of selected) {
-        const ext = file.name.split(".").pop();
+        const ext = (file.name.split(".").pop() || "").toLowerCase();
+        if (!ALLOWED_MEDIA_EXTS.includes(ext)) {
+          throw new Error(`Ekstensi file ".${ext}" tidak diizinkan.`);
+        }
+
+        const isVideo = ["mp4", "webm"].includes(ext);
+        const limit = isVideo ? MAX_VIDEO_SIZE : MAX_IMAGE_SIZE;
+        if (file.size > limit) {
+          throw new Error(`File ${file.name} melebihi batas (${isVideo ? "50MB" : "15MB"}).`);
+        }
+
         const baseName = file.name
           .replace(/\.[^/.]+$/, "")
           .toLowerCase()
           .replace(/[^a-z0-9]+/g, "-")
+          .slice(0, 50)
           .replace(/^-|-$/g, "");
         const path = `${FOLDER}/${Date.now()}-${baseName || "media"}.${ext}`;
         const { error } = await supabase.storage.from(BUCKET).upload(path, file);
@@ -589,7 +604,7 @@ export default function MediaLibrary() {
                     <a
                       href={file.publicUrl}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className="flex items-center justify-center gap-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-2 py-2 text-xs text-zinc-300 transition"
                     >
                       <Download className="w-3.5 h-3.5" />
