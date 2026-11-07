@@ -12,6 +12,7 @@ import Works from "./components/works"
 import Cta from "./components/Cta"
 import Scope from "./components/scope"
 import Chatbot from "./components/Chatbot"
+import ShaderAnimation from "./components/ui/ShaderAnimation"
 import { PageTransitionProvider } from "./components/PageTransition"
 import { HelmetProvider } from "react-helmet-async"
 import SEO from "./components/SEO"
@@ -153,15 +154,16 @@ function HomeIntro({ onDone }) {
   const [showIntro, setShowIntro] = useState(true)
   const [isFadingOut, setIsFadingOut] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
+  const [hasError, setHasError] = useState(false)
   const videoRef = useRef(null)
 
   const isMobile = typeof window !== "undefined" ? window.innerWidth <= 768 : false
   const videoSrc = isMobile
-    ? "/vid/gemini_generated_video_mobile_9_16.mp4"
-    : "/vid/gemini_generated_video_20b2f22c.mp4"
+    ? "/vid/wd_opening_mobile.mp4?v=20261107"
+    : "/vid/wd_opening_desktop.mp4?v=20261107"
   const posterSrc = isMobile
-    ? "/vid/opening_poster_mobile.webp"
-    : "/vid/opening_poster_desktop.webp"
+    ? "/vid/opening_poster_mobile.webp?v=20261107"
+    : "/vid/opening_poster_desktop.webp?v=20261107"
 
   const handleFinish = useCallback(() => {
     setIsFadingOut(true)
@@ -171,6 +173,7 @@ function HomeIntro({ onDone }) {
     }, 1000)
   }, [onDone])
 
+  // Fallback timer if video hangs
   useEffect(() => {
     const timer = setTimeout(() => {
       handleFinish()
@@ -179,13 +182,24 @@ function HomeIntro({ onDone }) {
     return () => clearTimeout(timer)
   }, [handleFinish])
 
+  // If video encountered an error, fallback to shader intro for 2.8s
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = isMuted
+    if (hasError) {
+      const timer = setTimeout(() => {
+        handleFinish()
+      }, 2800)
+      return () => clearTimeout(timer)
+    }
+  }, [hasError, handleFinish])
+
+  useEffect(() => {
+    if (videoRef.current && !hasError) {
+      videoRef.current.muted = true
+      videoRef.current.playsInline = true
       const playPromise = videoRef.current.play()
       if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Fallback autoplay if browser enforces muted restriction
+        playPromise.catch((err) => {
+          console.warn("Autoplay policy retry muted:", err)
           if (videoRef.current) {
             videoRef.current.muted = true
             videoRef.current.play().catch(() => {})
@@ -193,7 +207,7 @@ function HomeIntro({ onDone }) {
         })
       }
     }
-  }, [videoSrc, isMuted])
+  }, [videoSrc, hasError])
 
   const toggleMute = () => {
     setIsMuted((prev) => {
@@ -207,11 +221,42 @@ function HomeIntro({ onDone }) {
 
   if (!showIntro) return null
 
+  if (hasError) {
+    return (
+      <div
+        className={`fixed inset-0 z-[9999] flex h-[100dvh] w-screen items-center justify-center overflow-hidden bg-black transition-opacity duration-1000 ease-in-out ${
+          isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
+      >
+        <ShaderAnimation />
+
+        <div className="relative z-10 text-center px-6 animate-[loginIntroText_2.6s_ease_forwards]">
+          <p className="text-blue-300 tracking-[0.55em] uppercase text-xs sm:text-sm mb-5">
+            Welcome To
+          </p>
+
+          <h2 className="text-white text-5xl sm:text-7xl font-bold tracking-tight">
+            WD GROUP
+          </h2>
+
+          <div className="mx-auto mt-7 h-px w-48 overflow-hidden bg-white/10">
+            <div className="h-full w-full bg-blue-400 animate-[loginIntroLine_1.7s_ease-in-out_forwards]" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       className={`fixed inset-0 z-[9999] flex h-[100dvh] w-screen items-center justify-center overflow-hidden bg-[#bcbcbc] transition-opacity duration-1000 ease-in-out ${
         isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
+      onClick={() => {
+        if (videoRef.current && videoRef.current.paused) {
+          videoRef.current.play().catch(() => {})
+        }
+      }}
     >
       <video
         ref={videoRef}
@@ -220,18 +265,23 @@ function HomeIntro({ onDone }) {
         className="h-full w-full object-cover"
         autoPlay
         muted={isMuted}
-        defaultMuted
         playsInline
         preload="auto"
         onEnded={handleFinish}
-        onError={handleFinish}
+        onError={(e) => {
+          console.error("Opening video load error, switching to shader intro:", e)
+          setHasError(true)
+        }}
       />
 
       {/* Action buttons: Sound toggle & Skip */}
       <div className="absolute top-5 right-5 z-20 flex items-center gap-2">
         <button
           type="button"
-          onClick={toggleMute}
+          onClick={(e) => {
+            e.stopPropagation()
+            toggleMute()
+          }}
           className="flex items-center gap-1.5 rounded-full border border-black/10 bg-black/40 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md transition hover:bg-black/60 cursor-pointer"
           title={isMuted ? "Aktifkan Suara" : "Bisukan"}
           aria-label={isMuted ? "Aktifkan Suara" : "Bisukan"}
@@ -242,7 +292,10 @@ function HomeIntro({ onDone }) {
 
         <button
           type="button"
-          onClick={handleFinish}
+          onClick={(e) => {
+            e.stopPropagation()
+            handleFinish()
+          }}
           className="flex items-center gap-1.5 rounded-full border border-black/10 bg-black/40 px-3.5 py-1.5 text-xs font-medium text-white backdrop-blur-md transition hover:bg-black/60 cursor-pointer"
           aria-label="Lewati intro"
         >
